@@ -42,8 +42,8 @@
     ],
     "packs": [],
 	  "url": "https://github.com/p4535992/foundryvtt-arms-reach",
- 	  "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/src/module.json",
-	  "download": "https://github.com/p4535992/foundryvtt-arms-reach/arms-reach.zip",
+ 	  "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/src/module.json",
+	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/arms-reach.zip",
     "minimumCoreVersion": "0.7.6",
     "compatibleCoreVersion": "0.7.9",
     "minimumSystemVersion": "1.2.2"
