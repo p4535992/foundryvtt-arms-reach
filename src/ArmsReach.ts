@@ -37,7 +37,7 @@ export let setDebugLevel = (debugText: string) => {
 /* ------------------------------------ */
 
 Hooks.once('init', async function () {
-	console.log(`${MODULE_NAME} | Initializing arms-reach`);
+	console.log(`${MODULE_NAME} | Initializing ${MODULE_NAME}`);
 
 	// Assign custom classes and constants here
 
@@ -66,7 +66,7 @@ Hooks.once('init', async function () {
         let dist = getManhattanBetween(this, getTokenCenter(character));
         let gridSize = canvas.dimensions.size;
 
-        if ( (dist / gridSize) > game.settings.get("arms-reach", "globalInteractionDistance") ) {
+        if ( (dist / gridSize) > game.settings.get(`${MODULE_NAME}`, "globalInteractionDistance") ) {
           var tokenName = getCharacterName(character);
           if (tokenName) iteractionFailNotification("Door not within " + tokenName + "'s reach" );
           else iteractionFailNotification("Door not in reach" );

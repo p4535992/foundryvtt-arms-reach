@@ -1,6 +1,6 @@
 import { debug, log, setDebugLevel, warn, i18n } from '../ArmsReach';
 
-export const MODULE_NAME = 'arms-reach';
+export const MODULE_NAME = 'foundryvtt-arms-reach';
 
 export const registerSettings = function () {
   game.settings.register(`${MODULE_NAME}`, "notificationsInteractionFail", {
