@@ -1,0 +1,155 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    <form class="{{cssClass}} flexcol" autocomplete="off">
+
+        {{!-- Item Sheet Header --}}
+        <header class="sheet-header flexrow">
+            <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+    
+            <div class="header-details flexrow">
+                <h1 class="charname">
+                    <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+                </h1>
+    
+                <div class="item-subtitle">
+                    <h4 class="item-type">{{itemType}}</h4>
+                    <span class="item-status">{{itemStatus}}</span>
+                </div>
+    
+                <ul class="summary">
+                    <li></li>
+                    <li>
+                        <input type="text" name="data.rarity" value="{{data.rarity}}" placeholder="Rarity"/>
+                    </li>
+                    <li>
+                        <input type="text" name="data.source" value="{{data.source}}" placeholder="Source"/>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    
+        {{!-- Item Sheet Navigation --}}
+        <nav class="sheet-navigation tabs" data-group="primary">
+            <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+            <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        </nav>
+    
+        {{!-- Item Sheet Body --}}
+        <section class="sheet-body">
+    
+            {{!-- Description Tab --}}
+            {{> "systems/dnd5e/templates/items/parts/item-description.html"}}
+    
+            {{!-- Details Tab --}}
+            <div class="tab active itemcollection-details" data-group="primary" data-tab="details">
+                <h3 class="form-header">{{localize 'DND5E.ItemContainerDetails'}}</h3>
+    
+                <div class ="itemcollection-details ">
+                    <div class="form-group compressed">
+                        <label>{{localize 'DND5E.ItemContainerCapacity'}}</label>
+
+                            <input type="text" name="data.capacity.value" value="{{data.capacity.value}}"
+                                data-dtype="Number" placeholder="-">
+                    </div>
+        
+                    <div class="itemcollection-details form-group compressed">
+                        <label>{{localize 'DND5E.ItemContainerCapacityType'}}</label>
+                        <select name="data.capacity.type">
+                            {{#select data.capacity.type}}
+                                {{#each config.itemCapacityTypes}}
+                                    <option value="{{@key}}">{{localize this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+        
+                    <div class="form-group stacked">
+                        <label>{{localize 'DND5E.ItemContainerProperties'}}</label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="data.capacity.weightless" {{checked data.capacity.weightless}}>
+                            {{localize 'DND5E.ItemContainerWeightless'}}
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="data.equipped" {{checked data.equipped}}>
+                            Equipped
+                        </label>
+                    </div>
+
+
+                    <div class="form-group compressed">
+                        <label>Weight</label>{{data.weight}}
+                    </div>
+                    <div class="form-group compressed">
+                            <label>Contents Weight</label> {{flags.itemcollection.itemWeight}}
+                    </div>
+                    <div class="form-group compressed">
+                        <label>{{localize 'Container Weight'}}</label>
+                        <input type="text" name="flags.itemcollection.fixedWeight" value="{{flags.itemcollection.fixedWeight}}"
+                                data-dtype="Number" placeholder="0">
+                    </div>
+                    <div class="form-group compressed">
+                        <label>GP Value</label> {{flags.itemcollection.goldValue}}
+                    </div>
+                 
+
+                    <ol class="currency flexrow">
+                                Currency
+                        {{#each data.currency as |c i|}}
+                        <li class=" denomination {{i}}">
+                            <label>{{ lookup ../config.currencies i }}:</label>
+                            <input type="text" name="data.currency.{{i}}" value="{{c}}" data-dtype="Number" />
+                        </li>
+                        {{/each}}
+                    </ol>
+                    <div class="inventory-list item-list">
+                        <li class="item flexrow inventory-header">
+                            <h3 class="item-name flexrow"> Items</h3>
+                            <span class="item-quantity">Qty.</span>
+                            <span class="item-weight">Wt.</span>
+                            <div class="item-controls">
+                                {{#if canImportExport}}
+                                <a class="item-control item-export-all" title="Export All Items" data-type="{{sid}}"><i
+                                        class="fas fa-minus"></i> All</a>
+                                {{/if}}
+                            </div>
+                        </li>
+                        {{#each flags.itemcollection.contents as |item iid|}}
+                        <li class="item flexrow" data-item-id="{{item._id}}">
+                            <div class="item-name flexrow">
+                                {{#if item.data.level}} {{item.data.level}} {{/if}}
+                                <div class="item-image" style="background-image: url({{item.img}})"></div>
+                                <h4>{{item.name}}</h4>
+                            </div>
+                            <span class="item-quantity">{{item.data.quantity}}</span>
+                            <span class="item-weight">{{item.totalWeight}}</span>
+                            <div class="item-controls">
+                                {{#if ../canEdit}}
+                                    {{#if item.isBackpack}}
+                                        <a class="item-control item-export" title="Import Contents"><i  class="fas fa-asterisk"></i></a>
+                                    {{else}}
+                                    {{#if ../isOwned}}
+                                    {{#if ../canImportExport}}
+                                        <a class="item-control item-export" title="Export to Owner"><i class="fas fa-minus"></i></a>
+                                    {{/if}}
+                                    {{/if}}
+                                    <a class="item-control item-split" title="Split Item"><i class="fas fa-columns"></i></a>
+                                    {{#if ../canConvertToGold}} <a class="item-control item-convertToGold"
+                                        title="Convert To Gold"><i class="fas fa-dollar-sign"></i></a> {{/if}}
+                                    {{/if}}
+                                    <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                                    <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                                    {{/if}}
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ol>
+                        
+
+                    <div class="form-group">
+                        <button type="button" class="item-button item-compact-all" title="Compact All"><i class="fas fa-asterisk"></i> Compact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
