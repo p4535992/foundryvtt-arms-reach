@@ -15,7 +15,7 @@ export let initHooks = () => {
 
   // Sets the global maximum interaction distance
   // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
-  if( game.settings.get(`${MODULE_NAME}`, "globalInteractionDistance") > 0 ) {
+  if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
     let originalMethod = DoorControl.prototype._onMouseDown;
     DoorControl.prototype._onMouseDown = function(event) {
       // Check distance
@@ -30,7 +30,7 @@ export let initHooks = () => {
         let dist = getManhattanBetween(this, getTokenCenter(character));
         let gridSize = canvas.dimensions.size;
 
-        if ( (dist / gridSize) > game.settings.get(`${MODULE_NAME}`, "globalInteractionDistance") ) {
+        if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
           var tokenName = getCharacterName(character);
           if (tokenName) iteractionFailNotification("Door not within " + tokenName + "'s reach" );
           else iteractionFailNotification("Door not in reach" );
@@ -48,7 +48,7 @@ export let initHooks = () => {
 // Door interaction
 document.addEventListener('keydown', evt => {
 	if (evt.key === 'e') {
-    if(!game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteractionCenter")) { return; }
+    if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) { return; }
     if(ArmsReachVariables.door_interaction_cameraCentered) { return; }
     
     if( !isFocusOnCanvas() ) { return; }
@@ -85,7 +85,7 @@ document.addEventListener('keyup', evt => {
     
     if( !isFocusOnCanvas() ) { return; }
     
-    if (!game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteraction")) return;   
+    if (!game.settings.get(MODULE_NAME, "hotkeyDoorInteraction")) return;   
     
     // Get first token ownted by the player 
     let character = getFirstPlayerToken();
@@ -102,22 +102,22 @@ document.addEventListener('keyup', evt => {
 // Double Tap to open nearest door -------------------------------------------------
 document.addEventListener('keyup', evt => {
 	if (evt.key === 'ArrowUp' || evt.key === 'w') {
-    if(game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('up', 0, -0.5);
   }
   
 	if (evt.key === 'ArrowDown' || evt.key === 's') {
-    if(game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('down', 0, +0.5);
   }
   
 	if (evt.key === 'ArrowRight' || evt.key === 'd') {
-    if(game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('right', +0.5, 0);
   }
   
 	if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-    if(game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
     ifStuckInteract('left', -0.5, 0);
   }
 });
@@ -126,7 +126,7 @@ function ifStuckInteract(key, offsetx, offsety) {
   let character = getFirstPlayerToken();
   if(!character) return;
   
-  if( Date.now() - ArmsReachVariables.lastData[key] > game.settings.get(`${MODULE_NAME}`, "hotkeyDoorInteractionDelay") ) {
+  if( Date.now() - ArmsReachVariables.lastData[key] > game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") ) {
     ArmsReachVariables.lastData.x = character.x;
     ArmsReachVariables.lastData.y = character.y;
     ArmsReachVariables.lastData[key] = Date.now();
@@ -144,11 +144,11 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     // Max distance definition
     let gridSize = canvas.dimensions.size;
     let maxDistance = Infinity;
-    let globalMaxDistance = game.settings.get(`${MODULE_NAME}`, "globalInteractionDistance");
+    let globalMaxDistance = game.settings.get(MODULE_NAME, "globalInteractionDistance");
     if( globalMaxDistance > 0 ) {
       if( globalMaxDistance < maxDistance ) maxDistance = globalMaxDistance;
     } else {
-      maxDistance = game.settings.get(`${MODULE_NAME}`, "doorInteractionDistance");
+      maxDistance = game.settings.get(MODULE_NAME, "doorInteractionDistance");
     }
       
     // Shortest dist
@@ -209,7 +209,7 @@ export const getCharacterName = function(token) {
 
 // Interation fail messages
 export const iteractionFailNotification = function(message) {
-  if( !game.settings.get(`${MODULE_NAME}`, "notificationsInteractionFail") ) return;
+  if( !game.settings.get(MODULE_NAME, "notificationsInteractionFail") ) return;
   ui.notifications.warn(message);
 }
 
