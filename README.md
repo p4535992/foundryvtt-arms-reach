@@ -2,12 +2,17 @@
 # Arms Reach
 
 * **Author**: Psyny#0677  (Discord)
-* **Version**: 1.0.1
-* **Foundry VTT Compatibility**: 0.6.2
+* **Version**: 1.0.2
+* **Foundry VTT Compatibility**: 0.7.9
 * **System Compatibility**: Any
 * **Link**: https://github.com/psyny/FoundryVTT/tree/master/ArmsReach
 
-### ABOUT 0.7.X and forks!
+
+## NOTE
+
+This is a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0
+
+### NOTE FROM PSYNY ABOUT 0.7.X and forks!
 
 I have plans to update all my mods soon (in a month or so).
 I know its a bit late, but anyone is allowed and welcome to fork or use my mods to create their own.
@@ -19,26 +24,43 @@ This features of this module was first part of my (Cozy Player)[https://github.c
 If FVTT adds windows and other interactibles I plan to update this module to support it.
 
 ## Installation
-* Open the Foundry application and click **"Install Module"** in the **"Add-On Modules"** tab.
-* Paste the following link: https://raw.githubusercontent.com/psyny/FoundryVTT/master/ArmsReach/arms-reach/module.json
-* Click "Install"
-* Activate the module in your World using **Manage Modules** under the **Game Settings** tab.
+
+It's always easiest to install modules from the in game add-on browser.
+
+To install this module manually:
+1.  Inside the Foundry "Configuration and Setup" screen, click "Add-on Modules"
+2.  Click "Install Module"
+3.  In the "Manifest URL" field, paste the following url:
+`https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/master/src/module.json`
+4.  Click 'Install' and wait for installation to complete
+5.  Don't forget to enable the module in game using the "Manage Module" button
+
+### libWrapper
+
+This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
 ## Usage
+
 The iteraction distance is measure by the distance between a token and the door. So, to iteract with a door, the player need to have a token selected (or own a token).
 
 ## Features
-* Enable the GM to select the maximum distancce that players can interact with a door (needs a token selected) (DM bypass this limitation)
+
+* Enable the GM to select the maximum distance that players can interact with a door (needs a token selected) (DM bypass this limitation)
 * Pressing 'e' opens/closes a door nearest of current selected token
 * Holding 'e' centers the camera on current selected token
 * Double tapping movement on the direction of a door will interact with it
 
-## Known issues
-None up until now.
+## Issues
 
-## Thanks and Credits
+None up until now.
+## Credit
+
+Thanks to anyone who helps me with this code! I appreciate the user community's feedback on this project!
+
 - Foundry VTT discord community for always helping me out.
+- [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny)
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development v 0.1.6](http://foundryvtt.com/pages/license.html).
+

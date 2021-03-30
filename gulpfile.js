@@ -182,9 +182,6 @@ async function copyFiles() {
 		'module.json',
 		'system.json',
 		'template.json',
-		// Added to default
-		'packs',
-		'icons'
 	];
 	try {
 		for (const file of statics) {
@@ -237,9 +234,6 @@ async function clean() {
 			'module.json',
 			'system.json',
 			'template.json',
-			// Added to default
-			'packs',
-			'icons'
 		);
 	}
 
