@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-<<<<<<< HEAD
 		"moduleResolution": "node",
 		"noEmit": false,
 		"strict": false,
@@ -13,13 +12,5 @@
 		"types": [
 			"@league-of-foundry-developers/foundry-vtt-types"
 		]
-=======
-		"moduleResolution": "Node",
-		"noEmit": false,
-		"strict": false,
-		"target": "ES2017",
-		"lib": ["DOM", "ES6", "ES2017", "ES2018"],
-		"types": ["foundry-pc-types"]
->>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
 	}
 }

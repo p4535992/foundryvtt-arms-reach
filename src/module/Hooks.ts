@@ -3,8 +3,6 @@ import { ArmsReachVariables } from "./ArmsReachVariables";
 import { getCanvas, MODULE_NAME } from './settings';
 import {libWrapper} from './libs/shim.js';
 
-import { getFirstPlayerToken, iteractionFailNotification, getManhattanBetween, getTokenCenter, getCharacterName  } from './InteractWithDorrHelper';
-
 export let readyHooks = async () => {
   // initialazideTab = true;
 }
@@ -19,7 +17,6 @@ export let initHooks = () => {
   // Sets the global maximum interaction distance
   // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
   if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
-<<<<<<< HEAD
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'WRAPPER');   
     // let originalMethod = DoorControl.prototype._onMouseDown;
     // DoorControl.prototype._onMouseDown = function(event) {
@@ -34,24 +31,7 @@ export let initHooks = () => {
         
     //     let dist = getManhattanBetween(this, getTokenCenter(character));
     //     let gridSize = getCanvas().dimensions.size;
-=======
-    //@ts-ignore
-    let originalMethod = DoorControl.prototype._onMouseDown;
-    //@ts-ignore
-    DoorControl.prototype._onMouseDown = function(event) {
-      // Check distance
-      if( !game.user.isGM ) {
-        let character = getFirstPlayerToken();
-
-        if( !character ) {
-          iteractionFailNotification("No character is selected to interact with a door");
-          return;
-        }
-
-        let dist = getManhattanBetween(this, getTokenCenter(character));
-        let gridSize = canvas.dimensions.size;
->>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
-
+    
     //     if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
     //       var tokenName = getCharacterName(character);
     //       if (tokenName) iteractionFailNotification("Door not within " + tokenName + "'s reach" );
@@ -59,8 +39,6 @@ export let initHooks = () => {
     //       return;
     //     }
     //   }
-
-<<<<<<< HEAD
     //   // Call original method
     //   return originalMethod.apply(this,arguments);
     // };
@@ -89,7 +67,7 @@ export const DoorControlPrototypeOnMouseDownHandler = function (wrapped, ...args
       else {
         iteractionFailNotification("Door not in reach" );
       }
-      return;
+      //return wrapped(...args);
     }
   }
 
@@ -98,40 +76,6 @@ export const DoorControlPrototypeOnMouseDownHandler = function (wrapped, ...args
   return wrapped(...args);
 };
 
-// Door interaction
-document.addEventListener('keydown', evt => {
-	if (evt.key === 'e') {
-    if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) { return; }
-    if(ArmsReachVariables.door_interaction_cameraCentered) { return; }
-    
-    if( !isFocusOnCanvas() ) { return; }
-    
-    if( ArmsReachVariables.door_interaction_keydown == false ) {
-      ArmsReachVariables.door_interaction_lastTime = Date.now();
-      ArmsReachVariables.door_interaction_keydown = true;
-    } else {
-      // Center camera on character (if  key was pressed for a time)
-      let diff = Date.now() - ArmsReachVariables.door_interaction_lastTime;
-      if( diff > 500 ) {
-        ArmsReachVariables.door_interaction_lastTime = Date.now();
-        let character = getFirstPlayerToken();
-        if( !character ) {
-          iteractionFailNotification("No character is selected to center camera on.");
-          return;
-        }
-        
-        ArmsReachVariables.door_interaction_cameraCentered = true;
-        getCanvas().animatePan({x: character.x, y: character.y});
-      }
-    }
-=======
-      // Call original method
-      return originalMethod.apply(this,arguments);
-    };
->>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
-  }
-
-<<<<<<< HEAD
 // Interact with door ------------------------------------------------------------------
 export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {
     // Max distance definition
@@ -244,6 +188,4 @@ export const isFocusOnCanvas = function() {
   { 
     return true;
   }
-=======
->>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
 }

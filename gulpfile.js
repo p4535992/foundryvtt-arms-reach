@@ -188,11 +188,7 @@ async function copyFiles() {
 		'templates',
 		'module.json',
 		'system.json',
-<<<<<<< HEAD
-		'template.json'
-=======
 		'template.json',
->>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
 	];
 	try {
 		for (const file of statics) {
@@ -245,11 +241,7 @@ async function clean() {
 			`${name}.js`,
 			'module.json',
 			'system.json',
-<<<<<<< HEAD
-			'template.json'
-=======
 			'template.json',
->>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
 		);
 	}
 

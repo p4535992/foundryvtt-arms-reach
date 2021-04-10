@@ -1,5 +1,5 @@
 import { ArmsReachVariables } from "./ArmsReachVariables";
-import { MODULE_NAME } from './settings';
+import { getCanvas, MODULE_NAME } from './settings';
 // Door interaction
 document.addEventListener('keydown', evt => {
 	if (evt.key === 'e') {
@@ -23,7 +23,7 @@ document.addEventListener('keydown', evt => {
         }
 
         ArmsReachVariables.door_interaction_cameraCentered = true;
-        canvas.animatePan({x: character.x, y: character.y});
+        getCanvas().animatePan({x: character.x, y: character.y});
       }
     }
   }
@@ -57,22 +57,30 @@ document.addEventListener('keyup', evt => {
 // Double Tap to open nearest door -------------------------------------------------
 document.addEventListener('keyup', evt => {
 	if (evt.key === 'ArrowUp' || evt.key === 'w') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+      return; 
+    }
     ifStuckInteract('up', 0, -0.5);
   }
 
 	if (evt.key === 'ArrowDown' || evt.key === 's') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+      return; 
+    }
     ifStuckInteract('down', 0, +0.5);
   }
 
 	if (evt.key === 'ArrowRight' || evt.key === 'd') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+      return; 
+    }
     ifStuckInteract('right', +0.5, 0);
   }
 
 	if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { return; }
+    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+      return; 
+    }
     ifStuckInteract('left', -0.5, 0);
   }
 });
@@ -97,13 +105,15 @@ function ifStuckInteract(key, offsetx, offsety) {
 // Interact with door ------------------------------------------------------------------
 export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {
     // Max distance definition
-    let gridSize = canvas.dimensions.size;
+    let gridSize = getCanvas().dimensions.size;
     let maxDistance = Infinity;
-    let globalMaxDistance = game.settings.get(MODULE_NAME, "globalInteractionDistance");
+    let globalMaxDistance = <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
     if( globalMaxDistance > 0 ) {
-      if( globalMaxDistance < maxDistance ) maxDistance = globalMaxDistance;
+      if( globalMaxDistance < maxDistance ){
+         maxDistance = globalMaxDistance;
+      }
     } else {
-      maxDistance = game.settings.get(MODULE_NAME, "doorInteractionDistance");
+      maxDistance = <number>game.settings.get(MODULE_NAME, "doorInteractionDistance");
     }
 
     // Shortest dist
@@ -115,8 +125,8 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     charCenter.x += offsetx * gridSize;
     charCenter.y += offsety * gridSize;
 
-    for( let i = 0; i < canvas.controls.doors.children.length ; i++ ) {
-      let door = canvas.controls.doors.children[i];
+    for( let i = 0; i < getCanvas().controls.doors.children.length ; i++ ) {
+      let door = getCanvas().controls.doors.children[i];
 
       let dist = getManhattanBetween(door, charCenter);
       let distInGridUnits = (dist / gridSize) - 0.1;
@@ -179,8 +189,8 @@ export const getFirstPlayerToken = function() {
 // Returns a list of selected (or owned, if no token is selected)
 export const getSelectedOrOwnedTokens = function()
 {
-  var controlled = canvas.tokens.controlled;
-  if( controlled.length == 0 ) controlled = canvas.tokens.ownedTokens;
+  var controlled = getCanvas().tokens.controlled;
+  if( controlled.length == 0 ) controlled = getCanvas().tokens.ownedTokens;
   return controlled;
 }
 
