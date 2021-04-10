@@ -2,8 +2,13 @@
 	  "name": "foundryvtt-arms-reach",
 	  "title": "FoundryVTT Arms Reach",
 	  "description": "Allows the GM to limit the distance that a player can interate with a door. And adds a shortkey to interact with rearest door.",
+<<<<<<< HEAD
     "version": "1.0.0",
     "author": "Psyny",
+=======
+    "version": "1.0.2",
+    "author": "Psyny and 4535992",
+>>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
     "type": "module",
     "socket": true,
     "includes": [
@@ -21,7 +26,7 @@
       {
         "type": "icon",
         "location": ""
-      }, 
+      },
       {
         "type": "cover",
         "location": ""
@@ -32,14 +37,24 @@
       }
     ],
     "esmodules": [
-        "ArmsReach.js"
+        "foundryvtt-arms-reach.js"
     ],
     "styles": [
-        "styles/ArmsReach.css"
+        "styles/foundryvtt-arms-reach.css"
     ],
 	  "url": "https://github.com/p4535992/foundryvtt-arms-reach",
  	  "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/src/module.json",
+<<<<<<< HEAD
 	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach.zip",
     "minimumCoreVersion": "0.7.6",
     "compatibleCoreVersion": "0.7.9"
+=======
+	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v1.0.2",
+    "minimumCoreVersion": "0.7.6",
+    "compatibleCoreVersion": "0.7.9",
+    "changelog": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/master/changelog.md",
+    "bugs": "https://github.com/p4535992/foundryvtt-arms-reach/issues",
+    "allowBugReporter": true
+
+>>>>>>> e5fa7bed634fd7062ac91e1048176d16c1f24ea2
 }
