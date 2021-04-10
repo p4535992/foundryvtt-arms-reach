@@ -1,6 +1,7 @@
 import { warn, error, debug, i18n } from "../ArmsReach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
-import { MODULE_NAME } from './settings';
+import { getCanvas, MODULE_NAME } from './settings';
+import {libWrapper} from './libs/shim.js';
 
 export let readyHooks = async () => {
   // initialazideTab = true;
@@ -16,34 +17,65 @@ export let initHooks = () => {
   // Sets the global maximum interaction distance
   // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
   if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
-    let originalMethod = DoorControl.prototype._onMouseDown;
-    DoorControl.prototype._onMouseDown = function(event) {
-      // Check distance
-      if( !game.user.isGM ) {
-        let character = getFirstPlayerToken();
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'WRAPPER');   
+    // let originalMethod = DoorControl.prototype._onMouseDown;
+    // DoorControl.prototype._onMouseDown = function(event) {
+    //   // Check distance
+    //   if( !game.user.isGM ) {
+    //     let character = getFirstPlayerToken();
         
-        if( !character ) {
-          iteractionFailNotification("No character is selected to interact with a door");
-          return;
-        }
+    //     if( !character ) {
+    //       iteractionFailNotification("No character is selected to interact with a door");
+    //       return;
+    //     }
         
-        let dist = getManhattanBetween(this, getTokenCenter(character));
-        let gridSize = canvas.dimensions.size;
+    //     let dist = getManhattanBetween(this, getTokenCenter(character));
+    //     let gridSize = getCanvas().dimensions.size;
 
-        if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
-          var tokenName = getCharacterName(character);
-          if (tokenName) iteractionFailNotification("Door not within " + tokenName + "'s reach" );
-          else iteractionFailNotification("Door not in reach" );
-          return;
-        }
-      }
+    //     if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
+    //       var tokenName = getCharacterName(character);
+    //       if (tokenName) iteractionFailNotification("Door not within " + tokenName + "'s reach" );
+    //       else iteractionFailNotification("Door not in reach" );
+    //       return;
+    //     }
+    //   }
 
-      // Call original method
-      return originalMethod.apply(this,arguments);
-    };
+    //   // Call original method
+    //   return originalMethod.apply(this,arguments);
+    // };
   } 
 
 }
+
+export const DoorControlPrototypeOnMouseDownHandler = function (wrapped, ...args) {
+  // Check distance
+  if( !game.user.isGM ) {
+    let character = getFirstPlayerToken();
+    
+    if( !character ) {
+      iteractionFailNotification("No character is selected to interact with a door");
+      return;
+    }
+    
+    let dist = getManhattanBetween(this, getTokenCenter(character));
+    let gridSize = getCanvas().dimensions.size;
+
+    if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
+      var tokenName = getCharacterName(character);
+      if (tokenName){
+         iteractionFailNotification("Door not within " + tokenName + "'s reach" );
+      }
+      else {
+        iteractionFailNotification("Door not in reach" );
+      }
+      return;
+    }
+  }
+
+  // Call original method
+  //return originalMethod.apply(this,arguments);
+  return wrapped(...args);
+};
 
 // Door interaction
 document.addEventListener('keydown', evt => {
@@ -68,7 +100,7 @@ document.addEventListener('keydown', evt => {
         }
         
         ArmsReachVariables.door_interaction_cameraCentered = true;
-        canvas.animatePan({x: character.x, y: character.y});
+        getCanvas().animatePan({x: character.x, y: character.y});
       }
     }
   }
@@ -142,13 +174,15 @@ function ifStuckInteract(key, offsetx, offsety) {
 // Interact with door ------------------------------------------------------------------
 export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {
     // Max distance definition
-    let gridSize = canvas.dimensions.size;
+    let gridSize = getCanvas().dimensions.size;
     let maxDistance = Infinity;
-    let globalMaxDistance = game.settings.get(MODULE_NAME, "globalInteractionDistance");
+    let globalMaxDistance = <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
     if( globalMaxDistance > 0 ) {
-      if( globalMaxDistance < maxDistance ) maxDistance = globalMaxDistance;
+      if( globalMaxDistance < maxDistance ){
+         maxDistance = globalMaxDistance;
+      }
     } else {
-      maxDistance = game.settings.get(MODULE_NAME, "doorInteractionDistance");
+      maxDistance = <number>game.settings.get(MODULE_NAME, "doorInteractionDistance");
     }
       
     // Shortest dist
@@ -160,8 +194,8 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     charCenter.x += offsetx * gridSize;
     charCenter.y += offsety * gridSize;
     
-    for( let i = 0; i < canvas.controls.doors.children.length ; i++ ) {
-      let door = canvas.controls.doors.children[i];
+    for( let i = 0; i < getCanvas().controls.doors.children.length ; i++ ) {
+      let door = getCanvas().controls.doors.children[i];
       
       let dist = getManhattanBetween(door, charCenter);
       let distInGridUnits = (dist / gridSize) - 0.1;
@@ -224,8 +258,8 @@ export const getFirstPlayerToken = function() {
 // Returns a list of selected (or owned, if no token is selected)
 export const getSelectedOrOwnedTokens = function() 
 {
-  var controlled = canvas.tokens.controlled;
-  if( controlled.length == 0 ) controlled = canvas.tokens.ownedTokens;
+  var controlled = getCanvas().tokens.controlled;
+  if( controlled.length == 0 ) controlled = getCanvas().tokens.ownedTokens;
   return controlled;
 }
 
