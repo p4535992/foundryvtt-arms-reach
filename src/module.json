@@ -39,7 +39,7 @@
     ],
 	  "url": "https://github.com/p4535992/foundryvtt-arms-reach",
  	  "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/src/module.json",
-	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v1.0.2",
+	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v1.0.2.zip",
     "minimumCoreVersion": "0.7.6",
     "compatibleCoreVersion": "0.7.9",
     "changelog": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/master/changelog.md",
