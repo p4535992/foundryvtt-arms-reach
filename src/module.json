@@ -42,7 +42,7 @@
 	  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v1.0.2.zip",
     "minimumCoreVersion": "0.7.6",
     "compatibleCoreVersion": "0.7.9",
-    "changelog": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/master/changelog.md",
+    "changelog": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/changelog.md",
     "bugs": "https://github.com/p4535992/foundryvtt-arms-reach/issues",
     "allowBugReporter": true
 
