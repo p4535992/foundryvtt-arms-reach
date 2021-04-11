@@ -66,12 +66,21 @@ export const registerSettings = function () {
 		range: {min: 0, max: 10, step: 0.5}
 	});
   
-  game.settings.register(MODULE_NAME, "hotkeyDoorInteractionCenter", {
+    game.settings.register(MODULE_NAME, "hotkeyDoorInteractionCenter", {
 		name: "Hotkey 'e' to center camera",
 		hint: "Holding 'e' will center the camera on current selected token.",
 		scope: "world",
 		config: true,
 		default: true,
+		type: Boolean
+	});
+
+	game.settings.register(MODULE_NAME, "globalInteractionDistanceForGM", {
+		name: "Notifications failed interactions even for GM",
+    	hint: "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
+		scope: "world",
+		config: true,
+		default: false,
 		type: Boolean
 	});
 }

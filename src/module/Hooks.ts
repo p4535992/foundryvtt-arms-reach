@@ -46,31 +46,74 @@ export let initHooks = () => {
 
 }
 
-export const DoorControlPrototypeOnMouseDownHandler = function (wrapped, ...args) {
+export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
+  const [t] = args;
   // Check distance
-  if( !game.user.isGM ) {
+  if( !game.user.isGM || <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM")) {
     let character = getFirstPlayerToken();
     
     if( !character ) {
       iteractionFailNotification("No character is selected to interact with a door");
-      return;
-    }
+      //return;
+
+    }else{
     
-    let dist = getManhattanBetween(this, getTokenCenter(character));
-    let gridSize = getCanvas().dimensions.size;
+      let dist = getManhattanBetween(this, getTokenCenter(character));
+      let gridSize = getCanvas().dimensions.size;
 
-    if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
-      var tokenName = getCharacterName(character);
-      if (tokenName){
-         iteractionFailNotification("Door not within " + tokenName + "'s reach" );
+      if ( (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
+        var tokenName = getCharacterName(character);
+        if (tokenName){
+          iteractionFailNotification("Door not within " + tokenName + "'s reach" );
+        }
+        else {
+          iteractionFailNotification("Door not in reach" );
+        }
+        //return;
+
+        // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK
+        let wall:Wall = getCanvas().walls.get(t.currentTarget.wall.data._id); 
+        if(wall){
+          if(wall.data.ds==0)
+          {
+            await getCanvas().walls.get(t.currentTarget.wall.data._id).update({
+                ds : 1
+            });
+          }else if(wall.data.ds==1){
+            await getCanvas().walls.get(t.currentTarget.wall.data._id).update({
+                ds : 0
+            });
+          }else{
+            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + t.currentTarget.wall.data._id );
+          }
+        }else{
+          error("No wall found for id : " + t.currentTarget.wall.data._id);
+        }
+
+        // If is a secret door
+        // if(wall.data.door === 2){
+        //   wall.update(
+        //     {"door" : 1} // From secret door to normal door
+        //   );
+        //   let sent_message = `You have spotted a hidden door!`;
+        //   let chatData = {
+        //     user: game.user._id,
+        //     content: sent_message,
+        //     whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
+        //     speaker: ChatMessage.getSpeaker({alias: "Door"})
+        //   };
+        //   ChatMessage.create(chatData, {});
+        // }else if(wall.data.door === 1){
+        //   wall.update(
+        //     {"door" : 0}
+        //   );
+        // }
+      }else{
+        // Congratulations you are in reach
       }
-      else {
-        iteractionFailNotification("Door not in reach" );
-      }
-      //return wrapped(...args);
     }
+    // END MOD ABD 4535992
   }
-
   // Call original method
   //return originalMethod.apply(this,arguments);
   return wrapped(...args);
