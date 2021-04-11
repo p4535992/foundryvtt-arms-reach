@@ -13,7 +13,9 @@ This is a fork of the project made by Psyny, for avoid incompatibilites with fou
 
 ## NOTE
 
-This is a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0
+This project is still in beta so there is likely some issue use at your own risk.
+
+This is a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0.
 
 ### NOTE FROM PSYNY ABOUT 0.7.X and forks!
 
