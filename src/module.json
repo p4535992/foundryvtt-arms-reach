@@ -31,6 +31,9 @@
         "location": ""
       }
     ],
+    "scripts": [
+      "./module/libs/shim.js"
+    ],
     "esmodules": [
         "foundryvtt-arms-reach.js"
     ],
