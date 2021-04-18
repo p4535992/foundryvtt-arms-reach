@@ -52,13 +52,11 @@ export let initHooks = () => {
 
 export const DoorControlPrototypeOnMouseDownHandler = async function () { //function (wrapped, ...args) {
   // Check distance
-  if( !game.user.isGM || <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM")) {
-    let character = getFirstPlayerToken();
-    
+  let character:Token = getFirstPlayerToken();
+  if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
     if( !character ) {
       iteractionFailNotification("No character is selected to interact with a door");
       //return;
-
     }else{
     
       let dist = getManhattanBetween(this, getTokenCenter(character));
@@ -137,13 +135,47 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
           error("No wall found for id : " + doorControl.wall.data._id);
         }
       }
+      // END MOD ABD 4535992
     }
-    // END MOD ABD 4535992
+
+  } else if(game.user.isGM) {
+    const doorControl = this;
+    let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
+    if(wall){
+      if(wall.data.ds==0)
+      {
+        await getCanvas().walls.get(doorControl.wall.data._id).update({
+            ds : 1
+        });
+      }else if(wall.data.ds==1){
+        await getCanvas().walls.get(doorControl.wall.data._id).update({
+            ds : 0
+        });
+      }else{
+        error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+      }
+    }else{
+      error("No wall found for id : " + doorControl.wall.data._id);
+    }
   }
-  // Call original method
-  //return originalMethod.apply(this,arguments);
-  //return wrapped(...args);
-};
+
+  // If settings is true do not deselect the current select token
+  if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
+    if( !character ) {
+      iteractionFailNotification("No character is selected to interact with a door");
+      //return;
+    }else{
+      const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
+      if (observable !== undefined){
+          observable[0].control();
+      }
+    }
+  }
+
+    // Call original method
+    //return originalMethod.apply(this,arguments);
+    //return wrapped(...args);
+}
 
 // Interact with door ------------------------------------------------------------------
 export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {

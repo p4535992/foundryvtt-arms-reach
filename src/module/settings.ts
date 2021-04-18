@@ -83,4 +83,13 @@ export const registerSettings = function () {
 		default: false,
 		type: Boolean
 	});
+
+	game.settings.register(MODULE_NAME, "forceReSelection", {
+		name: "Avoid deselects the controlled token when open/close the door",
+    	hint: "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean
+	});
 }
