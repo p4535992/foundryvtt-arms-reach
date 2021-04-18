@@ -128,7 +128,16 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
             await getCanvas().walls.get(doorControl.wall.data._id).update({
                 ds : 0
             });
-          }else{
+          }else if(wall.data.ds==2){
+            var tokenName = getCharacterName(character);
+            if (tokenName){
+              iteractionFailNotification("Door is in reach but is locked for " + tokenName + "" );
+            }
+            else {
+              iteractionFailNotification("Door is in reach but is locked" );
+            }
+          }
+          else{
             error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
           }
         }else{
@@ -151,6 +160,8 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
         await getCanvas().walls.get(doorControl.wall.data._id).update({
             ds : 0
         });
+      }else if(wall.data.ds==2){
+        // DO NOTHING
       }else{
         error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
       }
