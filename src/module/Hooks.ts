@@ -1,7 +1,6 @@
 import { warn, error, debug, i18n } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
 import { getCanvas, MODULE_NAME } from './settings';
-import {libWrapper} from './libs/shim.js';
 
 export let readyHooks = async () => {
   // initialazideTab = true;
@@ -17,7 +16,12 @@ export let initHooks = () => {
   // Sets the global maximum interaction distance
   // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
   if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'WRAPPER');   
+
+    //@ts-ignore
+    //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');   
+    
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'OVERRIDE');   
     // let originalMethod = DoorControl.prototype._onMouseDown;
     // DoorControl.prototype._onMouseDown = function(event) {
     //   // Check distance
@@ -46,8 +50,7 @@ export let initHooks = () => {
 
 }
 
-export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
-  const [t] = args;
+export const DoorControlPrototypeOnMouseDownHandler = async function () { //function (wrapped, ...args) {
   // Check distance
   if( !game.user.isGM || <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM")) {
     let character = getFirstPlayerToken();
@@ -60,8 +63,8 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     
       let dist = getManhattanBetween(this, getTokenCenter(character));
       let gridSize = getCanvas().dimensions.size;
-
-      if ( (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
+      let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+      if (isNotNearEnough) {
         var tokenName = getCharacterName(character);
         if (tokenName){
           iteractionFailNotification("Door not within " + tokenName + "'s reach" );
@@ -70,53 +73,76 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
           iteractionFailNotification("Door not in reach" );
         }
         //return;
-
-        // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK
-        let wall:Wall = getCanvas().walls.get(t.currentTarget.wall.data._id); 
+        // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH WRAPPER AND MIXED
+        /*
+        const [t] = args;
+        const doorControl = t.currentTarget;
+        let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
         if(wall){
           if(wall.data.ds==0)
           {
-            await getCanvas().walls.get(t.currentTarget.wall.data._id).update({
+            await getCanvas().walls.get(doorControl.wall.data._id).update({
                 ds : 1
             });
           }else if(wall.data.ds==1){
-            await getCanvas().walls.get(t.currentTarget.wall.data._id).update({
+            await getCanvas().walls.get(doorControl.wall.data._id).update({
                 ds : 0
             });
           }else{
-            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + t.currentTarget.wall.data._id );
+            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
           }
         }else{
-          error("No wall found for id : " + t.currentTarget.wall.data._id);
+          error("No wall found for id : " + doorControl.wall.data._id);
         }
-
-        // If is a secret door
-        // if(wall.data.door === 2){
-        //   wall.update(
-        //     {"door" : 1} // From secret door to normal door
-        //   );
-        //   let sent_message = `You have spotted a hidden door!`;
-        //   let chatData = {
-        //     user: game.user._id,
-        //     content: sent_message,
-        //     whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
-        //     speaker: ChatMessage.getSpeaker({alias: "Door"})
-        //   };
-        //   ChatMessage.create(chatData, {});
-        // }else if(wall.data.door === 1){
-        //   wall.update(
-        //     {"door" : 0}
-        //   );
-        // }
+        */
+        // TODO If is a secret door we can do somethig
+        /*
+        if(wall.data.door === 2){
+          wall.update(
+            {"door" : 1} // From secret door to normal door
+          );
+          let sent_message = `You have spotted a hidden door!`;
+          let chatData = {
+            user: game.user._id,
+            content: sent_message,
+            whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
+            speaker: ChatMessage.getSpeaker({alias: "Door"})
+          };
+          ChatMessage.create(chatData, {});
+        }else if(wall.data.door === 1){
+          wall.update(
+            {"door" : 0}
+          );
+        }
+        */
       }else{
         // Congratulations you are in reach
+        // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH OVERRIDE
+        const doorControl = this;
+        let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
+        if(wall){
+          if(wall.data.ds==0)
+          {
+            await getCanvas().walls.get(doorControl.wall.data._id).update({
+                ds : 1
+            });
+          }else if(wall.data.ds==1){
+            await getCanvas().walls.get(doorControl.wall.data._id).update({
+                ds : 0
+            });
+          }else{
+            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+          }
+        }else{
+          error("No wall found for id : " + doorControl.wall.data._id);
+        }
       }
     }
     // END MOD ABD 4535992
   }
   // Call original method
   //return originalMethod.apply(this,arguments);
-  return wrapped(...args);
+  //return wrapped(...args);
 };
 
 // Interact with door ------------------------------------------------------------------
@@ -191,23 +217,34 @@ export const getCharacterName = function(token) {
 
 // Interation fail messages
 export const iteractionFailNotification = function(message) {
-  if( !game.settings.get(MODULE_NAME, "notificationsInteractionFail") ) return;
+  if( !game.settings.get(MODULE_NAME, "notificationsInteractionFail") ){
+     return;
+  }
   ui.notifications.warn(message);
 }
 
 // Returns the first selected token or owned token
 export const getFirstPlayerToken = function() {
     // Get first token ownted by the player 
-    let selectedTokens = getSelectedOrOwnedTokens();
-    if(!selectedTokens || selectedTokens.length == 0) return null;
+    let selectedTokens = getSelectedOrOwnedTokens();  
+    if(!selectedTokens || selectedTokens.length == 0){
+      return null;
+    }
     return selectedTokens[0];  
 }
 
 // Returns a list of selected (or owned, if no token is selected)
 export const getSelectedOrOwnedTokens = function() 
 {
-  var controlled = getCanvas().tokens.controlled;
-  if( controlled.length == 0 ) controlled = getCanvas().tokens.ownedTokens;
+  let controlled = getCanvas().tokens.controlled;
+  if (controlled.length > 1) {
+      ui.notifications.warn("Please selected a single token");
+      return;
+  }
+  // MOD 4535992 Removed not make sense
+  // if(!controlled || controlled.length == 0 ){
+  //   controlled = getCanvas().tokens.ownedTokens;
+  // }
   return controlled;
 }
 
