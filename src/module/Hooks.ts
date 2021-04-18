@@ -162,7 +162,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
   // If settings is true do not deselect the current select token
   if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
     if( !character ) {
-      iteractionFailNotification("No character is selected to interact with a door");
+      //iteractionFailNotification("No character is selected to interact with a door");
       //return;
     }else{
       const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
