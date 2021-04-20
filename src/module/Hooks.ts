@@ -13,6 +13,7 @@ export let readyHooks = async () => {
         return; 
       }
       if(ArmsReachVariables.door_interaction_cameraCentered) { 
+        ArmsReachVariables.door_interaction_cameraCentered = false;
         return; 
       }
 
