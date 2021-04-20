@@ -1,97 +1,98 @@
+import { i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
 import { getCanvas, MODULE_NAME } from './settings';
-// Door interaction
-document.addEventListener('keydown', evt => {
-	if (evt.key === 'e') {
-    if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) { 
-      return; 
-    }
-    if(ArmsReachVariables.door_interaction_cameraCentered) { 
-      return; 
-    }
+// // Door interaction
+// document.addEventListener('keydown', evt => {
+// 	if (evt.key === 'e') {
+//     if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) { 
+//       return; 
+//     }
+//     if(ArmsReachVariables.door_interaction_cameraCentered) { 
+//       return; 
+//     }
 
-    if( !isFocusOnCanvas() ) { 
-      return; 
-    }
+//     if( !isFocusOnCanvas() ) { 
+//       return; 
+//     }
 
-    if( ArmsReachVariables.door_interaction_keydown == false ) {
-      ArmsReachVariables.door_interaction_lastTime = Date.now();
-      ArmsReachVariables.door_interaction_keydown = true;
-    } else {
-      // Center camera on character (if  key was pressed for a time)
-      let diff = Date.now() - ArmsReachVariables.door_interaction_lastTime;
-      if( diff > 500 ) {
-        ArmsReachVariables.door_interaction_lastTime = Date.now();
-        let character = getFirstPlayerToken();
-        if( !character ) {
-          iteractionFailNotification("No character is selected to center camera on.");
-          return;
-        }
+//     if( ArmsReachVariables.door_interaction_keydown == false ) {
+//       ArmsReachVariables.door_interaction_lastTime = Date.now();
+//       ArmsReachVariables.door_interaction_keydown = true;
+//     } else {
+//       // Center camera on character (if  key was pressed for a time)
+//       let diff = Date.now() - ArmsReachVariables.door_interaction_lastTime;
+//       if( diff > 500 ) {
+//         ArmsReachVariables.door_interaction_lastTime = Date.now();
+//         let character = getFirstPlayerToken();
+//         if( !character ) {
+//           iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelectedToCenterCamera"));
+//           return;
+//         }
 
-        ArmsReachVariables.door_interaction_cameraCentered = true;
-        getCanvas().animatePan({x: character.x, y: character.y});
-      }
-    }
-  }
-});
+//         ArmsReachVariables.door_interaction_cameraCentered = true;
+//         getCanvas().animatePan({x: character.x, y: character.y});
+//       }
+//     }
+//   }
+// });
 
-document.addEventListener('keyup', evt => {
-	if (evt.key === 'e') {
-    ArmsReachVariables.door_interaction_keydown = false;
+// document.addEventListener('keyup', evt => {
+// 	if (evt.key === 'e') {
+//     ArmsReachVariables.door_interaction_keydown = false;
 
-    if(ArmsReachVariables.door_interaction_cameraCentered) {
-      ArmsReachVariables.door_interaction_cameraCentered = false;
-      return;
-    }
+//     if(ArmsReachVariables.door_interaction_cameraCentered) {
+//       ArmsReachVariables.door_interaction_cameraCentered = false;
+//       return;
+//     }
 
-    if( !isFocusOnCanvas() ) { return; }
+//     if( !isFocusOnCanvas() ) { return; }
 
-    if (!game.settings.get(MODULE_NAME, "hotkeyDoorInteraction")) return;
+//     if (!game.settings.get(MODULE_NAME, "hotkeyDoorInteraction")) return;
 
-    // Get first token ownted by the player
-    let character = getFirstPlayerToken();
+//     // Get first token ownted by the player
+//     let character = getFirstPlayerToken();
 
-    if( !character ) {
-      iteractionFailNotification("No character is selected to interact with a door.");
-      return;
-    }
+//     if( !character ) {
+//       iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
+//       return;
+//     }
 
-    interactWithNearestDoor(character,0,0);
-	}
-});
+//     interactWithNearestDoor(character,0,0);
+// 	}
+// });
 
-// Double Tap to open nearest door -------------------------------------------------
-document.addEventListener('keyup', evt => {
-	if (evt.key === 'ArrowUp' || evt.key === 'w') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
-      return; 
-    }
-    ifStuckInteract('up', 0, -0.5);
-  }
+// // Double Tap to open nearest door -------------------------------------------------
+// document.addEventListener('keyup', evt => {
+// 	if (evt.key === 'ArrowUp' || evt.key === 'w') {
+//     if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+//       return; 
+//     }
+//     ifStuckInteract('up', 0, -0.5);
+//   }
 
-	if (evt.key === 'ArrowDown' || evt.key === 's') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
-      return; 
-    }
-    ifStuckInteract('down', 0, +0.5);
-  }
+// 	if (evt.key === 'ArrowDown' || evt.key === 's') {
+//     if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+//       return; 
+//     }
+//     ifStuckInteract('down', 0, +0.5);
+//   }
 
-	if (evt.key === 'ArrowRight' || evt.key === 'd') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
-      return; 
-    }
-    ifStuckInteract('right', +0.5, 0);
-  }
+// 	if (evt.key === 'ArrowRight' || evt.key === 'd') {
+//     if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+//       return; 
+//     }
+//     ifStuckInteract('right', +0.5, 0);
+//   }
 
-	if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-    if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
-      return; 
-    }
-    ifStuckInteract('left', -0.5, 0);
-  }
-});
+// 	if (evt.key === 'ArrowLeft' || evt.key === 'a') {
+//     if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+//       return; 
+//     }
+//     ifStuckInteract('left', -0.5, 0);
+//   }
+// });
 
-function ifStuckInteract(key, offsetx, offsety) {
+export function ifStuckInteract(key, offsetx, offsety) {
   let character = getFirstPlayerToken();
   if(!character) return;
 
@@ -147,17 +148,21 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     // Operate the door
     if(closestDoor) {
       // Create a fake function... Ugly, but at same time take advantage of existing door interaction function of core FVTT
-      let fakeEvent = { stopPropagation: event => {return;} };
+      let fakeEvent = { 
+        stopPropagation: event => {
+          return;
+        } 
+      };
       closestDoor._onMouseDown(fakeEvent);
     } else {
 
       var tokenName = getCharacterName(token);
 
       if (tokenName){
-        iteractionFailNotification("No door was found within " + tokenName + "'s reach" );
+        iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotFoundInReachFor",{tokenName: tokenName}));
       }
       else {
-        iteractionFailNotification("No door was found within reach" );
+        iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotFoundInReach"));
       }
       return;
     }

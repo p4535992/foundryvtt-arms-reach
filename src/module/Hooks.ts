@@ -1,9 +1,105 @@
-import { warn, error, debug, i18n } from "../foundryvtt-arms-reach";
+import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
+import { ifStuckInteract } from "./InteractWithDoorHelper";
 import { getCanvas, MODULE_NAME } from './settings';
 
 export let readyHooks = async () => {
   // initialazideTab = true;
+
+  // Door interaction
+  document.addEventListener('keydown', evt => {
+    if (evt.key === 'e') {
+      if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) { 
+        return; 
+      }
+      if(ArmsReachVariables.door_interaction_cameraCentered) { 
+        return; 
+      }
+
+      if( !isFocusOnCanvas() ) { 
+        return; 
+      }
+
+      if( ArmsReachVariables.door_interaction_keydown == false ) {
+        ArmsReachVariables.door_interaction_lastTime = Date.now();
+        ArmsReachVariables.door_interaction_keydown = true;
+      } else {
+        // Center camera on character (if  key was pressed for a time)
+        let diff = Date.now() - ArmsReachVariables.door_interaction_lastTime;
+        if( diff > 500 ) {
+          ArmsReachVariables.door_interaction_lastTime = Date.now();
+          let character = getFirstPlayerToken();
+          if( !character ) {
+            iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelectedToCenterCamera"));
+            return;
+          }
+
+          ArmsReachVariables.door_interaction_cameraCentered = true;
+          getCanvas().animatePan({x: character.x, y: character.y});
+        }
+      }
+    }
+  });
+
+  document.addEventListener('keyup', evt => {
+    if (evt.key === 'e') {
+      ArmsReachVariables.door_interaction_keydown = false;
+
+      if(ArmsReachVariables.door_interaction_cameraCentered) {
+        ArmsReachVariables.door_interaction_cameraCentered = false;
+        return;
+      }
+
+      if( !isFocusOnCanvas() ) { 
+        return; 
+      }
+
+      if (!game.settings.get(MODULE_NAME, "hotkeyDoorInteraction")){
+         return;
+      }
+      // Get first token ownted by the player
+      let character = getFirstPlayerToken();
+
+      if( !character ) {
+        iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
+        return;
+      }
+
+      interactWithNearestDoor(character,0,0);
+    }
+  });
+
+  // Double Tap to open nearest door -------------------------------------------------
+  document.addEventListener('keyup', evt => {
+    if (evt.key === 'ArrowUp' || evt.key === 'w') {
+      if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+        return; 
+      }
+      ifStuckInteract('up', 0, -0.5);
+    }
+
+    if (evt.key === 'ArrowDown' || evt.key === 's') {
+      if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+        return; 
+      }
+      ifStuckInteract('down', 0, +0.5);
+    }
+
+    if (evt.key === 'ArrowRight' || evt.key === 'd') {
+      if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+        return; 
+      }
+      ifStuckInteract('right', +0.5, 0);
+    }
+
+    if (evt.key === 'ArrowLeft' || evt.key === 'a') {
+      if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) { 
+        return; 
+      }
+      ifStuckInteract('left', -0.5, 0);
+    }
+  });
+
 }
 
 export let initHooks = () => {
@@ -29,7 +125,7 @@ export let initHooks = () => {
     //     let character = getFirstPlayerToken();
         
     //     if( !character ) {
-    //       iteractionFailNotification("No character is selected to interact with a door");
+    //       iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
     //       return;
     //     }
         
@@ -38,8 +134,8 @@ export let initHooks = () => {
     
     //     if ( (dist / gridSize) > game.settings.get(MODULE_NAME, "globalInteractionDistance") ) {
     //       var tokenName = getCharacterName(character);
-    //       if (tokenName) iteractionFailNotification("Door not within " + tokenName + "'s reach" );
-    //       else iteractionFailNotification("Door not in reach" );
+    //       if (tokenName) iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
+    //       else iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
     //       return;
     //     }
     //   }
@@ -55,7 +151,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
   let character:Token = getFirstPlayerToken();
   if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
     if( !character ) {
-      iteractionFailNotification("No character is selected to interact with a door");
+      iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
       //return;
     }else{
     
@@ -65,10 +161,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
       if (isNotNearEnough) {
         var tokenName = getCharacterName(character);
         if (tokenName){
-          iteractionFailNotification("Door not within " + tokenName + "'s reach" );
+          iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
         }
         else {
-          iteractionFailNotification("Door not in reach" );
+          iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
         }
         //return;
         // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH WRAPPER AND MIXED
@@ -131,10 +227,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
           }else if(wall.data.ds==2){
             var tokenName = getCharacterName(character);
             if (tokenName){
-              iteractionFailNotification("Door is in reach but is locked for " + tokenName + "" );
+              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLockedFor") + " " + tokenName);
             }
             else {
-              iteractionFailNotification("Door is in reach but is locked" );
+              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLocked"));
             }
           }
           else{
@@ -173,7 +269,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
   // If settings is true do not deselect the current select token
   if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
     if( !character ) {
-      //iteractionFailNotification("No character is selected to interact with a door");
+      //iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
       //return;
     }else{
       const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
@@ -233,8 +329,11 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
       
       var tokenName = getCharacterName(token);
 
-      if (tokenName) iteractionFailNotification("No door was found within " + tokenName + "'s reach" );
-      else iteractionFailNotification("No door was found within reach" );
+      if (tokenName){
+         iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotFoundInReachFor",{tokenName: tokenName}));
+      }else{
+         iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotFoundInReach"));
+      }
       return;
     }
 }
