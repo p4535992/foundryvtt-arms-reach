@@ -2,9 +2,23 @@ import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
 import { ifStuckInteract } from "./InteractWithDoorHelper";
 import { getCanvas, MODULE_NAME } from './settings';
+import { preUpdateWallHandler, renderWallConfigHandler } from './AmbientDoors';
 
 export let readyHooks = async () => {
   // initialazideTab = true;
+
+  Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
+    if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+      preUpdateWallHandler(scene, object, updateData, diff, userID);
+    }
+  });
+
+  
+  Hooks.on("renderWallConfig", (app, html, data) => {
+    if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+      renderWallConfigHandler(app, html, data);
+    }
+  });
 
   // Door interaction
   document.addEventListener('keydown', evt => {
@@ -148,127 +162,129 @@ export let initHooks = () => {
 }
 
 export const DoorControlPrototypeOnMouseDownHandler = async function () { //function (wrapped, ...args) {
-  // Check distance
-  let character:Token = getFirstPlayerToken();
-  if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
-    if( !character ) {
-      iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
-      //return;
-    }else{
-    
-      let dist = getManhattanBetween(this, getTokenCenter(character));
-      let gridSize = getCanvas().dimensions.size;
-      let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
-      if (isNotNearEnough) {
-        var tokenName = getCharacterName(character);
-        if (tokenName){
-          iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
-        }
-        else {
-          iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
-        }
+  if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+    // Check distance
+    let character:Token = getFirstPlayerToken();
+    if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
+      if( !character ) {
+        iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
         //return;
-        // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH WRAPPER AND MIXED
-        /*
-        const [t] = args;
-        const doorControl = t.currentTarget;
-        let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
-        if(wall){
-          if(wall.data.ds==0)
-          {
-            await getCanvas().walls.get(doorControl.wall.data._id).update({
-                ds : 1
-            });
-          }else if(wall.data.ds==1){
-            await getCanvas().walls.get(doorControl.wall.data._id).update({
-                ds : 0
-            });
+      }else{
+      
+        let dist = getManhattanBetween(this, getTokenCenter(character));
+        let gridSize = getCanvas().dimensions.size;
+        let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+        if (isNotNearEnough) {
+          var tokenName = getCharacterName(character);
+          if (tokenName){
+            iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
+          }
+          else {
+            iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
+          }
+          //return;
+          // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH WRAPPER AND MIXED
+          /*
+          const [t] = args;
+          const doorControl = t.currentTarget;
+          let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
+          if(wall){
+            if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
+            {
+              await getCanvas().walls.get(doorControl.wall.data._id).update({
+                  ds : CONST.WALL_DOOR_STATES.OPEN
+              });
+            }else if(wall.data.ds==CONST.WALL_DOOR_STATES.OPEN){
+              await getCanvas().walls.get(doorControl.wall.data._id).update({
+                  ds : CONST.WALL_DOOR_STATES.CLOSED
+              });
+            }else{
+              error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+            }
           }else{
-            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+            error("No wall found for id : " + doorControl.wall.data._id);
           }
+          */
+          // TODO If is a secret door we can do somethig
+          /*
+          if(wall.data.door === CONST.WALL_DOOR_STATES.LOCKED){
+            wall.update(
+              {"door" : CONST.WALL_DOOR_STATES.OPEN} // From secret door to normal door
+            );
+            let sent_message = `You have spotted a hidden door!`;
+            let chatData = {
+              user: game.user._id,
+              content: sent_message,
+              whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
+              speaker: ChatMessage.getSpeaker({alias: "Door"})
+            };
+            ChatMessage.create(chatData, {});
+          }else if(wall.data.door === CONST.WALL_DOOR_STATES.OPEN){
+            wall.update(
+              {"door" : CONST.WALL_DOOR_STATES.CLOSED}
+            );
+          }
+          */
         }else{
-          error("No wall found for id : " + doorControl.wall.data._id);
-        }
-        */
-        // TODO If is a secret door we can do somethig
-        /*
-        if(wall.data.door === 2){
-          wall.update(
-            {"door" : 1} // From secret door to normal door
-          );
-          let sent_message = `You have spotted a hidden door!`;
-          let chatData = {
-            user: game.user._id,
-            content: sent_message,
-            whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
-            speaker: ChatMessage.getSpeaker({alias: "Door"})
-          };
-          ChatMessage.create(chatData, {});
-        }else if(wall.data.door === 1){
-          wall.update(
-            {"door" : 0}
-          );
-        }
-        */
-      }else{
-        // Congratulations you are in reach
-        // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH OVERRIDE
-        const doorControl = this;
-        let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
-        if(wall){
-          if(wall.data.ds==0)
-          {
-            await getCanvas().walls.get(doorControl.wall.data._id).update({
-                ds : 1
-            });
-          }else if(wall.data.ds==1){
-            await getCanvas().walls.get(doorControl.wall.data._id).update({
-                ds : 0
-            });
-          }else if(wall.data.ds==2){
-            var tokenName = getCharacterName(character);
-            if (tokenName){
-              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLockedFor") + " " + tokenName);
+          // Congratulations you are in reach
+          // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH OVERRIDE
+          const doorControl = this;
+          let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
+          if(wall){
+            if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
+            {
+              await getCanvas().walls.get(doorControl.wall.data._id).update({
+                  ds : CONST.WALL_DOOR_STATES.OPEN
+              });
+            }else if(wall.data.ds==CONST.WALL_DOOR_STATES.OPEN){
+              await getCanvas().walls.get(doorControl.wall.data._id).update({
+                  ds : CONST.WALL_DOOR_STATES.CLOSED
+              });
+            }else if(wall.data.ds==CONST.WALL_DOOR_STATES.LOCKED){
+              var tokenName = getCharacterName(character);
+              if (tokenName){
+                iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLockedFor") + " " + tokenName);
+              }
+              else {
+                iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLocked"));
+              }
             }
-            else {
-              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLocked"));
+            else{
+              error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
             }
+          }else{
+            error("No wall found for id : " + doorControl.wall.data._id);
           }
-          else{
-            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
-          }
-        }else{
-          error("No wall found for id : " + doorControl.wall.data._id);
         }
+        // END MOD ABD 4535992
       }
-      // END MOD ABD 4535992
-    }
 
-  } else if(game.user.isGM) {
-    const doorControl = this;
-    let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
-    if(wall){
-      if(wall.data.ds==0)
-      {
-        await getCanvas().walls.get(doorControl.wall.data._id).update({
-            ds : 1
-        });
-      }else if(wall.data.ds==1){
-        await getCanvas().walls.get(doorControl.wall.data._id).update({
-            ds : 0
-        });
-      }else if(wall.data.ds==2){
-        // DO NOTHING
+    } else if(game.user.isGM) {
+      const doorControl = this;
+      let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id); 
+      if(wall){
+        if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
+        {
+          await getCanvas().walls.get(doorControl.wall.data._id).update({
+              ds : CONST.WALL_DOOR_STATES.OPEN
+          });
+        }else if(wall.data.ds==CONST.WALL_DOOR_STATES.OPEN){
+          await getCanvas().walls.get(doorControl.wall.data._id).update({
+              ds : CONST.WALL_DOOR_STATES.CLOSED
+          });
+        }else if(wall.data.ds==CONST.WALL_DOOR_STATES.LOCKED){
+          // DO NOTHING
+        }else{
+          error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+        }
       }else{
-        error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+        error("No wall found for id : " + doorControl.wall.data._id);
       }
-    }else{
-      error("No wall found for id : " + doorControl.wall.data._id);
     }
   }
-
   // If settings is true do not deselect the current select token
   if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
+    let character:Token = getFirstPlayerToken();
     if( !character ) {
       //iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
       //return;
@@ -280,9 +296,20 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
     }
   }
 
-    // Call original method
-    //return originalMethod.apply(this,arguments);
-    //return wrapped(...args);
+
+  if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+    //check to see if the door is locked, otherwise use normal handler
+    if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      // Call new handler first. Only allow the original handler to run if our new handler does not return ture
+      // const eventLockJingle = onDoorMouseDown.call(this, event)
+      // if (eventLockJingle){
+      //     return
+      // }
+    }
+  }
+  // Call original method
+  //return originalMethod.apply(this,arguments);
+  //return wrapped(...args);
 }
 
 // Interact with door ------------------------------------------------------------------

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# 1.0.5 
+
+- Bug fixing for 'e' keyboard event
+- Add Internationalization
+- The sound of the door is bugged i solved by integratig the module [Ambient Doors](https://github.com/EndlesNights/ambientdoors) ty to [EndlesNights](https://github.com/EndlesNights)
+
 # 1.0.4
 
 - Remove shim.js of lib-wrapper, just use the module

@@ -2,11 +2,11 @@
 export const MODULE_NAME = 'foundryvtt-arms-reach';
 
 /**
- * Because typescript doesn’t know when in the lifecycle of foundry your code runs, we have to assume that the
- * canvas is potentially not yet initialized, so it’s typed as declare let canvas: Canvas | {ready: false}.
- * That’s why you get errors when you try to access properties on canvas other than ready.
+ * Because typescript doesn't know when in the lifecycle of foundry your code runs, we have to assume that the
+ * canvas is potentially not yet initialized, so it's typed as declare let canvas: Canvas | {ready: false}.
+ * That's why you get errors when you try to access properties on canvas other than ready.
  * In order to get around that, you need to type guard canvas.
- * Also be aware that this will become even more important in 0.8.x because a „no canvas“ mode is being introduced there.
+ * Also be aware that this will become even more important in 0.8.x because no canvas mode is being introduced there.
  * So you will need to deal with the fact that there might not be an initialized canvas at any point in time.
  * @returns
  */
@@ -19,7 +19,16 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 
 export const registerSettings = function () {
 
-  game.settings.register(MODULE_NAME, "notificationsInteractionFail", {
+	game.settings.register(MODULE_NAME, "enableArmsReach", {
+		name: "Enable/Disable arms reach feature",
+    	hint: "Enable the GM to select the maximum distance that players can interact with a door",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+  	game.settings.register(MODULE_NAME, "notificationsInteractionFail", {
 		name: "Notifications failed interactions",
     	hint: "Emit notifications for when a player fails to interact with a door. Good for debugging.",
 		scope: "world",
@@ -92,4 +101,120 @@ export const registerSettings = function () {
 		default: false,
 		type: Boolean
 	});
+
+	// ========================================================
+
+	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
+		name: "Enable/Disable ambient door feature",
+    	hint: "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configeration window to initilize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that spesific field blank. Some default sounds have been provided.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+	game.settings.register(MODULE_NAME, "stealthDoor",{
+		name: "Silent Door Permission Level",
+        hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+		scope: "world",
+		config: true,
+		default: "2",
+		choices: {1: "Player", 2: "Trusted", 3: "Assistant", 4: "Game Master"},
+		type: String
+	});
+
+    game.settings.register(MODULE_NAME, "closeDoorPathDefault", {
+        name: "Door Close",
+        hint: "The default sound effect that will be played when a door is closed.",
+        scope: 'world',
+        config: true,
+        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorCloseSound.wav",
+        type: String
+    });
+
+    game.settings.register(MODULE_NAME, "closeDoorLevelDefault", {
+        name: "Close Door Volume Level",
+        hint: "The default volume level that the close door SFX will be played at.",
+        scope: 'world',
+        config: true,
+        default: 0.8,
+        type: Number,
+		range: {min:0, max:2, step:0.05}
+    });
+
+    game.settings.register(MODULE_NAME, "openDoorPathDefault", {
+        name: "Door Open",
+        hint: "The default sound effect that will be played when a door is opened.",
+        scope: 'world',
+        config: true,
+        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorOpenSound.wav",
+        type: String
+    });
+
+    game.settings.register(MODULE_NAME, "openDoorLevelDefault", {
+        name: "Open Door Volume Level",
+        hint: "The default volume level that the open door SFX will be played at.",
+        scope: 'world',
+        config: true,
+        default: 0.8,
+        type: Number,
+		range: {min:0, max:2, step:0.05}
+    });
+
+    game.settings.register(MODULE_NAME, "lockDoorPathDefault", {
+        name: "Door Lock",
+        hint: "The default sound effect that will be played when a door is locked.",
+        scope: 'world',
+        config: true,
+        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorLockSound.wav",
+        type: String
+    });
+
+    game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
+        name: "Close Lock Volume Level",
+        hint: "The default volume level that the lock door SFX will be played at.",
+        scope: 'world',
+        config: true,
+        default: 0.8,
+        type: Number,
+		range: {min:0, max:2, step:0.05}
+    });
+	
+    game.settings.register(MODULE_NAME, "unlockDoorPathDefault", {
+        name: "Door Unlock",
+        hint: "The default sound effect that will be played when a door is unlocked.",
+        scope: 'world',
+        config: true,
+        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorUnlockSound.wav",
+        type: String
+    });
+
+    game.settings.register(MODULE_NAME, "unlockDoorLevelDefault", {
+        name: "Unlock Door Volume Level",
+        hint: "The default volume level that the unlock door SFX will be played at.",
+        scope: 'world',
+        config: true,
+        default: 0.8,
+        type: Number,
+		range: {min:0, max:2, step:0.05}
+    });	
+	
+    game.settings.register(MODULE_NAME, "lockedDoorJinglePathDefault", {
+        name: "Locked Door Jingle",
+        hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
+        scope: 'world',
+        config: true,
+        default: "sounds/lock.wav",
+        type: String
+    });
+
+    game.settings.register(MODULE_NAME, "lockedDoorJingleLevelDefault", {
+        name: "Locked Door Jingle Volume Level",
+        hint: "The default volume level that the unlock door SFX will be played at.",
+        scope: 'world',
+        config: true,
+        default: 0.8,
+        type: Number,
+		range: {min:0, max:2, step:0.05}
+    });
 }
