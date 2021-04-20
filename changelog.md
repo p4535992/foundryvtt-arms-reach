@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.0.6
+
+- Hot fix Add new settings for use the owned tokens if no tokens is selected
+
 # 1.0.5 
 
 - Bug fixing for 'e' keyboard event

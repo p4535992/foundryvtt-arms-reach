@@ -102,6 +102,16 @@ export const registerSettings = function () {
 		type: Boolean
 	});
 
+	game.settings.register(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected", {
+		name: "Use the owned tokens if no tokens is selected",
+    	hint: "Use the owned tokens if no tokens is selected",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
+
+
 	// ========================================================
 
 	game.settings.register(MODULE_NAME, "enableAmbientDoor", {

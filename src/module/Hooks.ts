@@ -1,6 +1,5 @@
 import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
-import { ifStuckInteract } from "./InteractWithDoorHelper";
 import { getCanvas, MODULE_NAME } from './settings';
 import { onDoorMouseDown, preUpdateWallHandler, renderWallConfigHandler } from './AmbientDoors';
 
@@ -312,6 +311,24 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
   //return wrapped(...args);
 }
 
+export function ifStuckInteract(key, offsetx, offsety) {
+  let character = getFirstPlayerToken();
+  if(!character){
+     return;
+  }
+  if( Date.now() - ArmsReachVariables.lastData[key] > game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") ) {
+    ArmsReachVariables.lastData.x = character.x;
+    ArmsReachVariables.lastData.y = character.y;
+    ArmsReachVariables.lastData[key] = Date.now();
+    return;
+  }
+
+  // See if character is stuck
+  if(character.x == ArmsReachVariables.lastData.x && character.y == ArmsReachVariables.lastData.y) {
+    interactWithNearestDoor(character, offsetx, offsety);
+  }
+}
+
 // Interact with door ------------------------------------------------------------------
 export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {
     // Max distance definition
@@ -411,10 +428,11 @@ export const getSelectedOrOwnedTokens = function()
       ui.notifications.warn("Please selected a single token");
       return;
   }
-  // MOD 4535992 Removed not make sense
-  // if(!controlled || controlled.length == 0 ){
-  //   controlled = getCanvas().tokens.ownedTokens;
-  // }
+  if(<boolean>game.settings.get(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+    if(!controlled || controlled.length == 0 ){
+      controlled = getCanvas().tokens.ownedTokens;
+    }
+  }
   return controlled;
 }
 
