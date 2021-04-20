@@ -2,7 +2,7 @@ import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
 import { ifStuckInteract } from "./InteractWithDoorHelper";
 import { getCanvas, MODULE_NAME } from './settings';
-import { preUpdateWallHandler, renderWallConfigHandler } from './AmbientDoors';
+import { onDoorMouseDown, preUpdateWallHandler, renderWallConfigHandler } from './AmbientDoors';
 
 export let readyHooks = async () => {
   // initialazideTab = true;
@@ -301,10 +301,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
     //check to see if the door is locked, otherwise use normal handler
     if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
       // Call new handler first. Only allow the original handler to run if our new handler does not return ture
-      // const eventLockJingle = onDoorMouseDown.call(this, event)
-      // if (eventLockJingle){
-      //     return
-      // }
+      const eventLockJingle = onDoorMouseDown.call(this, event);
+      if (eventLockJingle){
+          return;
+      }
     }
   }
   // Call original method
