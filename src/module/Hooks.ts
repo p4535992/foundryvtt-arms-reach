@@ -3,7 +3,8 @@ import { ArmsReachVariables } from "./ArmsReachVariables";
 import { getCanvas, MODULE_NAME } from './settings';
 import { onDoorMouseDown, preUpdateWallHandler, renderWallConfigHandler } from './AmbientDoors';
 import { SoundPreviewer } from "./SoundPreviewer";
-
+//@ts-ignore
+// import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
 const previewer = new SoundPreviewer();
 
@@ -57,7 +58,8 @@ export let readyHooks = async () => {
   });
 
   // Door interaction
-  document.addEventListener('keydown', evt => {
+  document.addEventListener('keydown', (evt) => {
+    //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
     if (evt.key === 'e') {
       if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) {
         return;
@@ -92,12 +94,12 @@ export let readyHooks = async () => {
     }
   });
 
-  document.addEventListener('keyup', evt => {
+  document.addEventListener('keyup', (evt) => {
+    //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
     if (evt.key === 'e') {
       ArmsReachVariables.door_interaction_keydown = false;
 
       if(ArmsReachVariables.door_interaction_cameraCentered) {
-        ArmsReachVariables.door_interaction_cameraCentered = false;
         return;
       }
 
@@ -164,33 +166,38 @@ export let initHooks = () => {
   //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
 
   //@ts-ignore
-  libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', (ev) => {
+  libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', (evt) => {
+
+    const doorControl = evt.currentTarget;
 
     // Arms Reach
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-      DoorControlPrototypeOnMouseDownHandler();
+    if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {     
+      DoorControlPrototypeOnMouseDownHandler(doorControl);
     }
 
     // Ambient Door
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
       //check to see if the door is locked, otherwise use normal handler
-      if(ev.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      if(doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      //if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
         // Call new handler first. Only allow the original handler to run if our new handler does not return ture
-        const eventLockJingle = onDoorMouseDown.call(this, event);
-        if (eventLockJingle){
-            return;
-        }
+        //const eventLockJingle = onDoorMouseDown.call(this, event);
+        // if (eventLockJingle){
+        //   return;
+        // }
+        onDoorMouseDown.call(doorControl, evt);
+        
       }
     }
   }, 'OVERRIDE');
 
 }
 
-export const DoorControlPrototypeOnMouseDownHandler = async function () { //function (wrapped, ...args) {
+export const DoorControlPrototypeOnMouseDownHandler = async function (doorControl) { //function (wrapped, ...args) {
 
-
+   
     // Sets the global maximum interaction distance
     // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
     if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
@@ -203,7 +210,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
           //return;
         }else{
 
-          let dist = getManhattanBetween(this, getTokenCenter(character));
+          let dist = getManhattanBetween(doorControl, getTokenCenter(character));
           let gridSize = getCanvas().dimensions.size;
           let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
           if (isNotNearEnough) {
@@ -260,7 +267,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
           }else{
             // Congratulations you are in reach
             // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH OVERRIDE
-            const doorControl = this;
+            //const doorControl = this;
             let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
             if(wall){
               if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
@@ -292,7 +299,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
         }
 
       } else if(game.user.isGM) {
-        const doorControl = this;
+        //const doorControl = this;
         let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
         if(wall){
           if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
@@ -367,7 +374,7 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
 
     // Shortest dist
     let shortestDistance = Infinity;
-    var closestDoor = null;
+    var closestDoor = null; // is a doorcontrol
 
     // Find closest door
     let charCenter = getTokenCenter(token);
@@ -375,7 +382,7 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     charCenter.y += offsety * gridSize;
 
     for( let i = 0; i < getCanvas().controls.doors.children.length ; i++ ) {
-      let door = getCanvas().controls.doors.children[i];
+      let door:DoorControl = getCanvas().controls.doors.children[i];
 
       let dist = getManhattanBetween(door, charCenter);
       let distInGridUnits = (dist / gridSize) - 0.1;
@@ -390,8 +397,14 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     // Operate the door
     if(closestDoor) {
       // Create a fake function... Ugly, but at same time take advantage of existing door interaction function of core FVTT
-      let fakeEvent = { stopPropagation: event => {return;} };
+      let fakeEvent = { 
+        // currentTarget:(event) => {
+        //   return closestDoor;
+        // } 
+        currentTarget: closestDoor
+      };
       closestDoor._onMouseDown(fakeEvent);
+
     } else {
 
       var tokenName = getCharacterName(token);

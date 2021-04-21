@@ -1,7 +1,6 @@
 import FilePickerFormApp from "./FilePickerFormApp";
 //@ts-ignore
-import KeybindLib from "/modules/keybind-lib/src/keybind-lib";
-
+// import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 export const MODULE_NAME = 'foundryvtt-arms-reach';
 
 /**
@@ -118,14 +117,16 @@ export const registerSettings = function () {
 		type: Boolean
 	});
 
-  KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorINteraction", {
-    name: "Set a custom keybind for door interaction",
-    hint: "Set a custom keybind for door interaction",
-    default: "e",
-    onKeyDown: () => {
-      console.log("Key pressed!");
-    }
-  });
+	//@ts-ignore
+	// KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction", {
+	// 	name: "Set a custom keybind for door interaction",
+	// 	hint: "Set a custom keybind for door interaction",
+	// 	config: true,
+	// 	default: "KeyE",
+	// 	onKeyDown: () => {
+	// 		console.log("Key pressed!");
+	// 	}
+	// });
 
 	// ========================================================
   // Ambient Door

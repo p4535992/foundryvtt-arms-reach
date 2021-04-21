@@ -58,9 +58,6 @@
     "dependencies": [
       {
         "name": "lib-wrapper"
-      },
-      {
-        "name": "keybind-lib"
       }
     ]
 

@@ -6,6 +6,6 @@
     "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach.",
     "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach",
     "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
-    "foundryvtt-arms-reach.doorNotInReachFor": "Door not within ${tokenName}'s reach" 
+    "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach" 
 
 }
