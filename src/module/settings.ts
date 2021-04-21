@@ -1,3 +1,6 @@
+import FilePickerFormApp from "./FilePickerFormApp";
+//@ts-ignore
+import KeybindLib from "/modules/keybind-lib/src/keybind-lib";
 
 export const MODULE_NAME = 'foundryvtt-arms-reach';
 
@@ -19,6 +22,10 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 
 export const registerSettings = function () {
 
+  // ========================================================
+  // Arms Reach
+  // ========================================================
+
 	game.settings.register(MODULE_NAME, "enableArmsReach", {
 		name: "Enable/Disable arms reach feature",
     	hint: "Enable the GM to select the maximum distance that players can interact with a door",
@@ -36,7 +43,7 @@ export const registerSettings = function () {
 		default: true,
 		type: Boolean
 	});
-  
+
 	game.settings.register(MODULE_NAME, "globalInteractionDistance", {
 		name: "Global maximum interaction distance",
 		hint: "Max distance (in tiles) that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
@@ -46,7 +53,7 @@ export const registerSettings = function () {
 		type: Number,
 		range: {min: 0, max: 50, step: 0.5}
 	});
-  
+
   game.settings.register(MODULE_NAME, "hotkeyDoorInteraction", {
 		name: "Hotkey 'e' for interaction",
 		hint: "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
@@ -55,7 +62,7 @@ export const registerSettings = function () {
 		default: true,
 		type: Boolean
 	});
-  
+
   game.settings.register(MODULE_NAME, "hotkeyDoorInteractionDelay", {
 		name: "Interaction double tap delay",
 		hint: "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
@@ -65,7 +72,7 @@ export const registerSettings = function () {
 		type: Number,
 		range: {min: 0, max: 750, step: 50}
 	});
-  
+
 	game.settings.register(MODULE_NAME, "doorInteractionDistance", {
 		name: "Maximum door interaction distance",
 		scope: "world",
@@ -74,7 +81,7 @@ export const registerSettings = function () {
 		type: Number,
 		range: {min: 0, max: 10, step: 0.5}
 	});
-  
+
     game.settings.register(MODULE_NAME, "hotkeyDoorInteractionCenter", {
 		name: "Hotkey 'e' to center camera",
 		hint: "Holding 'e' will center the camera on current selected token.",
@@ -111,8 +118,18 @@ export const registerSettings = function () {
 		type: Boolean
 	});
 
+  KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorINteraction", {
+    name: "Set a custom keybind for door interaction",
+    hint: "Set a custom keybind for door interaction",
+    default: "e",
+    onKeyDown: () => {
+      console.log("Key pressed!");
+    }
+  });
 
 	// ========================================================
+  // Ambient Door
+  // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
 		name: "Enable/Disable ambient door feature",
@@ -177,7 +194,8 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorLockSound.wav",
-        type: String
+        type: String,
+        //type: FilePickerFormApp
     });
 
     game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
@@ -187,9 +205,9 @@ export const registerSettings = function () {
         config: true,
         default: 0.8,
         type: Number,
-		range: {min:0, max:2, step:0.05}
+	    	range: {min:0, max:2, step:0.05}
     });
-	
+
     game.settings.register(MODULE_NAME, "unlockDoorPathDefault", {
         name: "Door Unlock",
         hint: "The default sound effect that will be played when a door is unlocked.",
@@ -206,9 +224,9 @@ export const registerSettings = function () {
         config: true,
         default: 0.8,
         type: Number,
-		range: {min:0, max:2, step:0.05}
-    });	
-	
+		    range: {min:0, max:2, step:0.05}
+    });
+
     game.settings.register(MODULE_NAME, "lockedDoorJinglePathDefault", {
         name: "Locked Door Jingle",
         hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
@@ -225,6 +243,6 @@ export const registerSettings = function () {
         config: true,
         default: 0.8,
         type: Number,
-		range: {min:0, max:2, step:0.05}
+		    range: {min:0, max:2, step:0.05}
     });
 }

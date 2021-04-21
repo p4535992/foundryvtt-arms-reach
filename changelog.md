@@ -1,5 +1,8 @@
 # CHANGELOG
 
+# 1.0.7
+
+- Add preview to sound file [Sound Previewer](https://github.com/matthewswar/foundry-vtt-sound-previewer) ty to [matthewswar](https://github.com/matthewswar)
 # 1.0.6
 
 - Hot fix Add new settings for use the owned tokens if no tokens is selected, if no token is selected i will try to get a owned token, you can disable this feature on the module settings if you like the old behaviour.
