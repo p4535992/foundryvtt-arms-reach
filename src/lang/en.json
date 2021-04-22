@@ -1,11 +1,13 @@
 {
     "foundryvtt-arms-reach.noCharacterSelected": "No character is selected to interact with a door.",
-    "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for",
+    "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
     "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",
     "foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No character is selected to center camera on.",
     "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach.",
     "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach",
     "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
-    "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach" 
+    "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach",
 
+    "foundryvtt-arms-reach.errorNoDsProperty": "No 'ds' property found for value '${wallDataDs}' for id : '${wallDDataId}'",
+    "foundryvtt-arms-reach.errorNoWallFoundForId" : "No wall found for id : '${wallDDataId}'"
 }

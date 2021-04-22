@@ -1,4 +1,34 @@
-export class SoundPreviewer extends Application {
+export const SoundPreviewer = {
+
+  previewer : null,
+
+  init : function(){
+    this.previewer = new SoundPreviewerApplication();
+  },
+
+  start : function(html){
+    if(!this.previewer){
+      this.init();
+    }
+    this.previewer.stop();
+    html.find('.file').click(ev => {
+        const filePath = ev.currentTarget.dataset.path;
+        const fileExtension = filePath.substring(filePath.lastIndexOf('.')).slice(1);
+        if (CONST.AUDIO_FILE_EXTENSIONS.includes(fileExtension)) {
+          this.previewer.play(filePath);
+        } else {
+          this.previewer.stop();
+        }
+    });
+  },
+
+  stop : function(){
+    this.previewer.stop();
+  }
+
+}
+
+export class SoundPreviewerApplication extends Application {
 
   currentClip:HTMLAudioElement;
   preppedFile:string

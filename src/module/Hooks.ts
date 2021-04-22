@@ -1,12 +1,12 @@
+import { AmbientDoors } from './AmbientDoors';
 import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { ArmsReachVariables } from "./ArmsReachVariables";
 import { getCanvas, MODULE_NAME } from './settings';
-import { onDoorMouseDown, preUpdateWallHandler, renderWallConfigHandler } from './AmbientDoors';
 import { SoundPreviewer } from "./SoundPreviewer";
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
-const previewer = new SoundPreviewer();
+// const previewer = new SoundPreviewerApplication();
 
 export let readyHooks = async () => {
   // initialazideTab = true;
@@ -16,7 +16,7 @@ export let readyHooks = async () => {
     // Ambient Door
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      preUpdateWallHandler(scene, object, updateData, diff, userID);
+      AmbientDoors.preUpdateWallHandler(scene, object, updateData, diff, userID);
     }
   });
 
@@ -26,7 +26,7 @@ export let readyHooks = async () => {
     // Ambient Door
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      renderWallConfigHandler(app, html, data);
+      AmbientDoors.renderWallConfigHandler(app, html, data);
     }
   });
 
@@ -34,17 +34,8 @@ export let readyHooks = async () => {
 
     // Sound Preview
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      previewer.stop();
-      html.find('.file').click(ev => {
-          const filePath = ev.currentTarget.dataset.path;
-          const fileExtension = filePath.substring(filePath.lastIndexOf('.')).slice(1);
-          if (CONST.AUDIO_FILE_EXTENSIONS.includes(fileExtension)) {
-              previewer.play(filePath);
-          } else {
-              previewer.stop();
-          }
-      })
+    if(<boolean>game.settings.get(MODULE_NAME, "enableSoundPreviewer")) {
+      SoundPreviewer.start(html);
     }
   });
 
@@ -52,8 +43,8 @@ export let readyHooks = async () => {
 
     // Sound Preview
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      previewer.stop();
+    if(<boolean>game.settings.get(MODULE_NAME, "enableSoundPreviewer")) {
+      SoundPreviewer.stop();
     }
   });
 
@@ -166,38 +157,20 @@ export let initHooks = () => {
   //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
 
   //@ts-ignore
-  libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', (evt) => {
-
-    const doorControl = evt.currentTarget;
-
-    // Arms Reach
-
-    if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {     
-      DoorControlPrototypeOnMouseDownHandler(doorControl);
-    }
-
-    // Ambient Door
-
-    if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      //check to see if the door is locked, otherwise use normal handler
-      if(doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
-      //if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
-        // Call new handler first. Only allow the original handler to run if our new handler does not return ture
-        //const eventLockJingle = onDoorMouseDown.call(this, event);
-        // if (eventLockJingle){
-        //   return;
-        // }
-        onDoorMouseDown.call(doorControl, evt);
-        
-      }
-    }
-  }, 'OVERRIDE');
+  libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'OVERRIDE');
 
 }
 
-export const DoorControlPrototypeOnMouseDownHandler = async function (doorControl) { //function (wrapped, ...args) {
+export const DoorControlPrototypeOnMouseDownHandler = async function () { //function (wrapped, ...args) {
 
-   
+  // const [t] = args;
+  // const doorControl = t.currentTarget;
+  const doorControl = this; //evt.currentTarget;
+
+  // Arms Reach
+
+  if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+
     // Sets the global maximum interaction distance
     // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
     if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
@@ -238,10 +211,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (doorContro
                     ds : CONST.WALL_DOOR_STATES.CLOSED
                 });
               }else{
-                error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+                error(i18nFormat("foundryvtt-arms-reach.errorNoDsProperty",{wallDataDs:wall.data.ds, wallDataId: doorControl.wall.data._id}));
               }
             }else{
-              error("No wall found for id : " + doorControl.wall.data._id);
+              error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
             }
             */
             // TODO If is a secret door we can do somethig
@@ -282,17 +255,17 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (doorContro
               }else if(wall.data.ds==CONST.WALL_DOOR_STATES.LOCKED){
                 var tokenName = getCharacterName(character);
                 if (tokenName){
-                  iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLockedFor") + " " + tokenName);
+                  iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorIsInReachButIsLockedFor", {tokenName: tokenName}));
                 }
                 else {
                   iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLocked"));
                 }
               }
               else{
-                error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+                error(i18nFormat("foundryvtt-arms-reach.errorNoDsProperty",{wallDataDs:wall.data.ds, wallDataId: doorControl.wall.data._id}));
               }
             }else{
-              error("No wall found for id : " + doorControl.wall.data._id);
+              error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
             }
           }
           // END MOD ABD 4535992
@@ -314,10 +287,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (doorContro
           }else if(wall.data.ds==CONST.WALL_DOOR_STATES.LOCKED){
             // DO NOTHING
           }else{
-            error("No 'ds' property found for value '"+wall.data.ds+"' for id : " + doorControl.wall.data._id );
+            error(i18nFormat("foundryvtt-arms-reach.errorNoDsProperty",{wallDataDs:wall.data.ds, wallDataId: doorControl.wall.data._id}));
           }
         }else{
-          error("No wall found for id : " + doorControl.wall.data._id);
+          error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
         }
       }
 
@@ -335,6 +308,23 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (doorContro
         }
       }
     }
+  }
+
+  // Ambient Door
+
+  if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+    //check to see if the door is locked, otherwise use normal handler
+    if(doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+    //if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      // Call new handler first. Only allow the original handler to run if our new handler does not return true
+      //const eventLockJingle = onDoorMouseDown.call(this, event);
+      // if (eventLockJingle){
+      //   return;
+      // }
+      AmbientDoors.onDoorMouseDown.call(doorControl, this);
+
+    }
+  }
     // Call original method
     //return originalMethod.apply(this,arguments);
     //return wrapped(...args);
@@ -397,10 +387,10 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     // Operate the door
     if(closestDoor) {
       // Create a fake function... Ugly, but at same time take advantage of existing door interaction function of core FVTT
-      let fakeEvent = { 
+      let fakeEvent = {
         // currentTarget:(event) => {
         //   return closestDoor;
-        // } 
+        // }
         currentTarget: closestDoor
       };
       closestDoor._onMouseDown(fakeEvent);

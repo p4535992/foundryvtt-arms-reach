@@ -1,5 +1,7 @@
-import FilePickerFormApp from "./FilePickerFormApp";
 //@ts-ignore
+
+import SoundPicker from "./libs/SoundPicker";
+
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 export const MODULE_NAME = 'foundryvtt-arms-reach';
 
@@ -133,22 +135,22 @@ export const registerSettings = function () {
   // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
-		name: "Enable/Disable ambient door feature",
+		  name: "Enable/Disable ambient door feature",
     	hint: "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configeration window to initilize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that spesific field blank. Some default sounds have been provided.",
-		scope: "world",
-		config: true,
-		default: true,
-		type: Boolean
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean
 	});
 
 	game.settings.register(MODULE_NAME, "stealthDoor",{
-		name: "Silent Door Permission Level",
-        hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
-		scope: "world",
-		config: true,
-		default: "2",
-		choices: {1: "Player", 2: "Trusted", 3: "Assistant", 4: "Game Master"},
-		type: String
+		  name: "Silent Door Permission Level",
+      hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+      scope: "world",
+      config: true,
+      default: "2",
+      choices: {1: "Player", 2: "Trusted", 3: "Assistant", 4: "Game Master"},
+      type: String
 	});
 
     game.settings.register(MODULE_NAME, "closeDoorPathDefault", {
@@ -157,7 +159,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorCloseSound.wav",
-        type: String
+        //type: String
+        //@ts-ignore
+        type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "closeDoorLevelDefault", {
@@ -167,7 +171,7 @@ export const registerSettings = function () {
         config: true,
         default: 0.8,
         type: Number,
-		range: {min:0, max:2, step:0.05}
+		    range: {min:0, max:2, step:0.05}
     });
 
     game.settings.register(MODULE_NAME, "openDoorPathDefault", {
@@ -176,7 +180,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorOpenSound.wav",
-        type: String
+        //type: String
+        //@ts-ignore
+        type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "openDoorLevelDefault", {
@@ -186,7 +192,7 @@ export const registerSettings = function () {
         config: true,
         default: 0.8,
         type: Number,
-		range: {min:0, max:2, step:0.05}
+		    range: {min:0, max:2, step:0.05}
     });
 
     game.settings.register(MODULE_NAME, "lockDoorPathDefault", {
@@ -195,8 +201,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorLockSound.wav",
-        type: String,
-        //type: FilePickerFormApp
+        //type: String
+        //@ts-ignore
+        type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
@@ -215,7 +222,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorUnlockSound.wav",
-        type: String
+        //type: String
+        //@ts-ignore
+        type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "unlockDoorLevelDefault", {
