@@ -1,7 +1,5 @@
-//@ts-ignore
-
+// import { hotkeys } from './libs/lib-df-hotkeys.shim.js';
 import SoundPicker from "./libs/SoundPicker";
-
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 export const MODULE_NAME = 'foundryvtt-arms-reach';
 
@@ -129,10 +127,10 @@ export const registerSettings = function () {
 	// 		console.log("Key pressed!");
 	// 	}
 	// });
-
+    
 	// ========================================================
-  // Ambient Door
-  // ========================================================
+    // Ambient Door
+    // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
 		  name: "Enable/Disable ambient door feature",
@@ -254,5 +252,18 @@ export const registerSettings = function () {
         default: 0.8,
         type: Number,
 		    range: {min:0, max:2, step:0.05}
+    });
+
+	// ========================================================
+    // Sound Previewer
+    // ========================================================
+
+    game.settings.register(MODULE_NAME, "enableSoundPreviewer", {
+        name: "Enable/Disable Sound Previewer feature",
+        hint: "Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
     });
 }

@@ -16,8 +16,8 @@ import SoundDirectoryPicker from './SoundDirectoryPicker';
     const path = event.target.file.value;
     const activeSource = this.activeSource;
     const bucket = event.target.bucket ? event.target.bucket.value : null;
-    //this.field.value = SoundPicker.format({
-    this.field.nodeValue = SoundPicker.format({
+    //@ts-ignore
+    this.field.value = SoundPicker.format({
       activeSource,
       bucket,
       path,
@@ -80,8 +80,8 @@ import SoundDirectoryPicker from './SoundDirectoryPicker';
         if (!$(this).next().length) {
           let picker = new SoundPicker({
             field: $(this)[0],
-            //...SoundPicker.parse(this.value),
-            ...SoundPicker.parse(this.nodeValue),
+            //@ts-ignore
+            ...SoundPicker.parse(this.value),
           });
           // data-type="sound" data-target="sound"
           let pickerButton = $(

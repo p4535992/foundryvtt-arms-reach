@@ -55,6 +55,7 @@ The iteraction distance is measure by the distance between a token and the door.
 * Holding 'e' centers the camera on current selected token
 * Double tapping movement on the direction of a door will interact with it
 * Embedded integration of Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configeration window to initilize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that spesific field blank. Some default sounds have been provided. 
+* Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.
 
 ## Issues
 

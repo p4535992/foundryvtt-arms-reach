@@ -12,8 +12,8 @@
     const path = event.target.target.value;
     const activeSource = this.activeSource;
     const bucket = event.target.bucket ? event.target.bucket.value : null;
-    //this.field.value = SoundDirectoryPicker.format({
-    this.field.nodeValue = SoundDirectoryPicker.format({
+    //@ts-ignore
+    this.field.value = SoundDirectoryPicker.format({
       activeSource,
       bucket,
       path,
@@ -87,8 +87,8 @@
           console.log("Adding Picker Button");
           let picker = new SoundDirectoryPicker({
             field: $(this)[0],
-            //...SoundDirectoryPicker.parse(this.value),
-            ...SoundDirectoryPicker.parse(this.nodeValue),
+            //@ts-ignore
+            ...SoundDirectoryPicker.parse(this.value),
           });
           let pickerButton = $(
             '<button type="button" class="file-picker" data-type="imagevideo" data-target="img" title="Pick directory"><i class="fas fa-file-import fa-fw"></i></button>'

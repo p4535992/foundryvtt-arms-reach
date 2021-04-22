@@ -29,7 +29,8 @@ export const AmbientDoors = {
     const playVolume = doorData.lockJingleLevel;
 
     if(playpath != "" && playpath != null) {
-          AudioHelper.play({src: playpath, volume: playVolume, autoplay: true, loop: false}, true);
+          let fixedPlayPath = playpath.replace("[data]", "").trim();
+          AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
       }
     //return true here to block the normal handler wich will only play sound on a per player basis.
     return true;
@@ -93,7 +94,8 @@ export const AmbientDoors = {
     }
 
     if(playpath != "" && playpath != null) {
-      AudioHelper.play({src: playpath, volume: playVolume, autoplay: true, loop: false}, true);
+      let fixedPlayPath = playpath.replace("[data]", "").trim();
+      AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
     }
 
   },
