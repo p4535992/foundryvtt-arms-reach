@@ -2,7 +2,7 @@
  * Game Settings: Directory
  * @href https://github.com/MrPrimate/vtta-tokenizer/blob/master/src/libs/DirectoryPicker.js
  */
- class SoundDirectoryPicker extends FilePicker {
+ class DirectoryPicker extends FilePicker {
   constructor(options = {}) {
     super(options);
   }
@@ -13,7 +13,7 @@
     const activeSource = this.activeSource;
     const bucket = event.target.bucket ? event.target.bucket.value : null;
     //@ts-ignore
-    this.field.value = SoundDirectoryPicker.format({
+    this.field.value = DirectoryPicker.format({
       activeSource,
       bucket,
       path,
@@ -22,7 +22,7 @@
   }
 
   static async uploadToPath(path, file) {
-    const options = SoundDirectoryPicker.parse(path);
+    const options = DirectoryPicker.parse(path);
     return FilePicker.upload(options.activeSource, options.current, file, { bucket: options.bucket });
   }
 
@@ -70,7 +70,7 @@
   }
 
   static extractUrl(str) {
-    let options = SoundDirectoryPicker.parse(str);
+    let options = DirectoryPicker.parse(str);
     if (options.activeSource === "data" || options.activeSource === "public") {
       return;
     } else {
@@ -85,10 +85,10 @@
       .each(function () {
         if (!$(this).next().length) {
           console.log("Adding Picker Button");
-          let picker = new SoundDirectoryPicker({
+          let picker = new DirectoryPicker({
             field: $(this)[0],
             //@ts-ignore
-            ...SoundDirectoryPicker.parse(this.value),
+            ...DirectoryPicker.parse(this.value),
           });
           let pickerButton = $(
             '<button type="button" class="file-picker" data-type="imagevideo" data-target="img" title="Pick directory"><i class="fas fa-file-import fa-fw"></i></button>'
@@ -113,7 +113,7 @@
 }
 
 Hooks.on("renderSettingsConfig", (app, html, user) => {
-  SoundDirectoryPicker.processHtml(html);
+  DirectoryPicker.processHtml(html);
 });
 
-export default SoundDirectoryPicker;
+export default DirectoryPicker;

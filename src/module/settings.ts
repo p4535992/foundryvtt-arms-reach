@@ -1,4 +1,5 @@
 // import { hotkeys } from './libs/lib-df-hotkeys.shim.js';
+import ImagePicker from "./libs/ImagePicker";
 import SoundPicker from "./libs/SoundPicker";
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 export const MODULE_NAME = 'foundryvtt-arms-reach';
@@ -19,6 +20,78 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 	return canvas;
 }
 
+export function manageSettingsArmsReachFeature(data){
+  if(data){
+    $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').show(); 
+    $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionCenter"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.globalInteractionDistanceForGM"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.forceReSelection"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.useOwnedTokenIfNoTokenIsSelected"]`).parents('.form-group').show();
+  } else {
+    $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionCenter"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.globalInteractionDistanceForGM"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.forceReSelection"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.useOwnedTokenIfNoTokenIsSelected"]`).parents('.form-group').hide();
+  }
+}
+
+export function manageSettingsAmbientDoorFeature(data){
+  if(data){
+    $(`[name="${MODULE_NAME}.stealthDoor"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.closeDoorPathDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.closeDoorLevelDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.openDoorPathDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.openDoorLevelDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.lockDoorPathDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.lockDoorLevelDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.unlockDoorPathDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.unlockDoorLevelDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.lockedDoorJinglePathDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.lockedDoorJingleLevelDefault"]`).parents('.form-group').show();
+  } else {
+    $(`[name="${MODULE_NAME}.stealthDoor"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.closeDoorPathDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.closeDoorLevelDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.openDoorPathDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.openDoorLevelDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.lockDoorPathDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.lockDoorLevelDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.unlockDoorPathDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.unlockDoorLevelDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.lockedDoorJinglePathDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.lockedDoorJingleLevelDefault"]`).parents('.form-group').hide();
+  }
+}
+
+export function manageSettingsDesignerDoorFeature(data){
+  if(data){
+    $(`[name="${MODULE_NAME}.doorClosedDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.doorOpenDefault"]`).parents('.form-group').show();
+    $(`[name="${MODULE_NAME}.doorLockedDefault"]`).parents('.form-group').show();
+  }else{
+    $(`[name="${MODULE_NAME}.doorClosedDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.doorOpenDefault"]`).parents('.form-group').hide();
+    $(`[name="${MODULE_NAME}.doorLockedDefault"]`).parents('.form-group').hide();
+  }
+}
+
+Hooks.on("renderSettingsConfig", (app, html, user) => {
+
+  manageSettingsArmsReachFeature(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach"));
+  manageSettingsAmbientDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor"));
+  manageSettingsDesignerDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor"));
+
+});
+
 export const registerSettings = function () {
 
   // ========================================================
@@ -26,21 +99,24 @@ export const registerSettings = function () {
   // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableArmsReach", {
-		name: "Enable/Disable arms reach feature",
+		  name: "Enable/Disable arms reach feature",
     	hint: "Enable the GM to select the maximum distance that players can interact with a door",
-		scope: "world",
-		config: true,
-		default: true,
-		type: Boolean
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean,
+      onChange: (data) => {
+        manageSettingsArmsReachFeature(data);
+      }
 	});
 
   	game.settings.register(MODULE_NAME, "notificationsInteractionFail", {
-		name: "Notifications failed interactions",
+		  name: "Notifications failed interactions",
     	hint: "Emit notifications for when a player fails to interact with a door. Good for debugging.",
-		scope: "world",
-		config: true,
-		default: true,
-		type: Boolean
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean
 	});
 
 	game.settings.register(MODULE_NAME, "globalInteractionDistance", {
@@ -139,7 +215,10 @@ export const registerSettings = function () {
       scope: "world",
       config: true,
       default: true,
-      type: Boolean
+      type: Boolean,
+      onChange: (data) => {
+        manageSettingsAmbientDoorFeature(data);
+      }
 	});
 
 	game.settings.register(MODULE_NAME, "stealthDoor",{
@@ -278,7 +357,10 @@ export const registerSettings = function () {
       scope: "world",
       config: true,
       default: true,
-      type: Boolean
+      type: Boolean,
+      onChange: (data) => {
+        manageSettingsDesignerDoorFeature(data);
+      }
     });
 
     // Initialise settings for default icon paths
@@ -290,7 +372,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/door-steel.svg`,
-        type: String,
+        //type: String
+        //@ts-ignore
+        type: ImagePicker.Img,
     });
 
     // Open door default icon
@@ -301,7 +385,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/door-exit.svg`,
-        type: String,
+        //type: String
+        //@ts-ignore
+        type: ImagePicker.Img,
     });
 
     // Locked door default icon
@@ -312,7 +398,9 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/padlock.svg`,
-        type: String,
+        //type: String
+        //@ts-ignore
+        type: ImagePicker.Img,
     });
 
 

@@ -2,7 +2,7 @@ import { WindowDoors } from './WindowDoors';
 import { AmbientDoors } from './AmbientDoors';
 import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { Armsreach } from "./ArmsReach";
-import { MODULE_NAME } from './settings';
+import { manageSettingsArmsReachFeature, MODULE_NAME } from './settings';
 import { SoundPreviewer } from "./SoundPreviewer";
 import { DesignerDoors } from './DesignerDoors';
 //@ts-ignore
@@ -116,11 +116,13 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
     //return wrapped(...args);
 }
 
-export const DoorControlPrototypeGetTextureHandler  = async function () { //function (wrapped, ...args) {
+export const DoorControlPrototypeGetTextureHandler  = async function (wrapped, ...args) {
 
+  const [doorControl] = args;
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    DesignerDoors.getTextureOverride();
+    DesignerDoors.getTextureOverride(doorControl);
   }
+  return wrapped(...args);
 
 }
 

@@ -1,6 +1,6 @@
 import { MODULE_NAME } from '../settings';
 
-import SoundDirectoryPicker from './SoundDirectoryPicker';
+import DirectoryPicker from './DirectoryPicker';
 
 /**
  * Game Settings: SoundPicker
@@ -26,7 +26,7 @@ import SoundDirectoryPicker from './SoundDirectoryPicker';
   }
 
   static async uploadToPath(path, file) {
-    const options = SoundDirectoryPicker.parse(path);
+    const options = DirectoryPicker.parse(path);
     return FilePicker.upload(options.activeSource, options.current, file, { bucket: options.bucket });
   }
 

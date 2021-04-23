@@ -25,11 +25,11 @@ export const DesignerDoors = {
 
   // Override of the original getTexture method.
   // Adds additional logic for checking which icon to return
-  getTextureOverride : async function() {
+  getTextureOverride : async function(doorControl) {
 
-      if (this.wall.getFlag(MODULE_NAME, 'doorIcon') === undefined) {
+      if (doorControl.wall.getFlag(MODULE_NAME, 'doorIcon') === undefined) {
 
-          let s = this.wall.data.ds;
+          let s = doorControl.wall.data.ds;
           const ds = CONST.WALL_DOOR_STATES;
           if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
           const textures = {
@@ -41,10 +41,10 @@ export const DesignerDoors = {
 
       }
 
-      let s = this.wall.data.ds;
+      let s = doorControl.wall.data.ds;
       const ds = CONST.WALL_DOOR_STATES;
       if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
-      const wallPaths = this.wall.getFlag(MODULE_NAME, 'doorIcon');
+      const wallPaths = doorControl.wall.getFlag(MODULE_NAME, 'doorIcon');
       const textures = {
           [ds.LOCKED]: wallPaths.doorLockedPath,
           [ds.CLOSED]: wallPaths.doorClosedPath,
