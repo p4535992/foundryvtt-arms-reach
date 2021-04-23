@@ -2,7 +2,7 @@
 
 #  FoundryVTT Arms Reach
 
-**I will probably change the name to 'FoundryVTT Door Utilities' when i rewrite everything for the 0.8.X**
+**I will probably change the name to 'FoundryVTT Door little Utilities' when i rewrite everything for the 0.8.X**
 
 This is project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
@@ -31,7 +31,7 @@ Every feature can be enable/disable from module settings
 
 **[Arms Reach Feature](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach)**
 
-The iteraction distance is measure by the distance between a token and the door. So, to iteract with a door, the player need to have a token selected (or own a token).
+The interaction distance is measure by the distance between a token and the door. So, to interact with a door, the player need to have a token selected (or own a token).
 
 * Enable the GM to select the maximum distance that players can interact with a door (needs a token selected) (DM bypass this limitation)
 
@@ -68,9 +68,15 @@ Each door can also be assigned icons specific to that door only. These are assig
 ![DD_individual_doors](https://user-images.githubusercontent.com/12241468/99480703-86c34a00-2950-11eb-9389-3af05ef9723d.gif)<br>
 This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
+## [Changelog](./changelog.md)
+
 ## Issues
 
-None up until now.
+- Users should report issues to the github issues. Reaching out on Discord is a good option as well, but please follow-up with a github issue
+- Try clearing all tokens using the new button before selecting/targeting other tokens. this should resolve most issues.
+
+Any issues, bugs, or feature requests are always welcome to be reported directly to the [Issue Tracker](https://github.com/eadorin/target-enhancements/issues ), or using the [Bug Reporter Module](https://foundryvtt.com/packages/bug-reporter/).
+
 ## Credit
 
 Thanks to anyone who helps me with this code! I appreciate the user community's feedback on this project!
@@ -80,6 +86,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [Ambient Doors](https://github.com/EndlesNights/ambientdoors) ty to [EndlesNights](https://github.com/EndlesNights)
 - [Sound Previewer](https://github.com/matthewswar/foundry-vtt-sound-previewer) ty to [matthewswar](https://github.com/matthewswar)
 - [Designer Doors](https://github.com/Exitalterego/designerdoors) ty to [Exitalterego](https://github.com/Exitalterego)
+- [Designer Windows](https://github.com/Exitalterego/designerwindows) ty to [Exitalterego](https://github.com/Exitalterego)
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development v 0.1.6](http://foundryvtt.com/pages/license.html).

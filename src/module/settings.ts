@@ -129,12 +129,12 @@ export const registerSettings = function () {
 	// });
 
 	// ========================================================
-    // Ambient Door
-    // ========================================================
+  // Ambient Door
+  // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
 		  name: "Enable/Disable ambient door feature",
-    	hint: "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configeration window to initilize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that spesific field blank. Some default sounds have been provided.",
+    	hint: "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.",
       scope: "world",
       config: true,
       default: true,
@@ -156,7 +156,7 @@ export const registerSettings = function () {
         hint: "The default sound effect that will be played when a door is closed.",
         scope: 'world',
         config: true,
-        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorCloseSound.wav",
+        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
         //type: String
         //@ts-ignore
         type: SoundPicker.Sound,
@@ -177,7 +177,7 @@ export const registerSettings = function () {
         hint: "The default sound effect that will be played when a door is opened.",
         scope: 'world',
         config: true,
-        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorOpenSound.wav",
+        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
         //type: String
         //@ts-ignore
         type: SoundPicker.Sound,
@@ -198,7 +198,7 @@ export const registerSettings = function () {
         hint: "The default sound effect that will be played when a door is locked.",
         scope: 'world',
         config: true,
-        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorLockSound.wav",
+        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
         //type: String
         //@ts-ignore
         type: SoundPicker.Sound,
@@ -219,7 +219,7 @@ export const registerSettings = function () {
         hint: "The default sound effect that will be played when a door is unlocked.",
         scope: 'world',
         config: true,
-        default: "modules/"+MODULE_NAME+"/assets/defaultSounds/DoorUnlockSound.wav",
+        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
         //type: String
         //@ts-ignore
         type: SoundPicker.Sound,
@@ -240,7 +240,7 @@ export const registerSettings = function () {
         hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
         scope: 'world',
         config: true,
-        default: "sounds/lock.wav",
+        default: `sounds/lock.wav`,
         type: String
     });
 
@@ -314,6 +314,19 @@ export const registerSettings = function () {
         type: String,
     });
 
+
+    // ========================================================
+    // Windows Door
+    // ========================================================
+
+    game.settings.register(MODULE_NAME, "enableWindowDoor", {
+      name: "Enable/Disable Window Door",
+      hint: "",
+      scope: "world",
+      config: true,
+      default: false,
+      type: Boolean
+    });
 
 
 }

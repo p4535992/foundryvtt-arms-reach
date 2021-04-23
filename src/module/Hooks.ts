@@ -1,3 +1,4 @@
+import { WindowDoors } from './WindowDoors';
 import { AmbientDoors } from './AmbientDoors';
 import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { Armsreach } from "./ArmsReach";
@@ -10,15 +11,6 @@ import { DesignerDoors } from './DesignerDoors';
 // const previewer = new SoundPreviewerApplication();
 
 export let readyHooks = async () => {
-
-
-  Hooks.on('setup', () => {
-
-    if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-      DesignerDoors.getTextureOverride();
-    }
-
-  });
 
   Hooks.on('preUpdateWall', async (scene, object, updateData, diff, userID) => {
 
@@ -36,6 +28,10 @@ export let readyHooks = async () => {
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
       DesignerDoors.renderWallConfigHandler(app, html, data);
+    }
+
+    if(<boolean>game.settings.get(MODULE_NAME, "enableWindowDoor")) {
+      WindowDoors.renderWallConfigHandler(app, html, data);
     }
 
   });
@@ -86,6 +82,10 @@ export let initHooks = () => {
     Armsreach.init();
   }
 
+  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    DesignerDoors.init();
+  }
+
   // setup all the hooks
 
   // Register custom sheets (if any)
@@ -104,13 +104,9 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
     // const doorControl = t.currentTarget;
     const doorControl = this; //evt.currentTarget;
 
-    // Arms Reach
-
     if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
       Armsreach.globalInteractionDistance(doorControl);
     }
-
-    // Ambient Door
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
       AmbientDoors.onDoorMouseDownCheck(doorControl);
@@ -123,7 +119,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
 export const DoorControlPrototypeGetTextureHandler  = async function () { //function (wrapped, ...args) {
 
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-
+    DesignerDoors.getTextureOverride();
   }
 
 }
