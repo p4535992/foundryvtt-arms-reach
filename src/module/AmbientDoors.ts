@@ -22,8 +22,21 @@ export const AmbientDoors = {
   // 	}
   // });
 
-  onDoorMouseDown :function (event) {
+  onDoorMouseDownCheck : function(doorControl){
+    //check to see if the door is locked, otherwise use normal handler
+    if(doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      //if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      // Call new handler first. Only allow the original handler to run if our new handler does not return true
+      //const eventLockJingle = onDoorMouseDown.call(this, event);
+      // if (eventLockJingle){
+      //   return;
+      // }
+      AmbientDoors.onDoorMouseDown.call(doorControl, this);
 
+    }
+  },
+
+  onDoorMouseDown : function (doorControl) {
     const doorData = this.wall.data.flags[MODULE_NAME]?.doorData || AmbientDoors.defaultDoorData();
     const playpath = doorData.lockJinglePath === "DefaultSound"? game.settings.get(MODULE_NAME, "lockedDoorJinglePathDefault") : doorData.lockJinglePath;
     const playVolume = doorData.lockJingleLevel;

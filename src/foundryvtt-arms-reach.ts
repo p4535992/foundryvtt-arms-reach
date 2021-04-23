@@ -49,7 +49,7 @@ Hooks.once('init', async () => {
 
 	// Assign custom classes and constants here
 	initHooks();
-		
+
 	// Preload Handlebars templates
 	await preloadTemplates();
 	// Register custom sheets (if any)
@@ -72,8 +72,20 @@ Hooks.once('setup', function () {
 Hooks.once('ready', () => {
 	// Do anything once the module is ready
 	if (!game.modules.get("lib-wrapper")?.active && game.user.isGM){
-		ui.notifications.error(`The '${MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`);
+		 ui.notifications.error(`The '${MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`);
 		 return;
+	}
+
+  if (game.modules.get("arms-reach")?.active && game.user.isGM){
+	  ui.notifications.warn(`The 'arms-reach', is not needed anymore just use '${MODULE_NAME}'`);
+	}
+
+  if (game.modules.get("ambientdoors")?.active && game.user.isGM){
+	  ui.notifications.warn(`The 'ambientdoors', is not needed anymore just use '${MODULE_NAME}'`);
+	}
+
+  if (game.modules.get("designerdoors")?.active && game.user.isGM){
+	  ui.notifications.warn(`The 'designerdoors', is not needed anymore just use '${MODULE_NAME}'`);
 	}
 
 	readyHooks();

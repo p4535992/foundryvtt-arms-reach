@@ -127,7 +127,7 @@ export const registerSettings = function () {
 	// 		console.log("Key pressed!");
 	// 	}
 	// });
-    
+
 	// ========================================================
     // Ambient Door
     // ========================================================
@@ -254,7 +254,7 @@ export const registerSettings = function () {
 		    range: {min:0, max:2, step:0.05}
     });
 
-	// ========================================================
+	  // ========================================================
     // Sound Previewer
     // ========================================================
 
@@ -266,4 +266,54 @@ export const registerSettings = function () {
         default: true,
         type: Boolean
     });
+
+    // ========================================================
+    // Designer Door
+    // ========================================================
+
+    game.settings.register(MODULE_NAME, "enableDesignerDoor", {
+      name: "Enable/Disable Designer Door",
+      hint: "You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.",
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean
+    });
+
+    // Initialise settings for default icon paths
+    // Closed door default icon
+
+    game.settings.register(MODULE_NAME, 'doorClosedDefault', {
+        name: 'Closed Door',
+        hint: 'The default icon for a closed door',
+        scope: 'world',
+        config: true,
+        default: `modules/${MODULE_NAME}/assets/icons/door-steel.svg`,
+        type: String,
+    });
+
+    // Open door default icon
+
+    game.settings.register(MODULE_NAME, 'doorOpenDefault', {
+        name: 'Open Door',
+        hint: 'The default icon for an open door',
+        scope: 'world',
+        config: true,
+        default: `modules/${MODULE_NAME}/assets/icons/door-exit.svg`,
+        type: String,
+    });
+
+    // Locked door default icon
+
+    game.settings.register(MODULE_NAME, 'doorLockedDefault', {
+        name: 'Locked Door',
+        hint: 'The default icon for a locked door',
+        scope: 'world',
+        config: true,
+        default: `modules/${MODULE_NAME}/assets/icons/padlock.svg`,
+        type: String,
+    });
+
+
+
 }
