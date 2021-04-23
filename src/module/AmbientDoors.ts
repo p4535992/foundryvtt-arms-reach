@@ -52,16 +52,16 @@ export const AmbientDoors = {
   //grab the default sounds from the config paths
   defaultDoorData : function () {
     return {
-      closePath: game.settings.get(MODULE_NAME, "closeDoorPathDefault"),
-      closeLevel: game.settings.get(MODULE_NAME, "closeDoorLevelDefault"),
-      openPath: game.settings.get(MODULE_NAME, "openDoorPathDefault"),
-      openLevel: game.settings.get(MODULE_NAME, "openDoorLevelDefault"),
-      lockPath: game.settings.get(MODULE_NAME, "lockDoorPathDefault"),
-      lockLevel: game.settings.get(MODULE_NAME, "lockDoorLevelDefault"),
-      unlockPath: game.settings.get(MODULE_NAME, "unlockDoorPathDefault"),
-      unlockLevel: game.settings.get(MODULE_NAME, "unlockDoorLevelDefault"),
-      lockJinglePath: game.settings.get(MODULE_NAME, "lockedDoorJinglePathDefault"),
-      lockJingleLevel: game.settings.get(MODULE_NAME, "lockedDoorJingleLevelDefault")
+      closePath: <string>game.settings.get(MODULE_NAME, "closeDoorPathDefault"),
+      closeLevel: <number>game.settings.get(MODULE_NAME, "closeDoorLevelDefault"),
+      openPath: <string>game.settings.get(MODULE_NAME, "openDoorPathDefault"),
+      openLevel: <number>game.settings.get(MODULE_NAME, "openDoorLevelDefault"),
+      lockPath: <string>game.settings.get(MODULE_NAME, "lockDoorPathDefault"),
+      lockLevel: <number>game.settings.get(MODULE_NAME, "lockDoorLevelDefault"),
+      unlockPath: <string>game.settings.get(MODULE_NAME, "unlockDoorPathDefault"),
+      unlockLevel: <number>game.settings.get(MODULE_NAME, "unlockDoorLevelDefault"),
+      lockJinglePath: <string>game.settings.get(MODULE_NAME, "lockedDoorJinglePathDefault"),
+      lockJingleLevel: <number>game.settings.get(MODULE_NAME, "lockedDoorJingleLevelDefault")
     }
   },
 

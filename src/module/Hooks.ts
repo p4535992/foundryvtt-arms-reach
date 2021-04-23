@@ -16,7 +16,10 @@ export let readyHooks = async () => {
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
       AmbientDoors.preUpdateWallHandler(scene, object, updateData, diff, userID);
+    }else if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+      Armsreach.preUpdateWallHandler(scene, object, updateData, diff, userID);
     }
+
   });
 
 
@@ -113,9 +116,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
       Armsreach.globalInteractionDistance(doorControl);
     }
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+    // YOU NEED THIS ANYWAY FOR A STRANGE BUG WITH OVERRIDE AND SOUND OF DOOR
+    //if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
       AmbientDoors.onDoorMouseDownCheck(doorControl);
-    }
+    //}
     // Call original method
     //return originalMethod.apply(this,arguments);
     //return wrapped(...args);

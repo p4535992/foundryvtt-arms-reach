@@ -241,6 +241,64 @@ export const Armsreach = {
         }
       }
     }
+  },
+
+  preUpdateWallHandler : async function(scene, object, updateData, diff, userID){
+
+    if(
+          (
+          (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
+      ||
+          game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
+          )
+          && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    {
+      return;
+    }
+
+    let doorData = Armsreach.defaultDoorData();
+   
+    let playpath = "";
+    let playVolume = 0.8;
+
+    if(object.ds == 2) { // Door Unlocking
+      playpath = doorData.unlockPath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "unlockDoorPathDefault") : doorData.unlockPath;
+      playVolume = doorData.unlockLevel;
+    }
+    else if(updateData.ds == 0) { //Door Close
+      playpath = doorData.closePath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "closeDoorPathDefault") : doorData.closePath;
+      playVolume = doorData.closeLevel;
+    }
+    else if(updateData.ds == 1) {//Door Open
+      playpath = doorData.openPath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "openDoorPathDefault") : doorData.openPath;
+      playVolume = doorData.openLevel;
+    }
+    else if(updateData.ds == 2) {// Door Lock
+      playpath = doorData.lockPath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "lockDoorPathDefault") : doorData.lockPath;
+      playVolume = doorData.lockLevel;
+    }
+
+    if(playpath != "" && playpath != null) {
+      let fixedPlayPath = playpath.replace("[data]", "").trim();
+      AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
+    }
+
+  },
+
+  //grab the default sounds from the config paths
+  defaultDoorData : function () {
+    return {
+      closePath: <string>game.settings.get(MODULE_NAME, "closeDoorPathDefault"),
+      closeLevel: <number>game.settings.get(MODULE_NAME, "closeDoorLevelDefault"),
+      openPath: <string>game.settings.get(MODULE_NAME, "openDoorPathDefault"),
+      openLevel: <number>game.settings.get(MODULE_NAME, "openDoorLevelDefault"),
+      lockPath: <string>game.settings.get(MODULE_NAME, "lockDoorPathDefault"),
+      lockLevel: <number>game.settings.get(MODULE_NAME, "lockDoorLevelDefault"),
+      unlockPath: <string>game.settings.get(MODULE_NAME, "unlockDoorPathDefault"),
+      unlockLevel: <number>game.settings.get(MODULE_NAME, "unlockDoorLevelDefault"),
+      lockJinglePath: <string>game.settings.get(MODULE_NAME, "lockedDoorJinglePathDefault"),
+      lockJingleLevel: <number>game.settings.get(MODULE_NAME, "lockedDoorJingleLevelDefault")
+    }
   }
 }
 

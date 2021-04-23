@@ -342,7 +342,7 @@ export const registerSettings = function () {
         name: "Enable/Disable Sound Previewer feature",
         hint: "Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.",
         scope: "world",
-        config: true,
+        config: false,
         default: true,
         type: Boolean
     });
