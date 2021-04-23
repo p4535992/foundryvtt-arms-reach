@@ -1,4 +1,114 @@
 {
+
+
+  "foundryvtt-arms-reach.settingNameEnableArmsReachFeature": "Enable/Disable arms reach feature",
+  "foundryvtt-arms-reach.settingHintEnableArmsReachFeature": "Enable the GM to select the maximum distance that players can interact with a door",
+
+  "foundryvtt-arms-reach.settingNameNotificationFailedInteraction": "Notifications failed interactions",
+  "foundryvtt-arms-reach.settingHintNotificationFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
+
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "Global maximum interaction distance",
+	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "Max distance (in tiles) that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Hotkey 'e' for interaction",
+  "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
+
+  "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "Interaction double tap delay",
+  "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
+
+  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "Maximum door interaction distance",
+  "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "Maximum door interaction distance",
+
+  "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "Hotkey 'e' to center camera",
+  "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "Holding 'e' will center the camera on current selected token.",
+
+  "foundryvtt-arms-reach.settingNameNotificationFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
+  "foundryvtt-arms-reach.settingHintNotificationFailedInteractionEvenForGM": "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
+
+  "foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Avoid deselects the controlled token when open/close the door",
+  "foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
+
+  "foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
+  "foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
+
+
+  "foundryvtt-arms-reach.settingNameEnableAmbientDoorFeature": "Enable/Disable ambient door feature",
+  "foundryvtt-arms-reach.settingHintEnableAmbientDoorFeature": "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.",
+
+  "foundryvtt-arms-reach.settingNameSilentDoorPermissionsLevel": "Silent Door Permission Level",
+  "foundryvtt-arms-reach.settingHintSilentDoorPermissionsLevel": "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+
+  "foundryvtt-arms-reach.settingNameDoorCloseSoundEffect": "Door Close",
+  "foundryvtt-arms-reach.settingHintDoorCloseSoundEffect": "The default sound effect that will be played when a door is closed.",
+
+  "foundryvtt-arms-reach.settingNameDoorCloseSoundLevel": "Close Door Volume Level",
+  "foundryvtt-arms-reach.settingHintDoorCloseSoundLevel": "The default volume level that the close door SFX will be played at.",
+
+  "foundryvtt-arms-reach.settingName "Door Open",
+        hint: "The default sound effect that will be played when a door is opened.",
+
+
+
+          "foundryvtt-arms-reach.settingName "Open Door Volume Level",
+        hint: "The default volume level that the open door SFX will be played at.",
+
+
+          "foundryvtt-arms-reach.settingName "Door Lock",
+        hint: "The default sound effect that will be played when a door is locked.",
+
+          "foundryvtt-arms-reach.settingName "Close Lock Volume Level",
+        hint: "The default volume level that the lock door SFX will be played at.",
+
+          "foundryvtt-arms-reach.settingName "Door Unlock",
+        hint: "The default sound effect that will be played when a door is unlocked.",
+
+          "foundryvtt-arms-reach.settingName "Unlock Door Volume Level",
+        hint: "The default volume level that the unlock door SFX will be played at.",
+
+          "foundryvtt-arms-reach.settingName "Locked Door Jingle",
+        hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
+
+
+          "foundryvtt-arms-reach.settingName "Locked Door Jingle Volume Level",
+        hint: "The default volume level that the unlock door SFX will be played at.",
+
+
+	  // ========================================================
+    // Sound Previewer
+    // ========================================================
+
+          "foundryvtt-arms-reach.settingName "Enable/Disable Sound Previewer feature",
+        hint: "Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.",
+
+
+    // ========================================================
+    // Designer Door
+    // ========================================================
+
+        "foundryvtt-arms-reach.settingName "Enable/Disable Designer Door",
+      hint: "You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.",
+
+          "foundryvtt-arms-reach.settingName 'Closed Door',
+        hint: 'The default icon for a closed door',
+
+
+          "foundryvtt-arms-reach.settingName 'Open Door',
+        hint: 'The default icon for an open door',
+
+
+          "foundryvtt-arms-reach.settingName 'Locked Door',
+        hint: 'The default icon for a locked door',
+
+
+    // ========================================================
+    // Windows Door
+    // ========================================================
+
+        "foundryvtt-arms-reach.settingName "Enable/Disable Window Door",
+      hint: "Enable/Disable Window Door",
+
+
+
     "foundryvtt-arms-reach.noCharacterSelected": "No character is selected to interact with a door.",
     "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
     "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",

@@ -74,6 +74,7 @@ export const registerSettings = function () {
 
 	game.settings.register(MODULE_NAME, "doorInteractionDistance", {
 		name: "Maximum door interaction distance",
+    hint: "",
 		scope: "world",
 		config: true,
 		default: 1,
@@ -321,7 +322,7 @@ export const registerSettings = function () {
 
     game.settings.register(MODULE_NAME, "enableWindowDoor", {
       name: "Enable/Disable Window Door",
-      hint: "",
+      hint: "Enable/Disable Window Door",
       scope: "world",
       config: true,
       default: false,

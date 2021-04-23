@@ -29,7 +29,7 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 
 Every feature can be enable/disable from module settings
 
-**[Arms Reach Feature](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach)**
+**Arms Reach Feature**
 
 The interaction distance is measure by the distance between a token and the door. So, to interact with a door, the player need to have a token selected (or own a token).
 
@@ -41,7 +41,7 @@ The interaction distance is measure by the distance between a token and the door
 
 * Double tapping movement on the direction of a door will interact with it
 
-**[Ambient Door Feature](https://github.com/EndlesNights/ambientdoors)**
+**Ambient Door Feature**
 
 Embedded integration of Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked.
 
@@ -53,20 +53,17 @@ If you do not wish for any sound effect to play when an certain action is taken,
 
 * Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
 
-**[Sound previewer Feature](https://github.com/matthewswar/foundry-vtt-sound-previewer)**
+**Sound previewer Feature**
 
 * Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.
 
-**[Designer Doors](https://github.com/Exitalterego/designerdoors)**
+**Designer Doors Feature**
 
 You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
 
-![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)<br>
-This may be useful to create door control icons more appropriate to a given setting or genre of game.
-
-Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
-![DD_individual_doors](https://user-images.githubusercontent.com/12241468/99480703-86c34a00-2950-11eb-9389-3af05ef9723d.gif)<br>
-This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
+* This may be useful to create door control icons more appropriate to a given setting or genre of game.
+* Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
+* This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
 ## [Changelog](./changelog.md)
 
