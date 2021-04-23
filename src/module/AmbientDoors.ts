@@ -219,7 +219,7 @@ export const AmbientDoors = {
     <div class="form-group">
       <label>Door Unlock</label>
       <div class="form-fields">
-        <button type="button" class="file-picker" data-type="sound" data-target="flags'+MODULE_NAME+'.doorData.unlockPath" title="Browse Files" tabindex="-1">
+        <button type="button" class="file-picker" data-type="sound" data-target="flags.${MODULE_NAME}.doorData.unlockPath" title="Browse Files" tabindex="-1">
           <i class="fas fa-file-import fa-fw"></i>
         </button>
         <input class="sound" type="text" name="flags.${MODULE_NAME}.doorData.unlockPath" value="${unLockFlag ? unLockFlag : ``}" placeholder="Door Unlock Sound Path" data-dtype="String" />
@@ -251,14 +251,15 @@ export const AmbientDoors = {
         <span class="range-value">${thisDoor.lockJingleLevel}</span>
       </div>
     </div>
-    `
+    `;
 
     html.find(".form-group").last().after(message);
-    const button = html.find('button[data-target="flags'+MODULE_NAME+'.doorData.closePath"]')[0];
-    const button2 = html.find('button[data-target="flags'+MODULE_NAME+'.doorData.openPath"]')[0];
-    const button3 = html.find('button[data-target="flags'+MODULE_NAME+'.doorData.lockPath"]')[0];
-    const button4 = html.find('button[data-target="flags'+MODULE_NAME+'.doorData.unlockPath"]')[0];
-    const button5 = html.find('button[data-target="flags'+MODULE_NAME+'.doorData.lockJinglePath"]')[0];
+    
+    const button = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.closePath"]')[0];
+    const button2 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.openPath"]')[0];
+    const button3 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.lockPath"]')[0];
+    const button4 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.unlockPath"]')[0];
+    const button5 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.lockJinglePath"]')[0];
 
     app._activateFilePicker(button);
     app._activateFilePicker(button2);

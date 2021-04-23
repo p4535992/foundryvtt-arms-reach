@@ -220,16 +220,20 @@ export const DesignerDoors = {
             // const wcOD = wall.flags.designerdoors.doorIcon.doorOpenPath;
             // const wcLD = wall.flags.designerdoors.doorIcon.doorLockedPath;
 
-            const nameDefCP = `flags.${MODULE_NAME}.doorIcon.doorClosedPath`;
-            const nameDefOP = `flags.${MODULE_NAME}.doorIcon.doorOpenPath`;
-            const nameDefLP = `flags.${MODULE_NAME}.doorIcon.doorLockedPath`;
+            const wcCD = wall.flags[MODULE_NAME]['doorIcon'].doorClosedPath;
+            const wcOD = wall.flags[MODULE_NAME]['doorIcon'].doorOpenPath;
+            const wcLD = wall.flags[MODULE_NAME]['doorIcon'].doorLockedPath;
 
-            //@ts-ignore
-            const wcCD = document.getElementsByName(nameDefCP)[0].value; // TODO HTMLElement property value not mapped
-            //@ts-ignore
-            const wcOD = document.getElementsByName(nameDefOP)[0].value; // TODO HTMLElement property value not mapped
-            //@ts-ignore
-            const wcLD = document.getElementsByName(nameDefLP)[0].value; // TODO HTMLElement property value not mapped
+            // const nameDefCP = `flags.${MODULE_NAME}.doorIcon.doorClosedPath`;
+            // const nameDefOP = `flags.${MODULE_NAME}.doorIcon.doorOpenPath`;
+            // const nameDefLP = `flags.${MODULE_NAME}.doorIcon.doorLockedPath`;
+
+            // //@ts-ignore
+            // const wcCD = document.getElementsByName(nameDefCP)[0].value; // TODO HTMLElement property value not mapped
+            // //@ts-ignore
+            // const wcOD = document.getElementsByName(nameDefOP)[0].value; // TODO HTMLElement property value not mapped
+            // //@ts-ignore
+            // const wcLD = document.getElementsByName(nameDefLP)[0].value; // TODO HTMLElement property value not mapped
 
             TextureLoader.loader.loadTexture(wcCD);
             TextureLoader.loader.loadTexture(wcOD);

@@ -93,8 +93,13 @@ export let initHooks = () => {
   //@ts-ignore
   //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
 
-  //@ts-ignore
-  libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'OVERRIDE');
+  if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'OVERRIDE');
+  }else{
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
+  }
 
 }
 
@@ -116,14 +121,24 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
     //return wrapped(...args);
 }
 
+export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, ...args) {
+  
+  const doorControl = this; 
+  
+  if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+    AmbientDoors.onDoorMouseDownCheck(doorControl);
+  }
+
+  return wrapped(...args);
+}
+
 export const DoorControlPrototypeGetTextureHandler  = async function (wrapped, ...args) {
 
-  const [doorControl] = args;
+  const doorControl = this;
+
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
     DesignerDoors.getTextureOverride(doorControl);
   }
+
   return wrapped(...args);
-
 }
-
-
