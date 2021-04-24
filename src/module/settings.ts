@@ -110,6 +110,15 @@ export const registerSettings = function () {
       }
 	});
 
+  $(`[name="${MODULE_NAME}.enableArmsReach"]`).change(function() {
+    if ($(this).is(':checked')) {
+      manageSettingsArmsReachFeature(true);
+    }
+    else {
+      manageSettingsArmsReachFeature(false);
+    }
+  });
+
   	game.settings.register(MODULE_NAME, "notificationsInteractionFail", {
 		  name: "Notifications failed interactions",
     	hint: "Emit notifications for when a player fails to interact with a door. Good for debugging.",
@@ -334,6 +343,15 @@ export const registerSettings = function () {
 		    range: {min:0, max:2, step:0.05}
     });
 
+    $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
+      if ($(this).is(':checked')) {
+        manageSettingsAmbientDoorFeature(true);
+      }
+      else {
+        manageSettingsAmbientDoorFeature(false);
+      }
+    });
+
 	  // ========================================================
     // Sound Previewer
     // ========================================================
@@ -401,6 +419,15 @@ export const registerSettings = function () {
         //type: String
         //@ts-ignore
         type: ImagePicker.Img,
+    });
+
+    $(`[name="${MODULE_NAME}.enableDesignerDoor"]`).change(function() {
+      if ($(this).is(':checked')) {
+        manageSettingsDesignerDoorFeature(true);
+      }
+      else {
+        manageSettingsDesignerDoorFeature(false);
+      }
     });
 
 
