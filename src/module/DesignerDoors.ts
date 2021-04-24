@@ -5,7 +5,7 @@ import { MODULE_NAME } from "./settings";
 // const cacheTex = ((key) => {
 
 //   const defaultPath = <string>game.settings.get(MODULE_NAME, key);
-//   TextureLoader.loader.loadTexture(defaultPath);
+//   TextureLoader.loader.loadTexture(defaultPath.replace("[data]", "").trim());
 
 // });
 
@@ -15,8 +15,8 @@ export const DesignerDoors = {
   // Global function to cache default textures
   cacheTex : (key) => {
 
-    const defaultPath = <string>game.settings.get(MODULE_NAME, key);
-    TextureLoader.loader.loadTexture(defaultPath.replace("[data]", "").trim());
+    const defaultPath = String(game.settings.get(MODULE_NAME, key)).replace("[data]", "").trim();
+    TextureLoader.loader.loadTexture(defaultPath);
 
   },
 
@@ -41,12 +41,16 @@ export const DesignerDoors = {
         const ds = CONST.WALL_DOOR_STATES;
         if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
         const textures = {
-            [ds.LOCKED]: game.settings.get(MODULE_NAME, 'doorLockedDefault'),
-            [ds.CLOSED]: game.settings.get(MODULE_NAME, 'doorClosedDefault'),
-            [ds.OPEN]: game.settings.get(MODULE_NAME, 'doorOpenDefault'),
+            [ds.LOCKED]: String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim(),
+            [ds.CLOSED]: String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim(),
+            [ds.OPEN]: String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim(),
         };
-        return getTexture(textures[s] || ds.CLOSED);
-
+        //return getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
+        return DesignerDoors.getTextureBugFixKeyOverride(
+          textures[s].replace("[data]", "").trim() || ds.CLOSED,
+          s,
+          textures[s].replace("[data]", "").trim()
+        );
     }
 
     let s = doorControl.wall.data.ds;
@@ -61,10 +65,54 @@ export const DesignerDoors = {
         [ds.CLOSED]: wallPaths.doorClosedPath,
         [ds.OPEN]: wallPaths.doorOpenPath,
     };
-    return getTexture(textures[s] || ds.CLOSED);
+    //return getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
+    return DesignerDoors.getTextureBugFixKeyOverride(
+      textures[s].replace("[data]", "").trim() || ds.CLOSED,
+      s,
+      textures[s].replace("[data]", "").trim()
+    );
+  },
 
-    
+  /**
+  * Get a single texture from the cache
+  * TODO WHY I NEED THIS ???? The method TextLoader seem to lose the data ????
+  * @param {string} src
+  * @return {PIXI.Texture}
+  */
+  getTextureBugFixKeyOverride: function(src,dss,correctvalue) {
+    let cached = TextureLoader.loader.getCache(src);
+    if ( !cached || !cached.valid ) {
 
+      let cachedDefault = null;
+      if( dss == CONST.WALL_DOOR_STATES.CLOSED || dss == String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim() ){
+          cachedDefault = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim());
+          let cachedClone = Object.assign([], cachedDefault);
+          cachedClone.baseTexture = PIXI.BaseTexture.from(correctvalue);
+          TextureLoader.loader.cache.set(correctvalue,cachedClone);
+          cached = TextureLoader.loader.getCache(src);
+          return cached;
+      }
+      else if(dss == CONST.WALL_DOOR_STATES.OPEN || dss == String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim()){
+        cachedDefault = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim());
+        let cachedClone = Object.assign([], cachedDefault);
+        cachedClone.baseTexture = PIXI.BaseTexture.from(correctvalue);
+        TextureLoader.loader.cache.set(correctvalue,cachedClone);
+        cached = TextureLoader.loader.getCache(src);
+        return cached;
+      }
+      else if(dss == CONST.WALL_DOOR_STATES.LOCKED || dss == String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim()){
+        cachedDefault = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim());
+        let cachedClone = Object.assign([], cachedDefault);
+        cachedClone.baseTexture = PIXI.BaseTexture.from(correctvalue);
+        TextureLoader.loader.cache.set(correctvalue,cachedClone);
+        cached = TextureLoader.loader.getCache(src);
+        return cached;
+      } 
+      else {
+        return null;
+      }
+    }
+    return cached;
   },
 
   // Wall Config extension. Allows each door to have individual icons
@@ -96,9 +144,9 @@ export const DesignerDoors = {
 
         // If wall has no flag, populate thisDoor from default settings
         thisDoor = {
-            doorClosedPath: game.settings.get(MODULE_NAME, 'doorClosedDefault'),
-            doorOpenPath: game.settings.get(MODULE_NAME, 'doorOpenDefault'),
-            doorLockedPath: game.settings.get(MODULE_NAME, 'doorLockedDefault'),
+            doorClosedPath: String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim(),
+            doorOpenPath: String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim(),
+            doorLockedPath: String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim(),
         };
         // Then set flag with contents of thisDoor
         app.object.setFlag(MODULE_NAME, 'doorIcon', thisDoor);
@@ -191,29 +239,29 @@ export const DesignerDoors = {
 
   },
 
-  // Cache default textures on submitting Settings Config
-  // Only really needed if default textures are changed, but as I haven't
-  // yet figured out how to only run on changes, it will just run on every
-  // submission of the settings form.
-  renderSettingsConfigHandler: function(app, html, user){
+  // // Cache default textures on submitting Settings Config
+  // // Only really needed if default textures are changed, but as I haven't
+  // // yet figured out how to only run on changes, it will just run on every
+  // // submission of the settings form.
+  // renderSettingsConfigHandler: function(app, html, user){
 
-    const form = document.getElementById('client-settings');
-    form.addEventListener('submit', (e) => {
+  //   const form = document.getElementById('client-settings');
+  //   form.addEventListener('submit', (e) => {
 
-        const setDefCD = document.getElementsByName(`${MODULE_NAME}.doorClosedDefault`);
-        const setDefOD = document.getElementsByName(`${MODULE_NAME}.doorOpenDefault`);
-        const setDefLD = document.getElementsByName(`${MODULE_NAME}.doorLockedDefault`);
+  //       const setDefCD = document.getElementsByName(`${MODULE_NAME}.doorClosedDefault`);
+  //       const setDefOD = document.getElementsByName(`${MODULE_NAME}.doorOpenDefault`);
+  //       const setDefLD = document.getElementsByName(`${MODULE_NAME}.doorLockedDefault`);
 
-        e.preventDefault();
-        //@ts-ignore
-        TextureLoader.loader.loadTexture(setDefCD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
-        //@ts-ignore
-        TextureLoader.loader.loadTexture(setDefOD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
-        //@ts-ignore
-        TextureLoader.loader.loadTexture(setDefLD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
+  //       e.preventDefault();
+  //       //@ts-ignore
+  //       TextureLoader.loader.loadTexture(setDefCD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
+  //       //@ts-ignore
+  //       TextureLoader.loader.loadTexture(setDefOD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
+  //       //@ts-ignore
+  //       TextureLoader.loader.loadTexture(setDefLD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
 
-    });
-  },
+  //   });
+  // },
 
   // On scene change, scan for doors and cache textures
   canvasInitHandler : function(){

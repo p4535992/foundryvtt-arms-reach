@@ -1,5 +1,16 @@
 # CHANGELOG
 
+# 1.0.8 (Breaking Version)
+
+- Add filepicker for Song of Ambient Door
+- Add a customize (rewrite almost everything) version of the project [Designer Doors](https://github.com/Exitalterego/designerdoors) ty to [Exitalterego](https://github.com/Exitalterego)
+- Bug fix: If Ambient door is disable and Arm reach is enable the sound is Broken ???
+- Bug fix: Add more internationalization
+- Add new checkin for manage multi feature all togheter
+- Add filepicker for Image of Designer Doors
+- Add a customized version of the project [Sound Previewer](https://github.com/matthewswar/foundry-vtt-sound-previewer) ty to [matthewswar](https://github.com/matthewswar)
+- Add a mechanism of hide and seek for on module settings when feature are enabled or disabled
+
 # 1.0.7
 
 - Add preview to sound file [Sound Previewer](https://github.com/matthewswar/foundry-vtt-sound-previewer) ty to [matthewswar](https://github.com/matthewswar)

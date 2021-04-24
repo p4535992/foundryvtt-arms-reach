@@ -243,7 +243,7 @@ export const Armsreach = {
     }
   },
 
-  preUpdateWallHandler : async function(scene, object, updateData, diff, userID){
+  preUpdateWallBugFixSoundHandler : async function(scene, object, updateData, diff, userID){
 
     if(
           (
