@@ -84,7 +84,11 @@ export let readyHooks = async () => {
 }
 
 export let setupHooks = () => {
-
+  
+  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
+  }
 }
 
 
@@ -109,11 +113,6 @@ export let initHooks = () => {
   }else{
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
-  }
-  
-  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
   }
 
   if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
