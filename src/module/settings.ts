@@ -223,7 +223,7 @@ export const registerSettings = function () {
     	hint: "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.",
       scope: "world",
       config: true,
-      default: true,
+      default: false,
       type: Boolean,
       onChange: (data) => {
         manageSettingsAmbientDoorFeature(data);
@@ -374,7 +374,7 @@ export const registerSettings = function () {
       hint: "You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.",
       scope: "world",
       config: true,
-      default: true,
+      default: false,
       type: Boolean,
       onChange: (data) => {
         manageSettingsDesignerDoorFeature(data);
@@ -444,5 +444,18 @@ export const registerSettings = function () {
       type: Boolean
     });
 
+    // ========================================================
+    // Show Door Icons
+    // ========================================================
 
+    // Register custom module settings
+    game.settings.register(MODULE_NAME, 'enabledShowDoorIcons', {
+      name: "sdi.force-doors-s",
+      hint: "sdi.force-doors-l",
+      scope: "world",
+      config: true,
+      default: false,
+      type: Boolean,
+      onChange: x => window.location.reload()
+    });
 }

@@ -5,6 +5,7 @@ import { Armsreach } from "./ArmsReach";
 import { manageSettingsArmsReachFeature, MODULE_NAME } from './settings';
 import { SoundPreviewer } from "./SoundPreviewer";
 import { DesignerDoors } from './DesignerDoors';
+import { ShowDoorIcons } from './showdooricons';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -74,6 +75,15 @@ export let readyHooks = async () => {
 
   });
 
+  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'ControlsLayer.prototype.drawDoors', ControlsLayerPrototypeDrawDoorsHandler, 'MIXED');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'Wall.prototype._onModifyWall', WallPrototypeOnModifyWallHandler, 'WRAPPER');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
+  }
+
 }
 
 export let setupHooks = () => {
@@ -107,10 +117,10 @@ export let initHooks = () => {
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
   }
-
-  //@ts-ignore
-  libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
-
+  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
+  }
 
 }
 
@@ -158,4 +168,26 @@ export const DoorControlPrototypeGetTextureHandler  = async function(wrapped, ..
   }else{
     return wrapped(...args);
   }
+}
+
+export const ControlsLayerPrototypeDrawDoorsHandler = async function (wrapped, ...args) {
+  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+    ShowDoorIcons.controlsLayerPrototypeDrawDoorsHandler(this);
+  }
+  return wrapped(...args);
+};
+
+export const WallsLayerPrototypeActivateHandler = function (wrapped, ...args) {
+  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+    ShowDoorIcons.wallsLayerPrototypeActivateHandler();
+  }
+  return wrapped(...args);
+}
+
+export const WallPrototypeOnModifyWallHandler = function (wrapped, ...args) {
+  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+    const [state] = args;
+    ShowDoorIcons.wallPrototypeOnModifyWallHandler(state);
+  }
+  return wrapped(...args);
 }

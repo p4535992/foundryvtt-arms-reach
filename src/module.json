@@ -2,7 +2,7 @@
 	  "name": "foundryvtt-arms-reach",
 	  "title": "FoundryVTT Arms Reach",
 	  "description": "Allows the GM to limit the distance that a player can interate with a door. And adds a shortkey to interact with rearest door.",
-    "version": "1.0.6",
+    "version": "1.0.8",
     "author": "Psyny and 4535992",
     "type": "module",
     "socket": true,
