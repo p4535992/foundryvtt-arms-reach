@@ -15,7 +15,7 @@
 import { registerSettings } from './module/settings';
 import { preloadTemplates } from './module/preloadTemplates';
 import { MODULE_NAME } from './module/settings';
-import { initHooks, readyHooks } from './module/Hooks';
+import { initHooks, readyHooks, setupHooks } from './module/Hooks';
 
 export let debugEnabled = 0;
 // 0 = none, warnings = 1, debug = 2, all = 3
@@ -64,6 +64,8 @@ Hooks.once('setup', function () {
 	// setupModules();
 
 	//registerSettings();
+
+	setupHooks();
 });
 
 /* ------------------------------------ */
@@ -76,15 +78,15 @@ Hooks.once('ready', () => {
 		 return;
 	}
 
-  if (game.modules.get("arms-reach")?.active && game.user.isGM){
+  	if (game.modules.get("arms-reach")?.active && game.user.isGM){
 	  ui.notifications.warn(`The 'arms-reach', is not needed anymore just use '${MODULE_NAME}'`);
 	}
 
-  if (game.modules.get("ambientdoors")?.active && game.user.isGM){
+  	if (game.modules.get("ambientdoors")?.active && game.user.isGM){
 	  ui.notifications.warn(`The 'ambientdoors', is not needed anymore just use '${MODULE_NAME}'`);
 	}
 
-  if (game.modules.get("designerdoors")?.active && game.user.isGM){
+  	if (game.modules.get("designerdoors")?.active && game.user.isGM){
 	  ui.notifications.warn(`The 'designerdoors', is not needed anymore just use '${MODULE_NAME}'`);
 	}
 

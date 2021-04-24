@@ -1,5 +1,13 @@
+import { error, log } from "../foundryvtt-arms-reach";
 import { MODULE_NAME } from "./settings";
 
+// // Global function to cache default textures
+// const cacheTex = ((key) => {
+
+//   const defaultPath = <string>game.settings.get(MODULE_NAME, key);
+//   TextureLoader.loader.loadTexture(defaultPath);
+
+// });
 
 export const DesignerDoors = {
 
@@ -8,49 +16,54 @@ export const DesignerDoors = {
   cacheTex : (key) => {
 
     const defaultPath = <string>game.settings.get(MODULE_NAME, key);
-    TextureLoader.loader.loadTexture(defaultPath);
+    TextureLoader.loader.loadTexture(defaultPath.replace("[data]", "").trim());
 
   },
 
   init : function(){
 
     // Cache default icons on setup of world
-    console.log(`Loading ${MODULE_NAME} default door textures`);
+    log(`Loading ${MODULE_NAME} default door textures`);
     DesignerDoors.cacheTex('doorClosedDefault');
     DesignerDoors.cacheTex('doorOpenDefault');
     DesignerDoors.cacheTex('doorLockedDefault');
-    console.log(`${MODULE_NAME} texture loading complete`);
+    log(`${MODULE_NAME} texture loading complete`);
 
   },
 
   // Override of the original getTexture method.
   // Adds additional logic for checking which icon to return
-  getTextureOverride : async function(doorControl) {
+  getTextureOverride : function(doorControl) {
 
-      if (doorControl.wall.getFlag(MODULE_NAME, 'doorIcon') === undefined) {
+    if (doorControl.wall.getFlag(MODULE_NAME, 'doorIcon') === undefined) {
 
-          let s = doorControl.wall.data.ds;
-          const ds = CONST.WALL_DOOR_STATES;
-          if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
-          const textures = {
-              [ds.LOCKED]: game.settings.get(MODULE_NAME, 'doorLockedDefault'),
-              [ds.CLOSED]: game.settings.get(MODULE_NAME, 'doorClosedDefault'),
-              [ds.OPEN]: game.settings.get(MODULE_NAME, 'doorOpenDefault'),
-          };
-          return getTexture(textures[s] || ds.CLOSED);
+        let s = doorControl.wall.data.ds;
+        const ds = CONST.WALL_DOOR_STATES;
+        if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+        const textures = {
+            [ds.LOCKED]: game.settings.get(MODULE_NAME, 'doorLockedDefault'),
+            [ds.CLOSED]: game.settings.get(MODULE_NAME, 'doorClosedDefault'),
+            [ds.OPEN]: game.settings.get(MODULE_NAME, 'doorOpenDefault'),
+        };
+        return getTexture(textures[s] || ds.CLOSED);
 
-      }
+    }
 
-      let s = doorControl.wall.data.ds;
-      const ds = CONST.WALL_DOOR_STATES;
-      if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
-      const wallPaths = doorControl.wall.getFlag(MODULE_NAME, 'doorIcon');
-      const textures = {
-          [ds.LOCKED]: wallPaths.doorLockedPath,
-          [ds.CLOSED]: wallPaths.doorClosedPath,
-          [ds.OPEN]: wallPaths.doorOpenPath,
-      };
-      return getTexture(textures[s] || ds.CLOSED);
+    let s = doorControl.wall.data.ds;
+    const ds = CONST.WALL_DOOR_STATES;
+    if (!game.user.isGM && s === ds.LOCKED){
+      s = ds.CLOSED;
+    }
+
+    const wallPaths = doorControl.wall.getFlag(MODULE_NAME, 'doorIcon');
+    const textures = {
+        [ds.LOCKED]: wallPaths.doorLockedPath,
+        [ds.CLOSED]: wallPaths.doorClosedPath,
+        [ds.OPEN]: wallPaths.doorOpenPath,
+    };
+    return getTexture(textures[s] || ds.CLOSED);
+
+    
 
   },
 
@@ -170,9 +183,9 @@ export const DesignerDoors = {
         const wallConfDLD = document.getElementsByName(nameDefLP)[0].value; // TODO HTMLElement property value not mapped
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(wallConfDCD);
-        TextureLoader.loader.loadTexture(wallConfDOD);
-        TextureLoader.loader.loadTexture(wallConfDLD);
+        TextureLoader.loader.loadTexture(wallConfDCD.replace("[data]", "").trim());
+        TextureLoader.loader.loadTexture(wallConfDOD.replace("[data]", "").trim());
+        TextureLoader.loader.loadTexture(wallConfDLD.replace("[data]", "").trim());
 
     });
 
@@ -193,11 +206,11 @@ export const DesignerDoors = {
 
         e.preventDefault();
         //@ts-ignore
-        TextureLoader.loader.loadTexture(setDefCD[0].value); // TODO HTMLElement property value not mapped
+        TextureLoader.loader.loadTexture(setDefCD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
         //@ts-ignore
-        TextureLoader.loader.loadTexture(setDefOD[0].value); // TODO HTMLElement property value not mapped
+        TextureLoader.loader.loadTexture(setDefOD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
         //@ts-ignore
-        TextureLoader.loader.loadTexture(setDefLD[0].value); // TODO HTMLElement property value not mapped
+        TextureLoader.loader.loadTexture(setDefLD[0].value.replace("[data]", "").trim()); // TODO HTMLElement property value not mapped
 
     });
   },
@@ -224,31 +237,20 @@ export const DesignerDoors = {
             const wcOD = wall.flags[MODULE_NAME]['doorIcon'].doorOpenPath;
             const wcLD = wall.flags[MODULE_NAME]['doorIcon'].doorLockedPath;
 
-            // const nameDefCP = `flags.${MODULE_NAME}.doorIcon.doorClosedPath`;
-            // const nameDefOP = `flags.${MODULE_NAME}.doorIcon.doorOpenPath`;
-            // const nameDefLP = `flags.${MODULE_NAME}.doorIcon.doorLockedPath`;
-
-            // //@ts-ignore
-            // const wcCD = document.getElementsByName(nameDefCP)[0].value; // TODO HTMLElement property value not mapped
-            // //@ts-ignore
-            // const wcOD = document.getElementsByName(nameDefOP)[0].value; // TODO HTMLElement property value not mapped
-            // //@ts-ignore
-            // const wcLD = document.getElementsByName(nameDefLP)[0].value; // TODO HTMLElement property value not mapped
-
-            TextureLoader.loader.loadTexture(wcCD);
-            TextureLoader.loader.loadTexture(wcOD);
-            TextureLoader.loader.loadTexture(wcLD);
+            TextureLoader.loader.loadTexture(wcCD.replace("[data]", "").trim());
+            TextureLoader.loader.loadTexture(wcOD.replace("[data]", "").trim());
+            TextureLoader.loader.loadTexture(wcLD.replace("[data]", "").trim());
 
         }
 
     }
 
     // Cache default icons on scene change
-    console.log(`Loading ${MODULE_NAME} default door textures`);
+    log(`Loading ${MODULE_NAME} default door textures`);
     DesignerDoors.cacheTex('doorClosedDefault');
     DesignerDoors.cacheTex('doorOpenDefault');
     DesignerDoors.cacheTex('doorLockedDefault');
-    console.log(`${MODULE_NAME} texture loading complete`);
+    log(`${MODULE_NAME} texture loading complete`);
   }
 
 
