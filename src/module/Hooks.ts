@@ -17,21 +17,6 @@ export let readyHooks = async () => {
 
   // Register custom sheets (if any)
 
-  //@ts-ignore
-  //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
-
-  if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'OVERRIDE');
-  }else{
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
-  }
-  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
-  }
-
   Hooks.on('preUpdateWall', async (scene, object, updateData, diff, userID) => {
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
@@ -94,14 +79,7 @@ export let readyHooks = async () => {
 
   });
 
-  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'ControlsLayer.prototype.drawDoors', ControlsLayerPrototypeDrawDoorsHandler, 'MIXED');
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'Wall.prototype._onModifyWall', WallPrototypeOnModifyWallHandler, 'WRAPPER');
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
-  }
+
 
 }
 
@@ -122,7 +100,30 @@ export let initHooks = () => {
     DesignerDoors.init();
   }
 
+  //@ts-ignore
+  //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
   
+  if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'OVERRIDE');
+  }else{
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
+  }
+  
+  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
+  }
+
+  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'ControlsLayer.prototype.drawDoors', ControlsLayerPrototypeDrawDoorsHandler, 'MIXED');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'Wall.prototype._onModifyWall', WallPrototypeOnModifyWallHandler, 'WRAPPER');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
+  }
 
 }
 

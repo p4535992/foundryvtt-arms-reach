@@ -13,6 +13,7 @@ You can still enable/disable every single feature from module settings.
 ## Known issue
 
 - If 'Show Doors Icons Featur is active there is a annoying expection on console, but it's not seem to broke anythng
+- For some reason i can't make worked the [Designer Doors](https://github.com/Exitalterego/designerdoors) for the specific door only for all need some more developing
 
 ## Installation
 
