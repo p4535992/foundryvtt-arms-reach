@@ -97,6 +97,9 @@
 
 
   "foundryvtt-arms-reach.settingNameFeature": "Enable/Disable Window Door",
-  "foundryvtt-arms-reach.settingHintFeature": "Enable/Disable Window Door"
+  "foundryvtt-arms-reach.settingHintFeature": "Enable/Disable Window Door",
+
+  "foundryvtt-arms-reach.force-doors-s": "Force Door Icon Visiblity?",
+  "foundryvtt-arms-reach.force-doors-l": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible."
 
 }

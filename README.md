@@ -9,6 +9,11 @@ This is project is born like a upgrade of the project [Arms Reach](https://githu
 There are more than 300 modules in foundry vtt so the scope of this module is to reduce the number of modules on your game and integrate them with each other without some strange collision between modules.
 
 You can still enable/disable every single feature from module settings.
+
+## Known issue
+
+- If 'Show Doors Icons Featur is active there is a annoying expection on console, but it's not seem to broke anythng
+
 ## Installation
 
 It's always easiest to install modules from the in game add-on browser.
@@ -65,6 +70,13 @@ You can change the default door icons used to show closed, open and locked doors
 * Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
 * This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
+**[DISABLED] Show Doors Icons Feature**
+
+Forces Door Controls to remain visible on the Wall Layer. 
+
+**[ON DEVELOPING FOR 0.8.X] Prcompiled Window Dorr Feature**
+
+
 ## [Changelog](./changelog.md)
 
 ## Issues
@@ -84,6 +96,8 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [Sound Previewer](https://github.com/matthewswar/foundry-vtt-sound-previewer) ty to [matthewswar](https://github.com/matthewswar)
 - [Designer Doors](https://github.com/Exitalterego/designerdoors) ty to [Exitalterego](https://github.com/Exitalterego)
 - [Designer Windows](https://github.com/Exitalterego/designerwindows) ty to [Exitalterego](https://github.com/Exitalterego)
+- [showdooricons](https://github.com/wsaunders1014/showdooricons) ty to [wsaunders1014](https://github.com/wsaunders1014)
+
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development v 0.1.6](http://foundryvtt.com/pages/license.html).

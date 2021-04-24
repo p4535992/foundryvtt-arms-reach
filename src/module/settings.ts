@@ -1,4 +1,5 @@
 // import { hotkeys } from './libs/lib-df-hotkeys.shim.js';
+import { i18n } from "../foundryvtt-arms-reach";
 import ImagePicker from "./libs/ImagePicker";
 import SoundPicker from "./libs/SoundPicker";
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
@@ -439,7 +440,7 @@ export const registerSettings = function () {
       name: "Enable/Disable Window Door",
       hint: "Enable/Disable Window Door",
       scope: "world",
-      config: true,
+      config: false,
       default: false,
       type: Boolean
     });
@@ -450,12 +451,14 @@ export const registerSettings = function () {
 
     // Register custom module settings
     game.settings.register(MODULE_NAME, 'enabledShowDoorIcons', {
-      name: "sdi.force-doors-s",
-      hint: "sdi.force-doors-l",
+      name: i18n(MODULE_NAME+".force-doors-s"),
+      hint: i18n(MODULE_NAME+".force-doors-l"),
       scope: "world",
-      config: true,
+      config: false,
       default: false,
       type: Boolean,
-      onChange: x => window.location.reload()
+      onChange: (x) => {
+        window.location.reload();
+      }
     });
 }
