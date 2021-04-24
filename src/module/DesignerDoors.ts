@@ -300,7 +300,7 @@ export const DesignerDoors = {
     for (let i = 0; i < sceneWalls.length; i++) {
 
         // Check wall for designerdoors flag
-        //if (MODULE_NAME in sceneWalls[i].flags) {
+        if (MODULE_NAME in sceneWalls[i].flags) {
 
             const wall = sceneWalls[i];
 
@@ -337,7 +337,7 @@ export const DesignerDoors = {
               cachedClone3.baseTexture = PIXI.BaseTexture.from(wcLD.replace("[data]", "").trim());
               TextureLoader.loader.cache.set(wcLD.replace("[data]", "").trim(),cachedClone3);
             }
-        //}
+        }
 
     }
 
