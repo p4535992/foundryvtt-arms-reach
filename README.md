@@ -12,8 +12,7 @@ You can still enable/disable every single feature from module settings.
 
 ## Known issue
 
-- If 'Show Doors Icons Feature is active there is a annoying expection on console, but it's not seem to broke anythng
-- For some reason when i reload the scene the [Designer Doors](https://github.com/Exitalterego/designerdoors) not draw the dorr but after i click at least once work just fine
+- If 'Show Doors Icons Feature' not working like exepcting
 
 ## Installation
 
@@ -75,7 +74,7 @@ You can change the default door icons used to show closed, open and locked doors
 
 Forces Door Controls to remain visible on the Wall Layer. 
 
-**[ON DEVELOPING FOR 0.8.X] Prcompiled Window Dorr Feature**
+**[ON DEVELOPING FOR 0.8.X] Precompiled Window Door Feature**
 
 
 ## [Changelog](./changelog.md)

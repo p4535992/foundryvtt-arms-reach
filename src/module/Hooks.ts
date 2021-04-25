@@ -15,7 +15,14 @@ export let readyHooks = async () => {
 
   // setup all the hooks
 
-  // Register custom sheets (if any)
+  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'ControlsLayer.prototype.drawDoors', ControlsLayerPrototypeDrawDoorsHandler, 'MIXED');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'Wall.prototype._onModifyWall', WallPrototypeOnModifyWallHandler, 'MIXED');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
+  }
 
   Hooks.on('preUpdateWall', async (scene, object, updateData, diff, userID) => {
 
@@ -79,7 +86,7 @@ export let readyHooks = async () => {
 
   });
 
-
+  // Register custom sheets (if any)
 
 }
 
@@ -116,15 +123,6 @@ export let initHooks = () => {
   }else{
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
-  }
-
-  if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'ControlsLayer.prototype.drawDoors', ControlsLayerPrototypeDrawDoorsHandler, 'MIXED');
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'Wall.prototype._onModifyWall', WallPrototypeOnModifyWallHandler, 'WRAPPER');
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
   }
 
 }
@@ -178,9 +176,9 @@ export const DoorControlPrototypeGetTextureHandler  = async function(wrapped, ..
 export const DoorControlPrototypeDrawHandler  = async function(wrapped, ...args) {
 
   const doorControl = this;
-  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    DesignerDoors.draw(doorControl);
-  }
+  // if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+  //   DesignerDoors.draw(doorControl);
+  // }
   return wrapped(...args);
   
 }
@@ -198,6 +196,13 @@ export const WallsLayerPrototypeActivateHandler = function (wrapped, ...args) {
   }
   return wrapped(...args);
 }
+
+// export const WallsLayerPrototypeDeactivateHandler = function (wrapped, ...args) {
+//   if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {
+//     ShowDoorIcons.wallsLayerPrototypeDeactivateHandler();
+//   }
+//   return wrapped(...args);
+// }
 
 export const WallPrototypeOnModifyWallHandler = function (wrapped, ...args) {
   if(<boolean>game.settings.get(MODULE_NAME, "enabledShowDoorIcons")) {

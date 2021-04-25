@@ -364,53 +364,53 @@ export const DesignerDoors = {
     }
 
     // Cache default icons on scene change
-    // log(`Loading ${MODULE_NAME} default door textures`);
-    // DesignerDoors.cacheTex('doorClosedDefault');
-    // DesignerDoors.cacheTex('doorOpenDefault');
-    // DesignerDoors.cacheTex('doorLockedDefault');
-    // log(`${MODULE_NAME} texture loading complete`);
+    log(`Loading ${MODULE_NAME} default door textures`);
+    DesignerDoors.cacheTex('doorClosedDefault');
+    DesignerDoors.cacheTex('doorOpenDefault');
+    DesignerDoors.cacheTex('doorLockedDefault');
+    log(`${MODULE_NAME} texture loading complete`);
   },
 
-  /**
-   * Draw the DoorControl icon, displaying it's icon texture and border
-   * @return {Promise<DoorControl>}
-   */
-  draw : async function(doorControl) {
+  // /**
+  //  * Draw the DoorControl icon, displaying it's icon texture and border
+  //  * @return {Promise<DoorControl>}
+  //  */
+  // draw : async function(doorControl) {
 
-    // Remove existing components
-    doorControl.icon = doorControl.icon || doorControl.addChild(new PIXI.Sprite());
-    doorControl.icon.width = doorControl.icon.height = 40;
-    doorControl.icon.alpha = 0.6;
-    //doorControl.icon.texture = await doorControl._getTexture();
-    doorControl.icon.texture = await DesignerDoors.getTextureOverride(doorControl);
-    // Background
-    doorControl.bg = doorControl.bg || doorControl.addChild(new PIXI.Graphics());
-    doorControl.bg.clear().beginFill(0x000000, 1.0).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
-    doorControl.bg.alpha = 0;
+  //   // Remove existing components
+  //   doorControl.icon = doorControl.icon || doorControl.addChild(new PIXI.Sprite());
+  //   doorControl.icon.width = doorControl.icon.height = 40;
+  //   doorControl.icon.alpha = 0.6;
+  //   //doorControl.icon.texture = await doorControl._getTexture();
+  //   doorControl.icon.texture = await DesignerDoors.getTextureOverride(doorControl);
+  //   // Background
+  //   doorControl.bg = doorControl.bg || doorControl.addChild(new PIXI.Graphics());
+  //   doorControl.bg.clear().beginFill(0x000000, 1.0).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
+  //   doorControl.bg.alpha = 0;
 
-    // Border
-    doorControl.border = doorControl.border || doorControl.addChild(new PIXI.Graphics());
-    doorControl.border.clear().lineStyle(1, 0xFF5500, 0.8).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
-    doorControl.border.visible = false;
+  //   // Border
+  //   doorControl.border = doorControl.border || doorControl.addChild(new PIXI.Graphics());
+  //   doorControl.border.clear().lineStyle(1, 0xFF5500, 0.8).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
+  //   doorControl.border.visible = false;
 
-    // Add control interactivity
-    doorControl.interactive = true;
-    doorControl.interactiveChildren = false;
-    doorControl.hitArea = new PIXI.Rectangle(-2, -2, 44, 44);
+  //   // Add control interactivity
+  //   doorControl.interactive = true;
+  //   doorControl.interactiveChildren = false;
+  //   doorControl.hitArea = new PIXI.Rectangle(-2, -2, 44, 44);
 
-    // Set position
-    doorControl.reposition();
-    doorControl.alpha = 1.0;
+  //   // Set position
+  //   doorControl.reposition();
+  //   doorControl.alpha = 1.0;
 
-    // Activate listeners
-    doorControl.removeAllListeners();
-    doorControl.on("mouseover", doorControl._onMouseOver)
-        .on("mouseout", doorControl._onMouseOut)
-        .on("mousedown", doorControl._onMouseDown)
-        .on('rightdown', doorControl._onRightDown);
+  //   // Activate listeners
+  //   doorControl.removeAllListeners();
+  //   doorControl.on("mouseover", doorControl._onMouseOver)
+  //       .on("mouseout", doorControl._onMouseOut)
+  //       .on("mousedown", doorControl._onMouseDown)
+  //       .on('rightdown', doorControl._onRightDown);
 
-    // Return the control icon
-    return doorControl;
-  }
+  //   // Return the control icon
+  //   return doorControl;
+  // }
 
 }

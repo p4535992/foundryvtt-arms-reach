@@ -50,31 +50,24 @@ export const ShowDoorIcons = {
       //@ts-ignore
       getCanvas().addPendingOperation("ControlsLayer.drawDoors", getCanvas().controls.drawDoors, getCanvas().controls);
       if ( state ) {
-        //if(canvas.sight.children){
-        //  await getCanvas().sight.initialize(); // This needs to happen first to rebuild FOV/LOS polygons
-        //}
+        await getCanvas().sight.initialize(); // This needs to happen first to rebuild FOV/LOS polygons
         //getCanvas().lighting.initialize();
-        await getCanvas().lighting.releaseAll()
+        
+        getCanvas().lighting.releaseAll();
         getCanvas().sounds.initialize();
       }
       getCanvas().triggerPendingOperations();
     }
-    // ???????????????
-    if(!getCanvas().controls.doors){
-      getCanvas().controls.doors = {};
-    }
-    if(!getCanvas().controls.doors.children){
-      getCanvas().controls.doors.children = [];
-    }
-    //return wrapped(...args);
   },
 
   //Overwrite Activate call to prevent doors from going invisible.
   wallsLayerPrototypeActivateHandler : function () {
-    //PlaceablesLayer.prototype.activate.call(this)
-    //Force Show Doors is set to True
-    if (getCanvas().controls){
-      getCanvas().controls.doors.visible = false;
+    if(getCanvas()){
+      //PlaceablesLayer.prototype.activate.call(this)
+      //Force Show Doors is set to True
+      if (getCanvas().controls){
+        getCanvas().controls.doors.visible = false;
+      }
     }
   }
 }
