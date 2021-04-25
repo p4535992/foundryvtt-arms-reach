@@ -88,6 +88,9 @@ export let setupHooks = () => {
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
+    //@ts-ignore
+    // libWrapper.register(MODULE_NAME, 'DoorControl.prototype.draw', DoorControlPrototypeDrawHandler, 'MIXED');
+      
   }
 }
 
@@ -161,7 +164,7 @@ export const DoorControlPrototypeGetTextureHandler  = async function(wrapped, ..
   const doorControl = this;
   let texture:PIXI.Texture;
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    texture = DesignerDoors.getTextureOverride(doorControl);
+    texture = await DesignerDoors.getTextureOverride(doorControl);  
     if(texture!=null){
       return texture;
     }else{
@@ -170,6 +173,16 @@ export const DoorControlPrototypeGetTextureHandler  = async function(wrapped, ..
   }else{
     return wrapped(...args);
   }
+}
+
+export const DoorControlPrototypeDrawHandler  = async function(wrapped, ...args) {
+
+  const doorControl = this;
+  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    DesignerDoors.draw(doorControl);
+  }
+  return wrapped(...args);
+  
 }
 
 export const ControlsLayerPrototypeDrawDoorsHandler = async function (wrapped, ...args) {

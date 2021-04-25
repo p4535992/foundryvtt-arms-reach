@@ -1,4 +1,5 @@
 import { error, log } from "../foundryvtt-arms-reach";
+// import { Cloneable } from "./libs/Clonable";
 import { MODULE_NAME } from "./settings";
 
 // // Global function to cache default textures
@@ -33,7 +34,7 @@ export const DesignerDoors = {
 
   // Override of the original getTexture method.
   // Adds additional logic for checking which icon to return
-  getTextureOverride : function(doorControl) {
+  getTextureOverride : async function(doorControl) {
 
     if (doorControl.wall.getFlag(MODULE_NAME, 'doorIcon') === undefined) {
 
@@ -45,12 +46,7 @@ export const DesignerDoors = {
             [ds.CLOSED]: String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim(),
             [ds.OPEN]: String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim(),
         };
-        // return getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
-        return DesignerDoors.getTextureBugFixKeyOverride(
-          textures[s].replace("[data]", "").trim() || ds.CLOSED,
-          s,
-          textures[s].replace("[data]", "").trim()
-        );
+        return await getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
     }
 
     let s = doorControl.wall.data.ds;
@@ -65,8 +61,14 @@ export const DesignerDoors = {
         [ds.CLOSED]: wallPaths.doorClosedPath,
         [ds.OPEN]: wallPaths.doorOpenPath,
     };
-    //return getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
-    return DesignerDoors.getTextureBugFixKeyOverride(
+
+    // {
+    //   "doorClosedPath": "modules/foundryvtt-arms-reach/assets/icons/door-closed.svg",
+    //   "doorOpenPath": "modules/foundryvtt-arms-reach/assets/icons/door-exit.svg",
+    //   "doorLockedPath": "modules/foundryvtt-arms-reach/assets/icons/padlock.svg"
+    // }
+    // return await getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
+    return await DesignerDoors.getTextureBugFixKeyOverride(
       textures[s].replace("[data]", "").trim() || ds.CLOSED,
       s,
       textures[s].replace("[data]", "").trim()
@@ -83,32 +85,41 @@ export const DesignerDoors = {
     let cached = TextureLoader.loader.getCache(src);
     if ( !cached || !cached.valid ) {
 
-      let cachedDefault = null;
+      //let cachedDefault = null;
       if( dss == CONST.WALL_DOOR_STATES.CLOSED || dss == String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim() ){
-          cachedDefault = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim());
-          let cachedClone = cachedDefault;//Object.assign([], cachedDefault);
-          cachedClone.baseTexture = PIXI.BaseTexture.from(correctvalue);
-          TextureLoader.loader.cache.set(correctvalue,cachedClone);
-          cached = TextureLoader.loader.getCache(src);
-          return cached;
-          // cachedDefault.baseTexture = PIXI.BaseTexture.from(correctvalue);
-          // return cachedDefault;
+        
+        if(!TextureLoader.loader.getCache(correctvalue)){  
+          let cachedDefault1 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim());
+          let cachedClone1 = new PIXI.Texture(PIXI.BaseTexture.from(correctvalue)); //Cloneable.clone(cachedDefault1);//Object.assign([], cachedDefault1);
+          //cachedClone1.baseTexture = PIXI.BaseTexture.from(correctvalue);
+          TextureLoader.loader.cache.set(correctvalue,cachedClone1);
+        }
+        cached = TextureLoader.loader.getCache(src);
+        return cached;
+        // cachedDefault.baseTexture = PIXI.BaseTexture.from(correctvalue);
+        // return cachedDefault;
       }
       else if(dss == CONST.WALL_DOOR_STATES.OPEN || dss == String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim()){
-        cachedDefault = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim());
-        let cachedClone = cachedDefault;//Object.assign([], cachedDefault);
-        cachedClone.baseTexture = PIXI.BaseTexture.from(correctvalue);
-        TextureLoader.loader.cache.set(correctvalue,cachedClone);
+        
+        if(!TextureLoader.loader.getCache(correctvalue)){
+          let cachedDefault2 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim());
+          let cachedClone2 = new PIXI.Texture(PIXI.BaseTexture.from(correctvalue)); //Cloneable.clone(cachedDefault2);//Object.assign([], cachedDefault2);
+          //cachedClone2.baseTexture = PIXI.BaseTexture.from(correctvalue);
+          TextureLoader.loader.cache.set(correctvalue,cachedClone2);
+        }
         cached = TextureLoader.loader.getCache(src);
         return cached;
         // cachedDefault.baseTexture = PIXI.BaseTexture.from(correctvalue);
         // return cachedDefault;
       }
       else if(dss == CONST.WALL_DOOR_STATES.LOCKED || dss == String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim()){
-        cachedDefault = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim());
-        let cachedClone = cachedDefault;//Object.assign([], cachedDefault);
-        cachedClone.baseTexture = PIXI.BaseTexture.from(correctvalue);
-        TextureLoader.loader.cache.set(correctvalue,cachedClone);
+        
+        if(!TextureLoader.loader.getCache(correctvalue)){
+          let cachedDefault3 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim());
+          let cachedClone3 = new PIXI.Texture(PIXI.BaseTexture.from(correctvalue)); //Cloneable.clone(cachedDefault3);//Object.assign([], cachedDefault3);
+          //cachedClone3.baseTexture = PIXI.BaseTexture.from(correctvalue);
+          TextureLoader.loader.cache.set(correctvalue,cachedClone3);
+        }
         cached = TextureLoader.loader.getCache(src);
         return cached;
         // cachedDefault.baseTexture = PIXI.BaseTexture.from(correctvalue);
@@ -243,26 +254,37 @@ export const DesignerDoors = {
 
         if(!TextureLoader.loader.getCache(wallConfDCD.replace("[data]", "").trim())){
           let cachedDefault1 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim());
-          let cachedClone1 = cachedDefault1;//Object.assign([], cachedDefault);
-          cachedClone1.baseTexture = PIXI.BaseTexture.from(wallConfDCD.replace("[data]", "").trim());
+          let cachedClone1 = new PIXI.Texture(PIXI.BaseTexture.from(wallConfDCD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault1);//Object.assign([], cachedDefault1);
+          //cachedClone1.baseTexture = PIXI.BaseTexture.from(wallConfDCD.replace("[data]", "").trim());
           TextureLoader.loader.cache.set(wallConfDCD.replace("[data]", "").trim(),cachedClone1);
         }
 
         if(!TextureLoader.loader.getCache(wallConfDOD.replace("[data]", "").trim())){
           let cachedDefault2 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim());
-          let cachedClone2 = cachedDefault2;//Object.assign([], cachedDefault);
-          cachedClone2.baseTexture = PIXI.BaseTexture.from(wallConfDOD.replace("[data]", "").trim());
+          let cachedClone2 = new PIXI.Texture(PIXI.BaseTexture.from(wallConfDOD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault2);//Object.assign([], cachedDefault2);
+          //cachedClone2.baseTexture = PIXI.BaseTexture.from(wallConfDOD.replace("[data]", "").trim());
           TextureLoader.loader.cache.set(wallConfDOD.replace("[data]", "").trim(),cachedClone2);
         }
 
         if(!TextureLoader.loader.getCache(wallConfDLD.replace("[data]", "").trim())){
 
           let cachedDefault3 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim());
-          let cachedClone3 = cachedDefault3;//Object.assign([], cachedDefault);
-          cachedClone3.baseTexture = PIXI.BaseTexture.from(wallConfDLD.replace("[data]", "").trim());
+          let cachedClone3 = new PIXI.Texture(PIXI.BaseTexture.from(wallConfDLD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault3);//Object.assign([], cachedDefault3);
+          //cachedClone3.baseTexture = PIXI.BaseTexture.from(wallConfDLD.replace("[data]", "").trim());
           TextureLoader.loader.cache.set(wallConfDLD.replace("[data]", "").trim(),cachedClone3);
 
         }
+
+        // Update flags
+
+        // // If wall has no flag, populate thisDoor from default settings
+        // thisDoor = {
+        //   doorClosedPath: wallConfDCD.replace("[data]", "").trim(),
+        //   doorOpenPath: wallConfDOD.replace("[data]", "").trim(),
+        //   doorLockedPath: wallConfDLD.replace("[data]", "").trim(),
+        // };
+        // // Then set flag with contents of thisDoor
+        // app.object.setFlag(MODULE_NAME, 'doorIcon',thisDoor);
     });
 
   },
@@ -319,22 +341,22 @@ export const DesignerDoors = {
 
             if(!TextureLoader.loader.getCache(wcCD.replace("[data]", "").trim())){
               let cachedDefault1 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim());
-              let cachedClone1 = cachedDefault1;//Object.assign([], cachedDefault);
-              cachedClone1.baseTexture = PIXI.BaseTexture.from(wcCD.replace("[data]", "").trim());
+              let cachedClone1 = new PIXI.Texture(PIXI.BaseTexture.from(wcCD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault1);//Object.assign([], cachedDefault1);
+              //cachedClone1.baseTexture = PIXI.BaseTexture.from(wcCD.replace("[data]", "").trim());
               TextureLoader.loader.cache.set(wcCD.replace("[data]", "").trim(),cachedClone1);
             }
 
             if(!TextureLoader.loader.getCache(wcOD.replace("[data]", "").trim())){
               let cachedDefault2 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim());
-              let cachedClone2 = cachedDefault2;//Object.assign([], cachedDefault);
-              cachedClone2.baseTexture = PIXI.BaseTexture.from(wcOD.replace("[data]", "").trim());
+              let cachedClone2 = new PIXI.Texture(PIXI.BaseTexture.from(wcOD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault2);//Object.assign([], cachedDefault2);
+              //cachedClone2.baseTexture = PIXI.BaseTexture.from(wcOD.replace("[data]", "").trim());
               TextureLoader.loader.cache.set(wcOD.replace("[data]", "").trim(),cachedClone2);
             }
 
             if(!TextureLoader.loader.getCache(wcLD.replace("[data]", "").trim())){
               let cachedDefault3 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim());
-              let cachedClone3 = cachedDefault3;//Object.assign([], cachedDefault);
-              cachedClone3.baseTexture = PIXI.BaseTexture.from(wcLD.replace("[data]", "").trim());
+              let cachedClone3 = new PIXI.Texture(PIXI.BaseTexture.from(wcLD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault3);//Object.assign([], cachedDefault3);
+              //cachedClone3.baseTexture = PIXI.BaseTexture.from(wcLD.replace("[data]", "").trim());
               TextureLoader.loader.cache.set(wcLD.replace("[data]", "").trim(),cachedClone3);
             }
         }
@@ -347,8 +369,48 @@ export const DesignerDoors = {
     // DesignerDoors.cacheTex('doorOpenDefault');
     // DesignerDoors.cacheTex('doorLockedDefault');
     // log(`${MODULE_NAME} texture loading complete`);
+  },
+
+  /**
+   * Draw the DoorControl icon, displaying it's icon texture and border
+   * @return {Promise<DoorControl>}
+   */
+  draw : async function(doorControl) {
+
+    // Remove existing components
+    doorControl.icon = doorControl.icon || doorControl.addChild(new PIXI.Sprite());
+    doorControl.icon.width = doorControl.icon.height = 40;
+    doorControl.icon.alpha = 0.6;
+    //doorControl.icon.texture = await doorControl._getTexture();
+    doorControl.icon.texture = await DesignerDoors.getTextureOverride(doorControl);
+    // Background
+    doorControl.bg = doorControl.bg || doorControl.addChild(new PIXI.Graphics());
+    doorControl.bg.clear().beginFill(0x000000, 1.0).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
+    doorControl.bg.alpha = 0;
+
+    // Border
+    doorControl.border = doorControl.border || doorControl.addChild(new PIXI.Graphics());
+    doorControl.border.clear().lineStyle(1, 0xFF5500, 0.8).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
+    doorControl.border.visible = false;
+
+    // Add control interactivity
+    doorControl.interactive = true;
+    doorControl.interactiveChildren = false;
+    doorControl.hitArea = new PIXI.Rectangle(-2, -2, 44, 44);
+
+    // Set position
+    doorControl.reposition();
+    doorControl.alpha = 1.0;
+
+    // Activate listeners
+    doorControl.removeAllListeners();
+    doorControl.on("mouseover", doorControl._onMouseOver)
+        .on("mouseout", doorControl._onMouseOut)
+        .on("mousedown", doorControl._onMouseDown)
+        .on('rightdown', doorControl._onRightDown);
+
+    // Return the control icon
+    return doorControl;
   }
-
-
 
 }

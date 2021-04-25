@@ -59,6 +59,7 @@ Hooks.once('init', async () => {
 /* ------------------------------------ */
 /* Setup module							*/
 /* ------------------------------------ */
+
 Hooks.once('setup', function () {
 	// Do anything after initialization but before ready
 	// setupModules();
