@@ -104,12 +104,22 @@ export const Armsreach = {
   },
 
   globalInteractionDistance : async function(doorControl:any){ // TODO can't be a DoorControl not have acces to wall property
+    
+    let character:Token = getFirstPlayerTokenSelected();
+    let isOwned:boolean = false;
+    if(!character){
+      character = getFirstPlayerToken();
+      if(character){
+        isOwned = true;
+      }
+    }
+
     // Sets the global maximum interaction distance
     // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
     if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
 
       // Check distance
-      let character:Token = getFirstPlayerToken();
+      //let character:Token = getFirstPlayerToken();
       if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
         if( !character ) {
           iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
@@ -230,14 +240,17 @@ export const Armsreach = {
     }
     // If settings is true do not deselect the current select token
     if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
-      let character:Token = getFirstPlayerToken();
-      if( !character ) {
-        //iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
-        //return;
-      }else{
-        const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
-        if (observable !== undefined){
-            observable[0].control();
+      // Make sense only if use owned is false beacuse there is no way to check what
+      // owned token is get from the array
+      if(!isOwned) {
+        //let character:Token = getFirstPlayerToken();
+        if( !character ) {
+          // DO NOTHING
+        }else{
+          const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
+          if (observable !== undefined){
+              observable[0].control();
+          }
         }
       }
     }
@@ -341,7 +354,9 @@ export function ifStuckInteract(key, offsetx, offsety) {
   }
 }
 
-// Interact with door ------------------------------------------------------------------
+/**
+ * Interact with door
+ */
 export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {
     // Max distance definition
     let gridSize = getCanvas().dimensions.size;
@@ -401,7 +416,9 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     }
 }
 
-// Get token center
+/**
+ * Get token center
+ */
 export const getTokenCenter = function(token) {
     let tokenCenter = {x: token.x , y: token.y };
     tokenCenter.x += -20 + ( token.w * 0.50 );
@@ -409,7 +426,9 @@ export const getTokenCenter = function(token) {
     return tokenCenter;
 }
 
-// Get chracter name from token
+/**
+ * Get chracter name from token
+ */
 export const getCharacterName = function(token) {
   var tokenName = null;
   if( token.name ) {
@@ -420,7 +439,9 @@ export const getCharacterName = function(token) {
   return tokenName;
 }
 
-// Interation fail messages
+/**
+ * Interation fail messages
+ */
 export const iteractionFailNotification = function(message) {
   if( !game.settings.get(MODULE_NAME, "notificationsInteractionFail") ){
      return;
@@ -428,7 +449,9 @@ export const iteractionFailNotification = function(message) {
   ui.notifications.warn(message);
 }
 
-// Returns the first selected token or owned token
+/**
+ * Returns the first selected token or owned token
+ */
 export const getFirstPlayerToken = function() {
     // Get first token ownted by the player
     let selectedTokens = getSelectedOrOwnedTokens();
@@ -438,7 +461,25 @@ export const getFirstPlayerToken = function() {
     return selectedTokens[0];
 }
 
-// Returns a list of selected (or owned, if no token is selected)
+/**
+ * Returns the first selected token
+ */
+ export const getFirstPlayerTokenSelected = function() {
+  // Get first token ownted by the player
+  let selectedTokens = getCanvas().tokens.controlled;
+  if (selectedTokens.length > 1) {
+      ui.notifications.warn("Please selected a single token");
+      return;
+  }
+  if(!selectedTokens || selectedTokens.length == 0){
+    return null;
+  }
+  return selectedTokens[0];
+}
+
+/**
+ * Returns a list of selected (or owned, if no token is selected)
+ */
 export const getSelectedOrOwnedTokens = function()
 {
   let controlled = getCanvas().tokens.controlled;
@@ -454,13 +495,17 @@ export const getSelectedOrOwnedTokens = function()
   return controlled;
 }
 
-// Simple Manhattan Distance between two objects that have x and y attrs.
+/**
+ * Simple Manhattan Distance between two objects that have x and y attrs.
+ */
 export const getManhattanBetween = function(obj1, obj2)  {
   // console.log("[" + obj1.x + " , " + obj1.y + "],[" + obj2.x + " , " + obj2.y + "]"); // DEBUG
   return Math.abs(obj1.x - obj2.x) + Math.abs(obj1.y - obj2.y);
 }
 
-// Check if active document is the canvas
+/**
+ * Check if active document is the canvas
+ */
 export const isFocusOnCanvas = function() {
   if(   !document.activeElement ||
         !document.activeElement.attributes ||

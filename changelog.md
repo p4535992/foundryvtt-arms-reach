@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 1.0.9
+
+- Solved [issue 5](https://github.com/p4535992/foundryvtt-arms-reach/issues/5)
+- Add more Internationalization
+
 # 1.0.8 (Breaking Version)
 
 - Add filepicker for Song of Ambient Door
