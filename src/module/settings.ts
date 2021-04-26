@@ -100,8 +100,8 @@ export const registerSettings = function () {
   // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableArmsReach", {
-		  name: "Enable/Disable arms reach feature",
-    	hint: "Enable the GM to select the maximum distance that players can interact with a door",
+		  name: i18n(`${MODULE_NAME}.settingNameEnableArmsReachFeature`),
+    	hint: i18n(`${MODULE_NAME}.settingHintEnableArmsReachFeature`),
       scope: "world",
       config: true,
       default: true,
@@ -121,8 +121,8 @@ export const registerSettings = function () {
   });
 
   	game.settings.register(MODULE_NAME, "notificationsInteractionFail", {
-		  name: "Notifications failed interactions",
-    	hint: "Emit notifications for when a player fails to interact with a door. Good for debugging.",
+		  name: i18n(`${MODULE_NAME}.settingNameNotificationsFailedInteraction`),
+    	hint: i18n(`${MODULE_NAME}.settingHintNotificationsFailedInteraction`),
       scope: "world",
       config: true,
       default: true,
@@ -130,8 +130,8 @@ export const registerSettings = function () {
 	});
 
 	game.settings.register(MODULE_NAME, "globalInteractionDistance", {
-		name: "Global maximum interaction distance",
-		hint: "Max distance (in tiles) that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+		name: i18n(`${MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
+		hint: i18n(`${MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
 		scope: "world",
 		config: true,
 		default: 1,
@@ -140,8 +140,8 @@ export const registerSettings = function () {
 	});
 
   game.settings.register(MODULE_NAME, "hotkeyDoorInteraction", {
-		name: "Hotkey 'e' for interaction",
-		hint: "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
+		name: i18n(`${MODULE_NAME}.settingNameHotKeyForInteraction`),
+		hint: i18n(`${MODULE_NAME}.settingHintHotKeyForInteraction`),
 		scope: "world",
 		config: true,
 		default: true,
@@ -149,8 +149,8 @@ export const registerSettings = function () {
 	});
 
   game.settings.register(MODULE_NAME, "hotkeyDoorInteractionDelay", {
-		name: "Interaction double tap delay",
-		hint: "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
+		name: i18n(`${MODULE_NAME}.settingNameDoubleTapInteraction`),
+		hint: i18n(`${MODULE_NAME}.settingHintDoubleTapInteraction`),
 		scope: "world",
 		config: true,
 		default: 200,
@@ -159,8 +159,8 @@ export const registerSettings = function () {
 	});
 
 	game.settings.register(MODULE_NAME, "doorInteractionDistance", {
-		name: "Maximum door interaction distance",
-    hint: "",
+		name: i18n(`${MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
+    hint: i18n(`${MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
 		scope: "world",
 		config: true,
 		default: 1,
@@ -169,8 +169,8 @@ export const registerSettings = function () {
 	});
 
     game.settings.register(MODULE_NAME, "hotkeyDoorInteractionCenter", {
-		name: "Hotkey 'e' to center camera",
-		hint: "Holding 'e' will center the camera on current selected token.",
+		name: i18n(`${MODULE_NAME}.settingNameHotKeyToCenterCamera`),
+		hint: i18n(`${MODULE_NAME}.settingHintHotKeyToCenterCamera`),
 		scope: "world",
 		config: true,
 		default: true,
@@ -178,8 +178,8 @@ export const registerSettings = function () {
 	});
 
 	game.settings.register(MODULE_NAME, "globalInteractionDistanceForGM", {
-		name: "Notifications failed interactions even for GM",
-    	hint: "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
+		name: i18n(`${MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
+    	hint: i18n(`${MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
 		scope: "world",
 		config: true,
 		default: false,
@@ -187,8 +187,8 @@ export const registerSettings = function () {
 	});
 
 	game.settings.register(MODULE_NAME, "forceReSelection", {
-		name: "Avoid deselects the controlled token when open/close the door",
-    	hint: "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
+		name: i18n(`${MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
+    	hint: i18n(`${MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
 		scope: "world",
 		config: true,
 		default: false,
@@ -196,8 +196,8 @@ export const registerSettings = function () {
 	});
 
 	game.settings.register(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected", {
-		name: "Use the owned tokens if no tokens is selected",
-    	hint: "Use the owned tokens if no tokens is selected",
+		name: i18n(`${MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
+    	hint: i18n(`${MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
 		scope: "world",
 		config: true,
 		default: true,
@@ -206,8 +206,8 @@ export const registerSettings = function () {
 
 	//@ts-ignore
 	// KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction", {
-	// 	name: "Set a custom keybind for door interaction",
-	// 	hint: "Set a custom keybind for door interaction",
+	// 	name: i18n(`${MODULE_NAME}.settingNameSetCustomKeyBindForDoorInteraction`),
+	// 	hint: i18n(`${MODULE_NAME}.settingHintSetCustomKeyBindForDoorInteraction`),
 	// 	config: true,
 	// 	default: "KeyE",
 	// 	onKeyDown: () => {
@@ -220,8 +220,8 @@ export const registerSettings = function () {
   // ========================================================
 
 	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
-		  name: "Enable/Disable ambient door feature",
-    	hint: "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.",
+		  name: i18n(`${MODULE_NAME}.settingNameEnableAmbientDoorFeature`),
+    	hint: i18n(`${MODULE_NAME}.settingHintEnableAmbientDoorFeature`),
       scope: "world",
       config: true,
       default: false,
@@ -231,19 +231,33 @@ export const registerSettings = function () {
       }
 	});
 
+  $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
+    if ($(this).is(':checked')) {
+      manageSettingsAmbientDoorFeature(true);
+    }
+    else {
+      manageSettingsAmbientDoorFeature(false);
+    }
+  });
+
 	game.settings.register(MODULE_NAME, "stealthDoor",{
-		  name: "Silent Door Permission Level",
-      hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+		  name: i18n(`${MODULE_NAME}.settingNameSilentDoorPermissionsLevel`),
+      hint: i18n(`${MODULE_NAME}.settingHintSilentDoorPermissionsLevel`),
       scope: "world",
       config: true,
       default: "2",
-      choices: {1: "Player", 2: "Trusted", 3: "Assistant", 4: "Game Master"},
+      choices: {
+        1: "Player", 
+        2: "Trusted", 
+        3: "Assistant", 
+        4: "Game Master"
+      },
       type: String
 	});
 
     game.settings.register(MODULE_NAME, "closeDoorPathDefault", {
-        name: "Door Close",
-        hint: "The default sound effect that will be played when a door is closed.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorCloseSoundEffect`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorCloseSoundEffect`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
@@ -253,8 +267,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "closeDoorLevelDefault", {
-        name: "Close Door Volume Level",
-        hint: "The default volume level that the close door SFX will be played at.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorCloseSoundVolumeLevel`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorCloseSoundVolumeLevel`),
         scope: 'world',
         config: true,
         default: 0.8,
@@ -263,8 +277,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "openDoorPathDefault", {
-        name: "Door Open",
-        hint: "The default sound effect that will be played when a door is opened.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorOpenSoundEffect`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorOpenSoundEffect`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
@@ -274,8 +288,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "openDoorLevelDefault", {
-        name: "Open Door Volume Level",
-        hint: "The default volume level that the open door SFX will be played at.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorOpenSoundVolumeLevel`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorOpenSoundVolumeLevel`),
         scope: 'world',
         config: true,
         default: 0.8,
@@ -284,8 +298,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "lockDoorPathDefault", {
-        name: "Door Lock",
-        hint: "The default sound effect that will be played when a door is locked.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorLockSoundEffect`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorLockSoundEffect`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
@@ -295,8 +309,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
-        name: "Close Lock Volume Level",
-        hint: "The default volume level that the lock door SFX will be played at.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorLockSoundVolumeLevel`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorLockSoundVolumeLevel`),
         scope: 'world',
         config: true,
         default: 0.8,
@@ -305,8 +319,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "unlockDoorPathDefault", {
-        name: "Door Unlock",
-        hint: "The default sound effect that will be played when a door is unlocked.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorUnlockSoundEffect`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorUnlockSoundEffect`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
@@ -316,8 +330,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "unlockDoorLevelDefault", {
-        name: "Unlock Door Volume Level",
-        hint: "The default volume level that the unlock door SFX will be played at.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorUnlockSoundVolumeLevel`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorUnlockSoundVolumeLevel`),
         scope: 'world',
         config: true,
         default: 0.8,
@@ -326,17 +340,17 @@ export const registerSettings = function () {
     });
 
     game.settings.register(MODULE_NAME, "lockedDoorJinglePathDefault", {
-        name: "Locked Door Jingle",
-        hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorLockedJingleSoundEffect`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorLockedJingleSoundEffect`),
         scope: 'world',
         config: true,
-        default: `sounds/lock.wav`,
+        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
         type: String
     });
 
     game.settings.register(MODULE_NAME, "lockedDoorJingleLevelDefault", {
-        name: "Locked Door Jingle Volume Level",
-        hint: "The default volume level that the unlock door SFX will be played at.",
+        name: i18n(`${MODULE_NAME}.settingNameDoorLockedJingleVolumeLevel`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorLockedJingleVolumeLevel`),
         scope: 'world',
         config: true,
         default: 0.8,
@@ -344,22 +358,13 @@ export const registerSettings = function () {
 		    range: {min:0, max:2, step:0.05}
     });
 
-    $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
-      if ($(this).is(':checked')) {
-        manageSettingsAmbientDoorFeature(true);
-      }
-      else {
-        manageSettingsAmbientDoorFeature(false);
-      }
-    });
-
 	  // ========================================================
     // Sound Previewer
     // ========================================================
 
     game.settings.register(MODULE_NAME, "enableSoundPreviewer", {
-        name: "Enable/Disable Sound Previewer feature",
-        hint: "Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.",
+        name: i18n(`${MODULE_NAME}.settingNameEnableSoundPreviewerFeature`),
+        hint: i18n(`${MODULE_NAME}.settingHintEnableSoundPreviewerFeature`),
         scope: "world",
         config: false,
         default: true,
@@ -371,8 +376,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(MODULE_NAME, "enableDesignerDoor", {
-      name: "Enable/Disable Designer Door",
-      hint: "You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.",
+      name: i18n(`${MODULE_NAME}.settingNameEnableDesignerDoorFeature`),
+      hint: i18n(`${MODULE_NAME}.settingHintEnableDesignerDoorFeature`),
       scope: "world",
       config: true,
       default: false,
@@ -386,8 +391,8 @@ export const registerSettings = function () {
     // Closed door default icon
 
     game.settings.register(MODULE_NAME, 'doorClosedDefault', {
-        name: 'Closed Door',
-        hint: 'The default icon for a closed door',
+        name: i18n(`${MODULE_NAME}.settingNameDoorClosedImageIcon`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorClosedImageIcon`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/door-steel.svg`,
@@ -399,8 +404,8 @@ export const registerSettings = function () {
     // Open door default icon
 
     game.settings.register(MODULE_NAME, 'doorOpenDefault', {
-        name: 'Open Door',
-        hint: 'The default icon for an open door',
+        name: i18n(`${MODULE_NAME}.settingNameDoorOpenImageIcon`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorOpenImageIcon`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/door-exit.svg`,
@@ -412,8 +417,8 @@ export const registerSettings = function () {
     // Locked door default icon
 
     game.settings.register(MODULE_NAME, 'doorLockedDefault', {
-        name: 'Locked Door',
-        hint: 'The default icon for a locked door',
+        name: i18n(`${MODULE_NAME}.settingNameDoorLockedImageIcon`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorLockedImageIcon`),
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/padlock.svg`,
@@ -437,8 +442,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(MODULE_NAME, "enableWindowDoor", {
-      name: "Enable/Disable Window Door",
-      hint: "Enable/Disable Window Door",
+      name: i18n(`${MODULE_NAME}.settingNameWindowDoorFeature`),
+      hint: i18n(`${MODULE_NAME}.settingHintWindowDoorFeature`),
       scope: "world",
       config: false,
       default: false,
@@ -451,8 +456,8 @@ export const registerSettings = function () {
 
     // Register custom module settings
     game.settings.register(MODULE_NAME, 'enabledShowDoorIcons', {
-      name: i18n(MODULE_NAME+".force-doors-s"),
-      hint: i18n(MODULE_NAME+".force-doors-l"),
+      name: i18n(MODULE_NAME+".settingNameShowDoorIconsFeature"),
+      hint: i18n(MODULE_NAME+".settingHintShowDoorIconsFeature"),
       scope: "world",
       config: false,
       default: false,

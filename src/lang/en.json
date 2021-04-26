@@ -14,8 +14,8 @@
   "foundryvtt-arms-reach.settingNameEnableArmsReachFeature": "Enable/Disable arms reach feature",
   "foundryvtt-arms-reach.settingHintEnableArmsReachFeature": "Enable the GM to select the maximum distance that players can interact with a door",
 
-  "foundryvtt-arms-reach.settingNameNotificationFailedInteraction": "Notifications failed interactions",
-  "foundryvtt-arms-reach.settingHintNotificationFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
+  "foundryvtt-arms-reach.settingNameNotificationsFailedInteraction": "Notifications failed interactions",
+  "foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
 
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "Global maximum interaction distance",
 	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "Max distance (in tiles) that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
@@ -32,8 +32,8 @@
   "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "Hotkey 'e' to center camera",
   "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "Holding 'e' will center the camera on current selected token.",
 
-  "foundryvtt-arms-reach.settingNameNotificationFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
-  "foundryvtt-arms-reach.settingHintNotificationFailedInteractionEvenForGM": "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
+  "foundryvtt-arms-reach.settingNameNotificationsFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
+  "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
 
   "foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Avoid deselects the controlled token when open/close the door",
   "foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
@@ -48,32 +48,32 @@
   "foundryvtt-arms-reach.settingNameSilentDoorPermissionsLevel": "Silent Door Permission Level",
   "foundryvtt-arms-reach.settingHintSilentDoorPermissionsLevel": "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
 
-  "foundryvtt-arms-reach.settingNameDoorCloseSoundEffect": "Door Close",
+  "foundryvtt-arms-reach.settingNameDoorCloseSoundEffect": "Door Close Sound Effect",
   "foundryvtt-arms-reach.settingHintDoorCloseSoundEffect": "The default sound effect that will be played when a door is closed.",
 
   "foundryvtt-arms-reach.settingNameDoorCloseSoundVolumeLevel": "Close Door Volume Level",
   "foundryvtt-arms-reach.settingHintDoorCloseSoundVolumeLevel": "The default volume level that the close door SFX will be played at.",
 
-  "foundryvtt-arms-reach.settingNameDoorOpenSoundEffect": "Door Open",
+  "foundryvtt-arms-reach.settingNameDoorOpenSoundEffect": "Door Open Sound Effect",
   "foundryvtt-arms-reach.settingHintDoorOpenSoundEffect": "The default sound effect that will be played when a door is opened.",
 
   "foundryvtt-arms-reach.settingNameDoorOpenSoundVolumeLevel": "Open Door Volume Level",
   "foundryvtt-arms-reach.settingHintDoorOpenSoundVolumeLevel": "The default volume level that the open door SFX will be played at.",
 
-  "foundryvtt-arms-reach.settingNameDoorLockSoundEffect": "Door Lock",
+  "foundryvtt-arms-reach.settingNameDoorLockSoundEffect": "Door Lock Sound Effect",
   "foundryvtt-arms-reach.settingHintDoorLockSoundEffect": "The default sound effect that will be played when a door is locked.",
 
   "foundryvtt-arms-reach.settingNameDoorLockSoundVolumeLevel": "Close Lock Volume Level",
   "foundryvtt-arms-reach.settingHintDoorLockSoundVolumeLevel": "The default volume level that the lock door SFX will be played at.",
 
-  "foundryvtt-arms-reach.settingNameDoorUnlockSoundEffect": "Door Unlock",
+  "foundryvtt-arms-reach.settingNameDoorUnlockSoundEffect": "Door Unlock Sound Effect",
   "foundryvtt-arms-reach.settingHintDoorUnlockSoundEffect": "The default sound effect that will be played when a door is unlocked.",
 
   "foundryvtt-arms-reach.settingNameDoorUnlockSoundVolumeLevel": "Unlock Door Volume Level",
   "foundryvtt-arms-reach.settingHintDoorUnlockSoundVolumeLevel": "The default volume level that the unlock door SFX will be played at.",
 
-  "foundryvtt-arms-reach.settingNameDoorLockedJingle": "Locked Door Jingle",
-  "foundryvtt-arms-reach.settingHintDoorLockedJingle": "The default sound effect that will be played when a locked door is attempted to be opened.",
+  "foundryvtt-arms-reach.settingNameDoorLockedJingleSoundEffect": "Locked Door Jingle Sound Effect",
+  "foundryvtt-arms-reach.settingHintDoorLockedJingleSoundEffect": "The default sound effect that will be played when a locked door is attempted to be opened.",
 
   "foundryvtt-arms-reach.settingNameDoorLockedJingleVolumeLevel": "Locked Door Jingle Volume Level",
   "foundryvtt-arms-reach.settingHintDoorLockedJingleVolumeLevel": "The default volume level that the unlock door SFX will be played at.",
@@ -86,20 +86,20 @@
   "foundryvtt-arms-reach.settingNameEnableDesignerDoorFeature": "Enable/Disable Designer Door",
   "foundryvtt-arms-reach.settingHintEnableDesignerDoorFeature": "You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.",
 
-  "foundryvtt-arms-reach.settingNameClosedDoor": "Closed Door",
-  "foundryvtt-arms-reach.settingHintClosedDoor": "The default icon for a closed door",
+  "foundryvtt-arms-reach.settingNameDoorClosedImageIcon": "Closed Door Image Icon",
+  "foundryvtt-arms-reach.settingHintDoorClosedImageIcon": "The default icon for a closed door",
 
-  "foundryvtt-arms-reach.settingNameOpenDoor": "Open Door",
-  "foundryvtt-arms-reach.settingHintOpenDoor": "The default icon for an open door",
+  "foundryvtt-arms-reach.settingNameDoorOpenImageIcon": "Open Door Image Icon",
+  "foundryvtt-arms-reach.settingHintDoorOpenImageIcon": "The default icon for an open door",
 
-  "foundryvtt-arms-reach.settingNameLockedDoor": "Locked Door",
-  "foundryvtt-arms-reach.settingHintLockedDoor": "The default icon for a locked door",
+  "foundryvtt-arms-reach.settingNameDoorLockedImageIcon": "Locked Door Image Icon",
+  "foundryvtt-arms-reach.settingHintDoorLockedImageIcon": "The default icon for a locked door",
 
 
-  "foundryvtt-arms-reach.settingNameFeature": "Enable/Disable Window Door",
-  "foundryvtt-arms-reach.settingHintFeature": "Enable/Disable Window Door",
+  "foundryvtt-arms-reach.settingNameWindowDoorFeature": "Enable/Disable Window Door",
+  "foundryvtt-arms-reach.settingHintWindowDoorFeature": "Enable/Disable Window Door",
 
-  "foundryvtt-arms-reach.force-doors-s": "Force Door Icon Visiblity?",
-  "foundryvtt-arms-reach.force-doors-l": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible."
+  "foundryvtt-arms-reach.settingNameShowDoorIconsFeature": "Force Door Icon Visiblity?",
+  "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible."
 
 }
