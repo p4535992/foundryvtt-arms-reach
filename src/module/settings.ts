@@ -24,7 +24,7 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 export function manageSettingsArmsReachFeature(data){
   if(data){
     $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').show(); 
+    $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').show();
     $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').show();
     $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').show();
     $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').show();
@@ -247,9 +247,9 @@ export const registerSettings = function () {
       config: true,
       default: "2",
       choices: {
-        1: "Player", 
-        2: "Trusted", 
-        3: "Assistant", 
+        1: "Player",
+        2: "Trusted",
+        3: "Assistant",
         4: "Game Master"
       },
       type: String
@@ -465,5 +465,18 @@ export const registerSettings = function () {
       onChange: (x) => {
         window.location.reload();
       }
+    });
+
+    // ========================================================
+    // GRIDLESS SUPPORT
+    // ========================================================
+
+    game.settings.register(MODULE_NAME, "enableGridlessSupport", {
+      name: i18n(`${MODULE_NAME}.settingNameGridlessSupportFeature`),
+      hint: i18n(`${MODULE_NAME}.settingHintGridlessSupportFeature`),
+      scope: "world",
+      config: false,
+      default: false,
+      type: Boolean
     });
 }

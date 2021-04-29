@@ -104,7 +104,7 @@ export const Armsreach = {
   },
 
   globalInteractionDistance : async function(doorControl:any){ // TODO can't be a DoorControl not have acces to wall property
-    
+
     let character:Token = getFirstPlayerTokenSelected();
     let isOwned:boolean = false;
     if(!character){
@@ -270,7 +270,7 @@ export const Armsreach = {
     }
 
     let doorData = Armsreach.defaultDoorData();
-   
+
     let playpath = "";
     let playVolume = 0.8;
 
@@ -326,6 +326,8 @@ export class ArmsReachVariables
   static weapon_interaction_keydown = false;
   static weapon_interaction_cameraCentered = false;
 
+  static grace_distance = 2.5;
+
   static lastData = {
     x: 0.0,
     y: 0.0,
@@ -337,11 +339,15 @@ export class ArmsReachVariables
 }
 
 export function ifStuckInteract(key, offsetx, offsety) {
+
+  if (!isFocusOnCanvas()){
+    return;
+  }
   let character = getFirstPlayerToken();
   if(!character){
      return;
   }
-  if( Date.now() - ArmsReachVariables.lastData[key] > game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") ) {
+  if( Date.now() - ArmsReachVariables.lastData[key] > <number>game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") ) {
     ArmsReachVariables.lastData.x = character.x;
     ArmsReachVariables.lastData.y = character.y;
     ArmsReachVariables.lastData[key] = Date.now();
@@ -357,7 +363,7 @@ export function ifStuckInteract(key, offsetx, offsety) {
 /**
  * Interact with door
  */
-export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0) {
+export const interactWithNearestDoor = function(token:Token, offsetx = 0, offsety = 0) {
     // Max distance definition
     let gridSize = getCanvas().dimensions.size;
     let maxDistance = Infinity;
@@ -373,22 +379,48 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
     // Shortest dist
     let shortestDistance = Infinity;
     var closestDoor = null; // is a doorcontrol
-
+    const reach = actorReach(token.actor);
     // Find closest door
     let charCenter = getTokenCenter(token);
     charCenter.x += offsetx * gridSize;
     charCenter.y += offsety * gridSize;
 
     for( let i = 0; i < getCanvas().controls.doors.children.length ; i++ ) {
+
+
+
       let door:DoorControl = getCanvas().controls.doors.children[i];
+      if (!door.visible){
+        continue;
+      }
 
-      let dist = getManhattanBetween(door, charCenter);
-      let distInGridUnits = (dist / gridSize) - 0.1;
+      if(<boolean>game.settings.get(MODULE_NAME,"enableGridlessSupport")){
+        // ==============================================================================
+
+        const rd = getDistance(token, door, offsetx, offsety);
 
 
-      if ( distInGridUnits < maxDistance && dist < shortestDistance ) {
-        closestDoor = door;
-        shortestDistance = dist;
+        if (rd.unitDistance < shortestDistance) {
+
+          shortestDistance = rd.unitDistance;
+          if (rd.unitDistance <= (reach + ArmsReachVariables.grace_distance)){
+            closestDoor = door;
+          }
+        }
+        else{
+          iteractionFailNotification(`Door too far away: ${clampNum(rd.unitDistance)} > ${reach}`);
+        }
+
+        // ================================================================================
+      }else{
+        let dist = getManhattanBetween(door, charCenter);
+        let distInGridUnits = (dist / gridSize) - 0.1;
+
+
+        if ( distInGridUnits < maxDistance && dist < shortestDistance ) {
+          closestDoor = door;
+          shortestDistance = dist;
+        }
       }
     }
 
@@ -409,8 +441,10 @@ export const interactWithNearestDoor = function(token, offsetx = 0, offsety = 0)
 
       if (tokenName){
          iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotFoundInReachFor",{tokenName: tokenName}));
+         iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }else{
          iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotFoundInReach"));
+         iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }
       return;
     }
@@ -519,4 +553,94 @@ export const isFocusOnCanvas = function() {
   {
     return true;
   }
+}
+
+// ===================================
+// POSSIBLE GRIDLESS SUPPORT
+// ===================================
+
+function getRay(pointA, pointB, scene) {
+	const rd = {
+		ray: new Ray(pointA, pointB),
+		get cellDistance() { return this.ray.distance / scene.data.grid; }, // cells
+		get unitDistance() { return this.cellDistance * scene.data.gridDistance; }, // feet, meters, whatever
+	};
+
+	//console.log("getRay:", pointA, pointB, rd.unitDistance);
+
+	return rd;
+}
+
+function getSector(radian) {
+	const clampDeg = (d) => d >= 360 ? d - 360 : d;
+	//const clampRad = (r) => r >= Math.PI * 2 ? r - Math.PI * 2 : r;
+	const wrapSector = (s) => s >= 8 ? 0 : s;
+	const rad2deg = (rad) => rad * (180 / Math.PI);
+	const angleDeg = clampDeg(rad2deg(radian)),
+		sectorAngle = 360 / 8, // 8 sectors
+		//sectorMargin = sectorAngle / 2; //
+		sector = wrapSector(Math.round(angleDeg / sectorAngle));
+	//console.log('rad:', Number(radian.toFixed(3)), '-> deg:', Number(angleDeg.toFixed(2)), '= sector:', sector, `[${sectorName(sector)}]`);
+	return sector;
+}
+
+const sectorMap = {
+	0: { x: 0.5, y: 0, label: 'MR' }, // middle right
+	1: { x: 0.5, y: 0.5, label: 'BR' }, // bottom right,
+	2: { x: 0, y: 0.5, label: 'BM' }, // bottom middle,
+	3: { x: -0.5, y: 0.5, label: 'BL' }, // bottom left,
+	4: { x: -0.5, y: 0, label: 'ML' }, // middle left,
+	5: { x: -0.5, y: -0.5, label: 'TL' }, // top left,
+	6: { x: 0, y: -0.5, label: 'TM' }, // top middle,
+	7: { x: 0.5, y: -0.5, label: 'TR' }, // top right,
+};
+
+// function sectorName(sector) {
+// 	const l = { M: 'Middle', T: 'Top', B: 'Bottom', L: 'Left', 'R': 'Right' };
+// 	const a = '→↘↓↙←↖↑↗';
+// 	const s = sectorMap[sector].label;
+// 	return `${l[s[0]]} ${l[s[1]]} ${a[sector]}`;
+// }
+
+function sectorAdjust(sector, token, origin) {
+	const adjust = sectorMap[sector];
+	//console.log(sector, adjust, token, origin);
+	return {
+		x: (adjust.x * token.w) + origin.x,
+		y: (adjust.y * token.h) + origin.y
+	};
+}
+
+function getDistance(token:Token, door:DoorControl, offsetx:Number, offsety:Number) {
+	const scene = getCanvas().scene;
+
+	const origin:any = { x: token.data.x, y: token.data.y };
+	const dest = { x: door.x, y: door.y };
+
+	const basicRayOnly = offsetx !== undefined && offsety !== undefined;
+
+	if (basicRayOnly) {
+		origin.x += offsetx;
+		origin.y += offsety;
+	}
+
+	// Basic distance ray
+	const rd = getRay(origin, dest, scene);
+	if (basicRayOnly) return rd;
+
+	// Advanced ray calculated from token sector.
+	const originSector = getSector(rd.ray.normAngle),
+		newOrigin = sectorAdjust(originSector, token, origin);
+
+	return getRay(newOrigin, door, scene);
+}
+
+
+function actorReach(actor) {
+	return Math.max(5, actor.data.data.range.melee);
+}
+
+// Clamps number to 1 decimal
+function clampNum(n) {
+	return Math.floor(n * 10) / 10;
 }

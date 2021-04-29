@@ -96,10 +96,13 @@
   "foundryvtt-arms-reach.settingHintDoorLockedImageIcon": "The default icon for a locked door",
 
 
-  "foundryvtt-arms-reach.settingNameWindowDoorFeature": "Enable/Disable Window Door",
-  "foundryvtt-arms-reach.settingHintWindowDoorFeature": "Enable/Disable Window Door",
+  "foundryvtt-arms-reach.settingNameWindowDoorFeature": "Enable/Disable Window Door feature",
+  "foundryvtt-arms-reach.settingHintWindowDoorFeature": "Enable/Disable Window Door feature",
 
   "foundryvtt-arms-reach.settingNameShowDoorIconsFeature": "Force Door Icon Visiblity?",
-  "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible."
+  "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible.",
+
+  "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
+  "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'"
 
 }
