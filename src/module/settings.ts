@@ -468,6 +468,21 @@ export const registerSettings = function () {
     });
 
     // ========================================================
+    // STAIRWAY SUPPORT
+    // ========================================================
+
+    // First of all Depends if the module is present and active
+
+    game.settings.register(MODULE_NAME, "enableStairwaysIntegration", {
+      name: i18n(`${MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
+      hint: i18n(`${MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean
+    });
+
+    // ========================================================
     // GRIDLESS SUPPORT
     // ========================================================
 

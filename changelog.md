@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.0.10
+
+- (Experimental) Integrations with [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways)
+
 # 1.0.9
 
 - Solved [issue 5](https://github.com/p4535992/foundryvtt-arms-reach/issues/5)

@@ -10,9 +10,10 @@ There are more than 300 modules in foundry vtt so the scope of this module is to
 
 You can still enable/disable every single feature from module settings.
 
-## Known issue
+## Known issue/Limitation
 
-- If 'Show Doors Icons Feature' not working like exepcting
+- If 'Show Doors Icons Feature' is enabled it's not working like expecting
+- Only Grid Square Maps are supported so Gridless and Hex map not work with the same logic (you can make it work by manipulating the module settings in some way) i will try in the future for 0.8.X to integrated this library [lib-find-the-path](https://github.com/dwonderley/lib-find-the-path/) for manage every type of map
 
 ## Installation
 
@@ -70,6 +71,10 @@ You can change the default door icons used to show closed, open and locked doors
 * Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
 * This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
+**(Experimental) Integration with [Stairways Module]((https://gitlab.com/SWW13/foundryvtt-stairways))**
+
+* If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon, ONLY WORK ON GRID SQUARE MAPS.
+
 **[DISABLED] Show Doors Icons Feature**
 
 Forces Door Controls to remain visible on the Wall Layer. 
@@ -98,6 +103,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [Designer Windows](https://github.com/Exitalterego/designerwindows) ty to [Exitalterego](https://github.com/Exitalterego)
 - [showdooricons](https://github.com/wsaunders1014/showdooricons) ty to [wsaunders1014](https://github.com/wsaunders1014)
 - [Arms Reach (for pathfinder 1e)](https://gitlab.com/mkah-fvtt/pf1/arms-reach) ty to [mkah-fvtt](https://gitlab.com/mkah-fvtt)
+- [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways) ty to [SWW13](https://gitlab.com/SWW13)
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

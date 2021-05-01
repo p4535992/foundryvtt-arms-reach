@@ -502,7 +502,7 @@ export const getFirstPlayerToken = function() {
   // Get first token ownted by the player
   let selectedTokens = getCanvas().tokens.controlled;
   if (selectedTokens.length > 1) {
-      ui.notifications.warn("Please selected a single token");
+      iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
       return;
   }
   if(!selectedTokens || selectedTokens.length == 0){
@@ -518,7 +518,7 @@ export const getSelectedOrOwnedTokens = function()
 {
   let controlled = getCanvas().tokens.controlled;
   if (controlled.length > 1) {
-      ui.notifications.warn("Please selected a single token");
+      iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
       return;
   }
   if(<boolean>game.settings.get(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {

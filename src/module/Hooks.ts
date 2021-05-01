@@ -6,6 +6,7 @@ import { manageSettingsArmsReachFeature, MODULE_NAME } from './settings';
 import { SoundPreviewer } from "./SoundPreviewer";
 import { DesignerDoors } from './DesignerDoors';
 import { ShowDoorIcons } from './showdooricons';
+import { StairwaysReach } from './StairwaysReach';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -85,6 +86,19 @@ export let readyHooks = async () => {
     }
 
   });
+
+  // Management of the Stairways module
+  if (game.modules.get("stairways")?.active){
+    Hooks.on('PreStairwayTeleport', (data) => {
+      if(<boolean>game.settings.get(MODULE_NAME, "enableStairwaysIntegration")) {
+        const { sourceSceneId, selectedTokenIds, targetSceneId, targetData, userId } = data
+    
+        return StairwaysReach.globalInteractionDistance(targetData,selectedTokenIds,userId);
+      }
+      
+    });
+  }
+  
 
   // Register custom sheets (if any)
 

@@ -3,10 +3,18 @@
   "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
   "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",
   "foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No character is selected to center camera on.",
+  
   "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach.",
   "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach",
   "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
   "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach",
+
+  "foundryvtt-arms-reach.stairwaysNotFoundInReach": "No stairways was found within reach.",
+  "foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "No stairways was found within {tokenName}'s reach",
+  "foundryvtt-arms-reach.stairwaysNotInReach": "Stairways not in reach",
+  "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairways not within {tokenName}'s reach",
+
+  "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 
   "foundryvtt-arms-reach.errorNoDsProperty": "No 'ds' property found for value '${wallDataDs}' for id : '${wallDDataId}'",
   "foundryvtt-arms-reach.errorNoWallFoundForId" : "No wall found for id : '${wallDDataId}'",
@@ -101,6 +109,9 @@
 
   "foundryvtt-arms-reach.settingNameShowDoorIconsFeature": "Force Door Icon Visiblity?",
   "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible.",
+
+  "foundryvtt-arms-reach.settingNameStairwaysIntegrationFeature": "[Experimental] Enable/Disable Stairways integration",
+  "foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Max distance (in tiles) that a token can interact with a stairways... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'"
