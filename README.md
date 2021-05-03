@@ -71,7 +71,7 @@ You can change the default door icons used to show closed, open and locked doors
 * Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
 * This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
-**(Experimental) Integration with [Stairways Module]((https://gitlab.com/SWW13/foundryvtt-stairways))**
+**Integration with [Stairways Module]((https://gitlab.com/SWW13/foundryvtt-stairways))**
 
 * If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon, ONLY WORK ON GRID SQUARE MAPS.
 

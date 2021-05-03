@@ -91,9 +91,9 @@ export let readyHooks = async () => {
   if (game.modules.get("stairways")?.active){
     Hooks.on('PreStairwayTeleport', (data) => {
       if(<boolean>game.settings.get(MODULE_NAME, "enableStairwaysIntegration")) {
-        const { sourceSceneId, selectedTokenIds, targetSceneId, targetData, userId } = data
+        const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data
     
-        return StairwaysReach.globalInteractionDistance(targetData,selectedTokenIds,userId);
+        return StairwaysReach.globalInteractionDistance(sourceData,selectedTokenIds,userId);
       }
       
     });

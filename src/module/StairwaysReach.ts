@@ -4,7 +4,7 @@ import { getCanvas, MODULE_NAME } from "./settings";
 
 export const StairwaysReach = {
 
-    globalInteractionDistance : function(stairway:TargetData,selectedTokenIds:string[],userId:String):Boolean{ 
+    globalInteractionDistance : function(stairway:SourceData,selectedTokenIds:string[],userId:String):Boolean{ 
         
       let isOwned:boolean = false;
       let character:Token = getFirstPlayerTokenSelected();
@@ -89,23 +89,17 @@ export const StairwaysReach = {
     },
 
     getStairwaysCenter : function(token) {
-        let tokenCenter = {x: token.x , y: token.y };
-        // tokenCenter.x += -20 + ( token.x * 0.5 );
-        // tokenCenter.y += -20 + ( token.y * 0.5 );
-        // With these 1.5
-        // tokenCenter.x += -20;
-        // tokenCenter.y += -20;
-        // With these 1.0.3 (80), 1.0.7 (75), 1.10 (70), 1.18 (60)
-        tokenCenter.x += -90;
-        tokenCenter.y += -90;
+        let tokenCenter = { x: token.x, y: token.y }
         return tokenCenter;
     }
 
 }
 
-export class data {
+export class Data {
     /// scene id of the stairway used (source scene of teleport)
     sourceSceneId:string;
+    /// stairway data of the source stairway (WARNING: this data may change in the future)
+    sourceData:SourceData;
     /// id's of all selected token (tokens beeing teleported)
     selectedTokenIds:string[];
     /// target scene id of the stairway or `null` (target scene of the teleport of `null` if current scene)
@@ -136,4 +130,26 @@ export class TargetData {
     x:number;
     /// y position of target stairway
     y:number;
+}
+
+/// WARNING: internal data - do not use if possible
+export class SourceData {
+  /// target (partner) scene id or `null` if current scene
+  scene:Scene;
+  /// stairway name (id for connection)
+  name:string;
+  /// stairway label or `null` for none
+  label:string;
+  /// stairway icon (image path) or `null` for default
+  icon:string;
+  /// disabled (locked on `true`)
+  disabled:boolean;
+  /// hide from players (hidden on `true`)
+  hidden:boolean;
+  /// animate movement within scene (animate on `true`)
+  animate:boolean;
+  /// x position of target stairway
+  x:number;
+  /// y position of target stairway
+  y:number;
 }

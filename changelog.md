@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.0.11
+
+- FInalized first integrations with [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways)
+
 # 1.0.10
 
 - (Experimental) Integrations with [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways)
