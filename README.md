@@ -104,6 +104,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [showdooricons](https://github.com/wsaunders1014/showdooricons) ty to [wsaunders1014](https://github.com/wsaunders1014)
 - [Arms Reach (for pathfinder 1e)](https://gitlab.com/mkah-fvtt/pf1/arms-reach) ty to [mkah-fvtt](https://gitlab.com/mkah-fvtt)
 - [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways) ty to [SWW13](https://gitlab.com/SWW13)
+- [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

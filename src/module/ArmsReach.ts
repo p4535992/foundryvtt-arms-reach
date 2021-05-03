@@ -454,9 +454,12 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
  * Get token center
  */
 export const getTokenCenter = function(token) {
+    /*
     let tokenCenter = {x: token.x , y: token.y };
     tokenCenter.x += -20 + ( token.w * 0.50 );
     tokenCenter.y += -20 + ( token.h * 0.50 );
+    */
+    let tokenCenter = {x: token.x + token.w / 2, y: token.y + token.h / 2}
     return tokenCenter;
 }
 
@@ -483,17 +486,17 @@ export const iteractionFailNotification = function(message) {
   ui.notifications.warn(message);
 }
 
-/**
- * Returns the first selected token or owned token
- */
-export const getFirstPlayerToken = function() {
-    // Get first token ownted by the player
-    let selectedTokens = getSelectedOrOwnedTokens();
-    if(!selectedTokens || selectedTokens.length == 0){
-      return null;
-    }
-    return selectedTokens[0];
-}
+// /**
+//  * Returns the first selected token or owned token
+//  */
+// export const getFirstPlayerToken = function() {
+//     // Get first token ownted by the player
+//     let selectedTokens = getSelectedOrOwnedTokens();
+//     if(!selectedTokens || selectedTokens.length == 0){
+//       return null;
+//     }
+//     return selectedTokens[0];
+// }
 
 /**
  * Returns the first selected token
@@ -513,20 +516,33 @@ export const getFirstPlayerToken = function() {
 
 /**
  * Returns a list of selected (or owned, if no token is selected)
+ * note: ex getSelectedOrOwnedToken
  */
-export const getSelectedOrOwnedTokens = function()
+export const getFirstPlayerToken = function():Token
 {
-  let controlled = getCanvas().tokens.controlled;
-  if (controlled.length > 1) {
+  // Get controlled token
+  let token:Token;
+  let controlled:Token[] = getCanvas().tokens.controlled;
+  // Do nothing if multiple tokens are selected
+  if (controlled.length && controlled.length > 1) {
       iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
       return;
   }
-  if(<boolean>game.settings.get(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
-    if(!controlled || controlled.length == 0 ){
-      controlled = getCanvas().tokens.ownedTokens;
+  // If exactly one token is selected, take that
+  token = controlled[0];
+  if(!token){
+    if(<boolean>game.settings.get(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+      if(!controlled.length || controlled.length == 0 ){
+        // If no token is selected use the token of the users character
+        token = getCanvas().tokens.placeables.find(token => token.actor.data._id === game.user.character?.data?._id);
+      }
+      // If no token is selected use the first owned token of the users character you found
+      if(!token){
+        token = getCanvas().tokens.ownedTokens[0];
+      }
     }
   }
-  return controlled;
+  return token;
 }
 
 /**
