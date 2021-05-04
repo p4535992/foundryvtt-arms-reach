@@ -89,7 +89,7 @@ Forces Door Controls to remain visible on the Wall Layer.
 - Users should report issues to the github issues. Reaching out on Discord is a good option as well, but please follow-up with a github issue
 - Try clearing all tokens using the new button before selecting/targeting other tokens. this should resolve most issues.
 
-Any issues, bugs, or feature requests are always welcome to be reported directly to the [Issue Tracker](https://github.com/eadorin/target-enhancements/issues ), or using the [Bug Reporter Module](https://foundryvtt.com/packages/bug-reporter/).
+Any issues, bugs, or feature requests are always welcome to be reported directly to the [Issue Tracker](https://github.com/p4535992/foundryvtt-arms-reach/issues ), or using the [Bug Reporter Module](https://foundryvtt.com/packages/bug-reporter/).
 
 ## Credit
 
