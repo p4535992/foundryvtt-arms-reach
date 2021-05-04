@@ -275,19 +275,19 @@ export const Armsreach = {
     let playVolume = 0.8;
 
     if(object.ds == 2) { // Door Unlocking
-      playpath = doorData.unlockPath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "unlockDoorPathDefault") : doorData.unlockPath;
+      playpath = doorData.unlockPath;
       playVolume = doorData.unlockLevel;
     }
     else if(updateData.ds == 0) { //Door Close
-      playpath = doorData.closePath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "closeDoorPathDefault") : doorData.closePath;
+      playpath = doorData.closePath;
       playVolume = doorData.closeLevel;
     }
     else if(updateData.ds == 1) {//Door Open
-      playpath = doorData.openPath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "openDoorPathDefault") : doorData.openPath;
+      playpath = doorData.openPath;
       playVolume = doorData.openLevel;
     }
     else if(updateData.ds == 2) {// Door Lock
-      playpath = doorData.lockPath === "DefaultSound"? <string>game.settings.get(MODULE_NAME, "lockDoorPathDefault") : doorData.lockPath;
+      playpath = doorData.lockPath;
       playVolume = doorData.lockLevel;
     }
 
@@ -301,16 +301,16 @@ export const Armsreach = {
   //grab the default sounds from the config paths
   defaultDoorData : function () {
     return {
-      closePath: <string>game.settings.get(MODULE_NAME, "closeDoorPathDefault"),
-      closeLevel: <number>game.settings.get(MODULE_NAME, "closeDoorLevelDefault"),
-      openPath: <string>game.settings.get(MODULE_NAME, "openDoorPathDefault"),
-      openLevel: <number>game.settings.get(MODULE_NAME, "openDoorLevelDefault"),
-      lockPath: <string>game.settings.get(MODULE_NAME, "lockDoorPathDefault"),
-      lockLevel: <number>game.settings.get(MODULE_NAME, "lockDoorLevelDefault"),
-      unlockPath: <string>game.settings.get(MODULE_NAME, "unlockDoorPathDefault"),
-      unlockLevel: <number>game.settings.get(MODULE_NAME, "unlockDoorLevelDefault"),
-      lockJinglePath: <string>game.settings.get(MODULE_NAME, "lockedDoorJinglePathDefault"),
-      lockJingleLevel: <number>game.settings.get(MODULE_NAME, "lockedDoorJingleLevelDefault")
+      closePath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
+      closeLevel: 0.8,
+      openPath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
+      openLevel: 0.8,
+      lockPath:  `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
+      lockLevel: 0.8,
+      unlockPath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
+      unlockLevel: 0.8,
+      lockJinglePath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
+      lockJingleLevel: 0.8
     }
   }
 }

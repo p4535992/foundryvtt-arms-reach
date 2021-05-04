@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.0.13
+
+- Bug fix [issue 8](https://github.com/p4535992/foundryvtt-arms-reach/issues/8)
+
 # 1.0.12
 
 - Hotfix module.json (why i'm so stupid ?)
