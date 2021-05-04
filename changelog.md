@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.0.12
+
+- Hotfix module.json (why i'm so stupid ?)
+
 # 1.0.11
 
 - FInalized first integrations with [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways)
