@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.0.14
+
+- Convert libWrapper hook for DoorControl.prototype._onMouseDown from 'OVERRIDE' to 'MIXED' ty to Stäbchenfisch suggestion
+
 # 1.0.13
 
 - Bug fix [issue 8](https://github.com/p4535992/foundryvtt-arms-reach/issues/8)
