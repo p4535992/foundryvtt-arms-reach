@@ -79,6 +79,14 @@ You can change the default door icons used to show closed, open and locked doors
 
 Forces Door Controls to remain visible on the Wall Layer. 
 
+**Reset Doors and Fog feature Feature**
+
+Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.
+
+REMASTERED
+
+Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
+
 **[ON DEVELOPING FOR 0.8.X] Precompiled Window Door Feature**
 
 
@@ -102,6 +110,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [Arms Reach (for pathfinder 1e)](https://gitlab.com/mkah-fvtt/pf1/arms-reach) ty to [mkah-fvtt](https://gitlab.com/mkah-fvtt)
 - [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways) ty to [SWW13](https://gitlab.com/SWW13)
 - [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
+- [Reset Doors and Fog - Remastered](https://github.com/p4535992/resetdoorsandfog) ty to [yacklebeam](https://github.com/yacklebeam) and [wsaunders1014](https://github.com/wsaunders1014)
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
