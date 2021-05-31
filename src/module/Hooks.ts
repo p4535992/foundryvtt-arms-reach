@@ -28,11 +28,11 @@ export let readyHooks = async () => {
   Hooks.on('preUpdateWall', async (scene, object, updateData, diff, userID) => {
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      AmbientDoors.preUpdateWallHandler(scene, object, updateData, diff, userID);
+      AmbientDoors.preUpdateWallHandler(object, updateData, diff, userID);
     }
     // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
     else if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-      Armsreach.preUpdateWallBugFixSoundHandler(scene, object, updateData, diff, userID);
+      Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
     }
 
   });

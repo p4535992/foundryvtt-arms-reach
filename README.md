@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Foundry-v0.7.9-informational)
+![](https://img.shields.io/badge/Foundry-v0.8.6-informational)
 
 #  FoundryVTT Arms Reach
 

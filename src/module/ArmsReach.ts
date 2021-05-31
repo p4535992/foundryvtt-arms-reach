@@ -256,7 +256,7 @@ export const Armsreach = {
     }
   },
 
-  preUpdateWallBugFixSoundHandler : async function(scene, object, updateData, diff, userID){
+  preUpdateWallBugFixSoundHandler : async function(object, updateData, diff, userID){
 
     if(
           (
@@ -274,7 +274,7 @@ export const Armsreach = {
     let playpath = "";
     let playVolume = 0.8;
 
-    if(object.ds == 2) { // Door Unlocking
+    if(object.data.ds == 2) { // Door Unlocking
       playpath = doorData.unlockPath;
       playVolume = doorData.unlockLevel;
     }

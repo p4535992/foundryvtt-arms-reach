@@ -65,7 +65,7 @@ export const AmbientDoors = {
     }
   },
 
-  preUpdateWallHandler : async function(scene, object, updateData, diff, userID){
+  preUpdateWallHandler : async function(object, updateData, diff, userID){
 
     if(
           (
@@ -79,17 +79,17 @@ export const AmbientDoors = {
     }
 
     let doorData;
-    try {
-          doorData = object.flags[MODULE_NAME].doorData;
-      } //If data is set us that
-    catch(err) {
-          doorData = AmbientDoors.defaultDoorData();
-      } //If no data is set use default sounds.
-
+    try { 
+      doorData = object.data.flags[MODULE_NAME].doorData; 
+    } //If data is set us that
+    catch(err) { 
+      doorData = AmbientDoors.defaultDoorData();
+    } //If no data is set use default sounds.
+   
     let playpath = "";
     let playVolume = 0.8;
 
-    if(object.ds == 2) { // Door Unlocking
+    if(object.data.ds == 2) { // Door Unlocking
       playpath = doorData.unlockPath === "DefaultSound"? game.settings.get(MODULE_NAME, "unlockDoorPathDefault") : doorData.unlockPath;
       playVolume = doorData.unlockLevel;
     }
@@ -124,7 +124,7 @@ export const AmbientDoors = {
     }
 
     app.setPosition({
-      height: 650,
+      height: 678,
       width: 520
     });
 
@@ -165,7 +165,7 @@ export const AmbientDoors = {
       <div class="form-group">
       <label>Door Close</label>
       <div class="form-fields">
-        <button type="button" class="file-picker" data-type="sound" data-target="flags.${MODULE_NAME}.doorData.closePath" title="Browse Files" tabindex="-1">
+        <button type="button" class="file-picker" data-type="audio" data-target="flags.${MODULE_NAME}.doorData.closePath" title="Browse Files" tabindex="-1">
           <i class="fas fa-file-import fa-fw"></i>
         </button>
         <input class="sound" type="text" name="flags.${MODULE_NAME}.doorData.closePath" value="${closeFlag ? closeFlag : ``}" placeholder="Door Close Sound Path" data-dtype="String" />
@@ -183,7 +183,7 @@ export const AmbientDoors = {
       <div class="form-group">
       <label>Door Open</label>
       <div class="form-fields">
-        <button type="button" class="file-picker" data-type="sound" data-target="flags.${MODULE_NAME}.doorData.openPath" title="Browse Files" tabindex="-1">
+        <button type="button" class="file-picker" data-type="audio" data-target="flags.${MODULE_NAME}.doorData.openPath" title="Browse Files" tabindex="-1">
           <i class="fas fa-file-import fa-fw"></i>
         </button>
         <input class="sound" type="text" name="flags.${MODULE_NAME}.doorData.openPath" value="${openFlag ? openFlag : ``}" placeholder="Door Open Sound Path" data-dtype="String" />
@@ -201,7 +201,7 @@ export const AmbientDoors = {
     <div class="form-group">
       <label>Door Lock</label>
       <div class="form-fields">
-        <button type="button" class="file-picker" data-type="sound" data-target="flags.${MODULE_NAME}.doorData.lockPath" title="Browse Files" tabindex="-1">
+        <button type="button" class="file-picker" data-type="audio" data-target="flags.${MODULE_NAME}.doorData.lockPath" title="Browse Files" tabindex="-1">
           <i class="fas fa-file-import fa-fw"></i>
         </button>
         <input class="sound" type="text" name="flags.${MODULE_NAME}.doorData.lockPath" value="${lockFlag ? lockFlag : ``}" placeholder="Door Lock Sound Path" data-dtype="String" />
@@ -219,7 +219,7 @@ export const AmbientDoors = {
     <div class="form-group">
       <label>Door Unlock</label>
       <div class="form-fields">
-        <button type="button" class="file-picker" data-type="sound" data-target="flags.${MODULE_NAME}.doorData.unlockPath" title="Browse Files" tabindex="-1">
+        <button type="button" class="file-picker" data-type="audio" data-target="flags.${MODULE_NAME}.doorData.unlockPath" title="Browse Files" tabindex="-1">
           <i class="fas fa-file-import fa-fw"></i>
         </button>
         <input class="sound" type="text" name="flags.${MODULE_NAME}.doorData.unlockPath" value="${unLockFlag ? unLockFlag : ``}" placeholder="Door Unlock Sound Path" data-dtype="String" />
@@ -237,7 +237,7 @@ export const AmbientDoors = {
       <div class="form-group">
       <label>Locked Door Jingle</label>
       <div class="form-fields">
-        <button type="button" class="file-picker" data-type="sound" data-target="flags.${MODULE_NAME}.doorData.lockJinglePath" title="Browse Files" tabindex="-1">
+        <button type="button" class="file-picker" data-type="audio" data-target="flags.${MODULE_NAME}.doorData.lockJinglePath" title="Browse Files" tabindex="-1">
           <i class="fas fa-file-import fa-fw"></i>
         </button>
         <input class="sound" type="text" name="flags.${MODULE_NAME}.doorData.lockJinglePath" value="${lockJingleFlag ? lockJingleFlag : ``}" placeholder="Locked Door Jingle Sound Path" data-dtype="String" />
@@ -254,17 +254,6 @@ export const AmbientDoors = {
     `;
 
     html.find(".form-group").last().after(message);
-    
-    const button = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.closePath"]')[0];
-    const button2 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.openPath"]')[0];
-    const button3 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.lockPath"]')[0];
-    const button4 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.unlockPath"]')[0];
-    const button5 = html.find('button[data-target="flags.'+MODULE_NAME+'.doorData.lockJinglePath"]')[0];
-
-    app._activateFilePicker(button);
-    app._activateFilePicker(button2);
-    app._activateFilePicker(button3);
-    app._activateFilePicker(button4);
-    app._activateFilePicker(button5);
+    app.activateListeners(html);
   }
 }
