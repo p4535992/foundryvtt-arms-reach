@@ -114,6 +114,9 @@
   "foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Max distance (in tiles) that a token can interact with a stairways... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
-  "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'"
+  "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
+
+  "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
+  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene"
 
 }

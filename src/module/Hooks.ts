@@ -7,6 +7,7 @@ import { SoundPreviewer } from "./SoundPreviewer";
 import { DesignerDoors } from './DesignerDoors';
 import { ShowDoorIcons } from './showdooricons';
 import { StairwaysReach } from './StairwaysReach';
+import { ResetDoorsAndFog } from './resetdoorsandfog';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -99,6 +100,34 @@ export let readyHooks = async () => {
     });
   }
   
+  // Adds menu option to Scene Nav and Directory
+  Hooks.on("getSceneNavigationContext", (html, contextOptions) => {
+    if(<boolean>game.settings.get(MODULE_NAME, "enableResetDoorsAndFog")) {
+      contextOptions.push(ResetDoorsAndFog.getContextOption2('sceneId'));
+    }
+  });
+
+  Hooks.on("getSceneDirectoryEntryContext", (html, contextOptions) => {
+    if(<boolean>game.settings.get(MODULE_NAME, "enableResetDoorsAndFog")) {
+      contextOptions.push(ResetDoorsAndFog.getContextOption2('entityId'));
+    }
+  });
+
+  // Adds Shut All Doors button to Walls Control Layer
+  Hooks.on("getSceneControlButtons", function(controls){
+    if(<boolean>game.settings.get(MODULE_NAME, "enableResetDoorsAndFog")) {
+      controls[4].tools.splice(controls[4].tools.length-2,0,{
+          name: "close",
+          title: "Close Open Doors",
+          icon: "fas fa-door-closed",
+          onClick: () => {
+              ResetDoorsAndFog.resetDoors(true);
+          },
+          button: true
+      })
+      return controls;
+    }
+  })
 
   // Register custom sheets (if any)
 

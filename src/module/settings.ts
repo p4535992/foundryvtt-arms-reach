@@ -494,4 +494,17 @@ export const registerSettings = function () {
       default: false,
       type: Boolean
     });
+
+    // ========================================================
+    // Reset Doors and Fog
+    // ========================================================
+
+    game.settings.register(MODULE_NAME, "enableResetDoorsAndFog", {
+      name: i18n(`${MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
+      hint: i18n(`${MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
+      scope: "world",
+      config: false,
+      default: true,
+      type: Boolean
+    });
 }
