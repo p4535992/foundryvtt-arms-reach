@@ -65,7 +65,7 @@ If you do not wish for any sound effect to play when an certain action is taken,
 
 **Designer Doors Feature**
 
-You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
+You can change the default door icons used to show closed, open and locked doors and set an icon to represent secret doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
 
 * This may be useful to create door control icons more appropriate to a given setting or genre of game.
 * Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.

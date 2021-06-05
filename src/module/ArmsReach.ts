@@ -534,7 +534,7 @@ export const getFirstPlayerToken = function():Token
     if(<boolean>game.settings.get(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
       if(!controlled.length || controlled.length == 0 ){
         // If no token is selected use the token of the users character
-        token = getCanvas().tokens.placeables.find(token => token.actor.data._id === game.user.character?.data?._id);
+        token = getCanvas().tokens.placeables.find(token => token.data._id === game.user.character?.data?._id);
       }
       // If no token is selected use the first owned token of the users character you found
       if(!token){

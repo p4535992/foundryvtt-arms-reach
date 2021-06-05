@@ -2,7 +2,7 @@ import { WindowDoors } from './WindowDoors';
 import { AmbientDoors } from './AmbientDoors';
 import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { Armsreach } from "./ArmsReach";
-import { manageSettingsArmsReachFeature, MODULE_NAME } from './settings';
+import { MODULE_NAME } from './settings';
 import { SoundPreviewer } from "./SoundPreviewer";
 import { DesignerDoors } from './DesignerDoors';
 import { ShowDoorIcons } from './showdooricons';
@@ -26,7 +26,7 @@ export let readyHooks = async () => {
     libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
   }
 
-  Hooks.on('preUpdateWall', async (scene, object, updateData, diff, userID) => {
+  Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
       AmbientDoors.preUpdateWallHandler(object, updateData, diff, userID);

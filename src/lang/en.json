@@ -102,7 +102,10 @@
 
   "foundryvtt-arms-reach.settingNameDoorLockedImageIcon": "Locked Door Image Icon",
   "foundryvtt-arms-reach.settingHintDoorLockedImageIcon": "The default icon for a locked door",
-
+  
+  "foundryvtt-arms-reach.settingNameDoorSecreImageIcon": "Secret Door",
+  "foundryvtt-arms-reach.settingHintDoorSecreImageIcon": "The default icon for a secret door",
+  
 
   "foundryvtt-arms-reach.settingNameWindowDoorFeature": "Enable/Disable Window Door feature",
   "foundryvtt-arms-reach.settingHintWindowDoorFeature": "Enable/Disable Window Door feature",

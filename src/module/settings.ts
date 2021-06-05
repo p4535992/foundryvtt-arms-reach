@@ -1,8 +1,8 @@
-// import { hotkeys } from './libs/lib-df-hotkeys.shim.js';
+
 import { i18n } from "../foundryvtt-arms-reach";
-import ImagePicker from "./libs/ImagePicker";
-import SoundPicker from "./libs/SoundPicker";
-// import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
+// import ImagePicker from "./libs/ImagePicker";
+// import SoundPicker from "./libs/SoundPicker";
+
 export const MODULE_NAME = 'foundryvtt-arms-reach';
 
 /**
@@ -21,75 +21,75 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 	return canvas;
 }
 
-export function manageSettingsArmsReachFeature(data){
-  if(data){
-    $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionCenter"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.globalInteractionDistanceForGM"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.forceReSelection"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.useOwnedTokenIfNoTokenIsSelected"]`).parents('.form-group').show();
-  } else {
-    $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.hotkeyDoorInteractionCenter"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.globalInteractionDistanceForGM"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.forceReSelection"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.useOwnedTokenIfNoTokenIsSelected"]`).parents('.form-group').hide();
-  }
-}
+// export function manageSettingsArmsReachFeature(data){
+//   if(data){
+//     $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.hotkeyDoorInteractionCenter"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.globalInteractionDistanceForGM"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.forceReSelection"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.useOwnedTokenIfNoTokenIsSelected"]`).parents('.form-group').show();
+//   } else {
+//     $(`[name="${MODULE_NAME}.notificationsInteractionFail"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.globalInteractionDistance"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.hotkeyDoorInteraction"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.hotkeyDoorInteractionDelay"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.doorInteractionDistance"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.hotkeyDoorInteractionCenter"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.globalInteractionDistanceForGM"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.forceReSelection"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.useOwnedTokenIfNoTokenIsSelected"]`).parents('.form-group').hide();
+//   }
+// }
 
-export function manageSettingsAmbientDoorFeature(data){
-  if(data){
-    $(`[name="${MODULE_NAME}.stealthDoor"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.closeDoorPathDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.closeDoorLevelDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.openDoorPathDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.openDoorLevelDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.lockDoorPathDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.lockDoorLevelDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.unlockDoorPathDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.unlockDoorLevelDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.lockedDoorJinglePathDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.lockedDoorJingleLevelDefault"]`).parents('.form-group').show();
-  } else {
-    $(`[name="${MODULE_NAME}.stealthDoor"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.closeDoorPathDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.closeDoorLevelDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.openDoorPathDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.openDoorLevelDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.lockDoorPathDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.lockDoorLevelDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.unlockDoorPathDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.unlockDoorLevelDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.lockedDoorJinglePathDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.lockedDoorJingleLevelDefault"]`).parents('.form-group').hide();
-  }
-}
+// export function manageSettingsAmbientDoorFeature(data){
+//   if(data){
+//     $(`[name="${MODULE_NAME}.stealthDoor"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.closeDoorPathDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.closeDoorLevelDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.openDoorPathDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.openDoorLevelDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.lockDoorPathDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.lockDoorLevelDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.unlockDoorPathDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.unlockDoorLevelDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.lockedDoorJinglePathDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.lockedDoorJingleLevelDefault"]`).parents('.form-group').show();
+//   } else {
+//     $(`[name="${MODULE_NAME}.stealthDoor"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.closeDoorPathDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.closeDoorLevelDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.openDoorPathDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.openDoorLevelDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.lockDoorPathDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.lockDoorLevelDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.unlockDoorPathDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.unlockDoorLevelDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.lockedDoorJinglePathDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.lockedDoorJingleLevelDefault"]`).parents('.form-group').hide();
+//   }
+// }
 
-export function manageSettingsDesignerDoorFeature(data){
-  if(data){
-    $(`[name="${MODULE_NAME}.doorClosedDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.doorOpenDefault"]`).parents('.form-group').show();
-    $(`[name="${MODULE_NAME}.doorLockedDefault"]`).parents('.form-group').show();
-  }else{
-    $(`[name="${MODULE_NAME}.doorClosedDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.doorOpenDefault"]`).parents('.form-group').hide();
-    $(`[name="${MODULE_NAME}.doorLockedDefault"]`).parents('.form-group').hide();
-  }
-}
+// export function manageSettingsDesignerDoorFeature(data){
+//   if(data){
+//     $(`[name="${MODULE_NAME}.doorClosedDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.doorOpenDefault"]`).parents('.form-group').show();
+//     $(`[name="${MODULE_NAME}.doorLockedDefault"]`).parents('.form-group').show();
+//   }else{
+//     $(`[name="${MODULE_NAME}.doorClosedDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.doorOpenDefault"]`).parents('.form-group').hide();
+//     $(`[name="${MODULE_NAME}.doorLockedDefault"]`).parents('.form-group').hide();
+//   }
+// }
 
 Hooks.on("renderSettingsConfig", (app, html, user) => {
 
-  manageSettingsArmsReachFeature(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach"));
-  manageSettingsAmbientDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor"));
-  manageSettingsDesignerDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor"));
+  // manageSettingsArmsReachFeature(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach"));
+  // manageSettingsAmbientDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor"));
+  // manageSettingsDesignerDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor"));
 
 });
 
@@ -107,18 +107,18 @@ export const registerSettings = function () {
       default: true,
       type: Boolean,
       onChange: (data) => {
-        manageSettingsArmsReachFeature(data);
+        // manageSettingsArmsReachFeature(data);
       }
 	});
 
-  $(`[name="${MODULE_NAME}.enableArmsReach"]`).change(function() {
-    if ($(this).is(':checked')) {
-      manageSettingsArmsReachFeature(true);
-    }
-    else {
-      manageSettingsArmsReachFeature(false);
-    }
-  });
+  // $(`[name="${MODULE_NAME}.enableArmsReach"]`).change(function() {
+  //   if ($(this).is(':checked')) {
+  //     manageSettingsArmsReachFeature(true);
+  //   }
+  //   else {
+  //     manageSettingsArmsReachFeature(false);
+  //   }
+  // });
 
   	game.settings.register(MODULE_NAME, "notificationsInteractionFail", {
 		  name: i18n(`${MODULE_NAME}.settingNameNotificationsFailedInteraction`),
@@ -227,18 +227,18 @@ export const registerSettings = function () {
       default: false,
       type: Boolean,
       onChange: (data) => {
-        manageSettingsAmbientDoorFeature(data);
+        // manageSettingsAmbientDoorFeature(data);
       }
 	});
 
-  $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
-    if ($(this).is(':checked')) {
-      manageSettingsAmbientDoorFeature(true);
-    }
-    else {
-      manageSettingsAmbientDoorFeature(false);
-    }
-  });
+  // $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
+  //   if ($(this).is(':checked')) {
+  //     manageSettingsAmbientDoorFeature(true);
+  //   }
+  //   else {
+  //     manageSettingsAmbientDoorFeature(false);
+  //   }
+  // });
 
 	game.settings.register(MODULE_NAME, "stealthDoor",{
 		  name: i18n(`${MODULE_NAME}.settingNameSilentDoorPermissionsLevel`),
@@ -261,9 +261,10 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: SoundPicker.Sound,
+        filePicker: true,
+        //type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "closeDoorLevelDefault", {
@@ -282,9 +283,10 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: SoundPicker.Sound,
+        filePicker: true,
+        //type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "openDoorLevelDefault", {
@@ -303,9 +305,10 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: SoundPicker.Sound,
+        filePicker: true,
+        //type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
@@ -324,9 +327,10 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: SoundPicker.Sound,
+        filePicker: true,
+        //type: SoundPicker.Sound,
     });
 
     game.settings.register(MODULE_NAME, "unlockDoorLevelDefault", {
@@ -383,7 +387,7 @@ export const registerSettings = function () {
       default: false,
       type: Boolean,
       onChange: (data) => {
-        manageSettingsDesignerDoorFeature(data);
+        // manageSettingsDesignerDoorFeature(data);
       }
     });
 
@@ -396,9 +400,10 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/door-steel.svg`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: ImagePicker.Img,
+        filePicker: true,
+        //type: ImagePicker.Img,
     });
 
     // Open door default icon
@@ -409,9 +414,10 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/door-exit.svg`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: ImagePicker.Img,
+        filePicker: true,
+        //type: ImagePicker.Img,
     });
 
     // Locked door default icon
@@ -422,20 +428,32 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         default: `modules/${MODULE_NAME}/assets/icons/padlock.svg`,
-        //type: String
+        type: String,
         //@ts-ignore
-        type: ImagePicker.Img,
+        filePicker: true,
+        //type: ImagePicker.Img,
     });
 
-    $(`[name="${MODULE_NAME}.enableDesignerDoor"]`).change(function() {
-      if ($(this).is(':checked')) {
-        manageSettingsDesignerDoorFeature(true);
-      }
-      else {
-        manageSettingsDesignerDoorFeature(false);
-      }
-    });
+    // $(`[name="${MODULE_NAME}.enableDesignerDoor"]`).change(function() {
+    //   if ($(this).is(':checked')) {
+    //     manageSettingsDesignerDoorFeature(true);
+    //   }
+    //   else {
+    //     manageSettingsDesignerDoorFeature(false);
+    //   }
+    // });
 
+    // Secret door default icon
+    game.settings.register(MODULE_NAME, 'doorSecretDefault', {
+        name:  i18n(`${MODULE_NAME}.settingNameDoorSecreImageIcon`),
+        hint: i18n(`${MODULE_NAME}.settingHintDoorSecreImageIcon`),
+        scope: 'world',
+        config: true,
+        default: `modules/${MODULE_NAME}/assets/icons/mute.svg`,
+        type: String,
+        //@ts-ignore
+        filePicker: true,
+    });
 
     // ========================================================
     // Windows Door
