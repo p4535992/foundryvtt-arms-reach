@@ -378,19 +378,19 @@ export const registerSettings = function () {
     // ========================================================
     // Designer Door
     // ========================================================
-
+    
     game.settings.register(MODULE_NAME, "enableDesignerDoor", {
       name: i18n(`${MODULE_NAME}.settingNameEnableDesignerDoorFeature`),
       hint: i18n(`${MODULE_NAME}.settingHintEnableDesignerDoorFeature`),
       scope: "world",
-      config: true,
+      config: false,
       default: false,
       type: Boolean,
       onChange: (data) => {
         // manageSettingsDesignerDoorFeature(data);
       }
     });
-
+    /*
     // Initialise settings for default icon paths
     // Closed door default icon
 
@@ -454,7 +454,7 @@ export const registerSettings = function () {
         //@ts-ignore
         filePicker: true,
     });
-
+    */
     // ========================================================
     // Windows Door
     // ========================================================

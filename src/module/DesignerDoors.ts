@@ -28,6 +28,7 @@ export const DesignerDoors = {
     DesignerDoors.cacheTex('doorClosedDefault');
     DesignerDoors.cacheTex('doorOpenDefault');
     DesignerDoors.cacheTex('doorLockedDefault');
+    DesignerDoors.cacheTex('doorSecretDefault');
     log(`${MODULE_NAME} texture loading complete`);
 
   },
@@ -35,7 +36,7 @@ export const DesignerDoors = {
   // Override of the original getTexture method.
   // Adds additional logic for checking which icon to return
   getTextureOverride : async function(doorControl) {
-
+    /*
     if (doorControl.wall.getFlag(MODULE_NAME, 'doorIcon') === undefined) {
 
         let s = doorControl.wall.data.ds;
@@ -61,18 +62,37 @@ export const DesignerDoors = {
         [ds.CLOSED]: wallPaths.doorClosedPath,
         [ds.OPEN]: wallPaths.doorOpenPath,
     };
-
-    // {
-    //   "doorClosedPath": "modules/foundryvtt-arms-reach/assets/icons/door-closed.svg",
-    //   "doorOpenPath": "modules/foundryvtt-arms-reach/assets/icons/door-exit.svg",
-    //   "doorLockedPath": "modules/foundryvtt-arms-reach/assets/icons/padlock.svg"
-    // }
-    // return await getTexture(textures[s].replace("[data]", "").trim() || ds.CLOSED);
+    //return getTexture(textures[s] || ds.CLOSED);
     return await DesignerDoors.getTextureBugFixKeyOverride(
       textures[s].replace("[data]", "").trim() || ds.CLOSED,
       s,
       textures[s].replace("[data]", "").trim()
     );
+    */
+    // Determine door state
+    const ds = CONST.WALL_DOOR_STATES;
+    let s = doorControl.wall.data.ds;  
+    if (!game.user.isGM && s === ds.LOCKED ) { s = ds.CLOSED;}
+    
+    const wallPaths = doorControl.wall.document.getFlag(MODULE_NAME, 'doorIcon');
+    
+    let path;
+    if (s === ds.CLOSED && doorControl.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) {
+        path = game.settings.get(MODULE_NAME, 'doorSecretDefault');
+    } else {
+        // Determine texture to render
+        if (s === ds.CLOSED) {
+            path = wallPaths?.doorClosedPath ?? game.settings.get(MODULE_NAME, 'doorClosedDefault');
+        } else if (s === ds.OPEN) { 
+                path = wallPaths?.doorOpenPath ?? game.settings.get(MODULE_NAME, 'doorOpenDefault');
+        } else if (s === ds.LOCKED) {
+                path = wallPaths?.doorLockedPath ?? game.settings.get(MODULE_NAME, 'doorLockedDefault');
+        }
+
+        path ??= wallPaths?.doorClosedPath ?? game.settings.get(MODULE_NAME, 'doorClosedDefault');
+    }
+
+    return getTexture(path);
   },
 
   /**
@@ -149,7 +169,7 @@ export const DesignerDoors = {
 
     // If the wall is a door, extend the size of the wall config form
     app.setPosition({
-        height: 700,
+        height: 'auto',
         width: 400,
     });
 
@@ -223,6 +243,7 @@ export const DesignerDoors = {
     html.find('.form-group').last().after(message);
 
     // File Picker buttons
+    /*
     const button1 = html.find(`button[data-target="flags.${MODULE_NAME}.doorIcon.doorClosedPath"]`)[0];
     const button2 = html.find(`button[data-target="flags.${MODULE_NAME}.doorIcon.doorOpenPath"]`)[0];
     const button3 = html.find(`button[data-target="flags.${MODULE_NAME}.doorIcon.doorLockedPath"]`)[0];
@@ -230,12 +251,17 @@ export const DesignerDoors = {
     app._activateFilePicker(button1);
     app._activateFilePicker(button2);
     app._activateFilePicker(button3);
-
+    */
+    // Is it possible that this may cause conflicts with other modules that add file picker buttons? To be tested.
+    // May need mod specific CSS class for file picker button - ddfile-picker?
+    // TODO
+    html.find('button.file-picker').on('click', app._activateFilePicker.bind(app));
+    
     // On submitting the Wall Config form, requested textures are added to the cache
 
     const form = document.getElementById('wall-config');
     form.addEventListener('submit', (e) => {
-
+        /*
         const nameDefCP = `flags.${MODULE_NAME}.doorIcon.doorClosedPath`;
         const nameDefOP = `flags.${MODULE_NAME}.doorIcon.doorOpenPath`;
         const nameDefLP = `flags.${MODULE_NAME}.doorIcon.doorLockedPath`;
@@ -274,17 +300,19 @@ export const DesignerDoors = {
           TextureLoader.loader.cache.set(wallConfDLD.replace("[data]", "").trim(),cachedClone3);
 
         }
-
-        // Update flags
-
-        // // If wall has no flag, populate thisDoor from default settings
-        // thisDoor = {
-        //   doorClosedPath: wallConfDCD.replace("[data]", "").trim(),
-        //   doorOpenPath: wallConfDOD.replace("[data]", "").trim(),
-        //   doorLockedPath: wallConfDLD.replace("[data]", "").trim(),
-        // };
-        // // Then set flag with contents of thisDoor
-        // app.object.setFlag(MODULE_NAME, 'doorIcon',thisDoor);
+        */
+        
+        // Door state keys used in game settings
+        const doorStates = ['doorClosedDefault','doorOpenDefault','doorLockedDefault','doorSecretDefault'];
+        
+        // Loop through states, caching textures from provided paths
+        for (let state of doorStates) {
+            //@ts-ignore
+            const path = document.getElementsByName(`${MODULE_NAME}.${state}`)[0].value;
+            e.preventDefault();
+            TextureLoader.loader.loadImageTexture(path);
+        }
+        
     });
 
   },
@@ -317,100 +345,25 @@ export const DesignerDoors = {
   canvasInitHandler : function(){
 
     // List of all walls in scene
-    const sceneWalls = game.scenes.viewed.data.walls;
+    const sceneWalls:any = game.scenes.viewed.data.walls;
 
-    for (let i = 0; i < sceneWalls.length; i++) {
-
-        // Check wall for designerdoors flag
-        if (MODULE_NAME in sceneWalls[i].flags) {
-
-            const wall = sceneWalls[i];
-
-            // If flag found, extract three paths and add files to cache
-            // const wcCD = wall.flags.designerdoors.doorIcon.doorClosedPath;
-            // const wcOD = wall.flags.designerdoors.doorIcon.doorOpenPath;
-            // const wcLD = wall.flags.designerdoors.doorIcon.doorLockedPath;
-
-            const wcCD = wall.flags[MODULE_NAME]['doorIcon'].doorClosedPath;
-            const wcOD = wall.flags[MODULE_NAME]['doorIcon'].doorOpenPath;
-            const wcLD = wall.flags[MODULE_NAME]['doorIcon'].doorLockedPath;
-
-            TextureLoader.loader.loadTexture(wcCD.replace("[data]", "").trim());
-            TextureLoader.loader.loadTexture(wcOD.replace("[data]", "").trim());
-            TextureLoader.loader.loadTexture(wcLD.replace("[data]", "").trim());
-
-            if(!TextureLoader.loader.getCache(wcCD.replace("[data]", "").trim())){
-              let cachedDefault1 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorClosedDefault')).replace("[data]", "").trim());
-              let cachedClone1 = new PIXI.Texture(PIXI.BaseTexture.from(wcCD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault1);//Object.assign([], cachedDefault1);
-              //cachedClone1.baseTexture = PIXI.BaseTexture.from(wcCD.replace("[data]", "").trim());
-              TextureLoader.loader.cache.set(wcCD.replace("[data]", "").trim(),cachedClone1);
-            }
-
-            if(!TextureLoader.loader.getCache(wcOD.replace("[data]", "").trim())){
-              let cachedDefault2 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorOpenDefault')).replace("[data]", "").trim());
-              let cachedClone2 = new PIXI.Texture(PIXI.BaseTexture.from(wcOD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault2);//Object.assign([], cachedDefault2);
-              //cachedClone2.baseTexture = PIXI.BaseTexture.from(wcOD.replace("[data]", "").trim());
-              TextureLoader.loader.cache.set(wcOD.replace("[data]", "").trim(),cachedClone2);
-            }
-
-            if(!TextureLoader.loader.getCache(wcLD.replace("[data]", "").trim())){
-              let cachedDefault3 = TextureLoader.loader.getCache(String(game.settings.get(MODULE_NAME, 'doorLockedDefault')).replace("[data]", "").trim());
-              let cachedClone3 = new PIXI.Texture(PIXI.BaseTexture.from(wcLD.replace("[data]", "").trim())); //Cloneable.clone(cachedDefault3);//Object.assign([], cachedDefault3);
-              //cachedClone3.baseTexture = PIXI.BaseTexture.from(wcLD.replace("[data]", "").trim());
-              TextureLoader.loader.cache.set(wcLD.replace("[data]", "").trim(),cachedClone3);
-            }
-        }
-
-    }
+    // Scan walls for DD flags
+    for (let wall of sceneWalls){
+      if (wall.getFlag(MODULE_NAME, 'doorIcon')) {
+          // Cycle through flag paths and submit to cache
+          const pathsArray = Object.values(wall.getFlag(MODULE_NAME, 'doorIcon'));
+          for (let path of pathsArray){
+              TextureLoader.loader.loadImageTexture(MODULE_NAME);
+          };
+      }
+    };
 
     // Cache default icons on scene change
     log(`Loading ${MODULE_NAME} default door textures`);
     DesignerDoors.cacheTex('doorClosedDefault');
     DesignerDoors.cacheTex('doorOpenDefault');
     DesignerDoors.cacheTex('doorLockedDefault');
+    DesignerDoors.cacheTex('doorSecretDefault');
     log(`${MODULE_NAME} texture loading complete`);
-  },
-
-  // /**
-  //  * Draw the DoorControl icon, displaying it's icon texture and border
-  //  * @return {Promise<DoorControl>}
-  //  */
-  // draw : async function(doorControl) {
-
-  //   // Remove existing components
-  //   doorControl.icon = doorControl.icon || doorControl.addChild(new PIXI.Sprite());
-  //   doorControl.icon.width = doorControl.icon.height = 40;
-  //   doorControl.icon.alpha = 0.6;
-  //   //doorControl.icon.texture = await doorControl._getTexture();
-  //   doorControl.icon.texture = await DesignerDoors.getTextureOverride(doorControl);
-  //   // Background
-  //   doorControl.bg = doorControl.bg || doorControl.addChild(new PIXI.Graphics());
-  //   doorControl.bg.clear().beginFill(0x000000, 1.0).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
-  //   doorControl.bg.alpha = 0;
-
-  //   // Border
-  //   doorControl.border = doorControl.border || doorControl.addChild(new PIXI.Graphics());
-  //   doorControl.border.clear().lineStyle(1, 0xFF5500, 0.8).drawRoundedRect(-2, -2, 44, 44, 5).endFill();
-  //   doorControl.border.visible = false;
-
-  //   // Add control interactivity
-  //   doorControl.interactive = true;
-  //   doorControl.interactiveChildren = false;
-  //   doorControl.hitArea = new PIXI.Rectangle(-2, -2, 44, 44);
-
-  //   // Set position
-  //   doorControl.reposition();
-  //   doorControl.alpha = 1.0;
-
-  //   // Activate listeners
-  //   doorControl.removeAllListeners();
-  //   doorControl.on("mouseover", doorControl._onMouseOver)
-  //       .on("mouseout", doorControl._onMouseOut)
-  //       .on("mousedown", doorControl._onMouseDown)
-  //       .on('rightdown', doorControl._onRightDown);
-
-  //   // Return the control icon
-  //   return doorControl;
-  // }
-
+  }
 }

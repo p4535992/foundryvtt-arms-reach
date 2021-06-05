@@ -63,7 +63,9 @@ If you do not wish for any sound effect to play when an certain action is taken,
 
 * Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.
 
-**Designer Doors Feature**
+** [REMOVED] Designer Doors Feature**
+
+### Use instead [Designer Dorrs by Exitalterego](https://github.com/Exitalterego/designerdoors)
 
 You can change the default door icons used to show closed, open and locked doors and set an icon to represent secret doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
 

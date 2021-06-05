@@ -32,9 +32,9 @@ export let readyHooks = async () => {
       AmbientDoors.preUpdateWallHandler(object, updateData, diff, userID);
     }
     // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
-    else if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-      Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
-    }
+    //else if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+    //  Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+    //}
 
   });
 
@@ -74,9 +74,9 @@ export let readyHooks = async () => {
 
   Hooks.on("renderSettingsConfig", (app, html, user) => {
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    //if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
       // DesignerDoors.renderSettingsConfigHandler(app, html, user);
-    }
+    //}
 
   });
 
@@ -137,7 +137,7 @@ export let setupHooks = () => {
   
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
     //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'MIXED');
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'OVERRIDE');
     //@ts-ignore
     // libWrapper.register(MODULE_NAME, 'DoorControl.prototype.draw', DoorControlPrototypeDrawHandler, 'MIXED');
       
@@ -200,19 +200,19 @@ export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, 
   return wrapped(...args);
 }
 
-export const DoorControlPrototypeGetTextureHandler  = async function(wrapped, ...args) {
+export const DoorControlPrototypeGetTextureHandler  = async function(){//async function(wrapped, ...args) {
 
   const doorControl = this;
   let texture:PIXI.Texture;
   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
     texture = await DesignerDoors.getTextureOverride(doorControl);  
     if(texture!=null){
-      return texture;
+      //return texture;
     }else{
-      return wrapped(...args);
+      //return wrapped(...args);
     }
   }else{
-    return wrapped(...args);
+    //return wrapped(...args);
   }
 }
 
