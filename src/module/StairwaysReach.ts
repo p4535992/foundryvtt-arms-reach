@@ -1,5 +1,5 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach";
-import { getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getManhattanBetween, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
+import { computeDistanceBetweenCoordinates, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
 import { getCanvas, MODULE_NAME } from "./settings";
 
 export const StairwaysReach = {
@@ -36,7 +36,8 @@ export const StairwaysReach = {
             return false;
           }else{
   
-            let dist = getManhattanBetween(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
+            //let dist = getManhattanBetween(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
+            let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
             let gridSize = getCanvas().dimensions.size;
             let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
             if (isNotNearEnough) {

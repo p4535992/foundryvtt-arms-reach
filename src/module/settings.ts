@@ -215,6 +215,19 @@ export const registerSettings = function () {
 	// 	}
 	// });
 
+  game.settings.register(MODULE_NAME,'setDistanceModeForDoorInteraction',{
+    name: i18n(MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
+    hint: i18n(MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
+    scope: "world",
+    config: true,
+    default: "0",
+    type: String,
+    choices: {
+        "0" : "Manhattan",
+        "1" : "Euclidean",
+        "2" : "Chebyshev" 
+    }
+  });
 	// ========================================================
   // Ambient Door
   // ========================================================

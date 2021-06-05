@@ -125,9 +125,13 @@ export const Armsreach = {
           iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
           //return;
         }else{
-
-          let dist = getManhattanBetween(doorControl, getTokenCenter(character));
           let gridSize = getCanvas().dimensions.size;
+          //let dist = getManhattanBetween(doorControl, getTokenCenter(character));
+          let charCenter = getTokenCenter(character);
+          //let offsetx = 1, offsety = 1;
+          //charCenter.x -= offsetx * gridSize;
+          //charCenter.y -= offsety * gridSize;
+          let dist = computeDistanceBetweenCoordinates(getDoorCenter(doorControl), character);      
           let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
           if (isNotNearEnough) {
             var tokenName = getCharacterName(character);
@@ -313,6 +317,51 @@ export const Armsreach = {
       lockJingleLevel: 0.8
     }
   }
+
+}
+
+export const computeDistanceBetweenCoordinates = function(doorControl, charCenter){
+  return getManhattanBetween(doorControl, charCenter)-10;
+  /*
+  const distanceType = <string>game.settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
+  //const token = canvas.tokens.get (id);
+  // You can also use the Euclidean or Chebyshev (i.e. dnd 5e's) distance metrics
+  let pf;// = game.FindThePath.Manhattan.PointFactory;
+  if(!distanceType){
+    //@ts-ignore
+    pf = game.FindThePath.Manhattan.PointFactory;
+  }else if(distanceType == "2" || distanceType=="Chebyshev"){
+    //@ts-ignore
+    pf = game.FindThePath.Chebyshev.PointFactory
+  }else if(distanceType == "1" || distanceType=="Euclidean"){
+    //@ts-ignore
+    pf = game.FindThePath.Euclidean.PointFactory
+  }else if(distanceType == "0" || distanceType=="Manhattan"){
+    //@ts-ignore
+    pf = game.FindThePath.Manhattan.PointFactory;
+  }
+  // You can set this to anything >= 0
+  //const movementRange = Infinity;
+  //let wallCoords = getWallCoords (wall);
+  //const path = await PathManager.pathToPoint (pf.fromToken (token), pf.fromPixel (wallCoords), movementRange);
+  let p1 = pf.fromCoord(charCenter.x,charCenter.y);
+  let p2 = pf.fromCoord(doorControl.x,doorControl.y);
+  let dist = null;
+  if(!distanceType){
+    //@ts-ignore
+    dist = Point.Manhattan(p1, p2);
+  }else if(distanceType=="Chebyshev"){
+    //@ts-ignore
+    dist = Point.Chebyshev(p1, p2);
+  }else if(distanceType=="Euclidean"){
+    //@ts-ignore
+    dist = Point.Euclidean(p1, p2);
+  }else if(distanceType=="Manhattan"){
+    //@ts-ignore
+    dist = Point.Manhattan(p1, p2);
+  }
+  return dist;
+  */
 }
 
 
@@ -413,7 +462,8 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
 
         // ================================================================================
       }else{
-        let dist = getManhattanBetween(door, charCenter);
+        //let dist = getManhattanBetween(door, charCenter);
+        let dist = computeDistanceBetweenCoordinates(getDoorCenter(door), charCenter);
         let distInGridUnits = (dist / gridSize) - 0.1;
 
 
@@ -461,6 +511,16 @@ export const getTokenCenter = function(token) {
     */
     let tokenCenter = {x: token.x + token.w / 2, y: token.y + token.h / 2}
     return tokenCenter;
+}
+
+
+/**
+ * Get dorr center
+ */
+ export const getDoorCenter = function(token) {
+  // let tokenCenter = {x: token.x + token.width / 2, y: token.y + token.height / 2}
+  let tokenCenter = {x: token.x, y: token.y}
+  return tokenCenter;
 }
 
 /**

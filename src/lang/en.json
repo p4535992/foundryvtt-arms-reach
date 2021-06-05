@@ -49,6 +49,8 @@
   "foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
   "foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
 
+  "foundryvtt-arms-reach.settingNameSetDistanceModeForDoorInteraction": "Set Distance Mode",
+  "foundryvtt-arms-reach.settingHintSetDistanceModeForDoorInteraction": "Set Distance Mode for Dorr distance interaction",
 
   "foundryvtt-arms-reach.settingNameEnableAmbientDoorFeature": "Enable/Disable ambient door feature",
   "foundryvtt-arms-reach.settingHintEnableAmbientDoorFeature": "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.",
