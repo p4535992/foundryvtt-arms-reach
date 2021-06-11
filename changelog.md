@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# 1.1.0 [BREAKING CHANGES]
+
+- Compatibility for foundryvtt 0.8.6
+- Removed desinger doors implementation use instead [Designer Doors](https://github.com/Exitalterego/designerdoors) ty to [Exitalterego](https://github.com/Exitalterego)
+- 
+
 # 1.0.14
 
 - Convert libWrapper hook for DoorControl.prototype._onMouseDown from 'OVERRIDE' to 'MIXED' ty to Stäbchenfisch suggestion

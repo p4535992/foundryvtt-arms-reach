@@ -2,8 +2,6 @@
 
 #  FoundryVTT Arms Reach
 
-**I will probably change the name to 'FoundryVTT Door little Utilities' when i rewrite everything for the 0.8.X**
-
 This is project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
 There are more than 300 modules in foundry vtt so the scope of this module is to reduce the number of modules on your game and integrate them with each other without some strange collision between modules.
@@ -12,7 +10,6 @@ You can still enable/disable every single feature from module settings.
 
 ## Known issue/Limitation
 
-- If 'Show Doors Icons Feature' is enabled it's not working like expecting
 - Only Grid Square Maps are supported so Gridless and Hex map not work with the same logic (you can make it work by manipulating the module settings in some way) i will try in the future for 0.8.X to integrated this library [lib-find-the-path](https://github.com/dwonderley/lib-find-the-path/) for manage every type of map
 
 ## Installation
@@ -77,10 +74,6 @@ You can change the default door icons used to show closed, open and locked doors
 
 * If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon, ONLY WORK ON GRID SQUARE MAPS.
 
-**[DISABLED] Show Doors Icons Feature**
-
-Forces Door Controls to remain visible on the Wall Layer. 
-
 **Reset Doors and Fog feature Feature**
 
 Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.
@@ -88,9 +81,6 @@ Adds a button to the Walls Menu to Shut all doors in the current scene. Also add
 REMASTERED
 
 Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
-
-**[ON DEVELOPING FOR 0.8.X] Precompiled Window Door Feature**
-
 
 ## [Changelog](./changelog.md)
 

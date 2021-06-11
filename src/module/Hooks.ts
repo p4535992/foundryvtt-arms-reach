@@ -4,7 +4,6 @@ import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { Armsreach } from "./ArmsReach";
 import { MODULE_NAME } from './settings';
 import { SoundPreviewer } from "./SoundPreviewer";
-import { DesignerDoors } from './DesignerDoors';
 import { ShowDoorIcons } from './showdooricons';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
@@ -45,9 +44,9 @@ export let readyHooks = async () => {
       AmbientDoors.renderWallConfigHandler(app, html, data);
     }
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-      DesignerDoors.renderWallConfigHandler(app, html, data);
-    }
+    // if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    //   DesignerDoors.renderWallConfigHandler(app, html, data);
+    // }
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableWindowDoor")) {
       WindowDoors.renderWallConfigHandler(app, html, data);
@@ -82,9 +81,9 @@ export let readyHooks = async () => {
 
   Hooks.on('canvasInit', () => {
 
-    if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-      DesignerDoors.canvasInitHandler();
-    }
+    // if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+    //   DesignerDoors.canvasInitHandler();
+    // }
 
   });
 
@@ -153,9 +152,9 @@ export let initHooks = () => {
     Armsreach.init();
   }
 
-  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    DesignerDoors.init();
-  }
+  // if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+  //   DesignerDoors.init();
+  // }
 
   //@ts-ignore
   //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
@@ -203,17 +202,17 @@ export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, 
 export const DoorControlPrototypeGetTextureHandler  = async function(){//async function(wrapped, ...args) {
 
   const doorControl = this;
-  let texture:PIXI.Texture;
-  if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-    texture = await DesignerDoors.getTextureOverride(doorControl);  
-    if(texture!=null){
-      //return texture;
-    }else{
-      //return wrapped(...args);
-    }
-  }else{
-    //return wrapped(...args);
-  }
+  // let texture:PIXI.Texture;
+  // if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
+  //   texture = await DesignerDoors.getTextureOverride(doorControl);  
+  //   if(texture!=null){
+  //     //return texture;
+  //   }else{
+  //     //return wrapped(...args);
+  //   }
+  // }else{
+  //   //return wrapped(...args);
+  // }
 }
 
 export const DoorControlPrototypeDrawHandler  = async function(wrapped, ...args) {

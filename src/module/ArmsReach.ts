@@ -131,7 +131,7 @@ export const Armsreach = {
           //let offsetx = 1, offsety = 1;
           //charCenter.x -= offsetx * gridSize;
           //charCenter.y -= offsety * gridSize;
-          let dist = computeDistanceBetweenCoordinates(getDoorCenter(doorControl), character);      
+          let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));      
           let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
           if (isNotNearEnough) {
             var tokenName = getCharacterName(character);
@@ -321,8 +321,9 @@ export const Armsreach = {
 }
 
 export const computeDistanceBetweenCoordinates = function(doorControl, charCenter){
-  return getManhattanBetween(doorControl, charCenter)-10;
+  return getManhattanBetween(doorControl, charCenter);
   /*
+  TODO THE INTEGRATION FOR GRIDLESS 
   const distanceType = <string>game.settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
   //const token = canvas.tokens.get (id);
   // You can also use the Euclidean or Chebyshev (i.e. dnd 5e's) distance metrics
@@ -610,7 +611,7 @@ export const getFirstPlayerToken = function():Token
  */
 export const getManhattanBetween = function(obj1, obj2)  {
   // console.log("[" + obj1.x + " , " + obj1.y + "],[" + obj2.x + " , " + obj2.y + "]"); // DEBUG
-  return Math.abs(obj1.x - obj2.x) + Math.abs(obj1.y - obj2.y);
+  return Math.abs(obj1.x - obj2.x) + Math.abs(obj1.y - obj2.y)-20; //The -20 seem to fix some calculation issue
 }
 
 /**
