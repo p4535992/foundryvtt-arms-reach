@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.1.1
+
+- Some minor fix
+
 # 1.1.0 [BREAKING CHANGES]
 
 - Compatibility for foundryvtt 0.8.6

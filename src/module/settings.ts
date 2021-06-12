@@ -534,7 +534,7 @@ export const registerSettings = function () {
       name: i18n(`${MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
       hint: i18n(`${MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
       scope: "world",
-      config: false,
+      config: true,
       default: true,
       type: Boolean
     });

@@ -162,10 +162,11 @@ export let initHooks = () => {
   if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'MIXED');
-  }else{
-    //@ts-ignore
-    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
   }
+  // else{
+  //   //@ts-ignore
+  //   libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler2, 'WRAPPER');
+  // }
 
 }
 
@@ -181,23 +182,23 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
 
     // YOU NEED THIS ANYWAY FOR A STRANGE BUG WITH OVERRIDE AND SOUND OF DOOR
     //if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-      AmbientDoors.onDoorMouseDownCheck(doorControl);
+    //  AmbientDoors.onDoorMouseDownCheck(doorControl);
     //}
     // Call original method
     //return originalMethod.apply(this,arguments);
     //return wrapped(...args);
 }
 
-export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, ...args) {
+// export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, ...args) {
   
-  const doorControl = this; 
+//   const doorControl = this; 
   
-  if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-    AmbientDoors.onDoorMouseDownCheck(doorControl);
-  }
+//   if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+//     AmbientDoors.onDoorMouseDownCheck(doorControl);
+//   }
 
-  return wrapped(...args);
-}
+//   return wrapped(...args);
+// }
 
 export const DoorControlPrototypeGetTextureHandler  = async function(){//async function(wrapped, ...args) {
 
