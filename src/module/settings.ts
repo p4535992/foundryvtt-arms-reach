@@ -85,13 +85,13 @@ export const MODULE_NAME = 'foundryvtt-arms-reach';
 //   }
 // }
 
-Hooks.on("renderSettingsConfig", (app, html, user) => {
+// Hooks.on("renderSettingsConfig", (app, html, user) => {
 
-  // manageSettingsArmsReachFeature(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach"));
-  // manageSettingsAmbientDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor"));
-  // manageSettingsDesignerDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor"));
+//   // manageSettingsArmsReachFeature(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach"));
+//   // manageSettingsAmbientDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor"));
+//   // manageSettingsDesignerDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor"));
 
-});
+// });
 
 export const registerSettings = function () {
 
@@ -228,275 +228,275 @@ export const registerSettings = function () {
         "2" : "Chebyshev" 
     }
   });
+
 	// ========================================================
   // Ambient Door
   // ========================================================
 
-	game.settings.register(MODULE_NAME, "enableAmbientDoor", {
-		  name: i18n(`${MODULE_NAME}.settingNameEnableAmbientDoorFeature`),
-    	hint: i18n(`${MODULE_NAME}.settingHintEnableAmbientDoorFeature`),
-      scope: "world",
-      config: true,
-      default: false,
-      type: Boolean,
-      onChange: (data) => {
-        // manageSettingsAmbientDoorFeature(data);
-      }
-	});
+	// game.settings.register(MODULE_NAME, "enableAmbientDoor", {
+	// 	  name: i18n(`${MODULE_NAME}.settingNameEnableAmbientDoorFeature`),
+  //   	hint: i18n(`${MODULE_NAME}.settingHintEnableAmbientDoorFeature`),
+  //     scope: "world",
+  //     config: true,
+  //     default: false,
+  //     type: Boolean,
+  //     onChange: (data) => {
+  //       // manageSettingsAmbientDoorFeature(data);
+  //     }
+	// });
 
-  // $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
-  //   if ($(this).is(':checked')) {
-  //     manageSettingsAmbientDoorFeature(true);
-  //   }
-  //   else {
-  //     manageSettingsAmbientDoorFeature(false);
-  //   }
-  // });
+  // // $(`[name="${MODULE_NAME}.enableAmbientDoor"]`).change(function() {
+  // //   if ($(this).is(':checked')) {
+  // //     manageSettingsAmbientDoorFeature(true);
+  // //   }
+  // //   else {
+  // //     manageSettingsAmbientDoorFeature(false);
+  // //   }
+  // // });
 
-	game.settings.register(MODULE_NAME, "stealthDoor",{
-		  name: i18n(`${MODULE_NAME}.settingNameSilentDoorPermissionsLevel`),
-      hint: i18n(`${MODULE_NAME}.settingHintSilentDoorPermissionsLevel`),
-      scope: "world",
-      config: true,
-      default: "2",
-      choices: {
-        1: "Player",
-        2: "Trusted",
-        3: "Assistant",
-        4: "Game Master"
-      },
-      type: String
-	});
+	// game.settings.register(MODULE_NAME, "stealthDoor",{
+	// 	  name: i18n(`${MODULE_NAME}.settingNameSilentDoorPermissionsLevel`),
+  //     hint: i18n(`${MODULE_NAME}.settingHintSilentDoorPermissionsLevel`),
+  //     scope: "world",
+  //     config: true,
+  //     default: "2",
+  //     choices: {
+  //       1: "Player",
+  //       2: "Trusted",
+  //       3: "Assistant",
+  //       4: "Game Master"
+  //     },
+  //     type: String
+	// });
 
-    game.settings.register(MODULE_NAME, "closeDoorPathDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorCloseSoundEffect`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorCloseSoundEffect`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: SoundPicker.Sound,
-    });
+  //   game.settings.register(MODULE_NAME, "closeDoorPathDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorCloseSoundEffect`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorCloseSoundEffect`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
+  //       type: String,
+  //       //@ts-ignore
+  //       filePicker: true,
+  //       //type: SoundPicker.Sound,
+  //   });
 
-    game.settings.register(MODULE_NAME, "closeDoorLevelDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorCloseSoundVolumeLevel`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorCloseSoundVolumeLevel`),
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
-		    range: {min:0, max:2, step:0.05}
-    });
+  //   game.settings.register(MODULE_NAME, "closeDoorLevelDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorCloseSoundVolumeLevel`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorCloseSoundVolumeLevel`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: 0.8,
+  //       type: Number,
+	// 	    range: {min:0, max:2, step:0.05}
+  //   });
 
-    game.settings.register(MODULE_NAME, "openDoorPathDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorOpenSoundEffect`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorOpenSoundEffect`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: SoundPicker.Sound,
-    });
+  //   game.settings.register(MODULE_NAME, "openDoorPathDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorOpenSoundEffect`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorOpenSoundEffect`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
+  //       type: String,
+  //       //@ts-ignore
+  //       filePicker: true,
+  //       //type: SoundPicker.Sound,
+  //   });
 
-    game.settings.register(MODULE_NAME, "openDoorLevelDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorOpenSoundVolumeLevel`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorOpenSoundVolumeLevel`),
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
-		    range: {min:0, max:2, step:0.05}
-    });
+  //   game.settings.register(MODULE_NAME, "openDoorLevelDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorOpenSoundVolumeLevel`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorOpenSoundVolumeLevel`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: 0.8,
+  //       type: Number,
+	// 	    range: {min:0, max:2, step:0.05}
+  //   });
 
-    game.settings.register(MODULE_NAME, "lockDoorPathDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorLockSoundEffect`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorLockSoundEffect`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: SoundPicker.Sound,
-    });
+  //   game.settings.register(MODULE_NAME, "lockDoorPathDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorLockSoundEffect`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorLockSoundEffect`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
+  //       type: String,
+  //       //@ts-ignore
+  //       filePicker: true,
+  //       //type: SoundPicker.Sound,
+  //   });
 
-    game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorLockSoundVolumeLevel`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorLockSoundVolumeLevel`),
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
-	    	range: {min:0, max:2, step:0.05}
-    });
+  //   game.settings.register(MODULE_NAME, "lockDoorLevelDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorLockSoundVolumeLevel`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorLockSoundVolumeLevel`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: 0.8,
+  //       type: Number,
+	//     	range: {min:0, max:2, step:0.05}
+  //   });
 
-    game.settings.register(MODULE_NAME, "unlockDoorPathDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorUnlockSoundEffect`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorUnlockSoundEffect`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: SoundPicker.Sound,
-    });
+  //   game.settings.register(MODULE_NAME, "unlockDoorPathDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorUnlockSoundEffect`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorUnlockSoundEffect`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
+  //       type: String,
+  //       //@ts-ignore
+  //       filePicker: true,
+  //       //type: SoundPicker.Sound,
+  //   });
 
-    game.settings.register(MODULE_NAME, "unlockDoorLevelDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorUnlockSoundVolumeLevel`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorUnlockSoundVolumeLevel`),
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
-		    range: {min:0, max:2, step:0.05}
-    });
+  //   game.settings.register(MODULE_NAME, "unlockDoorLevelDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorUnlockSoundVolumeLevel`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorUnlockSoundVolumeLevel`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: 0.8,
+  //       type: Number,
+	// 	    range: {min:0, max:2, step:0.05}
+  //   });
 
-    game.settings.register(MODULE_NAME, "lockedDoorJinglePathDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorLockedJingleSoundEffect`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorLockedJingleSoundEffect`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
-        type: String
-    });
+  //   game.settings.register(MODULE_NAME, "lockedDoorJinglePathDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorLockedJingleSoundEffect`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorLockedJingleSoundEffect`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
+  //       type: String
+  //   });
 
-    game.settings.register(MODULE_NAME, "lockedDoorJingleLevelDefault", {
-        name: i18n(`${MODULE_NAME}.settingNameDoorLockedJingleVolumeLevel`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorLockedJingleVolumeLevel`),
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
-		    range: {min:0, max:2, step:0.05}
-    });
+  //   game.settings.register(MODULE_NAME, "lockedDoorJingleLevelDefault", {
+  //       name: i18n(`${MODULE_NAME}.settingNameDoorLockedJingleVolumeLevel`),
+  //       hint: i18n(`${MODULE_NAME}.settingHintDoorLockedJingleVolumeLevel`),
+  //       scope: 'world',
+  //       config: true,
+  //       default: 0.8,
+  //       type: Number,
+	// 	    range: {min:0, max:2, step:0.05}
+  //   });
 
 	  // ========================================================
     // Sound Previewer
     // ========================================================
 
-    game.settings.register(MODULE_NAME, "enableSoundPreviewer", {
-        name: i18n(`${MODULE_NAME}.settingNameEnableSoundPreviewerFeature`),
-        hint: i18n(`${MODULE_NAME}.settingHintEnableSoundPreviewerFeature`),
-        scope: "world",
-        config: false,
-        default: true,
-        type: Boolean
-    });
+    // game.settings.register(MODULE_NAME, "enableSoundPreviewer", {
+    //     name: i18n(`${MODULE_NAME}.settingNameEnableSoundPreviewerFeature`),
+    //     hint: i18n(`${MODULE_NAME}.settingHintEnableSoundPreviewerFeature`),
+    //     scope: "world",
+    //     config: false,
+    //     default: true,
+    //     type: Boolean
+    // });
 
     // ========================================================
     // Designer Door
     // ========================================================
     
-    game.settings.register(MODULE_NAME, "enableDesignerDoor", {
-      name: i18n(`${MODULE_NAME}.settingNameEnableDesignerDoorFeature`),
-      hint: i18n(`${MODULE_NAME}.settingHintEnableDesignerDoorFeature`),
-      scope: "world",
-      config: false,
-      default: false,
-      type: Boolean,
-      onChange: (data) => {
-        // manageSettingsDesignerDoorFeature(data);
-      }
-    });
-    /*
-    // Initialise settings for default icon paths
-    // Closed door default icon
-
-    game.settings.register(MODULE_NAME, 'doorClosedDefault', {
-        name: i18n(`${MODULE_NAME}.settingNameDoorClosedImageIcon`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorClosedImageIcon`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/icons/door-steel.svg`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: ImagePicker.Img,
-    });
-
-    // Open door default icon
-
-    game.settings.register(MODULE_NAME, 'doorOpenDefault', {
-        name: i18n(`${MODULE_NAME}.settingNameDoorOpenImageIcon`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorOpenImageIcon`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/icons/door-exit.svg`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: ImagePicker.Img,
-    });
-
-    // Locked door default icon
-
-    game.settings.register(MODULE_NAME, 'doorLockedDefault', {
-        name: i18n(`${MODULE_NAME}.settingNameDoorLockedImageIcon`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorLockedImageIcon`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/icons/padlock.svg`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-        //type: ImagePicker.Img,
-    });
-
-    // $(`[name="${MODULE_NAME}.enableDesignerDoor"]`).change(function() {
-    //   if ($(this).is(':checked')) {
-    //     manageSettingsDesignerDoorFeature(true);
-    //   }
-    //   else {
-    //     manageSettingsDesignerDoorFeature(false);
+    // game.settings.register(MODULE_NAME, "enableDesignerDoor", {
+    //   name: i18n(`${MODULE_NAME}.settingNameEnableDesignerDoorFeature`),
+    //   hint: i18n(`${MODULE_NAME}.settingHintEnableDesignerDoorFeature`),
+    //   scope: "world",
+    //   config: false,
+    //   default: false,
+    //   type: Boolean,
+    //   onChange: (data) => {
+    //     // manageSettingsDesignerDoorFeature(data);
     //   }
     // });
+    // /*
+    // // Initialise settings for default icon paths
+    // // Closed door default icon
 
-    // Secret door default icon
-    game.settings.register(MODULE_NAME, 'doorSecretDefault', {
-        name:  i18n(`${MODULE_NAME}.settingNameDoorSecreImageIcon`),
-        hint: i18n(`${MODULE_NAME}.settingHintDoorSecreImageIcon`),
-        scope: 'world',
-        config: true,
-        default: `modules/${MODULE_NAME}/assets/icons/mute.svg`,
-        type: String,
-        //@ts-ignore
-        filePicker: true,
-    });
-    */
+    // game.settings.register(MODULE_NAME, 'doorClosedDefault', {
+    //     name: i18n(`${MODULE_NAME}.settingNameDoorClosedImageIcon`),
+    //     hint: i18n(`${MODULE_NAME}.settingHintDoorClosedImageIcon`),
+    //     scope: 'world',
+    //     config: true,
+    //     default: `modules/${MODULE_NAME}/assets/icons/door-steel.svg`,
+    //     type: String,
+    //     //@ts-ignore
+    //     filePicker: true,
+    //     //type: ImagePicker.Img,
+    // });
+
+    // // Open door default icon
+
+    // game.settings.register(MODULE_NAME, 'doorOpenDefault', {
+    //     name: i18n(`${MODULE_NAME}.settingNameDoorOpenImageIcon`),
+    //     hint: i18n(`${MODULE_NAME}.settingHintDoorOpenImageIcon`),
+    //     scope: 'world',
+    //     config: true,
+    //     default: `modules/${MODULE_NAME}/assets/icons/door-exit.svg`,
+    //     type: String,
+    //     //@ts-ignore
+    //     filePicker: true,
+    //     //type: ImagePicker.Img,
+    // });
+
+    // // Locked door default icon
+
+    // game.settings.register(MODULE_NAME, 'doorLockedDefault', {
+    //     name: i18n(`${MODULE_NAME}.settingNameDoorLockedImageIcon`),
+    //     hint: i18n(`${MODULE_NAME}.settingHintDoorLockedImageIcon`),
+    //     scope: 'world',
+    //     config: true,
+    //     default: `modules/${MODULE_NAME}/assets/icons/padlock.svg`,
+    //     type: String,
+    //     //@ts-ignore
+    //     filePicker: true,
+    //     //type: ImagePicker.Img,
+    // });
+
+    // // $(`[name="${MODULE_NAME}.enableDesignerDoor"]`).change(function() {
+    // //   if ($(this).is(':checked')) {
+    // //     manageSettingsDesignerDoorFeature(true);
+    // //   }
+    // //   else {
+    // //     manageSettingsDesignerDoorFeature(false);
+    // //   }
+    // // });
+
+    // // Secret door default icon
+    // game.settings.register(MODULE_NAME, 'doorSecretDefault', {
+    //     name:  i18n(`${MODULE_NAME}.settingNameDoorSecreImageIcon`),
+    //     hint: i18n(`${MODULE_NAME}.settingHintDoorSecreImageIcon`),
+    //     scope: 'world',
+    //     config: true,
+    //     default: `modules/${MODULE_NAME}/assets/icons/mute.svg`,
+    //     type: String,
+    //     //@ts-ignore
+    //     filePicker: true,
+    // });
+    // */
     // ========================================================
     // Windows Door
     // ========================================================
 
-    game.settings.register(MODULE_NAME, "enableWindowDoor", {
-      name: i18n(`${MODULE_NAME}.settingNameWindowDoorFeature`),
-      hint: i18n(`${MODULE_NAME}.settingHintWindowDoorFeature`),
-      scope: "world",
-      config: false,
-      default: false,
-      type: Boolean
-    });
+    // game.settings.register(MODULE_NAME, "enableWindowDoor", {
+    //   name: i18n(`${MODULE_NAME}.settingNameWindowDoorFeature`),
+    //   hint: i18n(`${MODULE_NAME}.settingHintWindowDoorFeature`),
+    //   scope: "world",
+    //   config: false,
+    //   default: false,
+    //   type: Boolean
+    // });
 
     // ========================================================
     // Show Door Icons
     // ========================================================
 
-    // Register custom module settings
-    game.settings.register(MODULE_NAME, 'enabledShowDoorIcons', {
-      name: i18n(MODULE_NAME+".settingNameShowDoorIconsFeature"),
-      hint: i18n(MODULE_NAME+".settingHintShowDoorIconsFeature"),
-      scope: "world",
-      config: false,
-      default: false,
-      type: Boolean,
-      onChange: (x) => {
-        window.location.reload();
-      }
-    });
+    // game.settings.register(MODULE_NAME, 'enabledShowDoorIcons', {
+    //   name: i18n(MODULE_NAME+".settingNameShowDoorIconsFeature"),
+    //   hint: i18n(MODULE_NAME+".settingHintShowDoorIconsFeature"),
+    //   scope: "world",
+    //   config: false,
+    //   default: false,
+    //   type: Boolean,
+    //   onChange: (x) => {
+    //     window.location.reload();
+    //   }
+    // });
 
     // ========================================================
     // STAIRWAY SUPPORT
