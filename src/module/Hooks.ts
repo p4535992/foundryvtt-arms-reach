@@ -21,17 +21,17 @@ export let readyHooks = async () => {
   //   libWrapper.register(MODULE_NAME, 'WallsLayer.prototype.activate', WallsLayerPrototypeActivateHandler, 'MIXED');
   // }
 
-  // Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
+  Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
 
-  //   if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
-  //     AmbientDoors.preUpdateWallHandler(object, updateData, diff, userID);
-  //   }
-  //   // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
-  //   //else if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-  //   //  Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
-  //   //}
+    // if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+    //   AmbientDoors.preUpdateWallHandler(object, updateData, diff, userID);
+    // }
+    // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
+    if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+     Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+    }
 
-  // });
+  });
 
 
   // Hooks.on("renderWallConfig", (app, html, data) => {

@@ -262,16 +262,16 @@ export const Armsreach = {
 
   preUpdateWallBugFixSoundHandler : async function(object, updateData, diff, userID){
 
-    if(
-          (
-          (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
-      ||
-          game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
-          )
-          && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
-    {
-      return;
-    }
+    // if(
+    //       (
+    //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
+    //   ||
+    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
+    //       )
+    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    // {
+    //   return;
+    // }
 
     let doorData = Armsreach.defaultDoorData();
 
