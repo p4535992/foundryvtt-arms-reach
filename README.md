@@ -10,6 +10,7 @@ You can still enable/disable every single feature from module settings.
 
 ## Known issue/Limitation
 
+- I know there is some measure distance issue, i'm trying to find a math formula for better manage the use cases
 - Only Grid Square Maps are supported so Gridless and Hex map not work with the same logic (you can make it work by manipulating the module settings in some way) i will try in the future for 0.8.X to integrated this library [lib-find-the-path](https://github.com/dwonderley/lib-find-the-path/) for manage every type of map
 
 ## Installation
@@ -30,10 +31,6 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 
 ## Features 
 
-Every feature can be enable/disable from module settings
-
-**Arms Reach Feature**
-
 The interaction distance is measure by the distance between a token and the door. So, to interact with a door, the player need to have a token selected (or own a token).
 
 * Enable the GM to select the maximum distance that players can interact with a door (needs a token selected) (DM bypass this limitation)
@@ -44,31 +41,6 @@ The interaction distance is measure by the distance between a token and the door
 
 * Double tapping movement on the direction of a door will interact with it
 
-**Ambient Door Feature**
-
-Embedded integration of Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked.
-
-If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.
-
-* Doors sound Paths can now be set to "DefaultSound", that door will always use the default sounds that are currently set in the configuration window."DefaultSound" is now the default that all new configured doors are set to.
-
-* Added an option to customize the lock jingle sound effect that plays when attempting to open a locked door. Lock jingle sound effect now players for everyone instead of just the user attempting to open the door.
-
-* Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
-
-**Sound previewer Feature**
-
-* Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.
-
-** [REMOVED] Designer Doors Feature**
-
-### Use instead [Designer Dorrs by Exitalterego](https://github.com/Exitalterego/designerdoors)
-
-You can change the default door icons used to show closed, open and locked doors and set an icon to represent secret doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
-
-* This may be useful to create door control icons more appropriate to a given setting or genre of game.
-* Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
-* This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
 **Integration with [Stairways Module]((https://gitlab.com/SWW13/foundryvtt-stairways))**
 
