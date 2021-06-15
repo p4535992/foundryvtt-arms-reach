@@ -4,9 +4,6 @@
 
 This is project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
-There are more than 300 modules in foundry vtt so the scope of this module is to reduce the number of modules on your game and integrate them with each other without some strange collision between modules.
-
-You can still enable/disable every single feature from module settings.
 
 ## Known issue/Limitation
 
