@@ -78,19 +78,6 @@ Hooks.once('ready', () => {
 		 ui.notifications.error(`The '${MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`);
 		 return;
 	}
-
-  	if (game.modules.get("arms-reach")?.active && game.user.isGM){
-	  ui.notifications.warn(`The 'arms-reach', is not needed anymore just use '${MODULE_NAME}'`);
-	}
-
-  	if (game.modules.get("ambientdoors")?.active && game.user.isGM){
-	  ui.notifications.warn(`The 'ambientdoors', is not needed anymore just use '${MODULE_NAME}'`);
-	}
-
-  	if (game.modules.get("designerdoors")?.active && game.user.isGM){
-	  ui.notifications.warn(`The 'designerdoors', is not needed anymore just use '${MODULE_NAME}'`);
-	}
-
 	readyHooks();
 });
 

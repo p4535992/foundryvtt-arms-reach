@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 1.1.3
+
+- Bug fix [Warning Msg when Ambient Doors/Designer Doors together with Arms Reach](https://github.com/p4535992/foundryvtt-arms-reach/issues/16)
+- Bug fix [Bug or Feature Suggestion? - Door sounds](https://github.com/p4535992/foundryvtt-arms-reach/issues/15)
+
 # 1.1.2
 
 - Removed  [Ambient Doors](https://github.com/EndlesNights/ambientdoors) ty to [EndlesNights](https://github.com/EndlesNights)

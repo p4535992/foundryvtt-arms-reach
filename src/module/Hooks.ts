@@ -28,7 +28,10 @@ export let readyHooks = async () => {
     // }
     // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
     if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-     Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+      // if ambient door is present and active dont' do this
+      if(!game.modules.get("ambientdoors")?.active){
+        Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+      }
     }
 
   });
@@ -88,13 +91,13 @@ export let readyHooks = async () => {
     Hooks.on('PreStairwayTeleport', (data) => {
       if(<boolean>game.settings.get(MODULE_NAME, "enableStairwaysIntegration")) {
         const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data
-    
+
         return StairwaysReach.globalInteractionDistance(sourceData,selectedTokenIds,userId);
       }
-      
+
     });
   }
-  
+
   // Adds menu option to Scene Nav and Directory
   Hooks.on("getSceneNavigationContext", (html, contextOptions) => {
     if(<boolean>game.settings.get(MODULE_NAME, "enableResetDoorsAndFog")) {
@@ -129,13 +132,13 @@ export let readyHooks = async () => {
 }
 
 export let setupHooks = () => {
-  
+
   // if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
   //   //@ts-ignore
   //   libWrapper.register(MODULE_NAME, 'DoorControl.prototype._getTexture', DoorControlPrototypeGetTextureHandler, 'OVERRIDE');
   //   //@ts-ignore
   //   // libWrapper.register(MODULE_NAME, 'DoorControl.prototype.draw', DoorControlPrototypeDrawHandler, 'MIXED');
-      
+
   // }
 }
 
@@ -143,7 +146,7 @@ export let setupHooks = () => {
 
 export let initHooks = () => {
   warn("Init Hooks processing");
-  
+
   if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
     Armsreach.init();
   }
@@ -154,7 +157,7 @@ export let initHooks = () => {
 
   //@ts-ignore
   //libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseOver', DoorControlPrototypeOnMouseOverHandler, 'WRAPPER');
-  
+
   if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'MIXED');
@@ -186,9 +189,9 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
 }
 
 // export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, ...args) {
-  
-//   const doorControl = this; 
-  
+
+//   const doorControl = this;
+
 //   if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
 //     AmbientDoors.onDoorMouseDownCheck(doorControl);
 //   }
@@ -201,7 +204,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
 //   const doorControl = this;
 //   let texture:PIXI.Texture;
 //   if(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor")) {
-//     texture = await DesignerDoors.getTextureOverride(doorControl);  
+//     texture = await DesignerDoors.getTextureOverride(doorControl);
 //     if(texture!=null){
 //       //return texture;
 //     }else{
@@ -219,7 +222,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
 //     DesignerDoors.draw(doorControl);
 //   }
 //   return wrapped(...args);
-  
+
 // }
 
 // export const ControlsLayerPrototypeDrawDoorsHandler = async function (wrapped, ...args) {
