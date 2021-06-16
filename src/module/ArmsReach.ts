@@ -127,7 +127,7 @@ export const Armsreach = {
         }else{
           let gridSize = getCanvas().dimensions.size;
           //let dist = getManhattanBetween(doorControl, getTokenCenter(character));
-          let charCenter = getTokenCenter(character);
+          //let charCenter = getTokenCenter(character);
           //let offsetx = 1, offsety = 1;
           //charCenter.x -= offsetx * gridSize;
           //charCenter.y -= offsety * gridSize;
@@ -342,8 +342,8 @@ export const computeDistanceBetweenCoordinates = function(doorControl, charCente
   const  diagonalSteps = min;
   const  straightSteps = max - min;
 
-  return SQRT_2 * diagonalSteps + straightSteps;
-
+  return (SQRT_2 * diagonalSteps + straightSteps) - getCanvas().dimensions.size;
+  //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
   //return getManhattanBetween(doorControl, charCenter);
   /*
   TODO THE INTEGRATION FOR GRIDLESS

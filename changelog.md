@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.1.4
+
+- Integration of a better math formula for compute the distance
+
 # 1.1.3
 
 - Bug fix [Warning Msg when Ambient Doors/Designer Doors together with Arms Reach](https://github.com/p4535992/foundryvtt-arms-reach/issues/16)
