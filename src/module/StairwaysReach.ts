@@ -4,8 +4,8 @@ import { getCanvas, MODULE_NAME } from "./settings";
 
 export const StairwaysReach = {
 
-    globalInteractionDistance : function(stairway:SourceData,selectedTokenIds:string[],userId:String):Boolean{ 
-        
+    globalInteractionDistance : function(stairway:SourceData,selectedTokenIds:string[],userId:String):Boolean{
+
       let isOwned:boolean = false;
       let character:Token = getFirstPlayerTokenSelected();
       if(selectedTokenIds){
@@ -27,7 +27,7 @@ export const StairwaysReach = {
       // Sets the global maximum interaction distance
       // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
       if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
-  
+
         // Check distance
         //let character:Token = getFirstPlayerToken();
         if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
@@ -35,7 +35,7 @@ export const StairwaysReach = {
             iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
             return false;
           }else{
-  
+
             //let dist = getManhattanBetween(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
             let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
             let gridSize = getCanvas().dimensions.size;
@@ -54,11 +54,11 @@ export const StairwaysReach = {
             }
             // END MOD ABD 4535992
           }
-  
+
         } else if(game.user.isGM) {
           // DO NOTHING
         }
-  
+
       }
       // If settings is true do not deselect the current select token
       if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {

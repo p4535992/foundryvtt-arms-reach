@@ -131,7 +131,7 @@ export const Armsreach = {
           //let offsetx = 1, offsety = 1;
           //charCenter.x -= offsetx * gridSize;
           //charCenter.y -= offsety * gridSize;
-          let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));      
+          let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
           let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
           if (isNotNearEnough) {
             var tokenName = getCharacterName(character);
@@ -320,10 +320,33 @@ export const Armsreach = {
 
 }
 
+export const SQRT_2 = Math.sqrt(2);
+
+/**
+ * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
+ * @param doorControl
+ * @param charCenter
+ * @returns
+ */
 export const computeDistanceBetweenCoordinates = function(doorControl, charCenter){
-  return getManhattanBetween(doorControl, charCenter);
+  const x1 = doorControl.x;
+  const y1 = doorControl.y;
+  const x2 = charCenter.x;
+  const y2 = charCenter.y;
+  const  dx = Math.abs(x2 - x1);
+  const  dy = Math.abs(y2 - y1);
+
+  const  min = Math.min(dx, dy);
+  const  max = Math.max(dx, dy);
+
+  const  diagonalSteps = min;
+  const  straightSteps = max - min;
+
+  return SQRT_2 * diagonalSteps + straightSteps;
+
+  //return getManhattanBetween(doorControl, charCenter);
   /*
-  TODO THE INTEGRATION FOR GRIDLESS 
+  TODO THE INTEGRATION FOR GRIDLESS
   const distanceType = <string>game.settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
   //const token = canvas.tokens.get (id);
   // You can also use the Euclidean or Chebyshev (i.e. dnd 5e's) distance metrics
@@ -431,9 +454,9 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
     var closestDoor = null; // is a doorcontrol
     const reach = actorReach(token.actor);
     // Find closest door
-    let charCenter = getTokenCenter(token);
-    charCenter.x += offsetx * gridSize;
-    charCenter.y += offsety * gridSize;
+    //let charCenter = getTokenCenter(token);
+    //charCenter.x += offsetx * gridSize;
+    //charCenter.y += offsety * gridSize;
 
     for( let i = 0; i < getCanvas().controls.doors.children.length ; i++ ) {
 
@@ -464,7 +487,7 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
         // ================================================================================
       }else{
         //let dist = getManhattanBetween(door, charCenter);
-        let dist = computeDistanceBetweenCoordinates(getDoorCenter(door), charCenter);
+        let dist = computeDistanceBetweenCoordinates(door, getTokenCenter(token));
         let distInGridUnits = (dist / gridSize) - 0.1;
 
 
