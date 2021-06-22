@@ -141,7 +141,6 @@ export const Armsreach = {
             else {
               iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
             }
-            //return;
             // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH WRAPPER AND MIXED
             /*
             const [t] = args;
@@ -166,8 +165,8 @@ export const Armsreach = {
             */
             // TODO If is a secret door we can do somethig
             /*
-            if(wall.data.door === CONST.WALL_DOOR_STATES.LOCKED){
-              wall.update(
+            if(doorControl.wall.data.door === CONST.WALL_DOOR_STATES.LOCKED){
+              doorControl.wall.update(
                 {"door" : CONST.WALL_DOOR_STATES.OPEN} // From secret door to normal door
               );
               let sent_message = `You have spotted a hidden door!`;
@@ -178,8 +177,8 @@ export const Armsreach = {
                 speaker: ChatMessage.getSpeaker({alias: "Door"})
               };
               ChatMessage.create(chatData, {});
-            }else if(wall.data.door === CONST.WALL_DOOR_STATES.OPEN){
-              wall.update(
+            }else if(doorControl.wall.data.door === CONST.WALL_DOOR_STATES.OPEN){
+              doorControl.wall.update(
                 {"door" : CONST.WALL_DOOR_STATES.CLOSED}
               );
             }
@@ -278,19 +277,61 @@ export const Armsreach = {
     let playpath = "";
     let playVolume = 0.8;
 
-    if(object.data.ds == 2) { // Door Unlocking
+    if(object.data.ds == CONST.WALL_DOOR_STATES.LOCKED) { // Door Unlocking
       playpath = doorData.unlockPath;
       playVolume = doorData.unlockLevel;
     }
-    else if(updateData.ds == 0) { //Door Close
+    else if(updateData.ds == CONST.WALL_DOOR_STATES.CLOSED) { //Door Close
       playpath = doorData.closePath;
       playVolume = doorData.closeLevel;
     }
-    else if(updateData.ds == 1) {//Door Open
+    else if(updateData.ds == CONST.WALL_DOOR_STATES.OPEN) {//Door Open
       playpath = doorData.openPath;
       playVolume = doorData.openLevel;
     }
-    else if(updateData.ds == 2) {// Door Lock
+    else if(updateData.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
+      playpath = doorData.lockPath;
+      playVolume = doorData.lockLevel;
+    }
+
+    if(playpath != "" && playpath != null) {
+      let fixedPlayPath = playpath.replace("[data]", "").trim();
+      AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
+    }
+
+  },
+
+  preUpdateWallBugFixSoundSimpleHandler : async function(updateData){
+
+    // if(
+    //       (
+    //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
+    //   ||
+    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
+    //       )
+    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    // {
+    //   return;
+    // }
+
+    let doorData = Armsreach.defaultDoorData();
+
+    let playpath = "";
+    let playVolume = 0.8;
+
+    // if(object.data.ds == CONST.WALL_DOOR_STATES.LOCKED) { // Door Unlocking
+    //   playpath = doorData.unlockPath;
+    //   playVolume = doorData.unlockLevel;
+    // }
+    if(updateData.ds == CONST.WALL_DOOR_STATES.CLOSED) { //Door Close
+      playpath = doorData.closePath;
+      playVolume = doorData.closeLevel;
+    }
+    else if(updateData.ds == CONST.WALL_DOOR_STATES.OPEN) {//Door Open
+      playpath = doorData.openPath;
+      playVolume = doorData.openLevel;
+    }
+    else if(updateData.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
       playpath = doorData.lockPath;
       playVolume = doorData.lockLevel;
     }

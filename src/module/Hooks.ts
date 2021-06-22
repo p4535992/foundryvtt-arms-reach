@@ -1,6 +1,6 @@
 import { warn, error, debug, i18n, i18nFormat } from "../foundryvtt-arms-reach";
-import { Armsreach } from "./ArmsReach";
-import { MODULE_NAME } from './settings';
+import { Armsreach, computeDistanceBetweenCoordinates, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
+import { getCanvas, MODULE_NAME } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
 //@ts-ignore
@@ -161,6 +161,9 @@ export let initHooks = () => {
   if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
     //@ts-ignore
     libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onMouseDown', DoorControlPrototypeOnMouseDownHandler, 'MIXED');
+    //@ts-ignore
+    libWrapper.register(MODULE_NAME, 'DoorControl.prototype._onRightDown', DoorControlPrototypeOnRightDownHandler, 'MIXED');
+  
   }
   // else{
   //   //@ts-ignore
@@ -177,6 +180,18 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
       Armsreach.globalInteractionDistance(doorControl);
+      
+      // Bug fix not sure why i need to do this
+      if(doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
+        let doorData = Armsreach.defaultDoorData();
+        let playpath = doorData.lockPath;
+        let playVolume = doorData.lockLevel;
+        let fixedPlayPath = playpath.replace("[data]", "").trim();
+        AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
+      }
+
+      // Armsreach.preUpdateWallBugFixSoundSimpleHandler(doorControl.wall.data);
+            
     }
 
     // YOU NEED THIS ANYWAY FOR A STRANGE BUG WITH OVERRIDE AND SOUND OF DOOR
@@ -186,6 +201,34 @@ export const DoorControlPrototypeOnMouseDownHandler = async function () { //func
     // Call original method
     //return originalMethod.apply(this,arguments);
     //return wrapped(...args);
+}
+
+export const DoorControlPrototypeOnRightDownHandler = function (wrapped, ...args) {
+  const doorControl = this; //evt.currentTarget;
+  if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
+    let character:Token = getFirstPlayerTokenSelected();
+    let isOwned:boolean = false;
+    if(!character){
+      character = getFirstPlayerToken();
+      if(character){
+        isOwned = true;
+      }
+    }
+    let gridSize = getCanvas().dimensions.size;
+    let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
+    let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+    if (isNotNearEnough) {
+      var tokenName = getCharacterName(character);
+      if (tokenName){
+        iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
+      }
+      else {
+        iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
+      }
+      return;
+    }
+  }
+  return wrapped(...args);
 }
 
 // export const DoorControlPrototypeOnMouseDownHandler2 = async function (wrapped, ...args) {
