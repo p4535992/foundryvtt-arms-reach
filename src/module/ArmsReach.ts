@@ -123,14 +123,9 @@ export const Armsreach = {
       if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
         if( !character ) {
           iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
-          //return;
+          return false;
         }else{
           let gridSize = getCanvas().dimensions.size;
-          //let dist = getManhattanBetween(doorControl, getTokenCenter(character));
-          //let charCenter = getTokenCenter(character);
-          //let offsetx = 1, offsety = 1;
-          //charCenter.x -= offsetx * gridSize;
-          //charCenter.y -= offsety * gridSize;
           let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
           let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
           if (isNotNearEnough) {
@@ -183,10 +178,11 @@ export const Armsreach = {
               );
             }
             */
+           return false;
           }else{
             // Congratulations you are in reach
             // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH OVERRIDE
-            //const doorControl = this;
+            /*
             let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
             if(wall){
               if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
@@ -213,12 +209,14 @@ export const Armsreach = {
             }else{
               error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
             }
+            */
+            return true;
           }
           // END MOD ABD 4535992
         }
 
       } else if(game.user.isGM) {
-        //const doorControl = this;
+        /*
         let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
         if(wall){
           if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
@@ -238,6 +236,8 @@ export const Armsreach = {
         }else{
           error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
         }
+        */
+        return false;
       }
 
     }

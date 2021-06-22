@@ -172,25 +172,30 @@ export let initHooks = () => {
 
 }
 
-export const DoorControlPrototypeOnMouseDownHandler = async function () { //function (wrapped, ...args) {
+export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
 
     // const [t] = args;
     // const doorControl = t.currentTarget;
     const doorControl = this; //evt.currentTarget;
 
     if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
-      Armsreach.globalInteractionDistance(doorControl);
-      
-      // Bug fix not sure why i need to do this
-      if(doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
-        let doorData = Armsreach.defaultDoorData();
-        let playpath = doorData.lockPath;
-        let playVolume = doorData.lockLevel;
-        let fixedPlayPath = playpath.replace("[data]", "").trim();
-        AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
-      }
+      const isInReach = await Armsreach.globalInteractionDistance(doorControl);
+      if(isInReach){
+        return wrapped(...args);
+      }else{
 
-      // Armsreach.preUpdateWallBugFixSoundSimpleHandler(doorControl.wall.data);
+        // Bug fix not sure why i need to do this
+        if(doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
+          let doorData = Armsreach.defaultDoorData();
+          let playpath = doorData.lockPath;
+          let playVolume = doorData.lockLevel;
+          let fixedPlayPath = playpath.replace("[data]", "").trim();
+          AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
+        }
+
+        return;
+      }
+      
             
     }
 
