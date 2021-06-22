@@ -173,17 +173,10 @@ export let initHooks = () => {
 }
 
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
-
-    // const [t] = args;
-    // const doorControl = t.currentTarget;
-    const doorControl = this; //evt.currentTarget;
-
+    const doorControl = this;
     if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
       const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-      if(isInReach){
-        return wrapped(...args);
-      }else{
-
+      if(!isInReach){
         // Bug fix not sure why i need to do this
         if(doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
           let doorData = Armsreach.defaultDoorData();
@@ -192,11 +185,8 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
           let fixedPlayPath = playpath.replace("[data]", "").trim();
           AudioHelper.play({src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false}, true);
         }
-
         return;
-      }
-      
-            
+      }           
     }
 
     // YOU NEED THIS ANYWAY FOR A STRANGE BUG WITH OVERRIDE AND SOUND OF DOOR
@@ -205,7 +195,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     //}
     // Call original method
     //return originalMethod.apply(this,arguments);
-    //return wrapped(...args);
+    return wrapped(...args);
 }
 
 export const DoorControlPrototypeOnRightDownHandler = function (wrapped, ...args) {

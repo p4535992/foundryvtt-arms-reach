@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.1.6
+
+- Bug fixing and clean up code
+
 # 1.1.5
 
 - Bug fix [No sound when iunteracting with locked doors](https://github.com/p4535992/foundryvtt-arms-reach/issues/17)
