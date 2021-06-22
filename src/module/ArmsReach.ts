@@ -113,6 +113,13 @@ export const Armsreach = {
         isOwned = true;
       }
     }
+    if(!character){
+      if(game.user.isGM){
+        return true;
+      }else{
+        return false;
+      }
+    }
 
     // Sets the global maximum interaction distance
     // Global interaction distance control. Replaces prototype function of DoorControl. Danger...

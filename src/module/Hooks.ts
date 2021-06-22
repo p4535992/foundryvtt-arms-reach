@@ -209,6 +209,13 @@ export const DoorControlPrototypeOnRightDownHandler = function (wrapped, ...args
         isOwned = true;
       }
     }
+    if(!character){
+      if(game.user.isGM){
+        return wrapped(...args);
+      }else{
+        return;
+      }
+    }
     let gridSize = getCanvas().dimensions.size;
     let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
     let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");

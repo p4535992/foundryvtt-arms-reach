@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.1.7
+
+- Bug fix when a scene has no token
+
 # 1.1.6
 
 - Bug fixing and clean up code
