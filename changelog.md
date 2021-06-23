@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.1.8
+
+- Bug fix [Can't interact with doors when unrelated option is disabled](https://github.com/p4535992/foundryvtt-arms-reach/issues/18)
+
 # 1.1.7
 
 - Bug fix when a scene has no token

@@ -244,7 +244,7 @@ export const Armsreach = {
           error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
         }
         */
-        return false;
+        return true;
       }
 
     }
