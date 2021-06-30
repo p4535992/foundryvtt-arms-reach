@@ -198,7 +198,7 @@ export const Armsreach = {
               return true;
             }
             // 2 : If Custom compute distance fail fallback to the standard compute distance
-            else if (<number>resultExplicitComputeDistance === 1) {
+            else if (<number>resultExplicitComputeDistance === 2) {
               // Conntinue
             }
             // x < 0 || x > 2 just fail

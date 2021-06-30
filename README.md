@@ -51,13 +51,13 @@ REMASTERED
 
 Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
-## Hooks (on developing)
+## Hooks (on developing, but any feedback is more than welcome)
 
 Hooks are only executed for the user using the door.
 
 `PreArmsReachInteraction` is called before the interaction with a door is executed. When any of executed hooks return `false` the interaction is aborted.
 
-`ArmsReachInteraction` is called after the interaction with a door.
+`ReplaceArmsReachInteraction` is called like a replacement to the standard interaction with a door, so any system or GM can use a customized version.
 
 ### Door Data
 
