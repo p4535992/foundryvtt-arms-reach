@@ -62,21 +62,7 @@
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
 
   "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
-  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene",
-
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedForPreArmsReachInteraction": "Door is in reach but is locked for ${tokenName} (PreArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedPreArmsReachInteraction": "Door is in reach but is locked (PreArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachPreArmsReachInteraction": "No door was found within reach (PreArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachForPreArmsReachInteraction": "No door was found within {tokenName}'s reach (PreArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachPreArmsReachInteraction": "Door not in reach (PreArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachForPreArmsReachInteraction": "Door not within {tokenName}'s reach (PreArmsReachInteraction)",
-
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedForReplaceArmsReachInteraction": "Door is in reach but is locked for ${tokenName} (ReplaceArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedReplaceArmsReachInteraction": "Door is in reach but is locked (ReplaceArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachReplaceArmsReachInteraction": "No door was found within reach (ReplaceArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachForReplaceArmsReachInteraction": "No door was found within {tokenName}'s reach (ReplaceArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachReplaceArmsReachInteraction": "Door not in reach (ReplaceArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachForReplaceArmsReachInteraction": "Door not within {tokenName}'s reach (ReplaceArmsReachInteraction)"
+  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene"
 
 
 }

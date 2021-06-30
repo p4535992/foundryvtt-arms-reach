@@ -2,7 +2,7 @@ export class DoorData {
   /// door data of the source door (WARNING: this data may change in the future)
   sourceData:DoorSourceData;
   /// id's of all selected token (tokens beeing teleported)
-  selectedTokenId:string;
+  selectedOrOwnedTokenId:string;
   /// door data of the target door (WARNING: this data may change in the future)
   targetData:DoorTargetData;
   /// id of the user using the door (current user)

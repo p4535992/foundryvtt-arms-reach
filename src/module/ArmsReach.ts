@@ -155,11 +155,11 @@ export const Armsreach = {
         };
 
         //const sourceSceneId = getCanvas().scene.id;
-        const selectedTokenIds = getCanvas().tokens.controlled.map((token) => token.id)
+        //const selectedOrOwnedTokenId = getCanvas().tokens.controlled.map((token) => token.id)
         //const targetSceneId = targetScene ? targetScene.id : null
         const doorData:DoorData = {
           sourceData: sourceData,
-          selectedTokenId: character.id,
+          selectedOrOwnedTokenId: character.id,
           targetData: targetData,
           userId: game.userId
         }
@@ -172,30 +172,26 @@ export const Armsreach = {
           if (Hooks.call('PreArmsReachInteraction', doorData) === false) {
             var tokenName = getCharacterName(character);
             if (tokenName){
-              iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachForPreArmsReachInteraction",{tokenName : tokenName}));
+              iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
             }
             else {
-              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReachPreArmsReachInteraction"));
+              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
             }
             return false
           }
-          const resultExplicitComputeDistance:any = Hooks.call('ReplaceArmsReachInteraction', doorData);
+
+          let isNotNearEnough = false;
+          /*
+          const resultExplicitComputeDistance = Hooks.call('ReplaceArmsReachInteraction', doorData);
           // undefined|null|Nan go with the standard compute distance
-          if(resultExplicitComputeDistance){
+          if(resultExplicitComputeDistance && typeof(resultExplicitComputeDistance) == 'number'){
             // 0 : Custom compute distance fail
             if (<number>resultExplicitComputeDistance === 0) {
-              var tokenName = getCharacterName(character);
-              if (tokenName){
-                iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachForReplaceArmsReachInteraction",{tokenName : tokenName}));
-              }
-              else {
-                iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReachReplaceArmsReachInteraction"));
-              }
-              return false;
+              isNotNearEnough = false;
             }
             // 1 : Custom compute success
             else if (<number>resultExplicitComputeDistance === 1) {
-              return true;
+              isNotNearEnough = true;
             }
             // 2 : If Custom compute distance fail fallback to the standard compute distance
             else if (<number>resultExplicitComputeDistance === 2) {
@@ -203,22 +199,17 @@ export const Armsreach = {
             }
             // x < 0 || x > 2 just fail
             else{
-              var tokenName = getCharacterName(character);
-              if (tokenName){
-                iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachForReplaceArmsReachInteraction",{tokenName : tokenName}));
-              }
-              else {
-                iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReachReplaceArmsReachInteraction"));
-              }
-              return false;
+              isNotNearEnough = false;
             }
-          }
-
+          }else{
+          */
           // Standard computing distance
 
           let gridSize = getCanvas().dimensions.size;
           let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
-          let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+          isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+          
+
           if (isNotNearEnough) {
             var tokenName = getCharacterName(character);
             if (tokenName){

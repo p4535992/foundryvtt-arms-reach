@@ -66,7 +66,7 @@ const doorData = {
     /// door data of the source door (WARNING: this data may change in the future)
     sourceData,
     /// id of the token (tokens interaction with the door)
-    selectedTokenId,
+    selectedOrOwnedTokenId,
     /// door data of the target data (WARNING: this data may change in the future)
     targetData,
     /// id of the user using the door (current user)
@@ -84,25 +84,9 @@ const doorData = {
 // DO SOME CHECK 'BEFORE' TEH DEFAULT DISTANCE COMPUTATION
 
 Hooks.on('PreArmsReachInteraction', (doorData) => {
-    const { sourceData, selectedTokenId, targetData, userId } = doorData
+    const { sourceData, selectedOrOwnedTokenId, targetData, userId } = doorData
 
     // DO SOMETHING AND RETURN OR TRUE OR FALSE
-})
-
-// REPLACE THE DEFAULT DISTANCE COMPUTATION BECAUSE YOUR SUCK (Yea i know that)
-
-Hooks.on('ReplaceArmsReachInteraction', (doorData) => {
-    const { sourceData, selectedTokenId, targetData, userId } = doorData
-
-    // NOTE : PROBABLY I CAN DO A BETTER JOB ON THIS SO ANY SUGGESTION IS ACCEPTED
-
-    // DO SOMETHING AND RETURN A NUMBER
-    
-    // 0 : Custom compute distance fail
-    // 1 : Custom compute success
-    // 2 : Custom compute distance fail but fallback to the standard compute distance
-    // x < 0 || x > 2 : something just go wrong it's a fail
-    // undefined|null|Nan : Nothing to check ? than go on with the standard compute distance
 })
 
 ```

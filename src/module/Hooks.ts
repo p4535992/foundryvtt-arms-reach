@@ -119,7 +119,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     return wrapped(...args);
 }
 
-export const DoorControlPrototypeOnRightDownHandler = function (wrapped, ...args) {
+export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, ...args) {
   const doorControl = this; //evt.currentTarget;
   if(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach")) {
     let character:Token = getFirstPlayerTokenSelected();
@@ -137,17 +137,8 @@ export const DoorControlPrototypeOnRightDownHandler = function (wrapped, ...args
         return;
       }
     }
-    let gridSize = getCanvas().dimensions.size;
-    let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
-    let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
-    if (isNotNearEnough) {
-      var tokenName = getCharacterName(character);
-      if (tokenName){
-        iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
-      }
-      else {
-        iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
-      }
+    const isInReach = await Armsreach.globalInteractionDistance(doorControl);
+    if (!isInReach) {
       return;
     }
   }
