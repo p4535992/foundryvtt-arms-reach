@@ -1,4 +1,5 @@
 import { error, i18n, i18nFormat } from "../foundryvtt-arms-reach";
+import { DoorData, DoorSourceData, DoorTargetData } from "./models";
 import { getCanvas, MODULE_NAME } from "./settings";
 
 export const Armsreach = {
@@ -103,7 +104,7 @@ export const Armsreach = {
 
   },
 
-  globalInteractionDistance : async function(doorControl:any){ // TODO can't be a DoorControl not have acces to wall property
+  globalInteractionDistance : async function(doorControl:DoorControl){
 
     let character:Token = getFirstPlayerTokenSelected();
     let isOwned:boolean = false;
@@ -128,10 +129,93 @@ export const Armsreach = {
       // Check distance
       //let character:Token = getFirstPlayerToken();
       if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
+
+        const sourceData:DoorSourceData = {
+          scene: getCanvas().scene,
+          name: doorControl.name,
+          label: doorControl.name,
+          icon: null, //doorControl.icon.texture.baseTexture., // TODO
+          disabled: (doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED),
+          hidden: (doorControl.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET),
+          animate: false,
+          x: doorControl.x,
+          y: doorControl.y
+        };
+
+        const targetData:DoorTargetData = {
+          scene:getCanvas().scene,
+          name: character.name,
+          label: character.name,
+          icon: null, //doorControl.icon.texture.baseTexture., // TODO
+          disabled: false,
+          hidden: false,
+          animate: false,
+          x: getTokenCenter(character).x,
+          y: getTokenCenter(character).y
+        };
+
+        //const sourceSceneId = getCanvas().scene.id;
+        const selectedTokenIds = getCanvas().tokens.controlled.map((token) => token.id)
+        //const targetSceneId = targetScene ? targetScene.id : null
+        const doorData:DoorData = {
+          sourceData: sourceData,
+          selectedTokenId: character.id,
+          targetData: targetData,
+          userId: game.userId
+        }
+
         if( !character ) {
           iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
           return false;
         }else{
+          // PreHook (can abort the interaction with the door)
+          if (Hooks.call('PreArmsReachInteraction', doorData) === false) {
+            var tokenName = getCharacterName(character);
+            if (tokenName){
+              iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachForPreArmsReachInteraction",{tokenName : tokenName}));
+            }
+            else {
+              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReachPreArmsReachInteraction"));
+            }
+            return false
+          }
+          const resultExplicitComputeDistance:any = Hooks.call('ReplaceArmsReachInteraction', doorData);
+          // undefined|null|Nan go with the standard compute distance
+          if(resultExplicitComputeDistance){
+            // 0 : Custom compute distance fail
+            if (<number>resultExplicitComputeDistance === 0) {
+              var tokenName = getCharacterName(character);
+              if (tokenName){
+                iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachForReplaceArmsReachInteraction",{tokenName : tokenName}));
+              }
+              else {
+                iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReachReplaceArmsReachInteraction"));
+              }
+              return false;
+            }
+            // 1 : Custom compute success
+            else if (<number>resultExplicitComputeDistance === 1) {
+              return true;
+            }
+            // 2 : If Custom compute distance fail fallback to the standard compute distance
+            else if (<number>resultExplicitComputeDistance === 1) {
+              // Conntinue
+            }
+            // x < 0 || x > 2 just fail
+            else{
+              var tokenName = getCharacterName(character);
+              if (tokenName){
+                iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachForReplaceArmsReachInteraction",{tokenName : tokenName}));
+              }
+              else {
+                iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReachReplaceArmsReachInteraction"));
+              }
+              return false;
+            }
+          }
+
+          // Standard computing distance
+
           let gridSize = getCanvas().dimensions.size;
           let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
           let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
@@ -165,7 +249,7 @@ export const Armsreach = {
               error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
             }
             */
-            // TODO If is a secret door we can do somethig
+            // If is a secret door we can do something
             /*
             if(doorControl.wall.data.door === CONST.WALL_DOOR_STATES.LOCKED){
               doorControl.wall.update(

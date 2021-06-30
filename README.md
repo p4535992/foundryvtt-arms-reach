@@ -51,6 +51,62 @@ REMASTERED
 
 Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
+## Hooks (on developing)
+
+Hooks are only executed for the user using the door.
+
+`PreArmsReachInteraction` is called before the interaction with a door is executed. When any of executed hooks return `false` the interaction is aborted.
+
+`ArmsReachInteraction` is called after the interaction with a door.
+
+### Door Data
+
+```js
+const doorData = {
+    /// door data of the source door (WARNING: this data may change in the future)
+    sourceData,
+    /// id of the token (tokens interaction with the door)
+    selectedTokenId,
+    /// door data of the target data (WARNING: this data may change in the future)
+    targetData,
+    /// id of the user using the door (current user)
+    userId
+}
+
+/// WARNING: internal data - do not use if possible
+// sourceData and targetData schema is defined in: src/module/models.ts (or module/models.js)
+```
+
+### Example
+
+```js
+
+// DO SOME CHECK 'BEFORE' TEH DEFAULT DISTANCE COMPUTATION
+
+Hooks.on('PreArmsReachInteraction', (doorData) => {
+    const { sourceData, selectedTokenId, targetData, userId } = doorData
+
+    // DO SOMETHING AND RETURN OR TRUE OR FALSE
+})
+
+// REPLACE THE DEFAULT DISTANCE COMPUTATION BECAUSE YOUR SUCK (Yea i know that)
+
+Hooks.on('ReplaceArmsReachInteraction', (doorData) => {
+    const { sourceData, selectedTokenId, targetData, userId } = doorData
+
+    // NOTE : PROBABLY I CAN DO A BETTER JOB ON THIS SO ANY SUGGESTION IS ACCEPTED
+
+    // DO SOMETHING AND RETURN A NUMBER
+    
+    // 0 : Custom compute distance fail
+    // 1 : Custom compute success
+    // 2 : Custom compute distance fail but fallback to the standard compute distance
+    // x < 0 || x > 2 : something just go wrong it's a fail
+    // undefined|null|Nan : Nothing to check ? than go on with the standard compute distance
+})
+
+```
+
 ## [Changelog](./changelog.md)
 
 ## Issues

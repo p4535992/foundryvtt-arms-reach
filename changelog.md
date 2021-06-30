@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 1.1.8 [BREAKING CHANGES]
+
+- Clean up code
+- Add hooks for set a customized formula for computing the distance (for all these system i'm not supporting)
+- Possible (i'm not sure 100%) bug fix of [As a GM, unable to lock/unlock doors](https://github.com/p4535992/foundryvtt-arms-reach/issues/19)
 # 1.1.8
 
 - Bug fix [Can't interact with doors when unrelated option is disabled](https://github.com/p4535992/foundryvtt-arms-reach/issues/18)

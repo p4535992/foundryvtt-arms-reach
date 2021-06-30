@@ -1,9 +1,9 @@
 {
   "foundryvtt-arms-reach.noCharacterSelected": "No character is selected to interact with a door.",
-  "foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No character is selected to center camera on.",
-
   "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
   "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",
+  "foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No character is selected to center camera on.",
+  
   "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach.",
   "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach",
   "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
@@ -52,6 +52,66 @@
   "foundryvtt-arms-reach.settingNameSetDistanceModeForDoorInteraction": "Set Distance Mode",
   "foundryvtt-arms-reach.settingHintSetDistanceModeForDoorInteraction": "Set Distance Mode for Dorr distance interaction",
 
+  "foundryvtt-arms-reach.settingNameEnableAmbientDoorFeature": "Enable/Disable ambient door feature",
+  "foundryvtt-arms-reach.settingHintEnableAmbientDoorFeature": "Adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configuration window to initialize the set up for that door, and you'll be able to enter in the sound file pathways that you wish to play when that door; is opened, is closed, is locked, or is unlocked. If you do not wish for any sound effect to play when an certain action is taken, just leave that specific field blank. Some default sounds have been provided.",
+
+  "foundryvtt-arms-reach.settingNameSilentDoorPermissionsLevel": "Silent Door Permission Level",
+  "foundryvtt-arms-reach.settingHintSilentDoorPermissionsLevel": "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+
+  "foundryvtt-arms-reach.settingNameDoorCloseSoundEffect": "Door Close Sound Effect",
+  "foundryvtt-arms-reach.settingHintDoorCloseSoundEffect": "The default sound effect that will be played when a door is closed.",
+
+  "foundryvtt-arms-reach.settingNameDoorCloseSoundVolumeLevel": "Close Door Volume Level",
+  "foundryvtt-arms-reach.settingHintDoorCloseSoundVolumeLevel": "The default volume level that the close door SFX will be played at.",
+
+  "foundryvtt-arms-reach.settingNameDoorOpenSoundEffect": "Door Open Sound Effect",
+  "foundryvtt-arms-reach.settingHintDoorOpenSoundEffect": "The default sound effect that will be played when a door is opened.",
+
+  "foundryvtt-arms-reach.settingNameDoorOpenSoundVolumeLevel": "Open Door Volume Level",
+  "foundryvtt-arms-reach.settingHintDoorOpenSoundVolumeLevel": "The default volume level that the open door SFX will be played at.",
+
+  "foundryvtt-arms-reach.settingNameDoorLockSoundEffect": "Door Lock Sound Effect",
+  "foundryvtt-arms-reach.settingHintDoorLockSoundEffect": "The default sound effect that will be played when a door is locked.",
+
+  "foundryvtt-arms-reach.settingNameDoorLockSoundVolumeLevel": "Close Lock Volume Level",
+  "foundryvtt-arms-reach.settingHintDoorLockSoundVolumeLevel": "The default volume level that the lock door SFX will be played at.",
+
+  "foundryvtt-arms-reach.settingNameDoorUnlockSoundEffect": "Door Unlock Sound Effect",
+  "foundryvtt-arms-reach.settingHintDoorUnlockSoundEffect": "The default sound effect that will be played when a door is unlocked.",
+
+  "foundryvtt-arms-reach.settingNameDoorUnlockSoundVolumeLevel": "Unlock Door Volume Level",
+  "foundryvtt-arms-reach.settingHintDoorUnlockSoundVolumeLevel": "The default volume level that the unlock door SFX will be played at.",
+
+  "foundryvtt-arms-reach.settingNameDoorLockedJingleSoundEffect": "Locked Door Jingle Sound Effect",
+  "foundryvtt-arms-reach.settingHintDoorLockedJingleSoundEffect": "The default sound effect that will be played when a locked door is attempted to be opened.",
+
+  "foundryvtt-arms-reach.settingNameDoorLockedJingleVolumeLevel": "Locked Door Jingle Volume Level",
+  "foundryvtt-arms-reach.settingHintDoorLockedJingleVolumeLevel": "The default volume level that the unlock door SFX will be played at.",
+
+
+  "foundryvtt-arms-reach.settingNameEnablePreviewerFeature": "Enable/Disable Sound Previewer feature",
+  "foundryvtt-arms-reach.settingHintEnablePreviewerFeature": "Double click on any audio file within the file picker. Sound should stop playing once a different file is chosen, the file picker is closed, or navigation changed.",
+
+
+  "foundryvtt-arms-reach.settingNameEnableDesignerDoorFeature": "Enable/Disable Designer Door",
+  "foundryvtt-arms-reach.settingHintEnableDesignerDoorFeature": "You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.",
+
+  "foundryvtt-arms-reach.settingNameDoorClosedImageIcon": "Closed Door Image Icon",
+  "foundryvtt-arms-reach.settingHintDoorClosedImageIcon": "The default icon for a closed door",
+
+  "foundryvtt-arms-reach.settingNameDoorOpenImageIcon": "Open Door Image Icon",
+  "foundryvtt-arms-reach.settingHintDoorOpenImageIcon": "The default icon for an open door",
+
+  "foundryvtt-arms-reach.settingNameDoorLockedImageIcon": "Locked Door Image Icon",
+  "foundryvtt-arms-reach.settingHintDoorLockedImageIcon": "The default icon for a locked door",
+  
+  "foundryvtt-arms-reach.settingNameDoorSecreImageIcon": "Secret Door",
+  "foundryvtt-arms-reach.settingHintDoorSecreImageIcon": "The default icon for a secret door",
+  
+
+  "foundryvtt-arms-reach.settingNameWindowDoorFeature": "Enable/Disable Window Door feature",
+  "foundryvtt-arms-reach.settingHintWindowDoorFeature": "Enable/Disable Window Door feature",
+
   "foundryvtt-arms-reach.settingNameShowDoorIconsFeature": "Force Door Icon Visiblity?",
   "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible.",
 
@@ -62,21 +122,6 @@
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
 
   "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
-  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene",
-
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedForPreArmsReachInteraction": "Door is in reach but is locked for ${tokenName} (PreArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedPreArmsReachInteraction": "Door is in reach but is locked (PreArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachPreArmsReachInteraction": "No door was found within reach (PreArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachForPreArmsReachInteraction": "No door was found within {tokenName}'s reach (PreArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachPreArmsReachInteraction": "Door not in reach (PreArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachForPreArmsReachInteraction": "Door not within {tokenName}'s reach (PreArmsReachInteraction)",
-
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedForReplaceArmsReachInteraction": "Door is in reach but is locked for ${tokenName} (ReplaceArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorIsInReachButIsLockedReplaceArmsReachInteraction": "Door is in reach but is locked (ReplaceArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachReplaceArmsReachInteraction": "No door was found within reach (ReplaceArmsReachInteraction).",
-  "foundryvtt-arms-reach.doorNotFoundInReachForReplaceArmsReachInteraction": "No door was found within {tokenName}'s reach (ReplaceArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachReplaceArmsReachInteraction": "Door not in reach (ReplaceArmsReachInteraction)",
-  "foundryvtt-arms-reach.doorNotInReachForReplaceArmsReachInteraction": "Door not within {tokenName}'s reach (ReplaceArmsReachInteraction)"
-
+  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene"
 
 }
