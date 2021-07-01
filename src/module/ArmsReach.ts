@@ -181,34 +181,40 @@ export const Armsreach = {
           }
 
           let isNotNearEnough = false;
-          /*
-          const resultExplicitComputeDistance = Hooks.call('ReplaceArmsReachInteraction', doorData);
+          const result = { status: 0 };
+          Hooks.call('ReplaceArmsReachInteraction', doorData, result);
+          const resultExplicitComputeDistance = result.status;
+          let jumDefaultComputation = false;
           // undefined|null|Nan go with the standard compute distance
           if(resultExplicitComputeDistance && typeof(resultExplicitComputeDistance) == 'number'){
             // 0 : Custom compute distance fail
             if (<number>resultExplicitComputeDistance === 0) {
               isNotNearEnough = false;
+              jumDefaultComputation = true;
             }
             // 1 : Custom compute success
             else if (<number>resultExplicitComputeDistance === 1) {
               isNotNearEnough = true;
+              jumDefaultComputation = true;
             }
             // 2 : If Custom compute distance fail fallback to the standard compute distance
             else if (<number>resultExplicitComputeDistance === 2) {
-              // Conntinue
+              // Continue
             }
             // x < 0 || x > 2 just fail
             else{
               isNotNearEnough = false;
+              jumDefaultComputation = true;
             }
-          }else{
-          */
+          }
+
           // Standard computing distance
 
           let gridSize = getCanvas().dimensions.size;
           let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
-          isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
-          
+          if(!jumDefaultComputation){
+            isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+          }
 
           if (isNotNearEnough) {
             var tokenName = getCharacterName(character);

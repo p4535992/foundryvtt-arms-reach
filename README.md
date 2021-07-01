@@ -81,7 +81,11 @@ const doorData = {
 
 ```js
 
-// DO SOME CHECK 'BEFORE' TEH DEFAULT DISTANCE COMPUTATION
+// DO SOME CHECK 'BEFORE' THE DEFAULT DISTANCE COMPUTATION
+
+Hooks.call('ReplaceArmsReachInteraction', doorData);
+
+// How you can use this....
 
 Hooks.on('PreArmsReachInteraction', (doorData) => {
     const { sourceData, selectedOrOwnedTokenId, targetData, userId } = doorData
@@ -89,7 +93,35 @@ Hooks.on('PreArmsReachInteraction', (doorData) => {
     // DO SOMETHING AND RETURN OR TRUE OR FALSE
 })
 
+// REPLACE THE DEFAULT DISTANCE COMPUTATION BECAUSE YOUR SUCK (Yea i know that)
+
+const result = { status: 0 };
+Hooks.call('ReplaceArmsReachInteraction', doorData, result);
+// and then i'll do something with `result.status`
+
+// How you can use this....
+
+Hooks.on('ReplaceArmsReachInteraction', (doorData, result) => {
+    const { sourceData, selectedTokenId, targetData, userId } = doorData
+
+    result.status = ......
+
+    // DO SOMETHING AND RETURN A NUMBER ON result.status
+    
+    // 0 : Custom compute distance fail
+    // 1 : Custom compute success
+    // 2 : Custom compute distance fail but fallback to the standard compute distance
+    // x < 0 || x > 2 : something just go wrong it's a fail
+    // undefined|null|Nan : Nothing to check ? than go on with the standard compute distance
+
+    return result;
+})
+
 ```
+
+## NOTE
+
+ I'll try to make this module system indipendent , but if anyone has some rule distance computation for a specific system i can put some more settings for manage that.
 
 ## [Changelog](./changelog.md)
 
