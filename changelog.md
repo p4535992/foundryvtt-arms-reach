@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# 1.1.8 [BREAKING CHANGES]
+# 1.2.0
+
+- Finally add some hook for external integration
+
+# 1.1.9 [BREAKING CHANGES]
 
 - Clean up code
 - Add hooks for set a customized formula for computing the distance (for all these system i'm not supporting)

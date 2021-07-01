@@ -186,25 +186,26 @@ export const Armsreach = {
           const resultExplicitComputeDistance = result.status;
           let jumDefaultComputation = false;
           // undefined|null|Nan go with the standard compute distance
-          if(resultExplicitComputeDistance && typeof(resultExplicitComputeDistance) == 'number'){
-            // 0 : Custom compute distance fail
+          if(typeof(resultExplicitComputeDistance) == 'number'){
+            // 0 : Custom compute distance fail but fallback to the standard compute distance
             if (<number>resultExplicitComputeDistance === 0) {
-              isNotNearEnough = false;
-              jumDefaultComputation = true;
+              isNotNearEnough = true;
+              jumDefaultComputation = false;
             }
             // 1 : Custom compute success
             else if (<number>resultExplicitComputeDistance === 1) {
+              isNotNearEnough = false;
+              jumDefaultComputation = true;
+            }
+            // 2 : If Custom compute distance fail 
+            else if (<number>resultExplicitComputeDistance === 2) {
               isNotNearEnough = true;
               jumDefaultComputation = true;
             }
-            // 2 : If Custom compute distance fail fallback to the standard compute distance
-            else if (<number>resultExplicitComputeDistance === 2) {
-              // Continue
-            }
-            // x < 0 || x > 2 just fail
+            // x < 0 || x > 2 just fail but fallback to the standard compute distance
             else{
-              isNotNearEnough = false;
-              jumDefaultComputation = true;
+              isNotNearEnough = true;
+              jumDefaultComputation = false;
             }
           }
 

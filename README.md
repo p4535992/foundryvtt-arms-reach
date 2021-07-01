@@ -108,10 +108,10 @@ Hooks.on('ReplaceArmsReachInteraction', (doorData, result) => {
 
     // DO SOMETHING AND RETURN A NUMBER ON result.status
     
-    // 0 : Custom compute distance fail
+    // 0 : Custom compute distance fail but fallback to the standard compute distance
     // 1 : Custom compute success
-    // 2 : Custom compute distance fail but fallback to the standard compute distance
-    // x < 0 || x > 2 : something just go wrong it's a fail
+    // 2 : Custom compute distance fail
+    // x < 0 || x > 2 : something just go wrong it's a fail but fallback to the standard compute distance
     // undefined|null|Nan : Nothing to check ? than go on with the standard compute distance
 
     return result;
