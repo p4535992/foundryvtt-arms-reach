@@ -197,7 +197,7 @@ export const Armsreach = {
               isNotNearEnough = false;
               jumDefaultComputation = true;
             }
-            // 2 : If Custom compute distance fail 
+            // 2 : If Custom compute distance fail
             else if (<number>resultExplicitComputeDistance === 2) {
               isNotNearEnough = true;
               jumDefaultComputation = true;
@@ -581,8 +581,8 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
 
     // Shortest dist
     let shortestDistance = Infinity;
-    var closestDoor = null; // is a doorcontrol
-    const reach = actorReach(token.actor);
+    let closestDoor = null; // is a doorcontrol
+    //const reach = actorReach(token.actor);
     // Find closest door
     //let charCenter = getTokenCenter(token);
     //charCenter.x += offsetx * gridSize;
@@ -599,7 +599,7 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
 
       if(<boolean>game.settings.get(MODULE_NAME,"enableGridlessSupport")){
         // ==============================================================================
-
+        /*
         const rd = getDistance(token, door, offsetx, offsety);
 
 
@@ -613,10 +613,17 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
         else{
           iteractionFailNotification(`Door too far away: ${clampNum(rd.unitDistance)} > ${reach}`);
         }
-
+        */
         // ================================================================================
+        let dist = computeDistanceBetweenCoordinates(door, getTokenCenter(token));
+        let distInGridUnits = (dist / gridSize) - 0.1;
+
+
+        if ( distInGridUnits < maxDistance && dist < shortestDistance ) {
+          closestDoor = door;
+          shortestDistance = dist;
+        }
       }else{
-        //let dist = getManhattanBetween(door, charCenter);
         let dist = computeDistanceBetweenCoordinates(door, getTokenCenter(token));
         let distInGridUnits = (dist / gridSize) - 0.1;
 
@@ -645,10 +652,10 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
 
       if (tokenName){
          iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotFoundInReachFor",{tokenName: tokenName}));
-         iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
+         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }else{
          iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotFoundInReach"));
-         iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
+         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }
       return;
     }
