@@ -639,10 +639,10 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
     if(closestDoor) {
       // Create a fake function... Ugly, but at same time take advantage of existing door interaction function of core FVTT
       let fakeEvent = {
-        // currentTarget:(event) => {
-        //   return closestDoor;
-        // }
-        currentTarget: closestDoor
+        stopPropagation: event => {
+          return;
+        },
+        //currentTarget: closestDoor
       };
       closestDoor._onMouseDown(fakeEvent);
 

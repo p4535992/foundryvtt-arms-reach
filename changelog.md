@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 1.2.1
+
+- Bug fix [Uncaught TypeError: Cannot read property 'melee' of undefined](https://github.com/p4535992/foundryvtt-arms-reach/issues/20)
+- Try to solved [As a GM, unable to lock/unlock doors](https://github.com/p4535992/foundryvtt-arms-reach/issues/19)
+
 # 1.2.0
 
 - Finally add some hook for external integration
