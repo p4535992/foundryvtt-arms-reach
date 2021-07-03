@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.2.2
+
+- Bug fix module.json
+
 # 1.2.1
 
 - Bug fix [Uncaught TypeError: Cannot read property 'melee' of undefined](https://github.com/p4535992/foundryvtt-arms-reach/issues/20)
