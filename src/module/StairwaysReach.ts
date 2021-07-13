@@ -37,7 +37,7 @@ export const StairwaysReach = {
           }else{
 
             //let dist = getManhattanBetween(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
-            let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
+            let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
             let gridSize = getCanvas().dimensions.size;
             let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
             if (isNotNearEnough) {

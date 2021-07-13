@@ -212,7 +212,7 @@ export const Armsreach = {
           // Standard computing distance
 
           let gridSize = getCanvas().dimensions.size;
-          let dist = computeDistanceBetweenCoordinates(doorControl, getTokenCenter(character));
+          let dist = computeDistanceBetweenCoordinates(doorControl, character);
           if(!jumDefaultComputation){
             isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
           }
@@ -458,7 +458,36 @@ export const SQRT_2 = Math.sqrt(2);
  * @param charCenter
  * @returns
  */
-export const computeDistanceBetweenCoordinates = function(doorControl, charCenter){
+export const computeDistanceBetweenCoordinates = function(placeable, character:Token){
+
+  //@ts-ignore
+  const xMinA = character._validPosition.x;
+  //@ts-ignore
+  const yMinA = character._validPosition.y;
+  //@ts-ignore
+  const xMaxA = xMinA + character.hitArea.width;
+  //@ts-ignore
+  const yMaxA = yMinA + character.hitArea.height;
+  //@ts-ignore
+  const xMinB = placeable._validPosition.x;
+  //@ts-ignore
+  const yMinB = placeable._validPosition.y;
+  //@ts-ignore
+  const xMaxB = xMinB + placeable.hitArea.width;
+  //@ts-ignore
+  const yMaxB = yMinB + placeable.hitArea.height;
+
+  const deltaBeneath = ((xMinB - xMaxA) / getCanvas().dimensions.size);
+  const deltaLeft = ((xMinA - xMaxB) / getCanvas().dimensions.size);
+  const deltaAbove = ((yMinB - yMaxA) / getCanvas().dimensions.size);
+  const deltaRight = ((yMinA - yMaxB) / getCanvas().dimensions.size);
+
+  return getCanvas().dimensions.size + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
+
+
+
+  /*
+  const charCenter = getTokenCenter(character);
   const x1 = doorControl.x;
   const y1 = doorControl.y;
   const x2 = charCenter.x;
@@ -473,6 +502,9 @@ export const computeDistanceBetweenCoordinates = function(doorControl, charCente
   const  straightSteps = max - min;
 
   return (SQRT_2 * diagonalSteps + straightSteps) - getCanvas().dimensions.size;
+  */
+
+
   //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
   //return getManhattanBetween(doorControl, charCenter);
   /*
@@ -615,7 +647,7 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
         }
         */
         // ================================================================================
-        let dist = computeDistanceBetweenCoordinates(door, getTokenCenter(token));
+        let dist = computeDistanceBetweenCoordinates(door, token);
         let distInGridUnits = (dist / gridSize) - 0.1;
 
 
@@ -624,7 +656,7 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
           shortestDistance = dist;
         }
       }else{
-        let dist = computeDistanceBetweenCoordinates(door, getTokenCenter(token));
+        let dist = computeDistanceBetweenCoordinates(door, token);
         let distInGridUnits = (dist / gridSize) - 0.1;
 
 
@@ -722,7 +754,7 @@ export const iteractionFailNotification = function(message) {
 /**
  * Returns the first selected token
  */
- export const getFirstPlayerTokenSelected = function() {
+ export const getFirstPlayerTokenSelected = function():Token {
   // Get first token ownted by the player
   let selectedTokens = getCanvas().tokens.controlled;
   if (selectedTokens.length > 1) {
@@ -730,7 +762,12 @@ export const iteractionFailNotification = function(message) {
       return;
   }
   if(!selectedTokens || selectedTokens.length == 0){
-    return null;
+    //if(game.user.character.data.token){
+    //  //@ts-ignore
+    //  return game.user.character.data.token;
+    //}else{
+      return null;
+    //}
   }
   return selectedTokens[0];
 }
@@ -796,88 +833,88 @@ export const isFocusOnCanvas = function() {
 // POSSIBLE GRIDLESS SUPPORT
 // ===================================
 
-function getRay(pointA, pointB, scene) {
-	const rd = {
-		ray: new Ray(pointA, pointB),
-		get cellDistance() { return this.ray.distance / scene.data.grid; }, // cells
-		get unitDistance() { return this.cellDistance * scene.data.gridDistance; }, // feet, meters, whatever
-	};
+// function getRay(pointA, pointB, scene) {
+// 	const rd = {
+// 		ray: new Ray(pointA, pointB),
+// 		get cellDistance() { return this.ray.distance / scene.data.grid; }, // cells
+// 		get unitDistance() { return this.cellDistance * scene.data.gridDistance; }, // feet, meters, whatever
+// 	};
 
-	//console.log("getRay:", pointA, pointB, rd.unitDistance);
+// 	//console.log("getRay:", pointA, pointB, rd.unitDistance);
 
-	return rd;
-}
-
-function getSector(radian) {
-	const clampDeg = (d) => d >= 360 ? d - 360 : d;
-	//const clampRad = (r) => r >= Math.PI * 2 ? r - Math.PI * 2 : r;
-	const wrapSector = (s) => s >= 8 ? 0 : s;
-	const rad2deg = (rad) => rad * (180 / Math.PI);
-	const angleDeg = clampDeg(rad2deg(radian)),
-		sectorAngle = 360 / 8, // 8 sectors
-		//sectorMargin = sectorAngle / 2; //
-		sector = wrapSector(Math.round(angleDeg / sectorAngle));
-	//console.log('rad:', Number(radian.toFixed(3)), '-> deg:', Number(angleDeg.toFixed(2)), '= sector:', sector, `[${sectorName(sector)}]`);
-	return sector;
-}
-
-const sectorMap = {
-	0: { x: 0.5, y: 0, label: 'MR' }, // middle right
-	1: { x: 0.5, y: 0.5, label: 'BR' }, // bottom right,
-	2: { x: 0, y: 0.5, label: 'BM' }, // bottom middle,
-	3: { x: -0.5, y: 0.5, label: 'BL' }, // bottom left,
-	4: { x: -0.5, y: 0, label: 'ML' }, // middle left,
-	5: { x: -0.5, y: -0.5, label: 'TL' }, // top left,
-	6: { x: 0, y: -0.5, label: 'TM' }, // top middle,
-	7: { x: 0.5, y: -0.5, label: 'TR' }, // top right,
-};
-
-// function sectorName(sector) {
-// 	const l = { M: 'Middle', T: 'Top', B: 'Bottom', L: 'Left', 'R': 'Right' };
-// 	const a = '→↘↓↙←↖↑↗';
-// 	const s = sectorMap[sector].label;
-// 	return `${l[s[0]]} ${l[s[1]]} ${a[sector]}`;
+// 	return rd;
 // }
 
-function sectorAdjust(sector, token, origin) {
-	const adjust = sectorMap[sector];
-	//console.log(sector, adjust, token, origin);
-	return {
-		x: (adjust.x * token.w) + origin.x,
-		y: (adjust.y * token.h) + origin.y
-	};
-}
+// function getSector(radian) {
+// 	const clampDeg = (d) => d >= 360 ? d - 360 : d;
+// 	//const clampRad = (r) => r >= Math.PI * 2 ? r - Math.PI * 2 : r;
+// 	const wrapSector = (s) => s >= 8 ? 0 : s;
+// 	const rad2deg = (rad) => rad * (180 / Math.PI);
+// 	const angleDeg = clampDeg(rad2deg(radian)),
+// 		sectorAngle = 360 / 8, // 8 sectors
+// 		//sectorMargin = sectorAngle / 2; //
+// 		sector = wrapSector(Math.round(angleDeg / sectorAngle));
+// 	//console.log('rad:', Number(radian.toFixed(3)), '-> deg:', Number(angleDeg.toFixed(2)), '= sector:', sector, `[${sectorName(sector)}]`);
+// 	return sector;
+// }
 
-function getDistance(token:Token, door:DoorControl, offsetx:Number, offsety:Number) {
-	const scene = getCanvas().scene;
+// const sectorMap = {
+// 	0: { x: 0.5, y: 0, label: 'MR' }, // middle right
+// 	1: { x: 0.5, y: 0.5, label: 'BR' }, // bottom right,
+// 	2: { x: 0, y: 0.5, label: 'BM' }, // bottom middle,
+// 	3: { x: -0.5, y: 0.5, label: 'BL' }, // bottom left,
+// 	4: { x: -0.5, y: 0, label: 'ML' }, // middle left,
+// 	5: { x: -0.5, y: -0.5, label: 'TL' }, // top left,
+// 	6: { x: 0, y: -0.5, label: 'TM' }, // top middle,
+// 	7: { x: 0.5, y: -0.5, label: 'TR' }, // top right,
+// };
 
-	const origin:any = { x: token.data.x, y: token.data.y };
-	const dest = { x: door.x, y: door.y };
+// // function sectorName(sector) {
+// // 	const l = { M: 'Middle', T: 'Top', B: 'Bottom', L: 'Left', 'R': 'Right' };
+// // 	const a = '→↘↓↙←↖↑↗';
+// // 	const s = sectorMap[sector].label;
+// // 	return `${l[s[0]]} ${l[s[1]]} ${a[sector]}`;
+// // }
 
-	const basicRayOnly = offsetx !== undefined && offsety !== undefined;
+// function sectorAdjust(sector, token, origin) {
+// 	const adjust = sectorMap[sector];
+// 	//console.log(sector, adjust, token, origin);
+// 	return {
+// 		x: (adjust.x * token.w) + origin.x,
+// 		y: (adjust.y * token.h) + origin.y
+// 	};
+// }
 
-	if (basicRayOnly) {
-		origin.x += offsetx;
-		origin.y += offsety;
-	}
+// function getDistance(token:Token, door:DoorControl, offsetx:Number, offsety:Number) {
+// 	const scene = getCanvas().scene;
 
-	// Basic distance ray
-	const rd = getRay(origin, dest, scene);
-	if (basicRayOnly) return rd;
+// 	const origin:any = { x: token.data.x, y: token.data.y };
+// 	const dest = { x: door.x, y: door.y };
 
-	// Advanced ray calculated from token sector.
-	const originSector = getSector(rd.ray.normAngle),
-		newOrigin = sectorAdjust(originSector, token, origin);
+// 	const basicRayOnly = offsetx !== undefined && offsety !== undefined;
 
-	return getRay(newOrigin, door, scene);
-}
+// 	if (basicRayOnly) {
+// 		origin.x += offsetx;
+// 		origin.y += offsety;
+// 	}
+
+// 	// Basic distance ray
+// 	const rd = getRay(origin, dest, scene);
+// 	if (basicRayOnly) return rd;
+
+// 	// Advanced ray calculated from token sector.
+// 	const originSector = getSector(rd.ray.normAngle),
+// 		newOrigin = sectorAdjust(originSector, token, origin);
+
+// 	return getRay(newOrigin, door, scene);
+// }
 
 
-function actorReach(actor) {
-	return Math.max(5, actor.data.data.range.melee);
-}
+// function actorReach(actor) {
+// 	return Math.max(5, actor.data.data.range.melee);
+// }
 
-// Clamps number to 1 decimal
-function clampNum(n) {
-	return Math.floor(n * 10) / 10;
-}
+// // Clamps number to 1 decimal
+// function clampNum(n) {
+// 	return Math.floor(n * 10) / 10;
+// }
