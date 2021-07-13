@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.2.3
+
+- Removed annoying warning [Multiple annoying warning messages when moving multiple tokens](https://github.com/p4535992/foundryvtt-arms-reach/issues/21)
+
 # 1.2.2
 
 - Bug fix module.json

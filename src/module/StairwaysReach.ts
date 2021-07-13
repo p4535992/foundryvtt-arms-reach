@@ -10,7 +10,7 @@ export const StairwaysReach = {
       let character:Token = getFirstPlayerTokenSelected();
       if(selectedTokenIds){
         if(selectedTokenIds.length > 1){
-          iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
+          //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
           return false;
         }else{
           character = StairwaysReach.getTokenByTokenID(selectedTokenIds[0]);

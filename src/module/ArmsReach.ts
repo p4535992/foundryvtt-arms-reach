@@ -726,7 +726,7 @@ export const iteractionFailNotification = function(message) {
   // Get first token ownted by the player
   let selectedTokens = getCanvas().tokens.controlled;
   if (selectedTokens.length > 1) {
-      iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
+      //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
       return;
   }
   if(!selectedTokens || selectedTokens.length == 0){
@@ -746,7 +746,7 @@ export const getFirstPlayerToken = function():Token
   let controlled:Token[] = getCanvas().tokens.controlled;
   // Do nothing if multiple tokens are selected
   if (controlled.length && controlled.length > 1) {
-      iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
+      //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
       return;
   }
   // If exactly one token is selected, take that
