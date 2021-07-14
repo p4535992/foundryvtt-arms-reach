@@ -1,5 +1,8 @@
 # CHANGELOG
 
+# 1.2.4
+
+- Bug foix worng code updated to release
 # 1.2.3
 
 - Removed annoying warning [Multiple annoying warning messages when moving multiple tokens](https://github.com/p4535992/foundryvtt-arms-reach/issues/21)

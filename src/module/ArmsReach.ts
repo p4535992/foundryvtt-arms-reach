@@ -454,12 +454,33 @@ export const SQRT_2 = Math.sqrt(2);
 
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
- * @param doorControl
+ * @param doorControl or placeable
  * @param charCenter
  * @returns
  */
 export const computeDistanceBetweenCoordinates = function(placeable, character:Token){
 
+  const charCenter = getTokenCenter(character);
+  const x1 = placeable.x;
+  const y1 = placeable.y;
+  const x2 = charCenter.x;
+  const y2 = charCenter.y;
+  const  dx = Math.abs(x2 - x1);
+  const  dy = Math.abs(y2 - y1);
+
+  const  min = Math.min(dx, dy);
+  const  max = Math.max(dx, dy);
+
+  const  diagonalSteps = min;
+  const  straightSteps = max - min;
+
+  return (SQRT_2 * diagonalSteps + straightSteps) - getCanvas().dimensions.size;
+
+  //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
+  //return getManhattanBetween(doorControl, charCenter);
+
+  // TODO INTEGRATION OF REACH ARM
+  /*
   //@ts-ignore
   const xMinA = character._validPosition.x;
   //@ts-ignore
@@ -483,30 +504,8 @@ export const computeDistanceBetweenCoordinates = function(placeable, character:T
   const deltaRight = ((yMinA - yMaxB) / getCanvas().dimensions.size);
 
   return getCanvas().dimensions.size + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-
-
-
-  /*
-  const charCenter = getTokenCenter(character);
-  const x1 = doorControl.x;
-  const y1 = doorControl.y;
-  const x2 = charCenter.x;
-  const y2 = charCenter.y;
-  const  dx = Math.abs(x2 - x1);
-  const  dy = Math.abs(y2 - y1);
-
-  const  min = Math.min(dx, dy);
-  const  max = Math.max(dx, dy);
-
-  const  diagonalSteps = min;
-  const  straightSteps = max - min;
-
-  return (SQRT_2 * diagonalSteps + straightSteps) - getCanvas().dimensions.size;
   */
 
-
-  //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
-  //return getManhattanBetween(doorControl, charCenter);
   /*
   TODO THE INTEGRATION FOR GRIDLESS
   const distanceType = <string>game.settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
