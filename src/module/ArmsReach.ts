@@ -482,17 +482,17 @@ export const computeDistanceBetweenCoordinates = function(placeable, character:T
   // TODO INTEGRATION OF REACH ARM
   /*
   //@ts-ignore
-  const xMinA = character._validPosition.x;
+  const xMinA = character.x;
   //@ts-ignore
-  const yMinA = character._validPosition.y;
+  const yMinA = character.y;
   //@ts-ignore
   const xMaxA = xMinA + character.hitArea.width;
   //@ts-ignore
   const yMaxA = yMinA + character.hitArea.height;
   //@ts-ignore
-  const xMinB = placeable._validPosition.x;
+  const xMinB = placeable.x;
   //@ts-ignore
-  const yMinB = placeable._validPosition.y;
+  const yMinB = placeable.y;
   //@ts-ignore
   const xMaxB = xMinB + placeable.hitArea.width;
   //@ts-ignore

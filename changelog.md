@@ -2,7 +2,7 @@
 
 # 1.2.4
 
-- Bug foix worng code updated to release
+- Bug fix wrong code updated to release [Fails on computeDistanceBetweenCoordinates as placeable has not _validPosition parameter](https://github.com/p4535992/foundryvtt-arms-reach/issues/22)
 # 1.2.3
 
 - Removed annoying warning [Multiple annoying warning messages when moving multiple tokens](https://github.com/p4535992/foundryvtt-arms-reach/issues/21)
