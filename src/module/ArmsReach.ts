@@ -1,6 +1,6 @@
 import { error, i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { DoorData, DoorSourceData, DoorTargetData } from "./models";
-import { getCanvas, MODULE_NAME } from "./settings";
+import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings";
 
 export const Armsreach = {
 
@@ -10,7 +10,7 @@ export const Armsreach = {
     document.addEventListener('keydown', (evt) => {
       //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
       if (evt.key === 'e') {
-        if(!game.settings.get(MODULE_NAME, "hotkeyDoorInteractionCenter")) {
+        if(!getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionCenter")) {
           return;
         }
         if(ArmsReachVariables.door_interaction_cameraCentered) {
@@ -56,7 +56,7 @@ export const Armsreach = {
           return;
         }
 
-        if (!game.settings.get(MODULE_NAME, "hotkeyDoorInteraction")){
+        if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteraction")){
           return;
         }
         // Get first token ownted by the player
@@ -74,28 +74,28 @@ export const Armsreach = {
     // Double Tap to open nearest door -------------------------------------------------
     document.addEventListener('keyup', evt => {
       if (evt.key === 'ArrowUp' || evt.key === 'w') {
-        if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
+        if(getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
           return;
         }
         ifStuckInteract('up', 0, -0.5);
       }
 
       if (evt.key === 'ArrowDown' || evt.key === 's') {
-        if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
+        if(getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
           return;
         }
         ifStuckInteract('down', 0, +0.5);
       }
 
       if (evt.key === 'ArrowRight' || evt.key === 'd') {
-        if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
+        if(getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
           return;
         }
         ifStuckInteract('right', +0.5, 0);
       }
 
       if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-        if(game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
+        if(getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionDelay") == 0) {
           return;
         }
         ifStuckInteract('left', -0.5, 0);
@@ -104,18 +104,54 @@ export const Armsreach = {
 
   },
 
+  reselectTokenAfterInteraction: function(){
+    
+    // If settings is true do not deselect the current select token
+    if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+      let character:Token = <Token>getFirstPlayerTokenSelected();
+      let isOwned:boolean = false;
+      if(!character){
+        character = <Token>getFirstPlayerToken();
+        if(character){
+          isOwned = true;
+        }
+      }
+      if(!character){
+        if(getGame().user?.isGM){
+          return true;
+        }else{
+          return false;
+        }
+      }
+
+      // Make sense only if use owned is false beacuse there is no way to check what
+      // owned token is get from the array
+      if(!isOwned) {
+        //let character:Token = getFirstPlayerToken();
+        if( !character ) {
+          // DO NOTHING
+        }else{
+          const observable = getCanvas().tokens?.placeables.filter(t => t.id === character.id);
+          if (observable !== undefined){
+              observable[0].control();
+          }
+        }
+      }
+    }
+  },
+
   globalInteractionDistance : async function(doorControl:DoorControl){
 
-    let character:Token = getFirstPlayerTokenSelected();
+    let character:Token = <Token>getFirstPlayerTokenSelected();
     let isOwned:boolean = false;
     if(!character){
-      character = getFirstPlayerToken();
+      character = <Token>getFirstPlayerToken();
       if(character){
         isOwned = true;
       }
     }
     if(!character){
-      if(game.user.isGM){
+      if(getGame().user?.isGM){
         return true;
       }else{
         return false;
@@ -124,17 +160,17 @@ export const Armsreach = {
 
     // Sets the global maximum interaction distance
     // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
-    if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
+    if( <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0 ) {
 
       // Check distance
       //let character:Token = getFirstPlayerToken();
-      if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
+      if( !getGame().user?.isGM || (getGame().user?.isGM && <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistanceForGM"))) {
 
         const sourceData:DoorSourceData = {
-          scene: getCanvas().scene,
+          scene: <Scene>getCanvas().scene,
           name: doorControl.name,
           label: doorControl.name,
-          icon: null, //doorControl.icon.texture.baseTexture., // TODO
+          icon: "", //doorControl.icon.texture.baseTexture., // TODO
           disabled: (doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED),
           hidden: (doorControl.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET),
           animate: false,
@@ -143,10 +179,10 @@ export const Armsreach = {
         };
 
         const targetData:DoorTargetData = {
-          scene:getCanvas().scene,
+          scene: <Scene>getCanvas().scene,
           name: character.name,
           label: character.name,
-          icon: null, //doorControl.icon.texture.baseTexture., // TODO
+          icon: "", //doorControl.icon.texture.baseTexture., // TODO
           disabled: false,
           hidden: false,
           animate: false,
@@ -161,7 +197,7 @@ export const Armsreach = {
           sourceData: sourceData,
           selectedOrOwnedTokenId: character.id,
           targetData: targetData,
-          userId: game.userId
+          userId: <string>getGame().userId
         }
 
         if( !character ) {
@@ -211,10 +247,10 @@ export const Armsreach = {
 
           // Standard computing distance
 
-          let gridSize = getCanvas().dimensions.size;
+          let gridSize = <number>getCanvas().dimensions?.size;
           let dist = computeDistanceBetweenCoordinates(doorControl, character);
           if(!jumDefaultComputation){
-            isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+            isNotNearEnough = (dist / gridSize) > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
           }
 
           if (isNotNearEnough) {
@@ -255,7 +291,7 @@ export const Armsreach = {
               );
               let sent_message = `You have spotted a hidden door!`;
               let chatData = {
-                user: game.user._id,
+                user: getGame().user._id,
                 content: sent_message,
                 whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
                 speaker: ChatMessage.getSpeaker({alias: "Door"})
@@ -304,7 +340,7 @@ export const Armsreach = {
           // END MOD ABD 4535992
         }
 
-      } else if(game.user.isGM) {
+      } else if(getGame().user?.isGM) {
         /*
         let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
         if(wall){
@@ -330,22 +366,7 @@ export const Armsreach = {
       }
 
     }
-    // If settings is true do not deselect the current select token
-    if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
-      // Make sense only if use owned is false beacuse there is no way to check what
-      // owned token is get from the array
-      if(!isOwned) {
-        //let character:Token = getFirstPlayerToken();
-        if( !character ) {
-          // DO NOTHING
-        }else{
-          const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
-          if (observable !== undefined){
-              observable[0].control();
-          }
-        }
-      }
-    }
+    
   },
 
   preUpdateWallBugFixSoundHandler : async function(object, updateData, diff, userID){
@@ -354,9 +375,9 @@ export const Armsreach = {
     //       (
     //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
     //   ||
-    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
+    //       getGame().data.users.find(x => x._id === userID )['role'] >= getGame().settings.get(MODULE_NAME, "stealthDoor")
     //       )
-    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    //       && getGame().keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
     // {
     //   return;
     // }
@@ -396,9 +417,9 @@ export const Armsreach = {
     //       (
     //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
     //   ||
-    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
+    //       getGame().data.users.find(x => x._id === userID )['role'] >= getGame().settings.get(MODULE_NAME, "stealthDoor")
     //       )
-    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    //       && getGame().keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
     // {
     //   return;
     // }
@@ -435,15 +456,15 @@ export const Armsreach = {
   //grab the default sounds from the config paths
   defaultDoorData : function () {
     return {
-      closePath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
+      closePath: `modules/${ARMS_REACH_MODULE_NAME}/assets/defaultSounds/DoorCloseSound.wav`,
       closeLevel: 0.8,
-      openPath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
+      openPath: `modules/${ARMS_REACH_MODULE_NAME}/assets/defaultSounds/DoorOpenSound.wav`,
       openLevel: 0.8,
-      lockPath:  `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
+      lockPath:  `modules/${ARMS_REACH_MODULE_NAME}/assets/defaultSounds/DoorLockSound.wav`,
       lockLevel: 0.8,
-      unlockPath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
+      unlockPath: `modules/${ARMS_REACH_MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
       unlockLevel: 0.8,
-      lockJinglePath: `modules/${MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
+      lockJinglePath: `modules/${ARMS_REACH_MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
       lockJingleLevel: 0.8
     }
   }
@@ -474,7 +495,7 @@ export const computeDistanceBetweenCoordinates = function(placeable, character:T
   const  diagonalSteps = min;
   const  straightSteps = max - min;
 
-  return (SQRT_2 * diagonalSteps + straightSteps) - getCanvas().dimensions.size;
+  return (SQRT_2 * diagonalSteps + straightSteps) - <number>getCanvas().dimensions?.size;
 
   //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
   //return getManhattanBetween(doorControl, charCenter);
@@ -508,22 +529,22 @@ export const computeDistanceBetweenCoordinates = function(placeable, character:T
 
   /*
   TODO THE INTEGRATION FOR GRIDLESS
-  const distanceType = <string>game.settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
+  const distanceType = <string>getGame().settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
   //const token = canvas.tokens.get (id);
   // You can also use the Euclidean or Chebyshev (i.e. dnd 5e's) distance metrics
-  let pf;// = game.FindThePath.Manhattan.PointFactory;
+  let pf;// = getGame().FindThePath.Manhattan.PointFactory;
   if(!distanceType){
     //@ts-ignore
-    pf = game.FindThePath.Manhattan.PointFactory;
+    pf = getGame().FindThePath.Manhattan.PointFactory;
   }else if(distanceType == "2" || distanceType=="Chebyshev"){
     //@ts-ignore
-    pf = game.FindThePath.Chebyshev.PointFactory
+    pf = getGame().FindThePath.Chebyshev.PointFactory
   }else if(distanceType == "1" || distanceType=="Euclidean"){
     //@ts-ignore
-    pf = game.FindThePath.Euclidean.PointFactory
+    pf = getGame().FindThePath.Euclidean.PointFactory
   }else if(distanceType == "0" || distanceType=="Manhattan"){
     //@ts-ignore
-    pf = game.FindThePath.Manhattan.PointFactory;
+    pf = getGame().FindThePath.Manhattan.PointFactory;
   }
   // You can set this to anything >= 0
   //const movementRange = Infinity;
@@ -581,7 +602,7 @@ export function ifStuckInteract(key, offsetx, offsety) {
   if(!character){
      return;
   }
-  if( Date.now() - ArmsReachVariables.lastData[key] > <number>game.settings.get(MODULE_NAME, "hotkeyDoorInteractionDelay") ) {
+  if( Date.now() - ArmsReachVariables.lastData[key] > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionDelay") ) {
     ArmsReachVariables.lastData.x = character.x;
     ArmsReachVariables.lastData.y = character.y;
     ArmsReachVariables.lastData[key] = Date.now();
@@ -599,36 +620,36 @@ export function ifStuckInteract(key, offsetx, offsety) {
  */
 export const interactWithNearestDoor = function(token:Token, offsetx = 0, offsety = 0) {
     // Max distance definition
-    let gridSize = getCanvas().dimensions.size;
+    let gridSize = <number>getCanvas().dimensions?.size;
     let maxDistance = Infinity;
-    let globalMaxDistance = <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+    let globalMaxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
     if( globalMaxDistance > 0 ) {
       if( globalMaxDistance < maxDistance ){
          maxDistance = globalMaxDistance;
       }
     } else {
-      maxDistance = <number>game.settings.get(MODULE_NAME, "doorInteractionDistance");
+      maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "doorInteractionDistance");
     }
 
     // Shortest dist
     let shortestDistance = Infinity;
-    let closestDoor = null; // is a doorcontrol
+    let closestDoor:DoorControl|null = null; // is a doorcontrol
     //const reach = actorReach(token.actor);
     // Find closest door
     //let charCenter = getTokenCenter(token);
     //charCenter.x += offsetx * gridSize;
     //charCenter.y += offsety * gridSize;
 
-    for( let i = 0; i < getCanvas().controls.doors.children.length ; i++ ) {
+    for( let i = 0; i < <number>getCanvas().controls?.doors?.children.length ; i++ ) {
 
 
 
-      let door:DoorControl = getCanvas().controls.doors.children[i];
+      let door:DoorControl = <DoorControl>getCanvas().controls?.doors?.getChildAt(0);
       if (!door.visible){
         continue;
       }
 
-      if(<boolean>game.settings.get(MODULE_NAME,"enableGridlessSupport")){
+      if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME,"enableGridlessSupport")){
         // ==============================================================================
         /*
         const rd = getDistance(token, door, offsetx, offsety);
@@ -675,6 +696,7 @@ export const interactWithNearestDoor = function(token:Token, offsetx = 0, offset
         },
         //currentTarget: closestDoor
       };
+      //@ts-ignore
       closestDoor._onMouseDown(fakeEvent);
 
     } else {
@@ -732,10 +754,10 @@ export const getCharacterName = function(token) {
  * Interation fail messages
  */
 export const iteractionFailNotification = function(message) {
-  if( !game.settings.get(MODULE_NAME, "notificationsInteractionFail") ){
+  if( !getGame().settings.get(ARMS_REACH_MODULE_NAME, "notificationsInteractionFail") ){
      return;
   }
-  ui.notifications.warn(message);
+  ui.notifications?.warn(message);
 }
 
 // /**
@@ -753,17 +775,17 @@ export const iteractionFailNotification = function(message) {
 /**
  * Returns the first selected token
  */
- export const getFirstPlayerTokenSelected = function():Token {
+ export const getFirstPlayerTokenSelected = function():Token|null {
   // Get first token ownted by the player
-  let selectedTokens = getCanvas().tokens.controlled;
+  let selectedTokens = <Token[]>getCanvas().tokens?.controlled;
   if (selectedTokens.length > 1) {
       //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
-      return;
+      return null;
   }
   if(!selectedTokens || selectedTokens.length == 0){
-    //if(game.user.character.data.token){
+    //if(getGame().user.character.data.token){
     //  //@ts-ignore
-    //  return game.user.character.data.token;
+    //  return getGame().user.character.data.token;
     //}else{
       return null;
     //}
@@ -775,27 +797,27 @@ export const iteractionFailNotification = function(message) {
  * Returns a list of selected (or owned, if no token is selected)
  * note: ex getSelectedOrOwnedToken
  */
-export const getFirstPlayerToken = function():Token
+export const getFirstPlayerToken = function():Token|null
 {
   // Get controlled token
   let token:Token;
-  let controlled:Token[] = getCanvas().tokens.controlled;
+  let controlled:Token[] = <Token[]>getCanvas().tokens?.controlled;
   // Do nothing if multiple tokens are selected
   if (controlled.length && controlled.length > 1) {
       //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
-      return;
+      return null;
   }
   // If exactly one token is selected, take that
   token = controlled[0];
   if(!token){
-    if(<boolean>game.settings.get(MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+    if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
       if(!controlled.length || controlled.length == 0 ){
         // If no token is selected use the token of the users character
-        token = getCanvas().tokens.placeables.find(token => token.data._id === game.user.character?.data?._id);
+        token = <Token>getCanvas().tokens?.placeables.find(token => token.data._id === getGame().user?.character?.data?._id);
       }
       // If no token is selected use the first owned token of the users character you found
       if(!token){
-        token = getCanvas().tokens.ownedTokens[0];
+        token = <Token>getCanvas().tokens?.ownedTokens[0];
       }
     }
   }

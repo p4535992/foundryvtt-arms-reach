@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.2.5
+
+- Upgrade to library typescript 0.8.8
+
 # 1.2.4
 
 - Bug fix wrong code updated to release [Fails on computeDistanceBetweenCoordinates as placeable has not _validPosition parameter](https://github.com/p4535992/foundryvtt-arms-reach/issues/22)

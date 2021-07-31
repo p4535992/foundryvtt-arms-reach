@@ -1,36 +1,36 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach";
 import { computeDistanceBetweenCoordinates, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
-import { getCanvas, MODULE_NAME } from "./settings";
+import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings";
 
 export const StairwaysReach = {
 
-    globalInteractionDistance : function(stairway:SourceData,selectedTokenIds:string[],userId:String):Boolean{
+    globalInteractionDistance : function(stairway:SourceData,selectedTokenIds:string[],userId:String):boolean{
 
       let isOwned:boolean = false;
-      let character:Token = getFirstPlayerTokenSelected();
+      let character:Token = <Token>getFirstPlayerTokenSelected();
       if(selectedTokenIds){
         if(selectedTokenIds.length > 1){
           //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
           return false;
         }else{
-          character = StairwaysReach.getTokenByTokenID(selectedTokenIds[0]);
+          character = <Token>StairwaysReach.getTokenByTokenID(selectedTokenIds[0]);
         }
       }else {
         if(!character){
-          character = getFirstPlayerToken();
+          character = <Token>getFirstPlayerToken();
           if(character){
             isOwned = true;
           }
         }
       }
-
+      
       // Sets the global maximum interaction distance
       // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
-      if( game.settings.get(MODULE_NAME, "globalInteractionDistance") > 0 ) {
+      if( <number>getGame().settings?.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0 ) {
 
         // Check distance
         //let character:Token = getFirstPlayerToken();
-        if( !game.user.isGM || (game.user.isGM && <boolean>game.settings.get(MODULE_NAME, "globalInteractionDistanceForGM"))) {
+        if( !getGame().user?.isGM || (getGame().user?.isGM && <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistanceForGM"))) {
           if( !character ) {
             iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
             return false;
@@ -38,8 +38,8 @@ export const StairwaysReach = {
 
             //let dist = getManhattanBetween(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
             let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
-            let gridSize = getCanvas().dimensions.size;
-            let isNotNearEnough = (dist / gridSize) > <number>game.settings.get(MODULE_NAME, "globalInteractionDistance");
+            let gridSize = <number>getCanvas().dimensions?.size;
+            let isNotNearEnough = (dist / gridSize) > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
             if (isNotNearEnough) {
               var tokenName = getCharacterName(character);
               if (tokenName){
@@ -55,38 +55,24 @@ export const StairwaysReach = {
             // END MOD ABD 4535992
           }
 
-        } else if(game.user.isGM) {
+        } else if(getGame().user?.isGM) {
           // DO NOTHING
         }
 
       }
-      // If settings is true do not deselect the current select token
-      if(<boolean>game.settings.get(MODULE_NAME, "forceReSelection")) {
-        // Make sense only if use owned is false beacuse there is no way to check what
-        // owned token is get from the array
-        if(!isOwned) {
-          //let character:Token = getFirstPlayerToken();
-          if( !character ) {
-            // DO NOTHING
-          }else{
-            const observable = getCanvas().tokens.placeables.filter(t => t.id === character.id);
-            if (observable !== undefined){
-                observable[0].control();
-            }
-          }
-        }
-      }
+      
+      return false;
     },
 
     getTokenByTokenID : function(id) {
-      // return await game.scenes.active.data.tokens.find( x => {return x.id === id});
-      return getCanvas().tokens.placeables.find( x => {return x.id === id});
+      // return await getGame().scenes.active.data.tokens.find( x => {return x.id === id});
+      return getCanvas().tokens?.placeables.find( x => {return x.id === id});
     },
 
     getTokenByTokenName : function(name) {
-        // return await game.scenes.active.data.tokens.find( x => {return x._name === name});
-        return getCanvas().tokens.placeables.find( x => { return x.name == name});
-        // return getCanvas().tokens.placeables.find( x => { return x.id == game.user.id});
+        // return await getGame().scenes.active.data.tokens.find( x => {return x._name === name});
+        return getCanvas().tokens?.placeables.find( x => { return x.name == name});
+        // return getCanvas().tokens.placeables.find( x => { return x.id == getGame().user.id});
     },
 
     getStairwaysCenter : function(token) {

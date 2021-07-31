@@ -7,26 +7,29 @@ RESET DOORS AND FOG BUTTONS
 
  ******************************************************************************************/
 
-import { getCanvas } from "./settings";
+import { log } from "../foundryvtt-arms-reach";
+import { getCanvas, getGame } from "./settings";
 
 export const ResetDoorsAndFog = {
 
 //Just a parent function for both sub functions. Kept functionality separate in case I want to detangle them later.
 resetDoorsAndFog : async function (scene){
-    let isCurrentScene = scene.data._id == getCanvas().scene.data._id;
+    let isCurrentScene = scene.data._id == getCanvas().scene?.data._id;
     await this.resetDoors(isCurrentScene,scene.data._id);
     await this.resetFog(isCurrentScene,scene.data._id);
 },
 /******** RESET DOOR **************/
 
-resetDoors : async function (isCurrentScene,id=null){
+resetDoors : async function (isCurrentScene,id){
     if(isCurrentScene){
-        await getCanvas().walls.doors.filter((item) => item.data.ds == 1).forEach((item)=> item.update({ds:0}));
+        await getCanvas().walls?.doors.filter((item) => item.data.ds == 1).forEach((item)=> item.update({ds:0},{}));
     }else{
-        console.log(game.scenes.get(id).data.walls.filter((item)=> item.door != 0))
-        await game.scenes.get(id).data.walls.filter((item)=> item.door != 0).forEach((x) => x.ds = 0);
+        if(id){
+            log(getGame().scenes?.get(id)?.data.walls.filter((item)=> item.door != 0))
+            await getGame().scenes?.get(id)?.data.walls.filter((item)=> item.door != 0).forEach((x) => x.ds = 0);
+        }
     }
-    ui.notifications.info(`Doors have been shut.`);
+    ui.notifications?.info(`Doors have been shut.`);
 },
 
 /**********************************/
@@ -35,7 +38,7 @@ resetDoors : async function (isCurrentScene,id=null){
 
 resetFog : async function (isCurrentScene,id=null){
     if(isCurrentScene){
-      getCanvas().sight.resetFog();
+      getCanvas().sight?.resetFog();
     }else{
       //@ts-ignore
       const response = await SocketInterface.dispatch("modifyDocument", {
@@ -46,7 +49,7 @@ resetFog : async function (isCurrentScene,id=null){
           //parentId: "",
           //parentType: ""
       });
-      ui.notifications.info(`Fog of War exploration progress was reset.`);
+      ui.notifications?.info(`Fog of War exploration progress was reset.`);
     }
 
 },
@@ -56,9 +59,9 @@ getContextOption2 : function (idField) {
     return {
         name: "Reset Doors & Fog",
         icon: '<i class="fas fa-dungeon"></i>',
-        condition: li => game.user.isGM,
+        condition: li => getGame().user?.isGM,
         callback: li => {
-            let scene = game.scenes.get(li.data(idField));
+            let scene = getGame().scenes?.get(li.data(idField));
             ResetDoorsAndFog.resetDoorsAndFog(scene)
         }
     };

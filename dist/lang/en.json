@@ -1,0 +1,68 @@
+{
+  "foundryvtt-arms-reach.noCharacterSelected": "No character is selected to interact with a door.",
+  "foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No character is selected to center camera on.",
+
+  "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
+  "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",
+  "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach.",
+  "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach",
+  "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
+  "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach",
+
+  "foundryvtt-arms-reach.stairwaysNotFoundInReach": "No stairways was found within reach.",
+  "foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "No stairways was found within {tokenName}'s reach",
+  "foundryvtt-arms-reach.stairwaysNotInReach": "Stairways not in reach",
+  "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairways not within {tokenName}'s reach",
+
+  "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
+
+  "foundryvtt-arms-reach.errorNoDsProperty": "No 'ds' property found for value '${wallDataDs}' for id : '${wallDDataId}'",
+  "foundryvtt-arms-reach.errorNoWallFoundForId" : "No wall found for id : '${wallDDataId}'",
+
+  "foundryvtt-arms-reach.settingNameEnableArmsReachFeature": "Enable/Disable arms reach feature",
+  "foundryvtt-arms-reach.settingHintEnableArmsReachFeature": "Enable the GM to select the maximum distance that players can interact with a door",
+
+  "foundryvtt-arms-reach.settingNameNotificationsFailedInteraction": "Notifications failed interactions",
+  "foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
+
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "Global maximum interaction distance",
+	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "Max distance (in tiles) that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Hotkey 'e' for interaction",
+  "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
+
+  "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "Interaction double tap delay",
+  "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
+
+  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "Maximum door interaction distance",
+  "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "Maximum door interaction distance",
+
+  "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "Hotkey 'e' to center camera",
+  "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "Holding 'e' will center the camera on current selected token.",
+
+  "foundryvtt-arms-reach.settingNameNotificationsFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
+  "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
+
+  "foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Avoid deselects the controlled token when open/close the door",
+  "foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
+
+  "foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
+  "foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
+
+  "foundryvtt-arms-reach.settingNameSetDistanceModeForDoorInteraction": "Set Distance Mode",
+  "foundryvtt-arms-reach.settingHintSetDistanceModeForDoorInteraction": "Set Distance Mode for Dorr distance interaction",
+
+  "foundryvtt-arms-reach.settingNameShowDoorIconsFeature": "Force Door Icon Visiblity?",
+  "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible.",
+
+  "foundryvtt-arms-reach.settingNameStairwaysIntegrationFeature": "Enable/Disable Stairways integration",
+  "foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Max distance (in tiles) that a token can interact with a stairways... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
+  "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
+
+  "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
+  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene"
+
+
+}
