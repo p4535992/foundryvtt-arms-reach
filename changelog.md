@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 1.2.6
+
+- Bug fox settig get selected token
+
 # 1.2.5
 
 - Upgrade to library typescript 0.8.8

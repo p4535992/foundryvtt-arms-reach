@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "foundryvtt-arms-reach",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Allows the GM to limit the distance that a player can interate with a door. And adds a shortkey to interact with rearest door.",
   "scripts": {
     "package": "gulp package",

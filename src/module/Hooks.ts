@@ -29,9 +29,15 @@ export let readyHooks = async () => {
     Hooks.on('PreStairwayTeleport', (data) => {
       if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableStairwaysIntegration")) {
         const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data
-
+        let tokenSelected;
+        if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+          tokenSelected = <Token>getFirstPlayerTokenSelected(); 
+          if(!tokenSelected){
+            tokenSelected = <Token>getFirstPlayerToken();
+          } 
+        }
         const result = StairwaysReach.globalInteractionDistance(sourceData,selectedTokenIds,userId);
-        Armsreach.reselectTokenAfterInteraction();
+        Armsreach.reselectTokenAfterInteraction(tokenSelected);
         return result;
       }
 
@@ -98,8 +104,15 @@ export let initHooks = () => {
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
     const doorControl = this;
     if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableArmsReach")) {
+      let tokenSelected;
+      if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+        tokenSelected = <Token>getFirstPlayerTokenSelected(); 
+        if(!tokenSelected){
+          tokenSelected = <Token>getFirstPlayerToken();
+        } 
+      }
       const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-      Armsreach.reselectTokenAfterInteraction();
+      Armsreach.reselectTokenAfterInteraction(tokenSelected);
       if(!isInReach){
         // Bug fix not sure why i need to do this
         if(doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {// Door Lock
@@ -141,7 +154,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
       }
     }
     const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-    Armsreach.reselectTokenAfterInteraction();
+    Armsreach.reselectTokenAfterInteraction(character);
     if (!isInReach) {
       return;
     }

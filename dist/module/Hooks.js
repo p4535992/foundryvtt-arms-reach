@@ -22,8 +22,15 @@ export let readyHooks = async () => {
         Hooks.on('PreStairwayTeleport', (data) => {
             if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableStairwaysIntegration")) {
                 const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
+                let tokenSelected;
+                if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+                    tokenSelected = getFirstPlayerTokenSelected();
+                    if (!tokenSelected) {
+                        tokenSelected = getFirstPlayerToken();
+                    }
+                }
                 const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
-                Armsreach.reselectTokenAfterInteraction();
+                Armsreach.reselectTokenAfterInteraction(tokenSelected);
                 return result;
             }
         });
@@ -73,8 +80,15 @@ export let initHooks = () => {
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
     const doorControl = this;
     if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableArmsReach")) {
+        let tokenSelected;
+        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+            tokenSelected = getFirstPlayerTokenSelected();
+            if (!tokenSelected) {
+                tokenSelected = getFirstPlayerToken();
+            }
+        }
         const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-        Armsreach.reselectTokenAfterInteraction();
+        Armsreach.reselectTokenAfterInteraction(tokenSelected);
         if (!isInReach) {
             // Bug fix not sure why i need to do this
             if (doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) { // Door Lock
@@ -115,7 +129,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
             }
         }
         const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-        Armsreach.reselectTokenAfterInteraction();
+        Armsreach.reselectTokenAfterInteraction(character);
         if (!isInReach) {
             return;
         }

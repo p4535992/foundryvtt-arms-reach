@@ -104,23 +104,25 @@ export const Armsreach = {
 
   },
 
-  reselectTokenAfterInteraction: function(){
+  reselectTokenAfterInteraction: function(character:Token){
     
     // If settings is true do not deselect the current select token
     if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
-      let character:Token = <Token>getFirstPlayerTokenSelected();
       let isOwned:boolean = false;
       if(!character){
-        character = <Token>getFirstPlayerToken();
-        if(character){
-          isOwned = true;
+        character = <Token>getFirstPlayerTokenSelected();       
+        if(!character){
+          character = <Token>getFirstPlayerToken();
+          if(character){
+            isOwned = true;
+          }
         }
-      }
-      if(!character){
-        if(getGame().user?.isGM){
-          return true;
-        }else{
-          return false;
+        if(!character){
+          if(getGame().user?.isGM){
+            return true;
+          }else{
+            return false;
+          }
         }
       }
 

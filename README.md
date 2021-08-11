@@ -85,7 +85,7 @@ const doorData = {
 
 // DO SOME CHECK 'BEFORE' THE DEFAULT DISTANCE COMPUTATION
 
-Hooks.call('ReplaceArmsReachInteraction', doorData);
+Hooks.call('PreArmsReachInteraction', doorData);
 
 // How you can use this....
 

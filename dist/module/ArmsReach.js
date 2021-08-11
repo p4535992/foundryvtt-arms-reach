@@ -86,23 +86,25 @@ export const Armsreach = {
             }
         });
     },
-    reselectTokenAfterInteraction: function () {
+    reselectTokenAfterInteraction: function (character) {
         // If settings is true do not deselect the current select token
         if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
-            let character = getFirstPlayerTokenSelected();
             let isOwned = false;
             if (!character) {
-                character = getFirstPlayerToken();
-                if (character) {
-                    isOwned = true;
+                character = getFirstPlayerTokenSelected();
+                if (!character) {
+                    character = getFirstPlayerToken();
+                    if (character) {
+                        isOwned = true;
+                    }
                 }
-            }
-            if (!character) {
-                if (getGame().user?.isGM) {
-                    return true;
-                }
-                else {
-                    return false;
+                if (!character) {
+                    if (getGame().user?.isGM) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 }
             }
             // Make sense only if use owned is false beacuse there is no way to check what
