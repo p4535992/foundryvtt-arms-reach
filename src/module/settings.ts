@@ -283,9 +283,22 @@ export const registerSettings = function () {
       hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
       scope: "world",
       config: true,
-      default: true,
+      default: false,
       type: Boolean
     });
+
+	// ========================================================
+    // JOURNAL SUPPORT
+    // ========================================================
+
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration", {
+		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameJournalsIntegrationFeature`),
+		hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintJournalsIntegrationFeature`),
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean
+	});
 
     // ========================================================
     // GRIDLESS SUPPORT

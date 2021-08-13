@@ -10,10 +10,15 @@
   "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
   "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach or is locked",
 
-  "foundryvtt-arms-reach.stairwaysNotFoundInReach": "No stairways was found within reach or is locked.",
-  "foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "No stairways was found within {tokenName}'s reach or is locked",
-  "foundryvtt-arms-reach.stairwaysNotInReach": "Stairways not in reach or is locked",
-  "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairways not within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.stairwaysNotFoundInReach": "No stairway was found within reach or is locked.",
+  "foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "No stairway was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.stairwaysNotInReach": "Stairway not in reach or is locked",
+  "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairway not within {tokenName}'s reach or is locked",
+
+  "foundryvtt-arms-reach.journalsNotFoundInReach": "No journal was found within reach or is locked.",
+  "foundryvtt-arms-reach.journalsNotFoundInReachFor": "No journal was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.journalsNotInReach": "Journal not in reach or is locked",
+  "foundryvtt-arms-reach.journalsNotInReachFor": "Journal not within {tokenName}'s reach or is locked",
 
   "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 
@@ -63,13 +68,15 @@
   "foundryvtt-arms-reach.settingHintShowDoorIconsFeature": "Default behavior hides Door Icons on the Walls layer. This makes them stay visible.",
 
   "foundryvtt-arms-reach.settingNameStairwaysIntegrationFeature": "Enable/Disable Stairways integration",
-  "foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Max distance (in tiles) that a token can interact with a stairways... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+  "foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Max distance that a token can interact with a stairway... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
 
   "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
-  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene"
+  "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene",
 
+  "foundryvtt-arms-reach.settingNameJournalsIntegrationFeature": "Enable/Disable Journals integration",
+  "foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Max distance that a token can interact with a journal... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
 
 }

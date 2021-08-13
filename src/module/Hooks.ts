@@ -4,6 +4,7 @@ import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
 import { getFirstPlayerToken, getFirstPlayerTokenSelected } from "./ArmsReachhelper";
 import { DoorsReach } from "./DoorsReach";
+import { JournalsReach } from "./JournalsReach";
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -74,8 +75,10 @@ export let readyHooks = async () => {
     }
   })
 
-  // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalEntry:JournalEntry, render) => {
+  // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalSheet:JournalSheet, render) => {
   //   let test = false;
+  //   let journalEntry = <JournalEntry>getGame().journal?.getName(journalSheet.title);
+  //   let seneNotes = <Note>journalEntry.sceneNote;
   //   return test;
   // })
   // Register custom sheets (if any)
@@ -104,7 +107,34 @@ export let initHooks = () => {
 
   }
 
+  if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration")) {
+    //@ts-ignore
+    // libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft', NotePrototypeOnClickLeftHandler, 'MIXED');
+    //@ts-ignore
+    libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft2', NotePrototypeOnClickLeftHandler, 'MIXED');
+  }
 }
+
+export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+  if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration")) {
+    const [ target ] = args;
+    const note:Note = this;
+    let tokenSelected;
+    if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+      tokenSelected = <Token>getFirstPlayerTokenSelected(); 
+      if(!tokenSelected){
+        tokenSelected = <Token>getFirstPlayerToken();
+      } 
+    }
+    const isInReach = await JournalsReach.globalInteractionDistance(tokenSelected,note);
+    DoorsReach.reselectTokenAfterInteraction(tokenSelected);
+    if (!isInReach) {
+      return;
+    }
+  }
+  return wrapped(...args);
+}
+
 
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
     const doorControl = this;

@@ -34,7 +34,7 @@ export const StairwaysReach = {
             //let character:Token = getFirstPlayerToken();
             if (!getGame().user?.isGM || (getGame().user?.isGM && getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistanceForGM"))) {
                 if (!character) {
-                    iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelectedForStairway"));
+                    iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + ".noCharacterSelectedForStairway"));
                     return false;
                 }
                 else {
@@ -51,10 +51,10 @@ export const StairwaysReach = {
                     if (isNotNearEnough) {
                         var tokenName = getCharacterName(character);
                         if (tokenName) {
-                            iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.stairwaysNotInReachFor", { tokenName: tokenName }));
+                            iteractionFailNotification(i18nFormat(ARMS_REACH_MODULE_NAME + ".stairwaysNotInReachFor", { tokenName: tokenName }));
                         }
                         else {
-                            iteractionFailNotification(i18n("foundryvtt-arms-reach.stairwaysNotInReach"));
+                            iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + ".stairwaysNotInReach"));
                         }
                         return false;
                     }
@@ -66,6 +66,7 @@ export const StairwaysReach = {
             }
             else if (getGame().user?.isGM) {
                 // DO NOTHING
+                return true;
             }
         }
         return false;

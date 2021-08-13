@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.2
+
+- Start Journal/Note reach support
+
 # 2.0.1
 
 - Some bug fix

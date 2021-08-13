@@ -4,6 +4,7 @@ import { StairwaysReach } from "./StairwaysReach.js";
 import { ResetDoorsAndFog } from "./resetdoorsandfog.js";
 import { getFirstPlayerToken, getFirstPlayerTokenSelected } from "./ArmsReachhelper.js";
 import { DoorsReach } from "./DoorsReach.js";
+import { JournalsReach } from "./JournalsReach.js";
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 // const previewer = new SoundPreviewerApplication();
@@ -62,8 +63,10 @@ export let readyHooks = async () => {
             return controls;
         }
     });
-    // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalEntry:JournalEntry, render) => {
+    // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalSheet:JournalSheet, render) => {
     //   let test = false;
+    //   let journalEntry = <JournalEntry>getGame().journal?.getName(journalSheet.title);
+    //   let seneNotes = <Note>journalEntry.sceneNote;
     //   return test;
     // })
     // Register custom sheets (if any)
@@ -81,6 +84,31 @@ export let initHooks = () => {
         //@ts-ignore
         libWrapper.register(ARMS_REACH_MODULE_NAME, 'DoorControl.prototype._onRightDown', DoorControlPrototypeOnRightDownHandler, 'MIXED');
     }
+    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration")) {
+        //@ts-ignore
+        // libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft', NotePrototypeOnClickLeftHandler, 'MIXED');
+        //@ts-ignore
+        libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft2', NotePrototypeOnClickLeftHandler, 'MIXED');
+    }
+};
+export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration")) {
+        const [target] = args;
+        const note = this;
+        let tokenSelected;
+        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "forceReSelection")) {
+            tokenSelected = getFirstPlayerTokenSelected();
+            if (!tokenSelected) {
+                tokenSelected = getFirstPlayerToken();
+            }
+        }
+        const isInReach = await JournalsReach.globalInteractionDistance(tokenSelected, note);
+        DoorsReach.reselectTokenAfterInteraction(tokenSelected);
+        if (!isInReach) {
+            return;
+        }
+    }
+    return wrapped(...args);
 };
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
     const doorControl = this;
