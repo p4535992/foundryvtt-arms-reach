@@ -1,5 +1,5 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach";
-import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
+import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, iteractionFailNotification } from "./ArmsReachhelper";
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings";
 
 export const StairwaysReach = {
@@ -30,14 +30,14 @@ export const StairwaysReach = {
       if(globalInteraction <= 0){
         globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
       }
-      // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
+      // Global interaction distance control. Replaces prototype function of Stairways. Danger...
       if( globalInteraction > 0 ) {
 
         // Check distance
         //let character:Token = getFirstPlayerToken();
         if( !getGame().user?.isGM || (getGame().user?.isGM && <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistanceForGM"))) {
           if( !character ) {
-            iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
+            iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelectedForStairway"));
             return false;
           }else{
             let isNotNearEnough = false;
@@ -47,7 +47,7 @@ export const StairwaysReach = {
               isNotNearEnough = dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
             }else{
               let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
-              isNotNearEnough = dist < <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
+              isNotNearEnough = dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
             }
             if (isNotNearEnough) {
               var tokenName = getCharacterName(character);

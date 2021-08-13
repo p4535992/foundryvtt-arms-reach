@@ -4,13 +4,15 @@
 
 Little Utilities, Arms Reach for door, journal, stairways, ecc.
 
-This is project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
+This project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
 ## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder or rename the file from .ts to .js
 
+A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'). 
+
 ## Known issue/Limitation
 
-- I know there is some measure distance issue, by integrating the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) i hope i silved all the limitiations, checkout the module settings fro details.
+- I know there is some measure distance issue, by integrating the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) i hope i solved all the old limitiations, checkout the module settings for details.
   
 - The module settings "Avoid deselects the controlled token when open/close the door" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
 
@@ -30,7 +32,7 @@ To install this module manually:
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
-## foundryvtt-drag-ruler
+### foundryvtt-drag-ruler
 
 This module uses the [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
@@ -148,6 +150,7 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 Thanks to anyone who helps me with this code! I appreciate the user community's feedback on this project!
 
 - Foundry VTT discord community for always helping me out.
+
 - [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny)
 - [Ambient Doors](https://github.com/EndlesNights/ambientdoors) ty to [EndlesNights](https://github.com/EndlesNights)
 - [Sound Previewer](https://github.com/matthewswar/foundry-vtt-sound-previewer) ty to [matthewswar](https://github.com/matthewswar)
@@ -158,6 +161,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways) ty to [SWW13](https://gitlab.com/SWW13)
 - [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
 - [Reset Doors and Fog - Remastered](https://github.com/p4535992/resetdoorsandfog) ty to [yacklebeam](https://github.com/yacklebeam) and [wsaunders1014](https://github.com/wsaunders1014)
+- [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo)
 
 ## License
 This Foundry VTT module is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

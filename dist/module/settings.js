@@ -167,7 +167,7 @@ export const registerSettings = function () {
         default: 1,
         type: Number,
         //@ts-ignore
-        range: { min: 0, max: 10, step: 0.5 }
+        range: { min: 0, max: 50, step: 0.5 }
     });
     getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteraction", {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),

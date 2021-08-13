@@ -25,8 +25,8 @@ resetDoors : async function (isCurrentScene,id){
         await getCanvas().walls?.doors.filter((item) => item.data.ds == 1).forEach((item)=> item.update({ds:0},{}));
     }else{
         if(id){
-            log(getGame().scenes?.get(id)?.data.walls.filter((item)=> item.door != 0))
-            await getGame().scenes?.get(id)?.data.walls.filter((item)=> item.door != 0).forEach((x) => x.ds = 0);
+            log(getGame().scenes?.get(id)?.data.walls.filter((item)=> item.data.door != 0))
+            await getGame().scenes?.get(id)?.data.walls.filter((item)=> item.data.door != 0).forEach((x) => x.data.ds = 0);
         }
     }
     ui.notifications?.info(`Doors have been shut.`);

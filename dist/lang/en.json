@@ -1,6 +1,7 @@
 {
   "foundryvtt-arms-reach.noCharacterSelected": "No character is selected to interact with a door.",
   "foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No character is selected to center camera on.",
+  "foundryvtt-arms-reach.noCharacterSelectedForStairway": "No character is selected to interact with a stairway.",
 
   "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
   "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",

@@ -1,8 +1,9 @@
 import { warn } from "../foundryvtt-arms-reach.js";
-import { Armsreach, getFirstPlayerToken, getFirstPlayerTokenSelected } from "./ArmsReach.js";
 import { ARMS_REACH_MODULE_NAME, getGame } from "./settings.js";
 import { StairwaysReach } from "./StairwaysReach.js";
 import { ResetDoorsAndFog } from "./resetdoorsandfog.js";
+import { getFirstPlayerToken, getFirstPlayerTokenSelected } from "./ArmsReachhelper.js";
+import { DoorsReach } from "./DoorsReach.js";
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 // const previewer = new SoundPreviewerApplication();
@@ -13,7 +14,7 @@ export let readyHooks = async () => {
         if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableArmsReach")) {
             // if ambient door is present and active dont' do this
             if (!getGame().modules.get("ambientdoors")?.active) {
-                Armsreach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+                DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
             }
         }
     });
@@ -30,7 +31,7 @@ export let readyHooks = async () => {
                     }
                 }
                 const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
-                Armsreach.reselectTokenAfterInteraction(tokenSelected);
+                DoorsReach.reselectTokenAfterInteraction(tokenSelected);
                 return result;
             }
         });
@@ -68,7 +69,7 @@ export let setupHooks = () => {
 export let initHooks = () => {
     warn("Init Hooks processing");
     if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableArmsReach")) {
-        Armsreach.init();
+        DoorsReach.init();
     }
     if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableArmsReach")) {
         //@ts-ignore
@@ -87,12 +88,12 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
                 tokenSelected = getFirstPlayerToken();
             }
         }
-        const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-        Armsreach.reselectTokenAfterInteraction(tokenSelected);
+        const isInReach = await DoorsReach.globalInteractionDistance(doorControl);
+        DoorsReach.reselectTokenAfterInteraction(tokenSelected);
         if (!isInReach) {
             // Bug fix not sure why i need to do this
             if (doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) { // Door Lock
-                let doorData = Armsreach.defaultDoorData();
+                let doorData = DoorsReach.defaultDoorData();
                 let playpath = doorData.lockPath;
                 let playVolume = doorData.lockLevel;
                 let fixedPlayPath = playpath.replace("[data]", "").trim();
@@ -128,8 +129,8 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
                 return;
             }
         }
-        const isInReach = await Armsreach.globalInteractionDistance(doorControl);
-        Armsreach.reselectTokenAfterInteraction(character);
+        const isInReach = await DoorsReach.globalInteractionDistance(doorControl);
+        DoorsReach.reselectTokenAfterInteraction(character);
         if (!isInReach) {
             return;
         }

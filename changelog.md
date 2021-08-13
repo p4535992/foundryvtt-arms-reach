@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# 2.0.0 [BREAKING CHANGES]
+
+- Integration with [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo) version 1.8.1
+- Many bug fix
+- Clean up of the code
+
 # 1.2.6
 
 - Bug fox settig get selected token
