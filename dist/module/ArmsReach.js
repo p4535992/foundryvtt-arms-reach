@@ -1,5 +1,9 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach.js";
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings.js";
+//@ts-ignore
+import { SpeedProvider } from '../../drag-ruler/src/speed_provider.js';
+//@ts-ignore
+import { currentSpeedProvider } from '../../drag-ruler/src/api.js';
 export const Armsreach = {
     init: function () {
         // Door interaction
@@ -427,7 +431,7 @@ export const Armsreach = {
         };
     }
 };
-export const SQRT_2 = Math.sqrt(2);
+// export const SQRT_2 = Math.sqrt(2);
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
  * @param doorControl or placeable
@@ -435,88 +439,170 @@ export const SQRT_2 = Math.sqrt(2);
  * @returns
  */
 export const computeDistanceBetweenCoordinates = function (placeable, character) {
+    const xPlaceable = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
+    const yPlaceable = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
+    //@ts-ignore
+    const xToken = character._validPosition?.x ? character._validPosition?.x : character.x;
+    //@ts-ignore
+    const yToken = character._validPosition?.y ? character._validPosition?.y : character.y;
+    const segments = [{ ray: new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable }) }];
+    const shape = getTokenShape(character);
+    const distances = measureDistances(segments, character, shape);
+    // Sum up the distances
+    return distances.reduce((acc, val) => acc + val, 0);
+    /*
+    //@ts-ignore
+    const xMinA = character._validPosition.x;
+    //@ts-ignore
+    const yMinA = character._validPosition.y;
+    //@ts-ignore
+    const xMaxA = xMinA + character.hitArea.width;
+    //@ts-ignore
+    const yMaxA = yMinA + character.hitArea.height;
+  
+    const xMinB = placeable._validPosition.x;
+    const yMinB = placeable._validPosition.y;
+    const xMaxB = xMinB + placeable.hitArea.width;
+    const yMaxB = yMinB + placeable.hitArea.height;
+  
+    const deltaBeneath = ((xMinB - xMaxA) / 20);
+    const deltaLeft = ((xMinA - xMaxB) / 20);
+    const deltaAbove = ((yMinB - yMaxA) / 20);
+    const deltaRight = ((yMinA - yMaxB) / 20);
+  
+    return 5 + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
+    */
+    /*
     const charCenter = getTokenCenter(character);
     const x1 = placeable.x;
     const y1 = placeable.y;
     const x2 = charCenter.x;
     const y2 = charCenter.y;
-    const dx = Math.abs(x2 - x1);
-    const dy = Math.abs(y2 - y1);
-    const min = Math.min(dx, dy);
-    const max = Math.max(dx, dy);
-    const diagonalSteps = min;
-    const straightSteps = max - min;
-    return (SQRT_2 * diagonalSteps + straightSteps) - getCanvas().dimensions?.size;
+    const  dx = Math.abs(x2 - x1);
+    const  dy = Math.abs(y2 - y1);
+  
+    const  min = Math.min(dx, dy);
+    const  max = Math.max(dx, dy);
+  
+    const  diagonalSteps = min;
+    const  straightSteps = max - min;
+  
+    return (SQRT_2 * diagonalSteps + straightSteps) - <number>getCanvas().dimensions?.size;
+    */
     //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
     //return getManhattanBetween(doorControl, charCenter);
-    // TODO INTEGRATION OF REACH ARM
-    /*
-    //@ts-ignore
-    const xMinA = character.x;
-    //@ts-ignore
-    const yMinA = character.y;
-    //@ts-ignore
-    const xMaxA = xMinA + character.hitArea.width;
-    //@ts-ignore
-    const yMaxA = yMinA + character.hitArea.height;
-    //@ts-ignore
-    const xMinB = placeable.x;
-    //@ts-ignore
-    const yMinB = placeable.y;
-    //@ts-ignore
-    const xMaxB = xMinB + placeable.hitArea.width;
-    //@ts-ignore
-    const yMaxB = yMinB + placeable.hitArea.height;
-  
-    const deltaBeneath = ((xMinB - xMaxA) / getCanvas().dimensions.size);
-    const deltaLeft = ((xMinA - xMaxB) / getCanvas().dimensions.size);
-    const deltaAbove = ((yMinB - yMaxA) / getCanvas().dimensions.size);
-    const deltaRight = ((yMinA - yMaxB) / getCanvas().dimensions.size);
-  
-    return getCanvas().dimensions.size + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-    */
-    /*
-    TODO THE INTEGRATION FOR GRIDLESS
-    const distanceType = <string>getGame().settings.get(MODULE_NAME,"setDistanceModeForDoorInteraction");
-    //const token = canvas.tokens.get (id);
-    // You can also use the Euclidean or Chebyshev (i.e. dnd 5e's) distance metrics
-    let pf;// = getGame().FindThePath.Manhattan.PointFactory;
-    if(!distanceType){
-      //@ts-ignore
-      pf = getGame().FindThePath.Manhattan.PointFactory;
-    }else if(distanceType == "2" || distanceType=="Chebyshev"){
-      //@ts-ignore
-      pf = getGame().FindThePath.Chebyshev.PointFactory
-    }else if(distanceType == "1" || distanceType=="Euclidean"){
-      //@ts-ignore
-      pf = getGame().FindThePath.Euclidean.PointFactory
-    }else if(distanceType == "0" || distanceType=="Manhattan"){
-      //@ts-ignore
-      pf = getGame().FindThePath.Manhattan.PointFactory;
-    }
-    // You can set this to anything >= 0
-    //const movementRange = Infinity;
-    //let wallCoords = getWallCoords (wall);
-    //const path = await PathManager.pathToPoint (pf.fromToken (token), pf.fromPixel (wallCoords), movementRange);
-    let p1 = pf.fromCoord(charCenter.x,charCenter.y);
-    let p2 = pf.fromCoord(doorControl.x,doorControl.y);
-    let dist = null;
-    if(!distanceType){
-      //@ts-ignore
-      dist = Point.Manhattan(p1, p2);
-    }else if(distanceType=="Chebyshev"){
-      //@ts-ignore
-      dist = Point.Chebyshev(p1, p2);
-    }else if(distanceType=="Euclidean"){
-      //@ts-ignore
-      dist = Point.Euclidean(p1, p2);
-    }else if(distanceType=="Manhattan"){
-      //@ts-ignore
-      dist = Point.Manhattan(p1, p2);
-    }
-    return dist;
-    */
 };
+export function measureDistances(segments, entity, shape, options = {}) {
+    const opts = duplicate(options);
+    if (opts.enableTerrainRuler || getGame().modules.get("terrain-ruler")?.active) {
+        opts.gridSpaces = true;
+        const firstNewSegmentIndex = segments.findIndex(segment => !segment.ray.dragRulerVisitedSpaces);
+        const previousSegments = segments.slice(0, firstNewSegmentIndex);
+        const newSegments = segments.slice(firstNewSegmentIndex);
+        const distances = previousSegments.map(segment => segment.ray.dragRulerVisitedSpaces[segment.ray.dragRulerVisitedSpaces.length - 1].distance);
+        previousSegments.forEach(segment => segment.ray.terrainRulerVisitedSpaces = duplicate(segment.ray.dragRulerVisitedSpaces));
+        opts.costFunction = (x, y, costOptions = {}) => {
+            return getCostFromSpeedProvider(entity, getAreaFromPositionAndShape({ x, y }, shape), costOptions);
+        };
+        if (previousSegments.length > 0) {
+            opts.terrainRulerInitialState = previousSegments[previousSegments.length - 1].ray.dragRulerFinalState;
+        }
+        //@ts-ignore
+        return distances.concat(terrainRuler.measureDistances(newSegments, opts));
+    }
+    else {
+        // If another module wants to enable grid measurements but disable grid highlighting,
+        // manually set the *duplicate* option's gridSpaces value to true for the Foundry logic to work properly
+        if (!opts.ignoreGrid) {
+            opts.gridSpaces = true;
+        }
+        return getCanvas().grid?.measureDistances(segments, opts);
+    }
+}
+export function getAreaFromPositionAndShape(position, shape) {
+    return shape.map(space => {
+        let x = position.x + space.x;
+        let y = position.y + space.y;
+        if (getCanvas().grid?.isHex) {
+            let shiftedRow;
+            //@ts-ignore
+            if (getCanvas().grid?.grid?.options.even) {
+                shiftedRow = 1;
+            }
+            else {
+                shiftedRow = 0;
+            }
+            //@ts-ignore
+            if (getCanvas().grid?.grid?.options.columns) {
+                if (space.x % 2 !== 0 && position.x % 2 !== shiftedRow) {
+                    y += 1;
+                }
+            }
+            else {
+                if (space.y % 2 !== 0 && position.y % 2 !== shiftedRow) {
+                    x += 1;
+                }
+            }
+        }
+        return { x, y };
+    });
+}
+export function getTokenShape(token) {
+    if (token.scene.data.gridType === CONST.GRID_TYPES.GRIDLESS) {
+        return [{ x: 0, y: 0 }];
+    }
+    else if (token.scene.data.gridType === CONST.GRID_TYPES.SQUARE) {
+        const topOffset = -Math.floor(token.data.height / 2);
+        const leftOffset = -Math.floor(token.data.width / 2);
+        const shape = [];
+        for (let y = 0; y < token.data.height; y++) {
+            for (let x = 0; x < token.data.width; x++) {
+                shape.push({ x: x + leftOffset, y: y + topOffset });
+            }
+        }
+        return shape;
+    }
+    else {
+        // Hex grids
+        //@ts-ignore
+        if (getGame().modules.get("hex-size-support")?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
+            const borderSize = token.data.flags["hex-size-support"].borderSize;
+            let shape = [{ x: 0, y: 0 }];
+            if (borderSize >= 2) {
+                shape = shape.concat([{ x: 0, y: -1 }, { x: -1, y: -1 }]);
+            }
+            if (borderSize >= 3) {
+                shape = shape.concat([{ x: 0, y: 1 }, { x: -1, y: 1 }, { x: -1, y: 0 }, { x: 1, y: 0 }]);
+            }
+            if (borderSize >= 4) {
+                shape = shape.concat([{ x: -2, y: -1 }, { x: 1, y: -1 }, { x: -1, y: -2 }, { x: 0, y: -2 }, { x: 1, y: -2 }]);
+            }
+            //@ts-ignore
+            if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== canvas.grid.grid.options.columns) {
+                shape.forEach(space => space.y *= -1);
+            }
+            //@ts-ignore
+            if (getCanvas().grid?.grid?.options.columns)
+                shape = shape.map(space => { return { x: space.y, y: space.x }; });
+            return shape;
+        }
+        else {
+            return [{ x: 0, y: 0 }];
+        }
+    }
+}
+export function getCostFromSpeedProvider(token, area, options) {
+    try {
+        if (currentSpeedProvider instanceof Function) {
+            return SpeedProvider.prototype.getCostForStep.call(undefined, token, area, options);
+        }
+        return currentSpeedProvider.getCostForStep(token, area, options);
+    }
+    catch (e) {
+        console.error(e);
+        return 1;
+    }
+}
 export class ArmsReachVariables {
 }
 ArmsReachVariables.door_interaction_lastTime = 0;
