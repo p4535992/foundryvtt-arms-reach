@@ -8,7 +8,7 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 
 ## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder or rename the file from .ts to .js
 
-A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'), you can even customize the diatnce calculation like you want with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api). 
+A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'), you can even customize the distance calculation like you want with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api). 
 
 ## Known issue/Limitation
 
@@ -70,15 +70,20 @@ REMASTERED
 
 Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
+## Hooks (FOR ALL FEATURE)
+
+Use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api), because i reuse the same code on distance calculation.
+
+
 ## Hooks (ONLY FOR DOOR FEATURE)
+
+### DEPRECATED is better[drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](htt
 
 Hooks are only executed for the user using the door.
 
 `ArmsReachPreInteraction` is called before the interaction with a door is executed. When any of executed hooks return `false` the interaction is aborted.
 
 `ArmsReachReplaceInteraction` is called like a replacement to the standard interaction with a door, so any system or GM can use a customized version.
-
-BETTER SUGGESTION: A good alternative is to use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api), becuase i reuse the same distance calculation.
 
 ### Door Data
 
