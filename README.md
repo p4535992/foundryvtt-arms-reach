@@ -1,6 +1,8 @@
 ![](https://img.shields.io/badge/Foundry-v0.8.6-informational)
 
-#  FoundryVTT Arms Reach
+#  FoundryVTT Arms Reach 
+
+Little Utilities, Arms Reach for door, journal, stairways, ecc.
 
 This is project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
@@ -8,8 +10,8 @@ This is project is born like a upgrade of the project [Arms Reach](https://githu
 
 ## Known issue/Limitation
 
-- I know there is some measure distance issue, i'm trying to find a math formula for better manage the use cases
-- Only Grid Square Maps are supported so Gridless and Hex map not work with the same logic (you can make it work by manipulating the module settings in some way) i will try in the future for 0.8.X to integrated this library [lib-find-the-path](https://github.com/dwonderley/lib-find-the-path/) for manage every type of map
+- I know there is some measure distance issue, by integrating the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) i hope i silved all the limitiations, checkout the module settings fro details.
+  
 - The module settings "Avoid deselects the controlled token when open/close the door" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
 
 ## Installation
@@ -34,7 +36,11 @@ This module uses the [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ru
 
 ## Features 
 
-The interaction distance is measure by the distance between a token and the door. So, to interact with a door, the player need to have a token selected (or own a token).
+The interaction distance is measure by the distance between a token and a placeable object like door, journal, stairways, ecc.
+
+To interact with a door, journal, ecc., the player need to have a token selected (or own a token) for make the calculation distance working well
+
+### Door Feature
 
 * Enable the GM to select the maximum distance that players can interact with a door (needs a token selected) (DM bypass this limitation)
 
@@ -45,11 +51,13 @@ The interaction distance is measure by the distance between a token and the door
 * Double tapping movement on the direction of a door will interact with it
 
 
-**Integration with [Stairways Module]((https://gitlab.com/SWW13/foundryvtt-stairways))**
+### [Stairways]((https://gitlab.com/SWW13/foundryvtt-stairways)) Feature
 
-* If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon, ONLY WORK ON GRID SQUARE MAPS.
+* If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon.
 
-**Reset Doors and Fog feature Feature**
+### Journal Feature (On developing)
+
+### Reset Doors and Fog feature Feature
 
 Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.
 
@@ -80,7 +88,7 @@ const doorData = {
 }
 
 /// WARNING: internal data - do not use if possible
-// sourceData and targetData schema is defined in: src/module/models.ts (or module/models.js)
+// sourceData and targetData schema is defined in: src/module/ArmsReachModels.ts (or module/ArmsReachModels.js)
 ```
 
 ### Example

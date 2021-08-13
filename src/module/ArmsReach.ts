@@ -1,5 +1,5 @@
 import { error, i18n, i18nFormat } from "../foundryvtt-arms-reach";
-import { DoorData, DoorSourceData, DoorTargetData } from "./models";
+import { DoorData, DoorSourceData, DoorTargetData } from "./ArmsReachModels";
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings";
 //@ts-ignore
 import { SpeedProvider } from '../../drag-ruler/src/speed_provider.js';
@@ -260,9 +260,8 @@ export const Armsreach = {
           if(!jumDefaultComputation){
             // OLD SETTING
             if(<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0){
-              let gridSize = <number>getCanvas().dimensions?.size;
-              let dist = computeDistanceBetweenCoordinatesOLD(doorControl, character);
-              isNotNearEnough = (dist / gridSize) > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+              let dist = <number>computeDistanceBetweenCoordinatesOLD(doorControl, character); 
+              isNotNearEnough = dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
             }else{
               let dist = computeDistanceBetweenCoordinates(doorControl, character);
               isNotNearEnough = dist < <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
@@ -493,30 +492,36 @@ export const Armsreach = {
  * @param charCenter
  * @returns
  */
- export const computeDistanceBetweenCoordinatesOLD = function(placeable, character:Token){
+ export const computeDistanceBetweenCoordinatesOLD = function(placeable:any, character:Token):number{
 
     const charCenter = getTokenCenter(character);
     //@ts-ignore
-    const xMinA = charCenter._validPosition?.x ? charCenter._validPosition?.x : charCenter.x;
+    const xMinA = character._validPosition?.x ? character._validPosition?.x : charCenter.x;
     //@ts-ignore
-    const yMinA = charCenter._validPosition?.y ? charCenter._validPosition?.y : charCenter.y;
+    const yMinA = character._validPosition?.y ? character._validPosition?.y : charCenter.y;
     //@ts-ignore
-    const xMaxA = xMinA + charCenter.hitArea.width;
+    const xMaxA = xMinA + (character.hitArea?.width ? character.hitArea?.width : 0);
     //@ts-ignore
-    const yMaxA = yMinA + charCenter.hitArea.height;
+    const yMaxA = yMinA + (character.hitArea?.height ? character.hitArea?.height : 0);
 
     const xMinB = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
     const yMinB = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
-    const xMaxB = xMinB + placeable.hitArea.width;
-    const yMaxB = yMinB + placeable.hitArea.height;
+    const xMaxB = xMinB + (placeable.hitArea?.width ? placeable.hitArea?.width : 0);
+    const yMaxB = yMinB + (placeable.hitArea?.height ? placeable.hitArea?.height : 0);
 
-    const deltaBeneath = ((xMinB - xMaxA) / 20);
-    const deltaLeft = ((xMinA - xMaxB) / 20);
-    const deltaAbove = ((yMinB - yMaxA) / 20);
-    const deltaRight = ((yMinA - yMaxB) / 20);
-
-    return 5 + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-    
+    const delta = <number>getCanvas().dimensions?.size / <number>getCanvas().dimensions?.distance || 20;
+    const deltaBeneath = ((xMinB - xMaxA) / delta);
+    const deltaLeft = ((xMinA - xMaxB) / delta);
+    const deltaAbove = ((yMinB - yMaxA) / delta);
+    const deltaRight = ((yMinA - yMaxB) / delta);
+    //@ts-ignore
+    const unitSize = <number>getCanvas().dimensions?.distance || 5;
+    //return unitSize + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
+    let dist = Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
+    dist = (dist / unitSize);
+    //let gridSize = <number>getCanvas().dimensions?.distance;
+    //dist = (dist / gridSize);
+    return dist;
     /*
     const SQRT_2 = Math.sqrt(2);
     const charCenter = getTokenCenter(character);
@@ -545,7 +550,7 @@ export const Armsreach = {
  * @param charCenter
  * @returns
  */
-export const computeDistanceBetweenCoordinates = function(placeable, character:Token){
+export const computeDistanceBetweenCoordinates = function(placeable:any, character:Token):number{
 
   const xPlaceable = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
   const yPlaceable = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;

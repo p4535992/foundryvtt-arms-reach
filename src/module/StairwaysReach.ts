@@ -43,9 +43,8 @@ export const StairwaysReach = {
             let isNotNearEnough = false;
             // OLD SETTING
             if(<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0){
-              let gridSize = <number>getCanvas().dimensions?.size;
               let dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
-              isNotNearEnough = (dist / gridSize) > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+              isNotNearEnough = dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
             }else{
               let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
               isNotNearEnough = dist < <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
