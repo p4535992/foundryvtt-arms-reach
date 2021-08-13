@@ -37,7 +37,7 @@ export const DoorsReach = {
             ArmsReachVariables.door_interaction_lastTime = Date.now();
             let character = getFirstPlayerToken();
             if( !character ) {
-              iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelectedToCenterCamera"));
+              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME+".noCharacterSelectedToCenterCamera"));
               return;
             }
 
@@ -68,7 +68,7 @@ export const DoorsReach = {
         let character = getFirstPlayerToken();
 
         if( !character ) {
-          iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
+          iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME+".noCharacterSelected"));
           return;
         }
 
@@ -147,7 +147,7 @@ export const DoorsReach = {
     }
   },
 
-  globalInteractionDistance : async function(doorControl:DoorControl){
+  globalInteractionDistance : async function(doorControl:DoorControl, isRightHanler:boolean){
 
     let character:Token = <Token>getFirstPlayerTokenSelected();
     let isOwned:boolean = false;
@@ -213,24 +213,24 @@ export const DoorsReach = {
         }
 
         if( !character ) {
-          iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
+          iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME+".noCharacterSelected"));
           return false;
         }else{
           // PreHook (can abort the interaction with the door)
-          if (Hooks.call('PreArmsReachInteraction', doorData) === false) {
+          if (Hooks.call('ArmsReachPreInteraction', doorData) === false) {
             var tokenName = getCharacterName(character);
             if (tokenName){
-              iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
+              iteractionFailNotification(i18nFormat(ARMS_REACH_MODULE_NAME+".doorNotInReachFor",{tokenName : tokenName}));
             }
             else {
-              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
+              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME+".doorNotInReach"));
             }
             return false
           }
 
           let isNotNearEnough = false;
           const result = { status: 0 };
-          Hooks.call('ReplaceArmsReachInteraction', doorData, result);
+          Hooks.call('ArmsReachReplaceInteraction', doorData, result);
           const resultExplicitComputeDistance = result.status;
           let jumDefaultComputation = false;
           // undefined|null|Nan go with the standard compute distance
@@ -268,116 +268,26 @@ export const DoorsReach = {
               isNotNearEnough = dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
             }
           }
-
+          if(getGame().user?.isGM && isRightHanler){
+            isNotNearEnough = false;
+          }
           if (isNotNearEnough) {
             var tokenName = getCharacterName(character);
             if (tokenName){
-              iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotInReachFor",{tokenName : tokenName}));
+              iteractionFailNotification(i18nFormat(ARMS_REACH_MODULE_NAME+".doorNotInReachFor",{tokenName : tokenName}));
             }
             else {
-              iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotInReach"));
+              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME+".doorNotInReach"));
             }
-            // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH WRAPPER AND MIXED
-            /*
-            const [t] = args;
-            const doorControl = t.currentTarget;
-            let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
-            if(wall){
-              if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
-              {
-                await getCanvas().walls.get(doorControl.wall.data._id).update({
-                    ds : CONST.WALL_DOOR_STATES.OPEN
-                });
-              }else if(wall.data.ds==CONST.WALL_DOOR_STATES.OPEN){
-                await getCanvas().walls.get(doorControl.wall.data._id).update({
-                    ds : CONST.WALL_DOOR_STATES.CLOSED
-                });
-              }else{
-                error(i18nFormat("foundryvtt-arms-reach.errorNoDsProperty",{wallDataDs:wall.data.ds, wallDataId: doorControl.wall.data._id}));
-              }
-            }else{
-              error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
-            }
-            */
-            // If is a secret door we can do something
-            /*
-            if(doorControl.wall.data.door === CONST.WALL_DOOR_STATES.LOCKED){
-              doorControl.wall.update(
-                {"door" : CONST.WALL_DOOR_STATES.OPEN} // From secret door to normal door
-              );
-              let sent_message = `You have spotted a hidden door!`;
-              let chatData = {
-                user: getGame().user._id,
-                content: sent_message,
-                whisper : ChatMessage.getWhisperRecipients(getCharacterName(character)),
-                speaker: ChatMessage.getSpeaker({alias: "Door"})
-              };
-              ChatMessage.create(chatData, {});
-            }else if(doorControl.wall.data.door === CONST.WALL_DOOR_STATES.OPEN){
-              doorControl.wall.update(
-                {"door" : CONST.WALL_DOOR_STATES.CLOSED}
-              );
-            }
-            */
            return false;
           }else{
-            // Congratulations you are in reach
-            // MOD 4535992 MAKE SURE THE DOOR REMAIN CLOSED/OPEN AFTER CLICK ONLY WITH OVERRIDE
-            /*
-            let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
-            if(wall){
-              if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
-              {
-                await getCanvas().walls.get(doorControl.wall.data._id).update({
-                    ds : CONST.WALL_DOOR_STATES.OPEN
-                });
-              }else if(wall.data.ds==CONST.WALL_DOOR_STATES.OPEN){
-                await getCanvas().walls.get(doorControl.wall.data._id).update({
-                    ds : CONST.WALL_DOOR_STATES.CLOSED
-                });
-              }else if(wall.data.ds==CONST.WALL_DOOR_STATES.LOCKED){
-                var tokenName = getCharacterName(character);
-                if (tokenName){
-                  iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorIsInReachButIsLockedFor", {tokenName: tokenName}));
-                }
-                else {
-                  iteractionFailNotification(i18n("foundryvtt-arms-reach.doorIsInReachButIsLocked"));
-                }
-              }
-              else{
-                error(i18nFormat("foundryvtt-arms-reach.errorNoDsProperty",{wallDataDs:wall.data.ds, wallDataId: doorControl.wall.data._id}));
-              }
-            }else{
-              error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
-            }
-            */
+            // Congratulations you are in reach           
             return true;
           }
           // END MOD ABD 4535992
         }
 
       } else if(getGame().user?.isGM) {
-        /*
-        let wall:Wall = getCanvas().walls.get(doorControl.wall.data._id);
-        if(wall){
-          if(wall.data.ds==CONST.WALL_DOOR_STATES.CLOSED)
-          {
-            await getCanvas().walls.get(doorControl.wall.data._id).update({
-                ds : CONST.WALL_DOOR_STATES.OPEN
-            });
-          }else if(wall.data.ds==CONST.WALL_DOOR_STATES.OPEN){
-            await getCanvas().walls.get(doorControl.wall.data._id).update({
-                ds : CONST.WALL_DOOR_STATES.CLOSED
-            });
-          }else if(wall.data.ds==CONST.WALL_DOOR_STATES.LOCKED){
-            // DO NOTHING
-          }else{
-            error(i18nFormat("foundryvtt-arms-reach.errorNoDsProperty",{wallDataDs:wall.data.ds, wallDataId: doorControl.wall.data._id}));
-          }
-        }else{
-          error(i18nFormat("foundryvtt-arms-reach.errorNoWallFoundForId",{wallDataId: doorControl.wall.data._id}));
-        }
-        */
         return true;
       }
 
@@ -603,10 +513,10 @@ export const DoorsReach = {
       var tokenName = getCharacterName(token);
 
       if (tokenName){
-        iteractionFailNotification(i18nFormat("foundryvtt-arms-reach.doorNotFoundInReachFor",{tokenName: tokenName}));
+        iteractionFailNotification(i18nFormat(ARMS_REACH_MODULE_NAME+".doorNotFoundInReachFor",{tokenName: tokenName}));
         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }else{
-        iteractionFailNotification(i18n("foundryvtt-arms-reach.doorNotFoundInReach"));
+        iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME+".doorNotFoundInReach"));
         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }
       return;

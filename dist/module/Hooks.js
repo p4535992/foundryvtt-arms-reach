@@ -88,7 +88,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
                 tokenSelected = getFirstPlayerToken();
             }
         }
-        const isInReach = await DoorsReach.globalInteractionDistance(doorControl);
+        const isInReach = await DoorsReach.globalInteractionDistance(doorControl, false);
         DoorsReach.reselectTokenAfterInteraction(tokenSelected);
         if (!isInReach) {
             // Bug fix not sure why i need to do this
@@ -129,7 +129,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
                 return;
             }
         }
-        const isInReach = await DoorsReach.globalInteractionDistance(doorControl);
+        const isInReach = await DoorsReach.globalInteractionDistance(doorControl, true);
         DoorsReach.reselectTokenAfterInteraction(character);
         if (!isInReach) {
             return;

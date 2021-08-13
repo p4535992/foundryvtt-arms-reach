@@ -8,7 +8,7 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 
 ## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder or rename the file from .ts to .js
 
-A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'). 
+A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'), you can even customize the diatnce calculation like you want with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api). 
 
 ## Known issue/Limitation
 
@@ -32,7 +32,7 @@ To install this module manually:
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
-### foundryvtt-drag-ruler
+### drag-ruler
 
 This module uses the [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
@@ -67,13 +67,15 @@ REMASTERED
 
 Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
-## Hooks (on developing, but any feedback is more than welcome)
+## Hooks
 
 Hooks are only executed for the user using the door.
 
-`PreArmsReachInteraction` is called before the interaction with a door is executed. When any of executed hooks return `false` the interaction is aborted.
+`ArmsReachPreInteraction` is called before the interaction with a door is executed. When any of executed hooks return `false` the interaction is aborted.
 
-`ReplaceArmsReachInteraction` is called like a replacement to the standard interaction with a door, so any system or GM can use a customized version.
+`ArmsReachReplaceInteraction` is called like a replacement to the standard interaction with a door, so any system or GM can use a customized version.
+
+A good alternative is to use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api), becuase i reuse the same distance calculation.
 
 ### Door Data
 
@@ -99,11 +101,11 @@ const doorData = {
 
 // DO SOME CHECK 'BEFORE' THE DEFAULT DISTANCE COMPUTATION
 
-Hooks.call('PreArmsReachInteraction', doorData);
+Hooks.call('ArmsReachPreInteraction', doorData);
 
 // How you can use this....
 
-Hooks.on('PreArmsReachInteraction', (doorData) => {
+Hooks.on('ArmsReachPreInteraction', (doorData) => {
     const { sourceData, selectedOrOwnedTokenId, targetData, userId } = doorData
 
     // DO SOMETHING AND RETURN OR TRUE OR FALSE
@@ -112,12 +114,12 @@ Hooks.on('PreArmsReachInteraction', (doorData) => {
 // REPLACE THE DEFAULT DISTANCE COMPUTATION BECAUSE YOUR SUCK (Yea i know that)
 
 const result = { status: 0 };
-Hooks.call('ReplaceArmsReachInteraction', doorData, result);
+Hooks.call('ArmsReachReplaceInteraction', doorData, result);
 // and then i'll do something with `result.status`
 
 // How you can use this....
 
-Hooks.on('ReplaceArmsReachInteraction', (doorData, result) => {
+Hooks.on('ArmsReachReplaceInteraction', (doorData, result) => {
     const { sourceData, selectedTokenId, targetData, userId } = doorData
 
     result.status = ......

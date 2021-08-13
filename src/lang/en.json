@@ -5,15 +5,15 @@
 
   "foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "Door is in reach but is locked for ${tokenName}",
   "foundryvtt-arms-reach.doorIsInReachButIsLocked": "Door is in reach but is locked.",
-  "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach.",
-  "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach",
+  "foundryvtt-arms-reach.doorNotFoundInReach": "No door was found within reach or is locked.",
+  "foundryvtt-arms-reach.doorNotFoundInReachFor": "No door was found within {tokenName}'s reach or is locked",
   "foundryvtt-arms-reach.doorNotInReach": "Door not in reach",
-  "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach",
+  "foundryvtt-arms-reach.doorNotInReachFor": "Door not within {tokenName}'s reach or is locked",
 
-  "foundryvtt-arms-reach.stairwaysNotFoundInReach": "No stairways was found within reach.",
-  "foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "No stairways was found within {tokenName}'s reach",
-  "foundryvtt-arms-reach.stairwaysNotInReach": "Stairways not in reach",
-  "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairways not within {tokenName}'s reach",
+  "foundryvtt-arms-reach.stairwaysNotFoundInReach": "No stairways was found within reach or is locked.",
+  "foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "No stairways was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.stairwaysNotInReach": "Stairways not in reach or is locked",
+  "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairways not within {tokenName}'s reach or is locked",
 
   "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 

@@ -229,7 +229,7 @@ export const Armsreach = {
 
           let isNotNearEnough = false;
           const result = { status: 0 };
-          Hooks.call('ReplaceArmsReachInteraction', doorData, result);
+          Hooks.call('ArmsReachReplaceInteraction', doorData, result);
           const resultExplicitComputeDistance = result.status;
           let jumDefaultComputation = false;
           // undefined|null|Nan go with the standard compute distance
