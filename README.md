@@ -59,6 +59,9 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 ### Journal Feature (On developing)
 
+* Add distance calculation for note and journal on the canvas
+* Automatically flag journal notes to show on the map without having to have your players turn it on themselves.
+
 ### Reset Doors and Fog feature Feature
 
 Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.

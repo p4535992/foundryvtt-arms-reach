@@ -86,8 +86,9 @@ export let readyHooks = async () => {
 }
 
 export let setupHooks = () => {
-
-
+  if(<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration")) {
+    getGame().settings.set('core', 'notesDisplayToggle', true);
+  }
 }
 
 

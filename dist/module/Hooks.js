@@ -72,6 +72,9 @@ export let readyHooks = async () => {
     // Register custom sheets (if any)
 };
 export let setupHooks = () => {
+    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration")) {
+        getGame().settings.set('core', 'notesDisplayToggle', true);
+    }
 };
 export let initHooks = () => {
     warn("Init Hooks processing");

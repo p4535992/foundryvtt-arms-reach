@@ -154,7 +154,7 @@ export const registerSettings = function () {
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
         scope: "world",
         config: true,
-        default: 1,
+        default: 5,
         type: Number,
         //@ts-ignore
         range: { min: 0, max: 50, step: 0.5 }
@@ -164,7 +164,7 @@ export const registerSettings = function () {
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
         scope: "world",
         config: true,
-        default: 1,
+        default: 5,
         type: Number,
         //@ts-ignore
         range: { min: 0, max: 50, step: 0.5 }
