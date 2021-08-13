@@ -25,8 +25,11 @@
   "foundryvtt-arms-reach.settingNameNotificationsFailedInteraction": "Notifications failed interactions",
   "foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
 
-  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "Global maximum interaction distance",
-	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "Max distance (in tiles) that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Deprecated] Global maximum interaction distance in tiles",
+	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Use instead 'Global maximum interaction distance measurement'], 0 will disable this setting limit (needs app reload). Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
+  
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terain Ruler",
+	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Max distance (in feet, meter, or the default system unit grid you are using) that a token can interact with aplaceable object (door, journal, ...), 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Hotkey 'e' for interaction",
   "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
@@ -34,8 +37,11 @@
   "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "Interaction double tap delay",
   "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
 
-  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "Maximum door interaction distance",
-  "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "Maximum door interaction distance",
+  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance (in tiles)",
+  "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Use instead 'Maximum door interaction distance measurement'], 0 will disable this setting limit (needs app reload).",
+
+  "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terain Ruler",
+  "foundryvtt-arms-reach.settingHintMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (in feet, meter, or the default system unit grid you are using)",
 
   "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "Hotkey 'e' to center camera",
   "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "Holding 'e' will center the camera on current selected token.",
@@ -47,7 +53,7 @@
   "foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
 
   "foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
-  "foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
+  "foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected, make sense for player when usually there is only owned token",
 
   "foundryvtt-arms-reach.settingNameSetDistanceModeForDoorInteraction": "Set Distance Mode",
   "foundryvtt-arms-reach.settingHintSetDistanceModeForDoorInteraction": "Set Distance Mode for Dorr distance interaction",

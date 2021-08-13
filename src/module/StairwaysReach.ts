@@ -1,5 +1,5 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach";
-import { computeDistanceBetweenCoordinates, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
+import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenCenter, iteractionFailNotification } from "./ArmsReach";
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings";
 
 export const StairwaysReach = {
@@ -25,8 +25,13 @@ export const StairwaysReach = {
       }
       
       // Sets the global maximum interaction distance
+      // OLD SETTING
+      let globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+      if(globalInteraction <= 0){
+        globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
+      }
       // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
-      if( <number>getGame().settings?.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0 ) {
+      if( globalInteraction > 0 ) {
 
         // Check distance
         //let character:Token = getFirstPlayerToken();
@@ -35,11 +40,16 @@ export const StairwaysReach = {
             iteractionFailNotification(i18n("foundryvtt-arms-reach.noCharacterSelected"));
             return false;
           }else{
-
-            //let dist = getManhattanBetween(StairwaysReach.getStairwaysCenter(stairway), getTokenCenter(character));
-            let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
-            let gridSize = <number>getCanvas().dimensions?.size;
-            let isNotNearEnough = (dist / gridSize) > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+            let isNotNearEnough = false;
+            // OLD SETTING
+            if(<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0){
+              let gridSize = <number>getCanvas().dimensions?.size;
+              let dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
+              isNotNearEnough = (dist / gridSize) > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+            }else{
+              let dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
+              isNotNearEnough = dist < <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
+            }
             if (isNotNearEnough) {
               var tokenName = getCharacterName(character);
               if (tokenName){

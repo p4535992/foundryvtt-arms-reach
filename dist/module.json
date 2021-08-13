@@ -59,6 +59,9 @@
     "dependencies": [
       {
         "name": "lib-wrapper"
+      },
+      {
+        "name": "drag-ruler"
       }
     ]
 

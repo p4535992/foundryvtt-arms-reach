@@ -116,13 +116,13 @@ export const registerSettings = function () {
   // ========================================================
 
 	getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableArmsReach", {
-		  name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameEnableArmsReachFeature`),
+		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameEnableArmsReachFeature`),
     	hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintEnableArmsReachFeature`),
-      scope: "world",
-      config: true,
-      default: true,
-      type: Boolean,
-      onChange: (data) => {
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean,
+		onChange: (data) => {
         // manageSettingsArmsReachFeature(data);
       }
 	});
@@ -137,17 +137,39 @@ export const registerSettings = function () {
   // });
 
   	getGame().settings.register(ARMS_REACH_MODULE_NAME, "notificationsInteractionFail", {
-		  name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteraction`),
+		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteraction`),
     	hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteraction`),
-      scope: "world",
-      config: true,
-      default: true,
-      type: Boolean
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
 	});
 
 	getGame().settings.register(ARMS_REACH_MODULE_NAME, "globalInteractionDistance", {
 		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
 		hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
+		scope: "world",
+		config: true,
+		default: 0, // instead of 1
+		type: Number,
+		//@ts-ignore
+		range: {min: 0, max: 50, step: 0.5}
+	});
+
+	getGame().settings.register(ARMS_REACH_MODULE_NAME, "doorInteractionDistance", {
+		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
+    	hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
+		scope: "world",
+		config: true,
+		default: 0,  // instead of 1
+		type: Number,
+		//@ts-ignore
+		range: {min: 0, max: 10, step: 0.5}
+	});
+
+	getGame().settings.register(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement", {
+		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
+		hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
 		scope: "world",
 		config: true,
 		default: 1,
@@ -156,7 +178,20 @@ export const registerSettings = function () {
 		range: {min: 0, max: 50, step: 0.5}
 	});
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteraction", {
+	getGame().settings.register(ARMS_REACH_MODULE_NAME, "doorInteractionMeasurement", {
+		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+    	hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+		scope: "world",
+		config: true,
+		default: 1,
+		type: Number,
+		//@ts-ignore
+		range: {min: 0, max: 10, step: 0.5}
+	});
+
+	
+
+  	getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteraction", {
 		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),
 		hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyForInteraction`),
 		scope: "world",
@@ -174,17 +209,6 @@ export const registerSettings = function () {
 		type: Number,
 		//@ts-ignore
 		range: {min: 0, max: 750, step: 50}
-	});
-
-	getGame().settings.register(ARMS_REACH_MODULE_NAME, "doorInteractionDistance", {
-		name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
-		scope: "world",
-		config: true,
-		default: 1,
-		type: Number,
-		//@ts-ignore
-		range: {min: 0, max: 10, step: 0.5}
 	});
 
     getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionCenter", {
@@ -234,19 +258,19 @@ export const registerSettings = function () {
 	// 	}
 	// });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME,'setDistanceModeForDoorInteraction',{
-    name: i18n(ARMS_REACH_MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
-    hint: i18n(ARMS_REACH_MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
-    scope: "world",
-    config: false,
-    default: "0",
-    type: String,
-    choices: {
-        "0" : "Manhattan",
-        "1" : "Euclidean",
-        "2" : "Chebyshev" 
-    }
-  });
+//   getGame().settings.register(ARMS_REACH_MODULE_NAME,'setDistanceModeForDoorInteraction',{
+//     name: i18n(ARMS_REACH_MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
+//     hint: i18n(ARMS_REACH_MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
+//     scope: "world",
+//     config: false,
+//     default: "0",
+//     type: String,
+//     choices: {
+//         "0" : "Manhattan",
+//         "1" : "Euclidean",
+//         "2" : "Chebyshev" 
+//     }
+//   });
 
     // ========================================================
     // STAIRWAY SUPPORT
@@ -267,14 +291,14 @@ export const registerSettings = function () {
     // GRIDLESS SUPPORT
     // ========================================================
 
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableGridlessSupport", {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGridlessSupportFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGridlessSupportFeature`),
-      scope: "world",
-      config: false,
-      default: false,
-      type: Boolean
-    });
+    // getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableGridlessSupport", {
+    //   name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGridlessSupportFeature`),
+    //   hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGridlessSupportFeature`),
+    //   scope: "world",
+    //   config: false,
+    //   default: false,
+    //   type: Boolean
+    // });
 
     // ========================================================
     // Reset Doors and Fog

@@ -67,6 +67,10 @@ Hooks.once('ready', () => {
         ui.notifications?.error(`The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`);
         return;
     }
+    if (!getGame().modules.get("drag-ruler")?.active && getGame().user?.isGM) {
+        ui.notifications?.error(`The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'drag-ruler' module.`);
+        return;
+    }
     readyHooks();
 });
 // Add any additional hooks if necessary

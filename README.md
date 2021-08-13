@@ -28,6 +28,10 @@ To install this module manually:
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
+## foundryvtt-drag-ruler
+
+This module uses the [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
+
 ## Features 
 
 The interaction distance is measure by the distance between a token and the door. So, to interact with a door, the player need to have a token selected (or own a token).

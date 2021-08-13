@@ -144,9 +144,14 @@ export const Armsreach = {
                 return false;
             }
         }
+        // OLD SETTING
+        let globalInteraction = getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+        if (globalInteraction <= 0) {
+            globalInteraction = getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
+        }
         // Sets the global maximum interaction distance
         // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
-        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0) {
+        if (globalInteraction > 0) {
             // Check distance
             //let character:Token = getFirstPlayerToken();
             if (!getGame().user?.isGM || (getGame().user?.isGM && getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistanceForGM"))) {
@@ -226,10 +231,17 @@ export const Armsreach = {
                         }
                     }
                     // Standard computing distance
-                    let gridSize = getCanvas().dimensions?.size;
-                    let dist = computeDistanceBetweenCoordinates(doorControl, character);
                     if (!jumDefaultComputation) {
-                        isNotNearEnough = (dist / gridSize) > getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+                        // OLD SETTING
+                        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance") > 0) {
+                            let gridSize = getCanvas().dimensions?.size;
+                            let dist = computeDistanceBetweenCoordinatesOLD(doorControl, character);
+                            isNotNearEnough = (dist / gridSize) > getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+                        }
+                        else {
+                            let dist = computeDistanceBetweenCoordinates(doorControl, character);
+                            isNotNearEnough = dist < getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
+                        }
                     }
                     if (isNotNearEnough) {
                         var tokenName = getCharacterName(character);
@@ -431,7 +443,52 @@ export const Armsreach = {
         };
     }
 };
-// export const SQRT_2 = Math.sqrt(2);
+/**
+ * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
+ * @param doorControl or placeable
+ * @param charCenter
+ * @returns
+ */
+export const computeDistanceBetweenCoordinatesOLD = function (placeable, character) {
+    const charCenter = getTokenCenter(character);
+    //@ts-ignore
+    const xMinA = charCenter._validPosition?.x ? charCenter._validPosition?.x : charCenter.x;
+    //@ts-ignore
+    const yMinA = charCenter._validPosition?.y ? charCenter._validPosition?.y : charCenter.y;
+    //@ts-ignore
+    const xMaxA = xMinA + charCenter.hitArea.width;
+    //@ts-ignore
+    const yMaxA = yMinA + charCenter.hitArea.height;
+    const xMinB = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
+    const yMinB = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
+    const xMaxB = xMinB + placeable.hitArea.width;
+    const yMaxB = yMinB + placeable.hitArea.height;
+    const deltaBeneath = ((xMinB - xMaxA) / 20);
+    const deltaLeft = ((xMinA - xMaxB) / 20);
+    const deltaAbove = ((yMinB - yMaxA) / 20);
+    const deltaRight = ((yMinA - yMaxB) / 20);
+    return 5 + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
+    /*
+    const SQRT_2 = Math.sqrt(2);
+    const charCenter = getTokenCenter(character);
+    const x1 = placeable.x;
+    const y1 = placeable.y;
+    const x2 = charCenter.x;
+    const y2 = charCenter.y;
+    const  dx = Math.abs(x2 - x1);
+    const  dy = Math.abs(y2 - y1);
+
+    const  min = Math.min(dx, dy);
+    const  max = Math.max(dx, dy);
+
+    const  diagonalSteps = min;
+    const  straightSteps = max - min;
+
+    return (SQRT_2 * diagonalSteps + straightSteps) - <number>getCanvas().dimensions?.size;
+    */
+    //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
+    //return getManhattanBetween(doorControl, charCenter);
+};
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
  * @param doorControl or placeable
@@ -449,48 +506,9 @@ export const computeDistanceBetweenCoordinates = function (placeable, character)
     const shape = getTokenShape(character);
     const distances = measureDistances(segments, character, shape);
     // Sum up the distances
-    return distances.reduce((acc, val) => acc + val, 0);
-    /*
     //@ts-ignore
-    const xMinA = character._validPosition.x;
-    //@ts-ignore
-    const yMinA = character._validPosition.y;
-    //@ts-ignore
-    const xMaxA = xMinA + character.hitArea.width;
-    //@ts-ignore
-    const yMaxA = yMinA + character.hitArea.height;
-  
-    const xMinB = placeable._validPosition.x;
-    const yMinB = placeable._validPosition.y;
-    const xMaxB = xMinB + placeable.hitArea.width;
-    const yMaxB = yMinB + placeable.hitArea.height;
-  
-    const deltaBeneath = ((xMinB - xMaxA) / 20);
-    const deltaLeft = ((xMinA - xMaxB) / 20);
-    const deltaAbove = ((yMinB - yMaxA) / 20);
-    const deltaRight = ((yMinA - yMaxB) / 20);
-  
-    return 5 + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-    */
-    /*
-    const charCenter = getTokenCenter(character);
-    const x1 = placeable.x;
-    const y1 = placeable.y;
-    const x2 = charCenter.x;
-    const y2 = charCenter.y;
-    const  dx = Math.abs(x2 - x1);
-    const  dy = Math.abs(y2 - y1);
-  
-    const  min = Math.min(dx, dy);
-    const  max = Math.max(dx, dy);
-  
-    const  diagonalSteps = min;
-    const  straightSteps = max - min;
-  
-    return (SQRT_2 * diagonalSteps + straightSteps) - <number>getCanvas().dimensions?.size;
-    */
-    //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
-    //return getManhattanBetween(doorControl, charCenter);
+    const unitSize = getCanvas().grid?.grid?.options.dimensions.distance;
+    return distances.reduce((acc, val) => acc + val, 0) - unitSize;
 };
 export function measureDistances(segments, entity, shape, options = {}) {
     const opts = duplicate(options);
@@ -646,7 +664,11 @@ export const interactWithNearestDoor = function (token, offsetx = 0, offsety = 0
     // Max distance definition
     let gridSize = getCanvas().dimensions?.size;
     let maxDistance = Infinity;
+    // OLD SETTING
     let globalMaxDistance = getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionDistance");
+    if (globalMaxDistance <= 0) {
+        globalMaxDistance = getGame().settings.get(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement");
+    }
     if (globalMaxDistance > 0) {
         if (globalMaxDistance < maxDistance) {
             maxDistance = globalMaxDistance;
@@ -654,6 +676,9 @@ export const interactWithNearestDoor = function (token, offsetx = 0, offsety = 0
     }
     else {
         maxDistance = getGame().settings.get(ARMS_REACH_MODULE_NAME, "doorInteractionDistance");
+        if (maxDistance <= 0) {
+            maxDistance = getGame().settings.get(ARMS_REACH_MODULE_NAME, "doorInteractionMeasurement");
+        }
     }
     // Shortest dist
     let shortestDistance = Infinity;
