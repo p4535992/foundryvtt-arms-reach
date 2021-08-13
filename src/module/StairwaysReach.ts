@@ -1,5 +1,5 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach";
-import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, iteractionFailNotification } from "./ArmsReachhelper";
+import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenByTokenID, iteractionFailNotification } from "./ArmsReachhelper";
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings";
 
 export const StairwaysReach = {
@@ -13,7 +13,7 @@ export const StairwaysReach = {
           //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
           return false;
         }else{
-          character = <Token>StairwaysReach.getTokenByTokenID(selectedTokenIds[0]);
+          character = <Token>getTokenByTokenID(selectedTokenIds[0]);
         }
       }else {
         if(!character){
@@ -71,17 +71,6 @@ export const StairwaysReach = {
       }
       
       return false;
-    },
-
-    getTokenByTokenID : function(id) {
-      // return await getGame().scenes.active.data.tokens.find( x => {return x.id === id});
-      return getCanvas().tokens?.placeables.find( x => {return x.id === id});
-    },
-
-    getTokenByTokenName : function(name) {
-        // return await getGame().scenes.active.data.tokens.find( x => {return x._name === name});
-        return getCanvas().tokens?.placeables.find( x => { return x.name == name});
-        // return getCanvas().tokens.placeables.find( x => { return x.id == getGame().user.id});
     },
 
     getStairwaysCenter : function(token) {

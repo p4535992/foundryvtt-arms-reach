@@ -1,6 +1,6 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach.js";
-import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, iteractionFailNotification } from "./ArmsReachhelper.js";
-import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from "./settings.js";
+import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, getFirstPlayerTokenSelected, getTokenByTokenID, iteractionFailNotification } from "./ArmsReachhelper.js";
+import { ARMS_REACH_MODULE_NAME, getGame } from "./settings.js";
 export const StairwaysReach = {
     globalInteractionDistance: function (stairway, selectedTokenIds, userId) {
         let isOwned = false;
@@ -11,7 +11,7 @@ export const StairwaysReach = {
                 return false;
             }
             else {
-                character = StairwaysReach.getTokenByTokenID(selectedTokenIds[0]);
+                character = getTokenByTokenID(selectedTokenIds[0]);
             }
         }
         else {
@@ -69,15 +69,6 @@ export const StairwaysReach = {
             }
         }
         return false;
-    },
-    getTokenByTokenID: function (id) {
-        // return await getGame().scenes.active.data.tokens.find( x => {return x.id === id});
-        return getCanvas().tokens?.placeables.find(x => { return x.id === id; });
-    },
-    getTokenByTokenName: function (name) {
-        // return await getGame().scenes.active.data.tokens.find( x => {return x._name === name});
-        return getCanvas().tokens?.placeables.find(x => { return x.name == name; });
-        // return getCanvas().tokens.placeables.find( x => { return x.id == getGame().user.id});
     },
     getStairwaysCenter: function (token) {
         let tokenCenter = { x: token.x, y: token.y };

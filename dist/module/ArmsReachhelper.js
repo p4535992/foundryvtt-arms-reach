@@ -64,132 +64,47 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable, charact
  * @returns
  */
 export const computeDistanceBetweenCoordinates = function (placeable, character) {
+    // const charCenter = getTokenCenter(character);
     const xPlaceable = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
     const yPlaceable = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
     //@ts-ignore
     const xToken = character._validPosition?.x ? character._validPosition?.x : character.x;
     //@ts-ignore
     const yToken = character._validPosition?.y ? character._validPosition?.y : character.y;
-    const segments = [{ ray: new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable }) }];
     const shape = getTokenShape(character);
-    const distances = measureDistances(segments, character, shape);
-    // Sum up the distances
     //@ts-ignore
     const unitSize = getCanvas().grid?.grid?.options.dimensions.distance;
-    return distances.reduce((acc, val) => acc + val, 0) - unitSize;
+    // const segments1 = [{ray: new Ray({x: xToken, y: yToken}, {x: xPlaceable, y: yPlaceable})}];  
+    // const distances1 = measureDistances(segments1, character, shape);
+    // // Sum up the distances
+    // let dist1 = distances1.reduce((acc, val) => acc + val, 0);
+    // const segments2 = [{ray: new Ray({x: xPlaceable, y: yPlaceable},{x: xToken, y: yToken})}];  
+    // const distances2 = measureDistances(segments2, character, shape);
+    // // Sum up the distances
+    // let dist2 = distances2.reduce((acc, val) => acc + val, 0);
+    // let dist = 0;
+    // if(dist1 > dist2){
+    //     dist = dist1;
+    // }else if(dist1 < dist2){
+    //     dist = dist2;
+    // }else{
+    //     dist = dist1;
+    // }
+    const segments = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
+    const distances = measureDistances(segments, character, shape);
+    // Sum up the distances
+    let dist = distances.reduce((acc, val) => acc + val, 0);
+    return dist;
 };
-// export function measureDistances(segments, entity:Token, shape, options:any={}) {
-// 	const opts = duplicate(options)
-// 	if (opts.enableTerrainRuler || getGame().modules.get("terrain-ruler")?.active) {
-// 		opts.gridSpaces = true;
-// 		const firstNewSegmentIndex = segments.findIndex(segment => !segment.ray.dragRulerVisitedSpaces);
-// 		const previousSegments = segments.slice(0, firstNewSegmentIndex);
-// 		const newSegments = segments.slice(firstNewSegmentIndex);
-// 		const distances = previousSegments.map(segment => segment.ray.dragRulerVisitedSpaces[segment.ray.dragRulerVisitedSpaces.length - 1].distance);
-// 		previousSegments.forEach(segment => segment.ray.terrainRulerVisitedSpaces = duplicate(segment.ray.dragRulerVisitedSpaces));
-// 		opts.costFunction = (x, y, costOptions={}) => {	
-//         return getCostFromSpeedProvider(entity, getAreaFromPositionAndShape({x, y}, shape), costOptions); 
-//         }
-//         if (previousSegments.length > 0){
-//             opts.terrainRulerInitialState = previousSegments[previousSegments.length - 1].ray.dragRulerFinalState;
-//         }
-//         //@ts-ignore
-//         return distances.concat(terrainRuler.measureDistances(newSegments, opts));
-// 	}
-// 	else {
-// 		// If another module wants to enable grid measurements but disable grid highlighting,
-// 		// manually set the *duplicate* option's gridSpaces value to true for the Foundry logic to work properly
-// 		if(!opts.ignoreGrid) {
-// 			opts.gridSpaces = true;
-// 		}
-// 		return getCanvas().grid?.measureDistances(segments, opts);
-// 	}
-// }
-// export function getAreaFromPositionAndShape(position, shape) {
-// 	return shape.map(space => {
-// 		let x = position.x + space.x;
-// 		let y = position.y + space.y;
-// 		if (getCanvas().grid?.isHex) {
-//             let shiftedRow;
-//             //@ts-ignore
-//             if (getCanvas().grid?.grid?.options.even){
-//                 shiftedRow = 1
-//             }
-//             else{
-//                 shiftedRow = 0
-//             }
-//             //@ts-ignore
-//             if (getCanvas().grid?.grid?.options.columns) {
-//                 if (space.x % 2 !== 0 && position.x % 2 !== shiftedRow) {
-//                     y += 1;
-//                 }
-//             }
-//             else {
-//                 if (space.y % 2 !== 0 && position.y % 2 !== shiftedRow) {
-//                     x += 1;
-//                 }
-//             }
-// 		}
-// 		return {x, y}
-// 	});
-// }
-// export function getTokenShape(token) {
-// 	if (token.scene.data.gridType === CONST.GRID_TYPES.GRIDLESS) {
-// 		return [{x: 0, y: 0}]
-// 	}
-// 	else if (token.scene.data.gridType === CONST.GRID_TYPES.SQUARE) {
-// 		const topOffset = -Math.floor(token.data.height / 2)
-// 		const leftOffset = -Math.floor(token.data.width / 2)
-// 		const shape = []
-// 		for (let y = 0;y < token.data.height;y++) {
-// 			for (let x = 0;x < token.data.width;x++) {
-// 				shape.push(<never>{x: x + leftOffset, y: y + topOffset})
-// 			}
-// 		}
-// 		return shape
-// 	}
-// 	else {
-// 		// Hex grids
-//         //@ts-ignore
-// 		if (getGame().modules.get("hex-size-support")?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
-// 			const borderSize = token.data.flags["hex-size-support"].borderSize;
-// 			let shape = [{x: 0, y: 0}];
-// 			if (borderSize >= 2){
-// 				shape = shape.concat([{x: 0, y: -1}, {x: -1, y: -1}]);
-//             }
-// 			if (borderSize >= 3){
-// 				shape = shape.concat([{x: 0, y: 1}, {x: -1, y: 1}, {x: -1, y: 0}, {x: 1, y: 0}]);
-//             }
-// 			if (borderSize >= 4){
-// 				shape = shape.concat([{x: -2, y: -1}, {x: 1, y: -1}, {x: -1, y: -2}, {x: 0, y: -2}, {x: 1, y: -2}])
-//             }
-//             //@ts-ignore
-// 			if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== canvas.grid.grid.options.columns){
-// 				shape.forEach(space => space.y *= -1);
-//             }
-//             //@ts-ignore
-// 			if (getCanvas().grid?.grid?.options.columns){
-// 				shape = shape.map(space => {return {x: space.y, y: space.x}});
-//             }
-// 			return shape;
-// 		}
-// 		else {
-// 			return [{x: 0, y: 0}];
-// 		}
-// 	}
-// }
-// export function getCostFromSpeedProvider(token, area, options) {
-// 	try {
-// 		if (currentSpeedProvider instanceof Function) {
-// 			return SpeedProvider.prototype.getCostForStep.call(undefined, token, area, options);
-// 		}
-// 		return currentSpeedProvider.getCostForStep(token, area, options);
-// 	}
-// 	catch (e) {
-// 		console.error(e);
-// 		return 1;
-// 	}
-// }
+export function getTokenByTokenID(id) {
+    // return await getGame().scenes.active.data.tokens.find( x => {return x.id === id});
+    return getCanvas().tokens?.placeables.find(x => { return x.id === id; });
+}
+export function getTokenByTokenName(name) {
+    // return await getGame().scenes.active.data.tokens.find( x => {return x._name === name});
+    return getCanvas().tokens?.placeables.find(x => { return x.name == name; });
+    // return getCanvas().tokens.placeables.find( x => { return x.id == getGame().user.id});
+}
 /**
  * Get token center
  */
