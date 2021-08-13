@@ -77,7 +77,7 @@ Use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-
 
 ## Hooks (ONLY FOR DOOR FEATURE)
 
-### DEPRECATED is better[drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](htt
+### DEPRECATED is better [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api)
 
 Hooks are only executed for the user using the door.
 
