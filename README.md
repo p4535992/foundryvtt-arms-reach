@@ -57,7 +57,7 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon.
 
-### Journal Feature (On developing)
+### Journal Feature
 
 * Add distance calculation for note and journal on the canvas
 * Automatically flag journal notes to show on the map without having to have your players turn it on themselves.
@@ -70,7 +70,7 @@ REMASTERED
 
 Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
-## Hooks
+## Hooks (ONLY FOR DOOR FEATURE)
 
 Hooks are only executed for the user using the door.
 
@@ -78,7 +78,7 @@ Hooks are only executed for the user using the door.
 
 `ArmsReachReplaceInteraction` is called like a replacement to the standard interaction with a door, so any system or GM can use a customized version.
 
-A good alternative is to use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api), becuase i reuse the same distance calculation.
+BETTER SUGGESTION: A good alternative is to use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api), becuase i reuse the same distance calculation.
 
 ### Door Data
 
