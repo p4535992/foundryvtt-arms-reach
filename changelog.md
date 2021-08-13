@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.1
+
+- Some bug fix
+
 # 2.0.0 [BREAKING CHANGES]
 
 - Integration with [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo) version 1.8.1

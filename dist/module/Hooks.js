@@ -62,6 +62,10 @@ export let readyHooks = async () => {
             return controls;
         }
     });
+    // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalEntry:JournalEntry, render) => {
+    //   let test = false;
+    //   return test;
+    // })
     // Register custom sheets (if any)
 };
 export let setupHooks = () => {
