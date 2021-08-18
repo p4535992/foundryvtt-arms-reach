@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.4
+
+- Bug fix module json 
+
 # 2.0.3
 
 - Bug fix Journal/Note reach support
