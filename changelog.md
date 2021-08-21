@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 2.0.5
+
+- Minor bug fix
+- Add prettier plugin
+
 # 2.0.4
 
 - Bug fix module json 

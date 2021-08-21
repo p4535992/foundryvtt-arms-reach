@@ -6,7 +6,9 @@ Little Utilities, Arms Reach for door, journal, stairways, ecc.
 
 This project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
-## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder or rename the file from .ts to .js
+ I'll try to make this module system indipendent , but if anyone has some rule distance computation for a specific system i can put some more settings for manage that.
+
+## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder
 
 A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'), you can even customize the distance calculation like you want with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api). 
 
@@ -145,9 +147,84 @@ Hooks.on('ArmsReachReplaceInteraction', (doorData, result) => {
 
 ```
 
-## NOTE
+## License
 
- I'll try to make this module system indipendent , but if anyone has some rule distance computation for a specific system i can put some more settings for manage that.
+This Foundry VTT module is licensed under a MIT License.
+
+# Build
+
+## Install all packages
+
+```bash
+npm install
+```
+## npm build scripts
+
+### build
+
+will build the code and copy all necessary assets into the dist folder and make a symlink to install the result into your foundry data; create a
+`foundryconfig.json` file with your Foundry Data path.
+
+```json
+{
+  "dataPath": "~/.local/share/FoundryVTT/"
+}
+```
+
+`build` will build and set up a symlink between `dist` and your `dataPath`.
+
+```bash
+npm run-script build
+```
+
+### NOTE:
+
+You don't need to build the `foundryconfig.json` file you can just copy the content of the `dist` folder on the module folder under `modules` of Foundry
+
+### build:watch
+
+`build:watch` will build and watch for changes, rebuilding automatically.
+
+```bash
+npm run-script build:watch
+```
+
+### clean
+
+`clean` will remove all contents in the dist folder (but keeps the link from build:install).
+
+```bash
+npm run-script clean
+```
+### lint and lintfix
+
+`lint` launch the eslint process based on the configuration [here](./.eslintrc)
+
+```bash
+npm run-script lint
+```
+
+`lintfix` launch the eslint process with the fix argument
+
+```bash
+npm run-script lintfix
+```
+
+### prettier-format
+
+`prettier-format` launch the prettier plugin based on the configuration [here](./.prettierrc)
+
+```bash
+npm run-script prettier-format
+```
+
+### package
+
+`package` generates a zip file containing the contents of the dist folder generated previously with the `build` command. Useful for those who want to manually load the module or want to create their own release
+
+```bash
+npm run-script package
+```
 
 ## [Changelog](./changelog.md)
 
@@ -166,9 +243,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
 - [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo)
 
-## License
 
-This Foundry VTT module is licensed under a MIT License.
 
 ## Acknowledgements
 

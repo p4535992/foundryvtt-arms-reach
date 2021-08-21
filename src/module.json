@@ -45,7 +45,7 @@
   "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/src/module.json",
   "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v2.0.5.zip",
   "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "0.8.9",
   "manifestPlusVersion": "1.2.1",
   "changelog": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/changelog.md",
   "bugs": "https://github.com/p4535992/foundryvtt-arms-reach/issues",
