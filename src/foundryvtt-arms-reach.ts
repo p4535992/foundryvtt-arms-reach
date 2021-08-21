@@ -19,41 +19,44 @@ import { initHooks, readyHooks, setupHooks } from './module/Hooks';
 
 export let debugEnabled = 0;
 // 0 = none, warnings = 1, debug = 2, all = 3
-export let debug = (...args) => {if (debugEnabled > 1) console.log(`DEBUG:${ARMS_REACH_MODULE_NAME} | `, ...args)};
+export let debug = (...args) => {
+  if (debugEnabled > 1) console.log(`DEBUG:${ARMS_REACH_MODULE_NAME} | `, ...args);
+};
 export let log = (...args) => console.log(`${ARMS_REACH_MODULE_NAME} | `, ...args);
-export let warn = (...args) => {if (debugEnabled > 0) console.warn(`${ARMS_REACH_MODULE_NAME} | `, ...args)};
+export let warn = (...args) => {
+  if (debugEnabled > 0) console.warn(`${ARMS_REACH_MODULE_NAME} | `, ...args);
+};
 export let error = (...args) => console.error(`${ARMS_REACH_MODULE_NAME} | `, ...args);
 export let timelog = (...args) => warn(`${ARMS_REACH_MODULE_NAME} | `, Date.now(), ...args);
 
-export let i18n = key => {
+export let i18n = (key) => {
   return getGame().i18n.localize(key);
 };
 export let i18nFormat = (key, data = {}) => {
   return getGame().i18n.format(key, data);
-}
+};
 
 export let setDebugLevel = (debugText: string) => {
-  debugEnabled = {"none": 0, "warn": 1, "debug": 2, "all": 3}[debugText] || 0;
+  debugEnabled = { none: 0, warn: 1, debug: 2, all: 3 }[debugText] || 0;
   // 0 = none, warnings = 1, debug = 2, all = 3
   if (debugEnabled >= 3) CONFIG.debug.hooks = true;
-}
+};
 
 /* ------------------------------------ */
 /* Initialize module					*/
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-	console.log(`${ARMS_REACH_MODULE_NAME} | Initializing ${ARMS_REACH_MODULE_NAME}`);
+  console.log(`${ARMS_REACH_MODULE_NAME} | Initializing ${ARMS_REACH_MODULE_NAME}`);
 
-  	// Register custom module settings
-	registerSettings();
+  // Register custom module settings
+  registerSettings();
 
-	// Assign custom classes and constants here
-	initHooks();
+  // Assign custom classes and constants here
+  initHooks();
 
-	// Preload Handlebars templates
-	await preloadTemplates();
-	// Register custom sheets (if any)
-
+  // Preload Handlebars templates
+  await preloadTemplates();
+  // Register custom sheets (if any)
 });
 
 /* ------------------------------------ */
@@ -61,28 +64,32 @@ Hooks.once('init', async () => {
 /* ------------------------------------ */
 
 Hooks.once('setup', function () {
-	// Do anything after initialization but before ready
-	// setupModules();
+  // Do anything after initialization but before ready
+  // setupModules();
 
-	//registerSettings();
+  //registerSettings();
 
-	setupHooks();
+  setupHooks();
 });
 
 /* ------------------------------------ */
 /* When ready							*/
 /* ------------------------------------ */
 Hooks.once('ready', () => {
-	// Do anything once the module is ready
-	if (!getGame().modules.get("lib-wrapper")?.active && getGame().user?.isGM){
-		 ui.notifications?.error(`The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`);
-		 return;
-	}
-	if (!getGame().modules.get("drag-ruler")?.active && getGame().user?.isGM){
-		ui.notifications?.error(`The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'drag-ruler' module.`);
-		return;
-    }
-	readyHooks();
+  // Do anything once the module is ready
+  if (!getGame().modules.get('lib-wrapper')?.active && getGame().user?.isGM) {
+    ui.notifications?.error(
+      `The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`,
+    );
+    return;
+  }
+  if (!getGame().modules.get('drag-ruler')?.active && getGame().user?.isGM) {
+    ui.notifications?.error(
+      `The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'drag-ruler' module.`,
+    );
+    return;
+  }
+  readyHooks();
 });
 
 // Add any additional hooks if necessary

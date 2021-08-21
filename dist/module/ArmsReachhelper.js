@@ -24,36 +24,36 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable, charact
     const xMaxB = xMinB + (placeable.hitArea?.width ? placeable.hitArea?.width : 0);
     const yMaxB = yMinB + (placeable.hitArea?.height ? placeable.hitArea?.height : 0);
     const delta = getCanvas().dimensions?.size / getCanvas().dimensions?.distance || 20;
-    const deltaBeneath = ((xMinB - xMaxA) / delta);
-    const deltaLeft = ((xMinA - xMaxB) / delta);
-    const deltaAbove = ((yMinB - yMaxA) / delta);
-    const deltaRight = ((yMinA - yMaxB) / delta);
+    const deltaBeneath = (xMinB - xMaxA) / delta;
+    const deltaLeft = (xMinA - xMaxB) / delta;
+    const deltaAbove = (yMinB - yMaxA) / delta;
+    const deltaRight = (yMinA - yMaxB) / delta;
     //@ts-ignore
     const unitSize = getCanvas().dimensions?.distance || 5;
     //return unitSize + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
     let dist = Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-    dist = (dist / unitSize);
+    dist = dist / unitSize;
     //let gridSize = <number>getCanvas().dimensions?.distance;
     //dist = (dist / gridSize);
     return dist;
     /*
-    const SQRT_2 = Math.sqrt(2);
-    const charCenter = getTokenCenter(character);
-    const x1 = placeable.x;
-    const y1 = placeable.y;
-    const x2 = charCenter.x;
-    const y2 = charCenter.y;
-    const  dx = Math.abs(x2 - x1);
-    const  dy = Math.abs(y2 - y1);
-
-    const  min = Math.min(dx, dy);
-    const  max = Math.max(dx, dy);
-
-    const  diagonalSteps = min;
-    const  straightSteps = max - min;
-
-    return (SQRT_2 * diagonalSteps + straightSteps) - <number>getCanvas().dimensions?.size;
-    */
+      const SQRT_2 = Math.sqrt(2);
+      const charCenter = getTokenCenter(character);
+      const x1 = placeable.x;
+      const y1 = placeable.y;
+      const x2 = charCenter.x;
+      const y2 = charCenter.y;
+      const  dx = Math.abs(x2 - x1);
+      const  dy = Math.abs(y2 - y1);
+  
+      const  min = Math.min(dx, dy);
+      const  max = Math.max(dx, dy);
+  
+      const  diagonalSteps = min;
+      const  straightSteps = max - min;
+  
+      return (SQRT_2 * diagonalSteps + straightSteps) - <number>getCanvas().dimensions?.size;
+      */
     //return Math.sqrt(getCanvas().dimensions.size) * diagonalSteps + straightSteps;
     //return getManhattanBetween(doorControl, charCenter);
 };
@@ -74,11 +74,11 @@ export const computeDistanceBetweenCoordinates = function (placeable, character)
     const shape = getTokenShape(character);
     //@ts-ignore
     const unitSize = getCanvas().grid?.grid?.options.dimensions.distance;
-    // const segments1 = [{ray: new Ray({x: xToken, y: yToken}, {x: xPlaceable, y: yPlaceable})}];  
+    // const segments1 = [{ray: new Ray({x: xToken, y: yToken}, {x: xPlaceable, y: yPlaceable})}];
     // const distances1 = measureDistances(segments1, character, shape);
     // // Sum up the distances
     // let dist1 = distances1.reduce((acc, val) => acc + val, 0);
-    // const segments2 = [{ray: new Ray({x: xPlaceable, y: yPlaceable},{x: xToken, y: yToken})}];  
+    // const segments2 = [{ray: new Ray({x: xPlaceable, y: yPlaceable},{x: xToken, y: yToken})}];
     // const distances2 = measureDistances(segments2, character, shape);
     // // Sum up the distances
     // let dist2 = distances2.reduce((acc, val) => acc + val, 0);
@@ -93,16 +93,20 @@ export const computeDistanceBetweenCoordinates = function (placeable, character)
     const segments = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
     const distances = measureDistances(segments, character, shape);
     // Sum up the distances
-    let dist = distances.reduce((acc, val) => acc + val, 0);
+    const dist = distances.reduce((acc, val) => acc + val, 0);
     return dist;
 };
 export function getTokenByTokenID(id) {
     // return await getGame().scenes.active.data.tokens.find( x => {return x.id === id});
-    return getCanvas().tokens?.placeables.find(x => { return x.id === id; });
+    return getCanvas().tokens?.placeables.find((x) => {
+        return x.id === id;
+    });
 }
 export function getTokenByTokenName(name) {
     // return await getGame().scenes.active.data.tokens.find( x => {return x._name === name});
-    return getCanvas().tokens?.placeables.find(x => { return x.name == name; });
+    return getCanvas().tokens?.placeables.find((x) => {
+        return x.name == name;
+    });
     // return getCanvas().tokens.placeables.find( x => { return x.id == getGame().user.id});
 }
 /**
@@ -110,18 +114,18 @@ export function getTokenByTokenName(name) {
  */
 export const getTokenCenter = function (token) {
     /*
-    let tokenCenter = {x: token.x , y: token.y };
-    tokenCenter.x += -20 + ( token.w * 0.50 );
-    tokenCenter.y += -20 + ( token.h * 0.50 );
-    */
-    let tokenCenter = { x: token.x + token.w / 2, y: token.y + token.h / 2 };
+      let tokenCenter = {x: token.x , y: token.y };
+      tokenCenter.x += -20 + ( token.w * 0.50 );
+      tokenCenter.y += -20 + ( token.h * 0.50 );
+      */
+    const tokenCenter = { x: token.x + token.w / 2, y: token.y + token.h / 2 };
     return tokenCenter;
 };
 /**
  * Get chracter name from token
  */
 export const getCharacterName = function (token) {
-    var tokenName = null;
+    let tokenName = "";
     if (token.name) {
         tokenName = token.name;
     }
@@ -134,7 +138,7 @@ export const getCharacterName = function (token) {
  * Interation fail messages
  */
 export const iteractionFailNotification = function (message) {
-    if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, "notificationsInteractionFail")) {
+    if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail')) {
         return;
     }
     ui.notifications?.warn(message);
@@ -155,7 +159,7 @@ export const iteractionFailNotification = function (message) {
  */
 export const getFirstPlayerTokenSelected = function () {
     // Get first token ownted by the player
-    let selectedTokens = getCanvas().tokens?.controlled;
+    const selectedTokens = getCanvas().tokens?.controlled;
     if (selectedTokens.length > 1) {
         //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
         return null;
@@ -177,7 +181,7 @@ export const getFirstPlayerTokenSelected = function () {
 export const getFirstPlayerToken = function () {
     // Get controlled token
     let token;
-    let controlled = getCanvas().tokens?.controlled;
+    const controlled = getCanvas().tokens?.controlled;
     // Do nothing if multiple tokens are selected
     if (controlled.length && controlled.length > 1) {
         //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
@@ -186,10 +190,10 @@ export const getFirstPlayerToken = function () {
     // If exactly one token is selected, take that
     token = controlled[0];
     if (!token) {
-        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected')) {
             if (!controlled.length || controlled.length == 0) {
                 // If no token is selected use the token of the users character
-                token = getCanvas().tokens?.placeables.find(token => token.data._id === getGame().user?.character?.data?._id);
+                token = (getCanvas().tokens?.placeables.find((token) => token.data._id === getGame().user?.character?.data?._id));
             }
             // If no token is selected use the first owned token of the users character you found
             if (!token) {
@@ -213,7 +217,7 @@ export const isFocusOnCanvas = function () {
     if (!document.activeElement ||
         !document.activeElement.attributes ||
         !document.activeElement.attributes['class'] ||
-        document.activeElement.attributes['class'].value.substr(0, 8) !== "vtt game") {
+        document.activeElement.attributes['class'].value.substr(0, 8) !== 'vtt game') {
         return false;
     }
     else {

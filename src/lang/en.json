@@ -23,7 +23,7 @@
   "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 
   "foundryvtt-arms-reach.errorNoDsProperty": "No 'ds' property found for value '${wallDataDs}' for id : '${wallDDataId}'",
-  "foundryvtt-arms-reach.errorNoWallFoundForId" : "No wall found for id : '${wallDDataId}'",
+  "foundryvtt-arms-reach.errorNoWallFoundForId": "No wall found for id : '${wallDDataId}'",
 
   "foundryvtt-arms-reach.settingNameEnableArmsReachFeature": "Enable/Disable arms reach feature",
   "foundryvtt-arms-reach.settingHintEnableArmsReachFeature": "Enable the GM to select the maximum distance that players can interact with a door",
@@ -32,10 +32,10 @@
   "foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
 
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Deprecated] Global maximum interaction distance in tiles",
-	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Use instead 'Global maximum interaction distance measurement'], 0 will disable this setting limit (needs app reload). Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
-  
+  "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Use instead 'Global maximum interaction distance measurement'], 0 will disable this setting limit (needs app reload). Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
+
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terain Ruler",
-	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Max distance (in feet, meter, or the default system unit grid you are using) that a token can interact with aplaceable object (door, journal, ...), 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+  "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Max distance (in feet, meter, or the default system unit grid you are using) that a token can interact with aplaceable object (door, journal, ...), 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Hotkey 'e' for interaction",
   "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
@@ -78,5 +78,4 @@
 
   "foundryvtt-arms-reach.settingNameJournalsIntegrationFeature": "Enable/Disable Journals integration",
   "foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Max distance that a token can interact with a journal... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
-
 }

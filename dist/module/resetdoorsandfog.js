@@ -10,19 +10,26 @@ import { getCanvas, getGame } from "./settings.js";
 export const ResetDoorsAndFog = {
     //Just a parent function for both sub functions. Kept functionality separate in case I want to detangle them later.
     resetDoorsAndFog: async function (scene) {
-        let isCurrentScene = scene.data._id == getCanvas().scene?.data._id;
+        const isCurrentScene = scene.data._id == getCanvas().scene?.data._id;
         await this.resetDoors(isCurrentScene, scene.data._id);
         await this.resetFog(isCurrentScene, scene.data._id);
     },
     /******** RESET DOOR **************/
     resetDoors: async function (isCurrentScene, id) {
         if (isCurrentScene) {
-            await getCanvas().walls?.doors.filter((item) => item.data.ds == 1).forEach((item) => item.update({ ds: 0 }, {}));
+            await getCanvas()
+                .walls?.doors.filter((item) => item.data.ds == 1)
+                .forEach((item) => item.update({ ds: 0 }, {}));
         }
         else {
             if (id) {
-                log(getGame().scenes?.get(id)?.data.walls.filter((item) => item.data.door != 0));
-                await getGame().scenes?.get(id)?.data.walls.filter((item) => item.data.door != 0).forEach((x) => x.data.ds = 0);
+                log(getGame()
+                    .scenes?.get(id)
+                    ?.data.walls.filter((item) => item.data.door != 0));
+                await getGame()
+                    .scenes?.get(id)
+                    ?.data.walls.filter((item) => item.data.door != 0)
+                    .forEach((x) => (x.data.ds = 0));
             }
         }
         ui.notifications?.info(`Doors have been shut.`);
@@ -35,9 +42,9 @@ export const ResetDoorsAndFog = {
         }
         else {
             //@ts-ignore
-            const response = await SocketInterface.dispatch("modifyDocument", {
-                type: "FogExploration",
-                action: "delete",
+            const response = await SocketInterface.dispatch('modifyDocument', {
+                type: 'FogExploration',
+                action: 'delete',
                 data: { scene: id },
                 options: { reset: true },
                 //parentId: "",
@@ -50,15 +57,15 @@ export const ResetDoorsAndFog = {
     //Credit to Winks' Everybody Look Here for the code to add menu option to Scene Nav
     getContextOption2: function (idField) {
         return {
-            name: "Reset Doors & Fog",
+            name: 'Reset Doors & Fog',
             icon: '<i class="fas fa-dungeon"></i>',
-            condition: li => getGame().user?.isGM,
-            callback: li => {
-                let scene = getGame().scenes?.get(li.data(idField));
+            condition: (li) => getGame().user?.isGM,
+            callback: (li) => {
+                const scene = getGame().scenes?.get(li.data(idField));
                 ResetDoorsAndFog.resetDoorsAndFog(scene);
-            }
+            },
         };
-    }
+    },
     // ===============================================
     // HOOKS
     // ===============================================

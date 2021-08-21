@@ -13,7 +13,7 @@ export const ARMS_REACH_MODULE_NAME = 'foundryvtt-arms-reach';
  */
 export function getCanvas() {
     if (!(canvas instanceof Canvas) || !canvas.ready) {
-        throw new Error("Canvas Is Not Initialized");
+        throw new Error('Canvas Is Not Initialized');
     }
     return canvas;
 }
@@ -28,7 +28,7 @@ export function getCanvas() {
  */
 export function getGame() {
     if (!(game instanceof Game)) {
-        throw new Error("Game Is Not Initialized");
+        throw new Error('Game Is Not Initialized');
     }
     return game;
 }
@@ -102,16 +102,16 @@ export const registerSettings = function () {
     // ========================================================
     // Arms Reach
     // ========================================================
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableArmsReach", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableArmsReach', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameEnableArmsReachFeature`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintEnableArmsReachFeature`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: true,
         type: Boolean,
         onChange: (data) => {
             // manageSettingsArmsReachFeature(data);
-        }
+        },
     });
     // $(`[name="${ARMS_REACH_MODULE_NAME}.enableArmsReach"]`).change(function() {
     //   if ($(this).is(':checked')) {
@@ -121,103 +121,103 @@ export const registerSettings = function () {
     //     manageSettingsArmsReachFeature(false);
     //   }
     // });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "notificationsInteractionFail", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteraction`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteraction`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: true,
-        type: Boolean
+        type: Boolean,
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "globalInteractionDistance", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: 0,
         type: Number,
         //@ts-ignore
-        range: { min: 0, max: 50, step: 0.5 }
+        range: { min: 0, max: 50, step: 0.5 },
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "doorInteractionDistance", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: 0,
         type: Number,
         //@ts-ignore
-        range: { min: 0, max: 10, step: 0.5 }
+        range: { min: 0, max: 10, step: 0.5 },
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "globalInteractionMeasurement", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: 5,
         type: Number,
         //@ts-ignore
-        range: { min: 0, max: 50, step: 0.5 }
+        range: { min: 0, max: 50, step: 0.5 },
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "doorInteractionMeasurement", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: 5,
         type: Number,
         //@ts-ignore
-        range: { min: 0, max: 50, step: 0.5 }
+        range: { min: 0, max: 50, step: 0.5 },
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteraction", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyForInteraction`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: true,
-        type: Boolean
+        type: Boolean,
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionDelay", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoubleTapInteraction`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoubleTapInteraction`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: 200,
         type: Number,
         //@ts-ignore
-        range: { min: 0, max: 750, step: 50 }
+        range: { min: 0, max: 750, step: 50 },
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "hotkeyDoorInteractionCenter", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyToCenterCamera`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyToCenterCamera`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: true,
-        type: Boolean
+        type: Boolean,
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "globalInteractionDistanceForGM", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: false,
-        type: Boolean
+        type: Boolean,
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "forceReSelection", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'forceReSelection', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: false,
-        type: Boolean
+        type: Boolean,
     });
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: true,
-        type: Boolean
+        type: Boolean,
     });
     //@ts-ignore
     // KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction", {
@@ -239,31 +239,31 @@ export const registerSettings = function () {
     //     choices: {
     //         "0" : "Manhattan",
     //         "1" : "Euclidean",
-    //         "2" : "Chebyshev" 
+    //         "2" : "Chebyshev"
     //     }
     //   });
     // ========================================================
     // STAIRWAY SUPPORT
     // ========================================================
     // First of all Depends if the module is present and active
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableStairwaysIntegration", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: false,
-        type: Boolean
+        type: Boolean,
     });
     // ========================================================
     // JOURNAL SUPPORT
     // ========================================================
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableJournalsIntegration", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameJournalsIntegrationFeature`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintJournalsIntegrationFeature`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: false,
-        type: Boolean
+        type: Boolean,
     });
     // ========================================================
     // GRIDLESS SUPPORT
@@ -279,12 +279,12 @@ export const registerSettings = function () {
     // ========================================================
     // Reset Doors and Fog
     // ========================================================
-    getGame().settings.register(ARMS_REACH_MODULE_NAME, "enableResetDoorsAndFog", {
+    getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog', {
         name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
         hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
-        scope: "world",
+        scope: 'world',
         config: true,
         default: true,
-        type: Boolean
+        type: Boolean,
     });
 };
