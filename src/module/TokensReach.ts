@@ -10,8 +10,8 @@ import {
 } from './ArmsReachhelper';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
-export const JournalsReach = {
-  globalInteractionDistance: function (character: Token, note: Note): boolean {
+export const TokensReach = {
+  globalInteractionDistance: function (character: Token, token: Token): boolean {
     // let character:Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
     if (!character) {
@@ -50,11 +50,11 @@ export const JournalsReach = {
           let isNotNearEnough = false;
           // OLD SETTING
           if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-            const dist = computeDistanceBetweenCoordinatesOLD(JournalsReach.getJournalsCenter(note), character);
+            const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
             isNotNearEnough =
               dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(JournalsReach.getJournalsCenter(note), character);
+            const dist = computeDistanceBetweenCoordinates(TokensReach.getTokensCenter(token), character);
             isNotNearEnough =
               dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
@@ -62,10 +62,10 @@ export const JournalsReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(ARMS_REACH_MODULE_NAME + '.journalsNotInReachFor', { tokenName: tokenName }),
+                i18nFormat(ARMS_REACH_MODULE_NAME + '.tokensNotInReachFor', { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.journalsNotInReach'));
+              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.tokensNotInReach'));
             }
             return false;
           } else {
@@ -81,8 +81,8 @@ export const JournalsReach = {
     return false;
   },
 
-  getJournalsCenter: function (token: Note) {
-    const tokenCenter = { x: token.x, y: token.y };
+  getTokensCenter: function (token: Token) {
+    const tokenCenter = { x: token.x + token.width / 2, y: token.y + token.height / 2 };
     return tokenCenter;
   },
 };

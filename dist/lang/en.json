@@ -20,6 +20,11 @@
   "foundryvtt-arms-reach.journalsNotInReach": "Journal not in reach or is locked",
   "foundryvtt-arms-reach.journalsNotInReachFor": "Journal not within {tokenName}'s reach or is locked",
 
+  "foundryvtt-arms-reach.tokensNotFoundInReach": "No token was found within reach or is locked.",
+  "foundryvtt-arms-reach.tokensNotFoundInReachFor": "No token was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.tokensNotInReach": "Token not in reach or is locked",
+  "foundryvtt-arms-reach.tokensNotInReachFor": "Token not within {tokenName}'s reach or is locked",
+
   "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 
   "foundryvtt-arms-reach.errorNoDsProperty": "No 'ds' property found for value '${wallDataDs}' for id : '${wallDDataId}'",
@@ -34,19 +39,19 @@
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Deprecated] Global maximum interaction distance in tiles",
   "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Use instead 'Global maximum interaction distance measurement'], 0 will disable this setting limit (needs app reload). Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
 
-  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terain Ruler",
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
   "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Max distance (in feet, meter, or the default system unit grid you are using) that a token can interact with aplaceable object (door, journal, ...), 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
-  "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Hotkey 'e' for interaction",
+  "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Interaction door with the hotkey 'e'",
   "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
 
-  "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "Interaction double tap delay",
+  "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "Interaction door with double tap delay",
   "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
 
-  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance (in tiles)",
+  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance in tiles",
   "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Use instead 'Maximum door interaction distance measurement'], 0 will disable this setting limit (needs app reload).",
 
-  "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terain Ruler",
+  "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
   "foundryvtt-arms-reach.settingHintMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (in feet, meter, or the default system unit grid you are using)",
 
   "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "Hotkey 'e' to center camera",
@@ -76,6 +81,21 @@
   "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
   "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene",
 
+  "foundryvtt-arms-reach.settingNameDoorsIntegrationFeature": "Enable/Disable Doors integration",
+  "foundryvtt-arms-reach.settingHintDoorsIntegrationFeature": "Max distance that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
   "foundryvtt-arms-reach.settingNameJournalsIntegrationFeature": "Enable/Disable Journals integration",
-  "foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Max distance that a token can interact with a journal... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
+  "foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Max distance that a token can interact with a journal... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameTokensIntegrationFeature": "Enable/Disable Tokens integration",
+  "foundryvtt-arms-reach.settingHintTokensIntegrationFeature": "Max distance that a token can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Enable the distance interaction for 'Loot Sheet'",
+  "foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "If true by default enable the distance integration for all the token with the 'LootSheet' sheet active",
+
+  "foundryvtt-arms-reach.settingNameTokensIntegrationByPrefix": "Enable the distance interaction on target token with a specific name prefix",
+  "foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "If true by default enable the distance integration for all the target token with the prefix setted on the name of the token (not the character name)",
+
+  "foundryvtt-arms-reach.settingNametokensIntegrationExplicitName": "Set the name of the source token you want to use for the iteraction",
+  "foundryvtt-arms-reach.settingHinttokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)"
 }

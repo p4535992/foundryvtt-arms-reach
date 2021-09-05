@@ -115,42 +115,42 @@ export const DoorsReach = {
     });
   },
 
-  reselectTokenAfterInteraction: function (character: Token) {
-    // If settings is true do not deselect the current select token
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
-      let isOwned = false;
-      if (!character) {
-        character = <Token>getFirstPlayerTokenSelected();
-        if (!character) {
-          character = <Token>getFirstPlayerToken();
-          if (character) {
-            isOwned = true;
-          }
-        }
-        if (!character) {
-          if (getGame().user?.isGM) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }
+  // reselectTokenAfterInteraction: function (character: Token) {
+  //   // If settings is true do not deselect the current select token
+  //   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+  //     let isOwned = false;
+  //     if (!character) {
+  //       character = <Token>getFirstPlayerTokenSelected();
+  //       if (!character) {
+  //         character = <Token>getFirstPlayerToken();
+  //         if (character) {
+  //           isOwned = true;
+  //         }
+  //       }
+  //       if (!character) {
+  //         if (getGame().user?.isGM) {
+  //           return true;
+  //         } else {
+  //           return false;
+  //         }
+  //       }
+  //     }
 
-      // Make sense only if use owned is false beacuse there is no way to check what
-      // owned token is get from the array
-      if (!isOwned) {
-        //let character:Token = getFirstPlayerToken();
-        if (!character) {
-          // DO NOTHING
-        } else {
-          const observable = getCanvas().tokens?.placeables.filter((t) => t.id === character.id);
-          if (observable !== undefined) {
-            observable[0].control();
-          }
-        }
-      }
-    }
-  },
+  //     // Make sense only if use owned is false beacuse there is no way to check what
+  //     // owned token is get from the array
+  //     if (!isOwned) {
+  //       //let character:Token = getFirstPlayerToken();
+  //       if (!character) {
+  //         // DO NOTHING
+  //       } else {
+  //         const observable = getCanvas().tokens?.placeables.filter((t) => t.id === character.id);
+  //         if (observable !== undefined) {
+  //           observable[0].control();
+  //         }
+  //       }
+  //     }
+  //   }
+  // },
 
   globalInteractionDistance: async function (doorControl: DoorControl, isRightHanler: boolean) {
     let character: Token = <Token>getFirstPlayerTokenSelected();
