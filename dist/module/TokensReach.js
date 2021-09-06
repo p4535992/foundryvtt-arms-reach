@@ -1,8 +1,8 @@
 import { i18n, i18nFormat } from "../foundryvtt-arms-reach.js";
 import { computeDistanceBetweenCoordinates, computeDistanceBetweenCoordinatesOLD, getCharacterName, getFirstPlayerToken, iteractionFailNotification, } from "./ArmsReachhelper.js";
 import { ARMS_REACH_MODULE_NAME, getGame } from "./settings.js";
-export const JournalsReach = {
-    globalInteractionDistance: function (character, note) {
+export const TokensReach = {
+    globalInteractionDistance: function (character, token) {
         // let character:Token = <Token>getFirstPlayerTokenSelected();
         let isOwned = false;
         if (!character) {
@@ -40,22 +40,22 @@ export const JournalsReach = {
                     let isNotNearEnough = false;
                     // OLD SETTING
                     if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-                        const dist = computeDistanceBetweenCoordinatesOLD(JournalsReach.getJournalsCenter(note), character);
+                        const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
                         isNotNearEnough =
                             dist > getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
                     }
                     else {
-                        const dist = computeDistanceBetweenCoordinates(JournalsReach.getJournalsCenter(note), character);
+                        const dist = computeDistanceBetweenCoordinates(TokensReach.getTokensCenter(token), character);
                         isNotNearEnough =
                             dist > getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
                     }
                     if (isNotNearEnough) {
                         const tokenName = getCharacterName(character);
                         if (tokenName) {
-                            iteractionFailNotification(i18nFormat(ARMS_REACH_MODULE_NAME + '.journalsNotInReachFor', { tokenName: tokenName }));
+                            iteractionFailNotification(i18nFormat(ARMS_REACH_MODULE_NAME + '.tokensNotInReachFor', { tokenName: tokenName }));
                         }
                         else {
-                            iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.journalsNotInReach'));
+                            iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.tokensNotInReach'));
                         }
                         return false;
                     }
@@ -71,8 +71,8 @@ export const JournalsReach = {
         }
         return false;
     },
-    getJournalsCenter: function (token) {
-        const tokenCenter = { x: token.x, y: token.y };
+    getTokensCenter: function (token) {
+        const tokenCenter = { x: token.x + token.width / 2, y: token.y + token.height / 2 };
         return tokenCenter;
     },
 };

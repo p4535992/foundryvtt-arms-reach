@@ -2,9 +2,10 @@ import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
-import { getFirstPlayerToken, getFirstPlayerTokenSelected } from './ArmsReachhelper';
-import { DoorsReach } from './DoorsReach';
+import { getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInteraction } from './ArmsReachhelper';
+import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { JournalsReach } from './JournalsReach';
+import { TokensReach } from './TokensReach';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -12,115 +13,167 @@ import { JournalsReach } from './JournalsReach';
 
 export const readyHooks = async () => {
   // setup all the hooks
-
-  Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
-    // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-      // if ambient door is present and active dont' do this
-      if (!getGame().modules.get('ambientdoors')?.active) {
-        DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
+      // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
+      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+        // if ambient door is present and active dont' do this
+        if (!getGame().modules.get('ambientdoors')?.active) {
+          DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+        }
       }
-    }
-  });
+    });
 
-  // Management of the Stairways module
-  if (getGame().modules.get('stairways')?.active) {
-    Hooks.on('PreStairwayTeleport', (data) => {
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
-        const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
-        let tokenSelected;
-        if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+    // Management of the Stairways module
+    if (getGame().modules.get('stairways')?.active) {
+      Hooks.on('PreStairwayTeleport', (data) => {
+        if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
+          const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
+          let tokenSelected;
+          // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
           tokenSelected = <Token>getFirstPlayerTokenSelected();
           if (!tokenSelected) {
             tokenSelected = <Token>getFirstPlayerToken();
           }
+          // }
+          const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
+          reselectTokenAfterInteraction(tokenSelected);
+          return result;
         }
-        const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
-        DoorsReach.reselectTokenAfterInteraction(tokenSelected);
-        return result;
+      });
+    }
+
+    // Adds menu option to Scene Nav and Directory
+    Hooks.on('getSceneNavigationContext', (html, contextOptions) => {
+      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+        contextOptions.push(<any>ResetDoorsAndFog.getContextOption2('sceneId'));
       }
     });
+
+    Hooks.on('getSceneDirectoryEntryContext', (html, contextOptions) => {
+      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+        contextOptions.push(ResetDoorsAndFog.getContextOption2('entityId'));
+      }
+    });
+
+    // Adds Shut All Doors button to Walls Control Layer
+    Hooks.on('getSceneControlButtons', function (controls) {
+      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+        controls[4].tools.splice(controls[4].tools.length - 2, 0, {
+          name: 'close',
+          title: 'Close Open Doors',
+          icon: 'fas fa-door-closed',
+          onClick: () => {
+            ResetDoorsAndFog.resetDoors(true, null);
+          },
+          button: true,
+        });
+        return controls;
+      }
+    });
+
+    // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalSheet:JournalSheet, render) => {
+    //   let test = false;
+    //   let journalEntry = <JournalEntry>getGame().journal?.getName(journalSheet.title);
+    //   let seneNotes = <Note>journalEntry.sceneNote;
+    //   return test;
+    // })
+    // Register custom sheets (if any)
   }
-
-  // Adds menu option to Scene Nav and Directory
-  Hooks.on('getSceneNavigationContext', (html, contextOptions) => {
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-      contextOptions.push(<any>ResetDoorsAndFog.getContextOption2('sceneId'));
-    }
-  });
-
-  Hooks.on('getSceneDirectoryEntryContext', (html, contextOptions) => {
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-      contextOptions.push(ResetDoorsAndFog.getContextOption2('entityId'));
-    }
-  });
-
-  // Adds Shut All Doors button to Walls Control Layer
-  Hooks.on('getSceneControlButtons', function (controls) {
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-      controls[4].tools.splice(controls[4].tools.length - 2, 0, {
-        name: 'close',
-        title: 'Close Open Doors',
-        icon: 'fas fa-door-closed',
-        onClick: () => {
-          ResetDoorsAndFog.resetDoors(true, null);
-        },
-        button: true,
-      });
-      return controls;
-    }
-  });
-
-  // Hooks.on("renderJournalSheet", (app, html:JQuery<HTMLElement>, journalSheet:JournalSheet, render) => {
-  //   let test = false;
-  //   let journalEntry = <JournalEntry>getGame().journal?.getName(journalSheet.title);
-  //   let seneNotes = <Note>journalEntry.sceneNote;
-  //   return test;
-  // })
-  // Register custom sheets (if any)
 };
 
 export const setupHooks = () => {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
-    getGame().settings.set('core', 'notesDisplayToggle', true);
+  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+      getGame().settings.set('core', 'notesDisplayToggle', true);
+    }
   }
 };
 
 export const initHooks = () => {
   warn('Init Hooks processing');
-
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    DoorsReach.init();
-  }
+    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+      DoorsReach.init();
 
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    //@ts-ignore
-    libWrapper.register(
-      ARMS_REACH_MODULE_NAME,
-      'DoorControl.prototype._onMouseDown',
-      DoorControlPrototypeOnMouseDownHandler,
-      'MIXED',
-    );
-    //@ts-ignore
-    libWrapper.register(
-      ARMS_REACH_MODULE_NAME,
-      'DoorControl.prototype._onRightDown',
-      DoorControlPrototypeOnRightDownHandler,
-      'MIXED',
-    );
-  }
+      //@ts-ignore
+      libWrapper.register(
+        ARMS_REACH_MODULE_NAME,
+        'DoorControl.prototype._onMouseDown',
+        DoorControlPrototypeOnMouseDownHandler,
+        'MIXED',
+      );
+      //@ts-ignore
+      libWrapper.register(
+        ARMS_REACH_MODULE_NAME,
+        'DoorControl.prototype._onRightDown',
+        DoorControlPrototypeOnRightDownHandler,
+        'MIXED',
+      );
+    }
 
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
-    //@ts-ignore
-    // libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft', NotePrototypeOnClickLeftHandler, 'MIXED');
-    //@ts-ignore
-    libWrapper.register(
-      ARMS_REACH_MODULE_NAME,
-      'Note.prototype._onClickLeft2',
-      NotePrototypeOnClickLeftHandler,
-      'MIXED',
-    );
+    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+      //@ts-ignore
+      // libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft', NotePrototypeOnClickLeftHandler, 'MIXED');
+      //@ts-ignore
+      libWrapper.register(
+        ARMS_REACH_MODULE_NAME,
+        'Note.prototype._onClickLeft2',
+        NotePrototypeOnClickLeftHandler,
+        'MIXED',
+      );
+    }
+
+    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
+      // //@ts-ignore
+      // libWrapper.register(
+      //   ARMS_REACH_MODULE_NAME,
+      //   'Token.prototype._onClickLeft',
+      //   TokenPrototypeOnClickLeftHandler,
+      //   'MIXED'
+      // );
+      //@ts-ignore
+      libWrapper.register(
+        ARMS_REACH_MODULE_NAME,
+        'Token.prototype._onClickLeft2',
+        TokenPrototypeOnClickLeftHandler,
+        'MIXED',
+      );
+    }
   }
+};
+
+export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
+    const [target] = args;
+    const token = this as Token;
+    const prefixToCheck = <string>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationByPrefix');
+    const isTokenNameChecked = token.name?.startsWith(prefixToCheck);
+    // lootsheetnpc5e/template/npc-sheet.html
+    const isNPCLootSheet = token.document.actor?.sheet?.template.includes('lootsheetnpc5e/template/npc-sheet.html');
+    if (isTokenNameChecked || isNPCLootSheet) {
+      const nameSourceToken = <string>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationExplicitName');
+      let tokenSelected;
+      if (nameSourceToken) {
+        tokenSelected = <Token>(
+          getCanvas().tokens?.placeables.find((tokenTmp: Token) => tokenTmp.name === nameSourceToken)
+        );
+      } else {
+        // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+        tokenSelected = <Token>getFirstPlayerTokenSelected();
+        if (!tokenSelected) {
+          tokenSelected = <Token>getFirstPlayerToken();
+        }
+        // }
+      }
+      const isInReach = await TokensReach.globalInteractionDistance(tokenSelected, token);
+      reselectTokenAfterInteraction(tokenSelected);
+      if (!isInReach) {
+        return;
+      }
+    }
+  }
+  return wrapped(...args);
 };
 
 export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
@@ -128,14 +181,14 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
     const [target] = args;
     const note = this as Note;
     let tokenSelected;
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
-      tokenSelected = <Token>getFirstPlayerTokenSelected();
-      if (!tokenSelected) {
-        tokenSelected = <Token>getFirstPlayerToken();
-      }
+    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+    tokenSelected = <Token>getFirstPlayerTokenSelected();
+    if (!tokenSelected) {
+      tokenSelected = <Token>getFirstPlayerToken();
     }
+    // }
     const isInReach = await JournalsReach.globalInteractionDistance(tokenSelected, note);
-    DoorsReach.reselectTokenAfterInteraction(tokenSelected);
+    reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
       return;
     }
@@ -144,17 +197,17 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
 };
 
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
-  const doorControl = this as DoorControl;
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+    const doorControl = this as DoorControl;
     let tokenSelected;
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
-      tokenSelected = <Token>getFirstPlayerTokenSelected();
-      if (!tokenSelected) {
-        tokenSelected = <Token>getFirstPlayerToken();
-      }
+    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+    tokenSelected = <Token>getFirstPlayerTokenSelected();
+    if (!tokenSelected) {
+      tokenSelected = <Token>getFirstPlayerToken();
     }
+    // }
     const isInReach = await DoorsReach.globalInteractionDistance(doorControl, false);
-    DoorsReach.reselectTokenAfterInteraction(tokenSelected);
+    reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
       // Bug fix not sure why i need to do this
       if (doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {
@@ -179,8 +232,8 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 };
 
 export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, ...args) {
-  const doorControl = this as DoorControl; //evt.currentTarget;
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+    const doorControl = this as DoorControl; //evt.currentTarget;
     let character: Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
     if (!character) {
@@ -197,7 +250,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
       }
     }
     const isInReach = await DoorsReach.globalInteractionDistance(doorControl, true);
-    DoorsReach.reselectTokenAfterInteraction(character);
+    reselectTokenAfterInteraction(character);
     if (!isInReach) {
       return;
     }

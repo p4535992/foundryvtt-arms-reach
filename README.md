@@ -2,7 +2,7 @@
 
 #  FoundryVTT Arms Reach 
 
-Little Utilities, Arms Reach for door, journal, stairways, ecc.
+Little Utilities, Arms Reach for door, journal, stairways, token, ecc.
 
 This project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
 
@@ -63,6 +63,14 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * Add distance calculation for note and journal on the canvas
 * Automatically flag journal notes to show on the map without having to have your players turn it on themselves.
+
+### Token Feature (On developing)
+
+* Add distance calculation for owned source token and generic target token on the canvas for open the sheet and emualte a loot chest
+* GM can't use this feature because they owned every token so you must set the explicit the source token on module setting
+* This feature work with only one owned source token on the canvas at the time
+* You must set the name of your source token (not the character name) on the module setting 
+* If no source token is setted on the module setting the module take the first owned token of the player
 
 ### Reset Doors and Fog feature Feature
 
