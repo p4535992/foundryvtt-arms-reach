@@ -155,10 +155,6 @@ Hooks.on('ArmsReachReplaceInteraction', (doorData, result) => {
 
 ```
 
-## License
-
-This Foundry VTT module is licensed under a MIT License.
-
 # Build
 
 ## Install all packages
