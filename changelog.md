@@ -1,5 +1,13 @@
 # CHANGELOG
 
+# 2.0.7
+
+- Little fix on Token Integration Distance
+
+# 2.0.6
+
+- Add Token Integration Distance
+
 # 2.0.5
 
 - Minor bug fix
