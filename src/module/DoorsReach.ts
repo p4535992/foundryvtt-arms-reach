@@ -1,10 +1,6 @@
 import { error, i18n, i18nFormat } from '../foundryvtt-arms-reach';
 import { DoorData, DoorSourceData, DoorTargetData } from './ArmsReachModels';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
-//@ts-ignore
-import { SpeedProvider } from '../../drag-ruler/src/speed_provider.js';
-//@ts-ignore
-import { availableSpeedProviders, currentSpeedProvider } from '../../drag-ruler/src/api.js';
 import {
   computeDistanceBetweenCoordinates,
   computeDistanceBetweenCoordinatesOLD,

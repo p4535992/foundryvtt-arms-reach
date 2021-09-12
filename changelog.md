@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.8
+
+- Add some check and a bug fix on measure distance
+
 # 2.0.7
 
 - Little fix on Token Integration Distance

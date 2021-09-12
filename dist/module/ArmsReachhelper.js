@@ -1,8 +1,13 @@
 import { ARMS_REACH_MODULE_NAME, getCanvas, getGame } from "./settings.js";
 //@ts-ignore
+// import { SpeedProvider } from '../../drag-ruler/src/speed_provider.js';
+//@ts-ignore
+// import { availableSpeedProviders, currentSpeedProvider } from '../../drag-ruler/src/api.js';
+//@ts-ignore
 import { measureDistances } from '../../drag-ruler/src/compatibility.js';
 //@ts-ignore
 import { getTokenShape } from '../../drag-ruler/src/util.js';
+import { error } from "../foundryvtt-arms-reach.js";
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
  * @param doorControl or placeable
@@ -74,27 +79,17 @@ export const computeDistanceBetweenCoordinates = function (placeable, character)
     const shape = getTokenShape(character);
     //@ts-ignore
     const unitSize = getCanvas().grid?.grid?.options.dimensions.distance;
-    // const segments1 = [{ray: new Ray({x: xToken, y: yToken}, {x: xPlaceable, y: yPlaceable})}];
-    // const distances1 = measureDistances(segments1, character, shape);
-    // // Sum up the distances
-    // let dist1 = distances1.reduce((acc, val) => acc + val, 0);
-    // const segments2 = [{ray: new Ray({x: xPlaceable, y: yPlaceable},{x: xToken, y: yToken})}];
-    // const distances2 = measureDistances(segments2, character, shape);
-    // // Sum up the distances
-    // let dist2 = distances2.reduce((acc, val) => acc + val, 0);
-    // let dist = 0;
-    // if(dist1 > dist2){
-    //     dist = dist1;
-    // }else if(dist1 < dist2){
-    //     dist = dist2;
-    // }else{
-    //     dist = dist1;
-    // }
-    const segments = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
-    const distances = measureDistances(segments, character, shape);
-    // Sum up the distances
-    const dist = distances.reduce((acc, val) => acc + val, 0);
-    return dist;
+    if (!xPlaceable || !yPlaceable || !xToken || !yToken) {
+        error('[xPlaceable=' + xPlaceable + ', yPlaceable=' + yPlaceable + ', xToken=' + xToken + ', yToken=' + yToken + ']');
+        return computeDistanceBetweenCoordinatesOLD(placeable, character);
+    }
+    else {
+        const segments = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
+        const distances = measureDistances(segments, character, shape);
+        // Sum up the distances
+        const dist = distances.reduce((acc, val) => acc + val, 0);
+        return dist;
+    }
 };
 export function getTokenByTokenID(id) {
     // return await getGame().scenes.active.data.tokens.find( x => {return x.id === id});
