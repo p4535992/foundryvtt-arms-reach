@@ -6,12 +6,18 @@ import { getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInt
 import { DoorsReach } from "./DoorsReach.js";
 import { JournalsReach } from "./JournalsReach.js";
 import { TokensReach } from "./TokensReach.js";
+import { socket, _socketRecalculate } from "./ArmsReachSocket.js";
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 // const previewer = new SoundPreviewerApplication();
 export const readyHooks = async () => {
     // setup all the hooks
     if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+        Hooks.once('socketlib.ready', () => {
+            //@ts-ignore
+            socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
+            socket.register('recalculate', _socketRecalculate);
+        });
         Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
             // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
             if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {

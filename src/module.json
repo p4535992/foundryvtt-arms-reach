@@ -2,7 +2,7 @@
   "name": "foundryvtt-arms-reach",
   "title": "FoundryVTT Arms Reach",
   "description": "Allows the GM to limit the distance that a player can interate with a placeable object like door, journal, stairway, token, ecc..",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "author": "Psyny, p4535992",
   "type": "module",
   "socket": true,
@@ -43,7 +43,7 @@
   "styles": ["styles/foundryvtt-arms-reach.css"],
   "url": "https://github.com/p4535992/foundryvtt-arms-reach",
   "manifest": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/src/module.json",
-  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v2.0.8.zip",
+  "download": "https://raw.githubusercontent.com/p4535992/foundryvtt-arms-reach/main/package/foundryvtt-arms-reach-v2.0.9.zip",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
   "manifestPlusVersion": "1.2.1",
@@ -56,6 +56,9 @@
     },
     {
       "name": "drag-ruler"
+    },
+    {
+      "name": "socketlib"
     }
   ]
 }
