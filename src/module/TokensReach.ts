@@ -7,7 +7,7 @@ import {
   getFirstPlayerTokenSelected,
   getTokenByTokenID,
   iteractionFailNotification,
-} from './ArmsReachhelper';
+} from './ArmsReachHelper';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
 export const TokensReach = {

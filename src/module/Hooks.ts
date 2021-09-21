@@ -2,7 +2,7 @@ import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
-import { getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInteraction } from './ArmsReachhelper';
+import { getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInteraction } from './ArmsReachHelper';
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { JournalsReach } from './JournalsReach';
 import { TokensReach } from './TokensReach';

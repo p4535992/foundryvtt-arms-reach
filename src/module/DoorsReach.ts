@@ -10,7 +10,7 @@ import {
   getTokenCenter,
   isFocusOnCanvas,
   iteractionFailNotification,
-} from './ArmsReachhelper';
+} from './ArmsReachHelper';
 
 export const DoorsReach = {
   init: function () {
