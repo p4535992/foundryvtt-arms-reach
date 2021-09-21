@@ -1,8 +1,9 @@
 {
   "private": true,
   "name": "foundryvtt-arms-reach",
-  "version": "2.0.9",
+  "title": "FoundryVTT Arms Reach",
   "description": "Allows the GM to limit the distance that a player can interate with a placeable object like door, journal, stairway, token, ecc..",
+  "version": "2.0.10",
   "scripts": {
     "package": "gulp package",
     "build": "gulp build && gulp link",
@@ -11,15 +12,15 @@
     "update": "npm install --save-dev @league-of-foundry-developers/foundry-vtt-types@fvtt-0.8.8",
     "lint": "eslint --ext .ts,.js,.vue .",
     "lintfix": "eslint --fix --ext .ts,.js,.vue ./src",
-    "prettier-format": "prettier --config .prettierrc --write \"./src/**/*.(ts|js|json|scss)\""
+    "prettier-format": "prettier --config .prettierrc --write \"./src/**/*.(ts|js|json|scss|css)\""
   },
   "author": "",
   "license": "",
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^0.8.8-9",
     "@types/jquery": "^3.5.5",
-    "@typescript-eslint/eslint-plugin": "^4.28.3",
-    "@typescript-eslint/parser": "^4.28.3",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "archiver": "^5.2.0",
     "chalk": "^4.1.2",
@@ -38,11 +39,11 @@
     "gulp-git": "^2.10.1",
     "gulp-less": "^4.0.1",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^4.1.1",
     "gulp-typescript": "^6.0.0-alpha.1",
     "json-stringify-pretty-compact": "^2.0.0",
     "prettier": "^2.3.2",
-    "sass": "^1.38.0",
+    "sass": "^1.42.0",
     "yargs": "^15.4.1"
   },
   "lint-staged": {

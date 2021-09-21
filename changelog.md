@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.10
+
+- Added github workflow
+
 # 2.0.9
 
 - Add socketlib reference for solve the issue https://github.com/p4535992/foundryvtt-arms-reach/issues/26 and https://github.com/p4535992/foundryvtt-arms-reach/issues/23
