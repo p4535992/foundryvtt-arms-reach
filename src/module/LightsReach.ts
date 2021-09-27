@@ -10,8 +10,8 @@ import {
 } from './ArmsReachHelper';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
-export const JournalsReach = {
-  globalInteractionDistance: function (character: Token, note: Note): boolean {
+export const LightsReach = {
+  globalInteractionDistance: function (character: Token, light: AmbientLight): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();
@@ -43,17 +43,17 @@ export const JournalsReach = {
           <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForJournal`));
+          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForLight`));
           return false;
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
           if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-            const dist = computeDistanceBetweenCoordinatesOLD(JournalsReach.getJournalsCenter(note), character);
+            const dist = computeDistanceBetweenCoordinatesOLD(LightsReach.getLightsCenter(light), character);
             isNotNearEnough =
               dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(JournalsReach.getJournalsCenter(note), character);
+            const dist = computeDistanceBetweenCoordinates(LightsReach.getLightsCenter(light), character);
             isNotNearEnough =
               dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
@@ -61,10 +61,10 @@ export const JournalsReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(`${ARMS_REACH_MODULE_NAME}.journalsNotInReachFor`, { tokenName: tokenName }),
+                i18nFormat(`${ARMS_REACH_MODULE_NAME}.lightsNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.journalsNotInReach`));
+              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.lightsNotInReach`));
             }
             return false;
           } else {
@@ -80,8 +80,8 @@ export const JournalsReach = {
     return false;
   },
 
-  getJournalsCenter: function (note: Note) {
-    const noteCenter = { x: note.x, y: note.y };
-    return noteCenter;
+  getLightsCenter: function (light: AmbientLight) {
+    const lightCenter = { x: light.x, y: light.y };
+    return lightCenter;
   },
 };

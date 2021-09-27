@@ -25,6 +25,11 @@
   "foundryvtt-arms-reach.tokensNotInReach": "Token not in reach or is locked",
   "foundryvtt-arms-reach.tokensNotInReachFor": "Token not within {tokenName}'s reach or is locked",
 
+  "foundryvtt-arms-reach.lightsNotFoundInReach": "No light was found within reach or is locked.",
+  "foundryvtt-arms-reach.lightsNotFoundInReachFor": "No light was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.lightsNotInReach": "Light not in reach or is locked",
+  "foundryvtt-arms-reach.lightsNotInReachFor": "Light not within {tokenName}'s reach or is locked",
+
   "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 
   "foundryvtt-arms-reach.errorNoDsProperty": "No 'ds' property found for value '${wallDataDs}' for id : '${wallDDataId}'",
@@ -42,11 +47,11 @@
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
   "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Max distance (in feet, meter, or the default system unit grid you are using) that a token can interact with aplaceable object (door, journal, ...), 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
-  "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "Interaction door with the hotkey 'e'",
-  "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
+  "foundryvtt-arms-reach.settingNameHotKeyForInteraction": "[Deprecated] Interaction door with the hotkey 'e'",
+  "foundryvtt-arms-reach.settingHintHotKeyForInteraction": "[I do not recommend this feature because of some incpmaptibility with other movement verification modules, but otherwise it works] Pressing 'e' will open or close nearest door. Holding 'e' will center camera on current token.",
 
-  "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "Interaction door with double tap delay",
-  "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
+  "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "[Deprecated] Interaction door with double tap delay",
+  "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "[I do not recommend this feature because of some incpmaptibility with other movement verification modules, but otherwise it works] Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
 
   "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance in tiles",
   "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Use instead 'Maximum door interaction distance measurement'], 0 will disable this setting limit (needs app reload).",
@@ -54,8 +59,8 @@
   "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
   "foundryvtt-arms-reach.settingHintMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (in feet, meter, or the default system unit grid you are using)",
 
-  "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "Hotkey 'e' to center camera",
-  "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "Holding 'e' will center the camera on current selected token.",
+  "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "[Deprecated] Hotkey 'e' to center camera",
+  "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "[I do not recommend this feature because of some incpmaptibility with other movement verification modules, but otherwise it works] Holding 'e' will center the camera on current selected token.",
 
   "foundryvtt-arms-reach.settingNameNotificationsFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
   "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
@@ -97,5 +102,8 @@
   "foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "If true by default enable the distance integration for all the target token with the prefix setted on the name of the token (not the character name)",
 
   "foundryvtt-arms-reach.settingNametokensIntegrationExplicitName": "Set the name of the source token you want to use for the iteraction",
-  "foundryvtt-arms-reach.settingHinttokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)"
+  "foundryvtt-arms-reach.settingHinttokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)",
+
+  "foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Enable/Disable Lights integration",
+  "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
 }

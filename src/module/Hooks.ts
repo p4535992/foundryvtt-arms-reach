@@ -7,6 +7,7 @@ import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { JournalsReach } from './JournalsReach';
 import { TokensReach } from './TokensReach';
 import { socket, _socketRecalculate } from './ArmsReachSocket';
+import { LightsReach } from './LightsReach';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -121,7 +122,12 @@ export const initHooks = () => {
 
     if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
       //@ts-ignore
-      // libWrapper.register(ARMS_REACH_MODULE_NAME, 'Note.prototype._onClickLeft', NotePrototypeOnClickLeftHandler, 'MIXED');
+      // libWrapper.register(
+      //   ARMS_REACH_MODULE_NAME,
+      //   'Note.prototype._onClickLeft',
+      //   NotePrototypeOnClickLeftHandler,
+      //   'MIXED');
+
       //@ts-ignore
       libWrapper.register(
         ARMS_REACH_MODULE_NAME,
@@ -144,6 +150,16 @@ export const initHooks = () => {
         ARMS_REACH_MODULE_NAME,
         'Token.prototype._onClickLeft2',
         TokenPrototypeOnClickLeftHandler,
+        'MIXED',
+      );
+    }
+
+    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration')) {
+      //@ts-ignore
+      libWrapper.register(
+        ARMS_REACH_MODULE_NAME,
+        'AmbientLight.prototype._onClickRight',
+        AmbientLightPrototypeOnClickRightHandler,
         'MIXED',
       );
     }
@@ -261,6 +277,26 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
     }
     const isInReach = await DoorsReach.globalInteractionDistance(doorControl, true);
     reselectTokenAfterInteraction(character);
+    if (!isInReach) {
+      return;
+    }
+  }
+  return wrapped(...args);
+};
+
+export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped, ...args) {
+  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+    const [target] = args;
+    const light = this as AmbientLight;
+    let tokenSelected;
+    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+    tokenSelected = <Token>getFirstPlayerTokenSelected();
+    if (!tokenSelected) {
+      tokenSelected = <Token>getFirstPlayerToken();
+    }
+    // }
+    const isInReach = await LightsReach.globalInteractionDistance(tokenSelected, light);
+    reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
       return;
     }

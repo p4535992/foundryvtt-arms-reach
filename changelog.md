@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 2.0.11
+
+- Little bug fix on the socket listener
+- Add the first beta version of the Light Reach feature
+
 # 2.0.10
 
 - Added github workflow

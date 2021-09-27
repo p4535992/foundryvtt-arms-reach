@@ -8,7 +8,7 @@ export function recalculate(tokens) {
 }
 
 export function _socketRecalculate(tokenIds) {
-  // DO NOTHING JUST REGISTER THE TOKEN FOR STRANGE BUG WITH SOCKETLIB
+  // DO NOTHING JUST REGISTER THE SOCKET FOR A STRANGE BUG WITH SOCKETLIB ?
   //@ts-ignore
- // return getCanvas().controls?.ruler?.dragRulerRecalculate(tokenIds);
+  // return getCanvas().controls?.ruler?.dragRulerRecalculate(tokenIds);
 }

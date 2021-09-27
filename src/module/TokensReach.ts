@@ -12,7 +12,6 @@ import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
 export const TokensReach = {
   globalInteractionDistance: function (character: Token, token: Token): boolean {
-    // let character:Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

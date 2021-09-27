@@ -256,6 +256,8 @@ export const registerSettings = function () {
     range: { min: 0, max: 50, step: 0.5 },
   });
 
+  // DEPRECATED
+
   getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyForInteraction`),
@@ -265,23 +267,27 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  // DEPRECATED (double tap)
+
   getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoubleTapInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoubleTapInteraction`),
     scope: 'world',
     config: true,
-    default: 200,
+    default: 0, // 200
     type: Number,
     //@ts-ignore
     range: { min: 0, max: 750, step: 50 },
   });
+
+  // DEPRECATED
 
   getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyToCenterCamera`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyToCenterCamera`),
     scope: 'world',
     config: true,
-    default: true,
+    default: false,
     type: Boolean,
   });
 
@@ -351,6 +357,19 @@ export const registerSettings = function () {
     config: true,
     default: '',
     type: String,
+  });
+
+  // ========================================================
+  // LIGHT SUPPORT
+  // ========================================================
+
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameLightsIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintLightsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
   });
 
   // ========================================================
