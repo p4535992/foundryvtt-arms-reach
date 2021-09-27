@@ -44,7 +44,7 @@ export const JournalsReach = {
           <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.noCharacterSelectedForJournal'));
+          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForJournal`));
           return false;
         } else {
           let isNotNearEnough = false;
@@ -62,10 +62,10 @@ export const JournalsReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(ARMS_REACH_MODULE_NAME + '.journalsNotInReachFor', { tokenName: tokenName }),
+                i18nFormat(`${ARMS_REACH_MODULE_NAME}.journalsNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.journalsNotInReach'));
+              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.journalsNotInReach`));
             }
             return false;
           } else {

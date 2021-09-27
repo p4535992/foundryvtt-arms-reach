@@ -46,7 +46,7 @@ export const StairwaysReach = {
           <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.noCharacterSelectedForStairway'));
+          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForStairway`));
           return false;
         } else {
           let isNotNearEnough = false;
@@ -64,10 +64,10 @@ export const StairwaysReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(ARMS_REACH_MODULE_NAME + '.stairwaysNotInReachFor', { tokenName: tokenName }),
+                i18nFormat(`${ARMS_REACH_MODULE_NAME}.stairwaysNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.stairwaysNotInReach'));
+              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.stairwaysNotInReach`));
             }
             return false;
           } else {

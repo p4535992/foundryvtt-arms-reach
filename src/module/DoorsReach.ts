@@ -40,7 +40,7 @@ export const DoorsReach = {
             ArmsReachVariables.door_interaction_lastTime = Date.now();
             const character = getFirstPlayerToken();
             if (!character) {
-              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.noCharacterSelectedToCenterCamera'));
+              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedToCenterCamera`));
               return;
             }
 
@@ -71,7 +71,7 @@ export const DoorsReach = {
         const character = getFirstPlayerToken();
 
         if (!character) {
-          iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.noCharacterSelected'));
+          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelected`));
           return;
         }
 
@@ -215,7 +215,7 @@ export const DoorsReach = {
         };
 
         if (!character) {
-          iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.noCharacterSelected'));
+          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelected`));
           return false;
         } else {
           // PreHook (can abort the interaction with the door)
@@ -223,10 +223,10 @@ export const DoorsReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(ARMS_REACH_MODULE_NAME + '.doorNotInReachFor', { tokenName: tokenName }),
+                i18nFormat(`${ARMS_REACH_MODULE_NAME}.doorNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.doorNotInReach'));
+              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.doorNotInReach`));
             }
             return false;
           }
@@ -280,10 +280,10 @@ export const DoorsReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(ARMS_REACH_MODULE_NAME + '.doorNotInReachFor', { tokenName: tokenName }),
+                i18nFormat(`${ARMS_REACH_MODULE_NAME}.doorNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.doorNotInReach'));
+              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.doorNotInReach`));
             }
             return false;
           } else {
@@ -510,11 +510,11 @@ export const DoorsReach = {
 
       if (tokenName) {
         iteractionFailNotification(
-          i18nFormat(ARMS_REACH_MODULE_NAME + '.doorNotFoundInReachFor', { tokenName: tokenName }),
+          i18nFormat(`${ARMS_REACH_MODULE_NAME}.doorNotFoundInReachFor`, { tokenName: tokenName }),
         );
         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       } else {
-        iteractionFailNotification(i18n(ARMS_REACH_MODULE_NAME + '.doorNotFoundInReach'));
+        iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.doorNotFoundInReach`));
         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }
       return;
