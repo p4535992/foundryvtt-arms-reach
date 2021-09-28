@@ -14,101 +14,107 @@ import {
 
 export const DoorsReach = {
   init: function () {
-    // Door interaction
-    document.addEventListener('keydown', (evt) => {
-      //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
-      if (evt.key === 'e') {
-        if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter')) {
-          return;
-        }
-        if (ArmsReachVariables.door_interaction_cameraCentered) {
-          ArmsReachVariables.door_interaction_cameraCentered = false;
-          return;
-        }
+    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter')) {
+      // Door interaction
+      document.addEventListener('keydown', (evt) => {
+        //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
+        if (evt.key === 'e') {
+          // if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter')) {
+          //   return;
+          // }
+          if (ArmsReachVariables.door_interaction_cameraCentered) {
+            ArmsReachVariables.door_interaction_cameraCentered = false;
+            return;
+          }
 
-        if (!isFocusOnCanvas()) {
-          return;
-        }
+          if (!isFocusOnCanvas()) {
+            return;
+          }
 
-        if (ArmsReachVariables.door_interaction_keydown == false) {
-          ArmsReachVariables.door_interaction_lastTime = Date.now();
-          ArmsReachVariables.door_interaction_keydown = true;
-        } else {
-          // Center camera on character (if  key was pressed for a time)
-          const diff = Date.now() - ArmsReachVariables.door_interaction_lastTime;
-          if (diff > 500) {
+          if (ArmsReachVariables.door_interaction_keydown == false) {
             ArmsReachVariables.door_interaction_lastTime = Date.now();
-            const character = getFirstPlayerToken();
-            if (!character) {
-              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedToCenterCamera`));
-              return;
-            }
+            ArmsReachVariables.door_interaction_keydown = true;
+          } else {
+            // Center camera on character (if  key was pressed for a time)
+            const diff = Date.now() - ArmsReachVariables.door_interaction_lastTime;
+            if (diff > 500) {
+              ArmsReachVariables.door_interaction_lastTime = Date.now();
+              const character = getFirstPlayerToken();
+              if (!character) {
+                iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedToCenterCamera`));
+                return;
+              }
 
-            ArmsReachVariables.door_interaction_cameraCentered = true;
-            getCanvas().animatePan({ x: character.x, y: character.y });
+              ArmsReachVariables.door_interaction_cameraCentered = true;
+              getCanvas().animatePan({ x: character.x, y: character.y });
+            }
           }
         }
-      }
-    });
+      });
+    }
 
-    document.addEventListener('keyup', (evt) => {
-      //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
-      if (evt.key === 'e') {
-        ArmsReachVariables.door_interaction_keydown = false;
+    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction')) {
+      document.addEventListener('keyup', (evt) => {
+        //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
+        if (evt.key === 'e') {
+          ArmsReachVariables.door_interaction_keydown = false;
 
-        if (ArmsReachVariables.door_interaction_cameraCentered) {
-          return;
+          if (ArmsReachVariables.door_interaction_cameraCentered) {
+            return;
+          }
+
+          if (!isFocusOnCanvas()) {
+            return;
+          }
+
+          // if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction')) {
+          //   return;
+          // }
+          // Get first token ownted by the player
+          const character = getFirstPlayerToken();
+
+          if (!character) {
+            iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelected`));
+            return;
+          }
+
+          DoorsReach.interactWithNearestDoor(character, 0, 0);
         }
-
-        if (!isFocusOnCanvas()) {
-          return;
-        }
-
-        if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction')) {
-          return;
-        }
-        // Get first token ownted by the player
-        const character = getFirstPlayerToken();
-
-        if (!character) {
-          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelected`));
-          return;
-        }
-
-        DoorsReach.interactWithNearestDoor(character, 0, 0);
-      }
-    });
+      });
+    }
 
     // Double Tap to open nearest door -------------------------------------------------
-    document.addEventListener('keyup', (evt) => {
-      if (evt.key === 'ArrowUp' || evt.key === 'w') {
-        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          return;
+    if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') > 0) {
+      document.addEventListener('keyup', (evt) => {
+        if (evt.key === 'ArrowUp' || evt.key === 'w') {
+          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
+          //   return;
+          // }
+          DoorsReach.ifStuckInteract('up', 0, -0.5);
         }
-        DoorsReach.ifStuckInteract('up', 0, -0.5);
-      }
 
-      if (evt.key === 'ArrowDown' || evt.key === 's') {
-        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          return;
+        if (evt.key === 'ArrowDown' || evt.key === 's') {
+          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
+          //   return;
+          // }
+          DoorsReach.ifStuckInteract('down', 0, +0.5);
         }
-        DoorsReach.ifStuckInteract('down', 0, +0.5);
-      }
 
-      if (evt.key === 'ArrowRight' || evt.key === 'd') {
-        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          return;
+        if (evt.key === 'ArrowRight' || evt.key === 'd') {
+          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
+          //   return;
+          // }
+          DoorsReach.ifStuckInteract('right', +0.5, 0);
         }
-        DoorsReach.ifStuckInteract('right', +0.5, 0);
-      }
 
-      if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-        if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          return;
+        if (evt.key === 'ArrowLeft' || evt.key === 'a') {
+          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
+          //   return;
+          // }
+          DoorsReach.ifStuckInteract('left', -0.5, 0);
         }
-        DoorsReach.ifStuckInteract('left', -0.5, 0);
-      }
-    });
+      });
+    }
   },
 
   // reselectTokenAfterInteraction: function (character: Token) {

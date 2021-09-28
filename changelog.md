@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.12
+
+- Add some performance check on the setting 'hotkeyDoorInteractionCenter','hotkeyDoorInteraction','hotkeyDoorInteractionDelay', avoid to add new listener
+- Try to fix [Can "reach" further to the east](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
 # 2.0.11
 
 - Little bug fix on the socket listener

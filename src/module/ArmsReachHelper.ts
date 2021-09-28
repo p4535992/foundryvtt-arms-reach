@@ -90,10 +90,17 @@ export const computeDistanceBetweenCoordinates = function (placeable: any, chara
     );
     return computeDistanceBetweenCoordinatesOLD(placeable, character);
   } else {
-    const segments = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
-    const distances = measureDistances(segments, character, shape);
+    const segmentsRight = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
+    const distancesRight = measureDistances(segmentsRight, character, shape);
     // Sum up the distances
-    const dist = distances.reduce((acc, val) => acc + val, 0);
+    const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
+
+    const segmentsLeft = [{ ray: new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable }) }];
+    const distancesLeft = measureDistances(segmentsLeft, character, shape);
+    // Sum up the distances
+    const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
+
+    const dist = Math.max(distRight, distLeft);
 
     return dist;
   }
