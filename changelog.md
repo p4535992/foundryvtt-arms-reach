@@ -1,9 +1,12 @@
 # CHANGELOG
 
-# 2.0.12
+# 2.0.12 (It should work)
 
 - Add some performance check on the setting 'hotkeyDoorInteractionCenter','hotkeyDoorInteraction','hotkeyDoorInteractionDelay', avoid to add new listener
 - Try to fix [Can "reach" further to the east](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
+- Remove the old settings 'enableGridlessSupport' when click the 'e' hotkey
+- Remove some comment to clean up on the next release
+
 # 2.0.11
 
 - Little bug fix on the socket listener

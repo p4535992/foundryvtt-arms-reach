@@ -464,39 +464,12 @@ export const DoorsReach = {
         continue;
       }
 
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableGridlessSupport')) {
-        // ==============================================================================
-        /*
-        const rd = getDistance(token, door, offsetx, offsety);
+      const dist = computeDistanceBetweenCoordinates(door, token);
+      const distInGridUnits = dist / gridSize - 0.1;
 
-
-        if (rd.unitDistance < shortestDistance) {
-
-          shortestDistance = rd.unitDistance;
-          if (rd.unitDistance <= (reach + ArmsReachVariables.grace_distance)){
-            closestDoor = door;
-          }
-        }
-        else{
-          iteractionFailNotification(`Door too far away: ${clampNum(rd.unitDistance)} > ${reach}`);
-        }
-        */
-        // ================================================================================
-        const dist = computeDistanceBetweenCoordinates(door, token);
-        const distInGridUnits = dist / gridSize - 0.1;
-
-        if (distInGridUnits < maxDistance && dist < shortestDistance) {
-          closestDoor = door;
-          shortestDistance = dist;
-        }
-      } else {
-        const dist = computeDistanceBetweenCoordinates(door, token);
-        const distInGridUnits = dist / gridSize - 0.1;
-
-        if (distInGridUnits < maxDistance && dist < shortestDistance) {
-          closestDoor = door;
-          shortestDistance = dist;
-        }
+      if (distInGridUnits < maxDistance && dist < shortestDistance) {
+        closestDoor = door;
+        shortestDistance = dist;
       }
     }
 
