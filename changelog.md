@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.0.13
+
+- Update some label on internazionalization
+
 # 2.0.12 (It should work)
 
 - Add some performance check on the setting 'hotkeyDoorInteractionCenter','hotkeyDoorInteraction','hotkeyDoorInteractionDelay', avoid to add new listener

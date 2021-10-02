@@ -63,7 +63,7 @@
   "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "[I do not recommend this feature because of some incpmaptibility with other movement verification modules, but otherwise it works] Holding 'e' will center the camera on current selected token.",
 
   "foundryvtt-arms-reach.settingNameNotificationsFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
-  "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for when a player fails to interact with a door. Good for debugging even for GM.",
+  "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for fails the distance interaction even for GM. Good for debugging.",
 
   "foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Avoid deselects the controlled token when open/close the door",
   "foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",
@@ -101,8 +101,8 @@
   "foundryvtt-arms-reach.settingNameTokensIntegrationByPrefix": "Enable the distance interaction on target token with a specific name prefix",
   "foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "If true by default enable the distance integration for all the target token with the prefix setted on the name of the token (not the character name)",
 
-  "foundryvtt-arms-reach.settingNametokensIntegrationExplicitName": "Set the name of the source token you want to use for the iteraction",
-  "foundryvtt-arms-reach.settingHinttokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)",
+  "foundryvtt-arms-reach.settingNameTokensIntegrationExplicitName": "Set the name of the source token you want to use for the iteraction",
+  "foundryvtt-arms-reach.settingHintTokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)",
 
   "foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Enable/Disable Lights integration",
   "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
