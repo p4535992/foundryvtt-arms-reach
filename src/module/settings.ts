@@ -381,7 +381,7 @@ export const registerSettings = function () {
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
     scope: 'world',
     config: true,
-    default: true,
+    default: false,
     type: Boolean,
   });
 };

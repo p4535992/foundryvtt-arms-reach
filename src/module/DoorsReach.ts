@@ -19,9 +19,6 @@ export const DoorsReach = {
       document.addEventListener('keydown', (evt) => {
         //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
         if (evt.key === 'e') {
-          // if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter')) {
-          //   return;
-          // }
           if (ArmsReachVariables.door_interaction_cameraCentered) {
             ArmsReachVariables.door_interaction_cameraCentered = false;
             return;
@@ -67,9 +64,6 @@ export const DoorsReach = {
             return;
           }
 
-          // if (!getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction')) {
-          //   return;
-          // }
           // Get first token ownted by the player
           const character = getFirstPlayerToken();
 
@@ -87,72 +81,23 @@ export const DoorsReach = {
     if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') > 0) {
       document.addEventListener('keyup', (evt) => {
         if (evt.key === 'ArrowUp' || evt.key === 'w') {
-          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          //   return;
-          // }
           DoorsReach.ifStuckInteract('up', 0, -0.5);
         }
 
         if (evt.key === 'ArrowDown' || evt.key === 's') {
-          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          //   return;
-          // }
           DoorsReach.ifStuckInteract('down', 0, +0.5);
         }
 
         if (evt.key === 'ArrowRight' || evt.key === 'd') {
-          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          //   return;
-          // }
           DoorsReach.ifStuckInteract('right', +0.5, 0);
         }
 
         if (evt.key === 'ArrowLeft' || evt.key === 'a') {
-          // if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') == 0) {
-          //   return;
-          // }
           DoorsReach.ifStuckInteract('left', -0.5, 0);
         }
       });
     }
   },
-
-  // reselectTokenAfterInteraction: function (character: Token) {
-  //   // If settings is true do not deselect the current select token
-  //   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
-  //     let isOwned = false;
-  //     if (!character) {
-  //       character = <Token>getFirstPlayerTokenSelected();
-  //       if (!character) {
-  //         character = <Token>getFirstPlayerToken();
-  //         if (character) {
-  //           isOwned = true;
-  //         }
-  //       }
-  //       if (!character) {
-  //         if (getGame().user?.isGM) {
-  //           return true;
-  //         } else {
-  //           return false;
-  //         }
-  //       }
-  //     }
-
-  //     // Make sense only if use owned is false beacuse there is no way to check what
-  //     // owned token is get from the array
-  //     if (!isOwned) {
-  //       //let character:Token = getFirstPlayerToken();
-  //       if (!character) {
-  //         // DO NOTHING
-  //       } else {
-  //         const observable = getCanvas().tokens?.placeables.filter((t) => t.id === character.id);
-  //         if (observable !== undefined) {
-  //           observable[0].control();
-  //         }
-  //       }
-  //     }
-  //   }
-  // },
 
   globalInteractionDistance: async function (doorControl: DoorControl, isRightHanler: boolean) {
     let character: Token = <Token>getFirstPlayerTokenSelected();

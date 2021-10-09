@@ -38,12 +38,12 @@ export const readyHooks = async () => {
         if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
           const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
           let tokenSelected;
-          // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+
           tokenSelected = <Token>getFirstPlayerTokenSelected();
           if (!tokenSelected) {
             tokenSelected = <Token>getFirstPlayerToken();
           }
-          // }
+          
           const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
           reselectTokenAfterInteraction(tokenSelected);
           return result;
@@ -185,12 +185,12 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
           getCanvas().tokens?.placeables.find((tokenTmp: Token) => tokenTmp.name === nameSourceToken)
         );
       } else {
-        // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+
         tokenSelected = <Token>getFirstPlayerTokenSelected();
         if (!tokenSelected) {
           tokenSelected = <Token>getFirstPlayerToken();
         }
-        // }
+        
       }
       const isInReach = await TokensReach.globalInteractionDistance(tokenSelected, token);
       reselectTokenAfterInteraction(tokenSelected);
@@ -207,12 +207,12 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
     const [target] = args;
     const note = this as Note;
     let tokenSelected;
-    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+
     tokenSelected = <Token>getFirstPlayerTokenSelected();
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-    // }
+    
     const isInReach = await JournalsReach.globalInteractionDistance(tokenSelected, note);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
@@ -226,12 +226,12 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
     const doorControl = this as DoorControl;
     let tokenSelected;
-    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+
     tokenSelected = <Token>getFirstPlayerTokenSelected();
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-    // }
+    
     const isInReach = await DoorsReach.globalInteractionDistance(doorControl, false);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
@@ -289,12 +289,12 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
     const [target] = args;
     const light = this as AmbientLight;
     let tokenSelected;
-    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+
     tokenSelected = <Token>getFirstPlayerTokenSelected();
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-    // }
+    
     const isInReach = await LightsReach.globalInteractionDistance(tokenSelected, light);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
