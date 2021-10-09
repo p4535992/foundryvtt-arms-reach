@@ -232,13 +232,13 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
-  // DEPRECATED
+  // DEPRECATED AND REMOVED
 
   getGame().settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
     scope: 'world',
-    config: true,
+    config: false,
     default: 0, // instead of 1
     type: Number,
     //@ts-ignore

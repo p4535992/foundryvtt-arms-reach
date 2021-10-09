@@ -198,6 +198,8 @@ export const DoorsReach = {
           y: doorControl.y,
         };
 
+        const tokenCenter = getTokenCenter(character);
+
         const targetData: DoorTargetData = {
           scene: <Scene>getCanvas().scene,
           name: character.name,
@@ -206,8 +208,8 @@ export const DoorsReach = {
           disabled: false,
           hidden: false,
           animate: false,
-          x: getTokenCenter(character).x,
-          y: getTokenCenter(character).y,
+          x: tokenCenter.x,
+          y: tokenCenter.y,
         };
 
         //const sourceSceneId = getCanvas().scene.id;
@@ -443,10 +445,11 @@ export const DoorsReach = {
         maxDistance = globalMaxDistance;
       }
     } else {
-      maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance');
-      if (maxDistance <= 0) {
+      // DEPRECATED AND REMOVED
+      // maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance');
+      // if (maxDistance <= 0) {
         maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement');
-      }
+      // }
     }
 
     // Shortest dist
