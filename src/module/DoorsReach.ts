@@ -172,21 +172,21 @@ export const DoorsReach = {
           return false;
         } else {
           // PreHook (can abort the interaction with the door)
-          if (Hooks.call('ArmsReachPreInteraction', doorData) === false) {
-            const tokenName = getCharacterName(character);
-            if (tokenName) {
-              iteractionFailNotification(
-                i18nFormat(`${ARMS_REACH_MODULE_NAME}.doorNotInReachFor`, { tokenName: tokenName }),
-              );
-            } else {
-              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.doorNotInReach`));
-            }
-            return false;
-          }
+          // if (Hooks.call('ArmsReachPreInteraction', doorData) === false) {
+          //   const tokenName = getCharacterName(character);
+          //   if (tokenName) {
+          //     iteractionFailNotification(
+          //       i18nFormat(`${ARMS_REACH_MODULE_NAME}.doorNotInReachFor`, { tokenName: tokenName }),
+          //     );
+          //   } else {
+          //     iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.doorNotInReach`));
+          //   }
+          //   return false;
+          // }
 
           let isNotNearEnough = false;
           const result = { status: 0 };
-          Hooks.call('ArmsReachReplaceInteraction', doorData, result);
+          // Hooks.call('ArmsReachReplaceInteraction', doorData, result);
           const resultExplicitComputeDistance = result.status;
           let jumDefaultComputation = false;
           // undefined|null|Nan go with the standard compute distance
@@ -393,7 +393,7 @@ export const DoorsReach = {
       // DEPRECATED AND REMOVED
       // maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance');
       // if (maxDistance <= 0) {
-        maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement');
+      maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement');
       // }
     }
 

@@ -6,7 +6,7 @@ import { getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInt
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { JournalsReach } from './JournalsReach';
 import { TokensReach } from './TokensReach';
-import { socket, _socketRecalculate } from './ArmsReachSocket';
+// import { socket, _socketRecalculate } from './ArmsReachSocket';
 import { LightsReach } from './LightsReach';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
@@ -16,11 +16,11 @@ import { LightsReach } from './LightsReach';
 export const readyHooks = async () => {
   // setup all the hooks
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    Hooks.once('socketlib.ready', () => {
-      //@ts-ignore
-      socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
-      socket.register('recalculate', _socketRecalculate);
-    });
+    // Hooks.once('socketlib.ready', () => {
+    //   //@ts-ignore
+    //   socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
+    //   socket.register('recalculate', _socketRecalculate);
+    // });
 
     Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
       // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
@@ -43,7 +43,7 @@ export const readyHooks = async () => {
           if (!tokenSelected) {
             tokenSelected = <Token>getFirstPlayerToken();
           }
-          
+
           const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
           reselectTokenAfterInteraction(tokenSelected);
           return result;
@@ -185,12 +185,10 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
           getCanvas().tokens?.placeables.find((tokenTmp: Token) => tokenTmp.name === nameSourceToken)
         );
       } else {
-
         tokenSelected = <Token>getFirstPlayerTokenSelected();
         if (!tokenSelected) {
           tokenSelected = <Token>getFirstPlayerToken();
         }
-        
       }
       const isInReach = await TokensReach.globalInteractionDistance(tokenSelected, token);
       reselectTokenAfterInteraction(tokenSelected);
@@ -212,7 +210,7 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-    
+
     const isInReach = await JournalsReach.globalInteractionDistance(tokenSelected, note);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
@@ -231,7 +229,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-    
+
     const isInReach = await DoorsReach.globalInteractionDistance(doorControl, false);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
@@ -294,7 +292,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-    
+
     const isInReach = await LightsReach.globalInteractionDistance(tokenSelected, light);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {

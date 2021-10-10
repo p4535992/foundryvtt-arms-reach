@@ -1,5 +1,13 @@
 # CHANGELOG
 
+# 2.1.0 [BREAKING CHANGES]
+
+- Removed dependency on drag-ruler
+- Removed dependency on socketLib
+- Change the calculation distance interaction
+- Removed all the deprecated hooks
+- Some clean up and performance of the code
+
 # 2.0.13
 
 - Update some label on internazionalization

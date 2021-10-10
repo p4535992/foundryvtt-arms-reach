@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/Foundry-v0.8.6-informational)
+![](https://img.shields.io/badge/Foundry-v0.8.9-informational)
 
 #  FoundryVTT Arms Reach 
 
@@ -14,9 +14,9 @@ A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to s
 
 ## Known issue/Limitation
 
-- I know there is some measure distance issue, by integrating the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) i hope i solved all the old limitiations, checkout the module settings for details.
+- I know there is some measure distance issue expecially with diagonals, here some details [current issue](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
   
-- The module settings "Avoid deselects the controlled token when open/close the door" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
+- The module setting "Avoid deselects the controlled token" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
 
 ## Installation
 
@@ -33,10 +33,6 @@ To install this module manually:
 ### libWrapper
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
-
-### drag-ruler
-
-This module uses the [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
 ## Features 
 
@@ -81,84 +77,7 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.
 
-REMASTERED
-
-Remastered changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
-
-## Hooks (FOR ALL FEATURE)
-
-Use the Hooks of the module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api), because i reuse the same code on distance calculation.
-
-
-## Hooks (ONLY FOR DOOR FEATURE)
-
-### DEPRECATED is better [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api)
-
-Hooks are only executed for the user using the door.
-
-`ArmsReachPreInteraction` is called before the interaction with a door is executed. When any of executed hooks return `false` the interaction is aborted.
-
-`ArmsReachReplaceInteraction` is called like a replacement to the standard interaction with a door, so any system or GM can use a customized version.
-
-### Door Data
-
-```js
-const doorData = {
-    /// door data of the source door (WARNING: this data may change in the future)
-    sourceData,
-    /// id of the token (tokens interaction with the door)
-    selectedOrOwnedTokenId,
-    /// door data of the target data (WARNING: this data may change in the future)
-    targetData,
-    /// id of the user using the door (current user)
-    userId
-}
-
-/// WARNING: internal data - do not use if possible
-// sourceData and targetData schema is defined in: src/module/ArmsReachModels.ts (or module/ArmsReachModels.js)
-```
-
-### Example
-
-```js
-
-// DO SOME CHECK 'BEFORE' THE DEFAULT DISTANCE COMPUTATION
-
-Hooks.call('ArmsReachPreInteraction', doorData);
-
-// How you can use this....
-
-Hooks.on('ArmsReachPreInteraction', (doorData) => {
-    const { sourceData, selectedOrOwnedTokenId, targetData, userId } = doorData
-
-    // DO SOMETHING AND RETURN OR TRUE OR FALSE
-})
-
-// REPLACE THE DEFAULT DISTANCE COMPUTATION BECAUSE YOUR SUCK (Yea i know that)
-
-const result = { status: 0 };
-Hooks.call('ArmsReachReplaceInteraction', doorData, result);
-// and then i'll do something with `result.status`
-
-// How you can use this....
-
-Hooks.on('ArmsReachReplaceInteraction', (doorData, result) => {
-    const { sourceData, selectedTokenId, targetData, userId } = doorData
-
-    result.status = ......
-
-    // DO SOMETHING AND RETURN A NUMBER ON result.status
-    
-    // 0 : Custom compute distance fail but fallback to the standard compute distance
-    // 1 : Custom compute success
-    // 2 : Custom compute distance fail
-    // x < 0 || x > 2 : something just go wrong it's a fail but fallback to the standard compute distance
-    // undefined|null|Nan : Nothing to check ? than go on with the standard compute distance
-
-    return result;
-})
-
-```
+Changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
 # Build
 

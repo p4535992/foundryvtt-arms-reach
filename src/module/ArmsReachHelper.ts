@@ -1,12 +1,4 @@
 import { ARMS_REACH_MODULE_NAME, getCanvas, getGame } from './settings';
-//@ts-ignore
-// import { SpeedProvider } from '../../drag-ruler/src/speed_provider.js';
-//@ts-ignore
-// import { availableSpeedProviders, currentSpeedProvider } from '../../drag-ruler/src/api.js';
-//@ts-ignore
-//import { measureDistances } from '../../drag-ruler/src/compatibility.js';
-//@ts-ignore
-//import { getTokenShape } from '../../drag-ruler/src/util.js';
 import { error, warn } from '../foundryvtt-arms-reach';
 
 /**
@@ -73,7 +65,6 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, ch
  * @returns
  */
 export const computeDistanceBetweenCoordinates = function (placeable: any, character: Token): number {
-
   const xPlaceable = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
   const yPlaceable = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
   //@ts-ignore
@@ -92,85 +83,83 @@ export const computeDistanceBetweenCoordinates = function (placeable: any, chara
   } else {
     const segmentsRight = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
     //@ts-ignore
-    const distancesRight = dragRuler.measureDistances(segmentsRight, character, shape);
+    const distancesRight = measureDistancesInternal(segmentsRight, character, shape);
     // Sum up the distances
     const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
 
     const segmentsLeft = [{ ray: new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable }) }];
     //@ts-ignore
-    const distancesLeft = dragRuler.measureDistances(segmentsLeft, character, shape);
+    const distancesLeft = measureDistancesInternal(segmentsLeft, character, shape);
     // Sum up the distances
     const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
 
     const dist = Math.max(distRight, distLeft);
 
     return dist;
-    
+
     /*
     // Track the total number of diagonals
     let nDiagonalRight = 0;
-    const dRight = <Canvas.Dimensions>getCanvas().dimensions;
+   
 
     const rayRight = new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken });
     const segmentsRight = [{ ray: rayRight }];
 
+    // const dRight = <Canvas.Dimensions>getCanvas().dimensions;
     // Determine the total distance traveled
-    const nxRight = Math.abs(Math.ceil(rayRight.dx / dRight.size));
-    const nyRight = Math.abs(Math.ceil(rayRight.dy / dRight.size));
+    // const nxRight = Math.abs(Math.ceil(rayRight.dx / dRight.size));
+    // const nyRight = Math.abs(Math.ceil(rayRight.dy / dRight.size));
 
     // Determine the number of straight and diagonal moves
-    const ndRight = Math.min(nxRight, nyRight);
-    const nsRight = Math.abs(nyRight - nxRight);
-    nDiagonalRight += ndRight;
+    // const ndRight = Math.min(nxRight, nyRight);
+    // const nsRight = Math.abs(nyRight - nxRight);
+    // nDiagonalRight += ndRight;
 
-    // Alternative 5/10/5 Movement
-    //const nd10Right = Math.floor(nDiagonalRight / 2) - Math.floor((nDiagonalRight - ndRight) / 2);
-    //const spacesRight = (nd10Right * 2) + (ndRight - nd10Right) + nsRight;
+    const ndRight = Math.min(rayRight.dx, rayRight.dy);
+    nDiagonalRight += Math.sqrt(2) * ndRight;
 
     //@ts-ignore
-    const distancesRight = dragRuler.measureDistances(segmentsRight, character, shape);
+    const distancesRight = measureDistancesInternal(segmentsRight, character, shape);
     // Sum up the distances
     const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
     //const distRight = spacesRight * distancesRight.reduce((acc, val) => acc + val, 0);
 
     // Track the total number of diagonals
     let nDiagonalLeft = 0;
-    const dLeft = <Canvas.Dimensions>getCanvas().dimensions;
 
     const rayLeft = new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable });
     const segmentsLeft = [{ ray: rayLeft }];
 
+    // const dLeft = <Canvas.Dimensions>getCanvas().dimensions;
     // Determine the total distance traveled
-    const nxLeft = Math.abs(Math.ceil(rayLeft.dx / dLeft.size));
-    const nyLeft = Math.abs(Math.ceil(rayLeft.dy / dLeft.size));
+    // const nxLeft = Math.abs(Math.ceil(rayLeft.dx / dLeft.size));
+    // const nyLeft = Math.abs(Math.ceil(rayLeft.dy / dLeft.size));
 
     // Determine the number of straight and diagonal moves
-    const ndLeft = Math.min(nxLeft, nyLeft);
-    const nsLeft = Math.abs(nyLeft - nxLeft);
-    nDiagonalLeft += ndLeft;
-
-    // Alternative 5/10/5 Movement
-    //const nd10Left = Math.floor(nDiagonalLeft / 2) - Math.floor((nDiagonalLeft - ndLeft) / 2);
-    //const spacesLeft = (nd10Left * 2) + (ndLeft - nd10Left) + nsLeft;
+    // const ndLeft = Math.min(nxLeft, nyLeft);
+    // const nsLeft = Math.abs(nyLeft - nxLeft);
+    // nDiagonalLeft += ndLeft;
+    
+    const ndLeft = Math.min(rayLeft.dx, rayLeft.dy);
+    nDiagonalLeft += Math.sqrt(2) * ndLeft;
 
     //@ts-ignore
-    const distancesLeft = dragRuler.measureDistances(segmentsLeft, character, shape);
+    const distancesLeft = measureDistancesInternal(segmentsLeft, character, shape);
     // Sum up the distances
     const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0) ;
     //const distLeft = spacesLeft * distancesLeft.reduce((acc, val) => acc + val, 0);
     let dist = 0;
-    // if(distLeft > distRight){
-    //   dist = distLeft + (distLeft == unitSize  ? (nDiagonalLeft * unitSize) : 0 )
-    // } else if(distRight > distLeft){
-    //   dist = distRight + (distRight == unitSize ? (nDiagonalRight * unitSize) : 0 )
-    // } else{
+    if(distLeft > distRight){
+      dist = distLeft + (distLeft == unitSize  ? (nDiagonalLeft * unitSize) : 0 )
+    } else if(distRight > distLeft){
+      dist = distRight + (distRight == unitSize ? (nDiagonalRight * unitSize) : 0 )
+    } else{
 
       dist = Math.max(distRight, distLeft);
       if(distRight == unitSize && distLeft == unitSize && nDiagonalRight == 0 && nDiagonalLeft == 0) {
         dist = dist + unitSize;
       }
-
-    // }
+    }
     //const dist = Math.max(distRight, distLeft);
     return dist;
     */
@@ -202,9 +191,9 @@ export const getTokenCenter = function (token) {
     tokenCenter.y += -20 + ( token.h * 0.50 );
     */
   const shapes = getTokenShape(token);
-  if(shapes && shapes.length > 0){
+  if (shapes && shapes.length > 0) {
     const shape0 = shapes[0];
-    return { x: shape0.x, y: shape0.y }
+    return { x: shape0.x, y: shape0.y };
   }
   const tokenCenter = { x: token.x + token.w / 2, y: token.y + token.h / 2 };
   return tokenCenter;
@@ -213,44 +202,57 @@ export const getTokenCenter = function (token) {
 /**
  * Get token shape center
  */
-function getTokenShape(token):any[] {
-	if (token.scene.data.gridType === CONST.GRID_TYPES.GRIDLESS) {
-		return [{x: 0, y: 0}]
-	}
-	else if (token.scene.data.gridType === CONST.GRID_TYPES.SQUARE) {
-		const topOffset = -Math.floor(token.data.height / 2)
-		const leftOffset = -Math.floor(token.data.width / 2)
-		const shape:any[] = []
-		for (let y = 0;y < token.data.height;y++) {
-			for (let x = 0;x < token.data.width;x++) {
-				shape.push({x: x + leftOffset, y: y + topOffset})
-			}
-		}
-		return shape
-	}
-	else {
-		// Hex grids
+function getTokenShape(token): any[] {
+  if (token.scene.data.gridType === CONST.GRID_TYPES.GRIDLESS) {
+    return [{ x: 0, y: 0 }];
+  } else if (token.scene.data.gridType === CONST.GRID_TYPES.SQUARE) {
+    const topOffset = -Math.floor(token.data.height / 2);
+    const leftOffset = -Math.floor(token.data.width / 2);
+    const shape: any[] = [];
+    for (let y = 0; y < token.data.height; y++) {
+      for (let x = 0; x < token.data.width; x++) {
+        shape.push({ x: x + leftOffset, y: y + topOffset });
+      }
+    }
+    return shape;
+  } else {
+    // Hex grids
     //@ts-ignore
-		if (getGame().modules.get("hex-size-support")?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
-			const borderSize = token.data.flags["hex-size-support"].borderSize;
-			let shape = [{x: 0, y: 0}];
-			if (borderSize >= 2)
-				shape = shape.concat([{x: 0, y: -1}, {x: -1, y: -1}]);
-			if (borderSize >= 3)
-				shape = shape.concat([{x: 0, y: 1}, {x: -1, y: 1}, {x: -1, y: 0}, {x: 1, y: 0}]);
-			if (borderSize >= 4)
-				shape = shape.concat([{x: -2, y: -1}, {x: 1, y: -1}, {x: -1, y: -2}, {x: 0, y: -2}, {x: 1, y: -2}])
+    if (getGame().modules.get('hex-size-support')?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
+      const borderSize = token.data.flags['hex-size-support'].borderSize;
+      let shape = [{ x: 0, y: 0 }];
+      if (borderSize >= 2)
+        shape = shape.concat([
+          { x: 0, y: -1 },
+          { x: -1, y: -1 },
+        ]);
+      if (borderSize >= 3)
+        shape = shape.concat([
+          { x: 0, y: 1 },
+          { x: -1, y: 1 },
+          { x: -1, y: 0 },
+          { x: 1, y: 0 },
+        ]);
+      if (borderSize >= 4)
+        shape = shape.concat([
+          { x: -2, y: -1 },
+          { x: 1, y: -1 },
+          { x: -1, y: -2 },
+          { x: 0, y: -2 },
+          { x: 1, y: -2 },
+        ]);
       //@ts-ignore
-			if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== getCanvas().grid?.grid?.options.columns)
-				shape.forEach(space => space.y *= -1);
-			if (getCanvas().grid?.grid?.options.columns)
-				shape = shape.map(space => {return {x: space.y, y: space.x}});
-			return shape;
-		}
-		else {
-			return [{x: 0, y: 0}];
-		}
-	}
+      if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== getCanvas().grid?.grid?.options.columns)
+        shape.forEach((space) => (space.y *= -1));
+      if (getCanvas().grid?.grid?.options.columns)
+        shape = shape.map((space) => {
+          return { x: space.y, y: space.x };
+        });
+      return shape;
+    } else {
+      return [{ x: 0, y: 0 }];
+    }
+  }
 }
 
 /**
@@ -401,3 +403,57 @@ export const reselectTokenAfterInteraction = function (character: Token) {
     }
   }
 };
+
+export function measureDistancesInternal(segments, entity, shape, options = {}) {
+  const opts: any = duplicate(options);
+  if (opts.enableTerrainRuler) {
+    opts.gridSpaces = true;
+    const firstNewSegmentIndex = segments.findIndex((segment) => !segment.ray.dragRulerVisitedSpaces);
+    const previousSegments = segments.slice(0, firstNewSegmentIndex);
+    const newSegments = segments.slice(firstNewSegmentIndex);
+    const distances = previousSegments.map(
+      (segment) => segment.ray.dragRulerVisitedSpaces[segment.ray.dragRulerVisitedSpaces.length - 1].distance,
+    );
+    previousSegments.forEach(
+      (segment) => (segment.ray.terrainRulerVisitedSpaces = duplicate(segment.ray.dragRulerVisitedSpaces)),
+    );
+    //opts.costFunction = (x, y, costOptions={}) => {	return getCostFromSpeedProvider(entity, getAreaFromPositionAndShape({x, y}, shape), costOptions); }
+    if (previousSegments.length > 0) {
+      opts.terrainRulerInitialState = previousSegments[previousSegments.length - 1].ray.dragRulerFinalState;
+    }
+    //@ts-ignore
+    return distances.concat(terrainRuler.measureDistances(newSegments, opts));
+  } else {
+    // If another module wants to enable grid measurements but disable grid highlighting,
+    // manually set the *duplicate* option's gridSpaces value to true for the Foundry logic to work properly
+    if (!opts.ignoreGrid) {
+      opts.gridSpaces = true;
+    }
+    //return getCanvas().grid?.measureDistances(segments, opts);
+    if (!opts.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
+
+    // Track the total number of diagonals
+    let nDiagonal = 0;
+    // const rule = getCanvas().parent.diagonalRule;
+    const d = <Canvas.Dimensions>getCanvas().dimensions;
+
+    // Iterate over measured segments
+    return segments.map((s) => {
+      const r: Ray = s.ray;
+
+      // Determine the total distance traveled
+      const nx = Math.abs(Math.ceil(r.dx / d.size));
+      const ny = Math.abs(Math.ceil(r.dy / d.size));
+
+      // Determine the number of straight and diagonal moves
+      const nd = Math.min(nx, ny);
+      const ns = Math.abs(ny - nx);
+
+      nDiagonal += nd;
+
+      const nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
+      const spaces = nd10 * 2 + (nd - nd10) + ns;
+      return spaces * <number>getCanvas().dimensions?.distance;
+    });
+  }
+}
