@@ -10,8 +10,6 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 
 ## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder
 
-A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry, so i just integrated his module [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) like a dependency for mine and use is calculation distance (support Hex grid, gridless and terrain rule for the 'Difficult Terrain Ruler'), you can even customize the distance calculation like you want with his [api](https://github.com/manuelVo/foundryvtt-drag-ruler#api). 
-
 ## Known issue/Limitation
 
 - I know there is some measure distance issue expecially with diagonals, here some details [current issue](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
@@ -175,6 +173,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
 - [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo)
 
+A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry by myself.
 
 
 ## Acknowledgements
