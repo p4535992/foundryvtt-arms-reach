@@ -375,6 +375,19 @@ export const registerSettings = function () {
   });
 
   // ========================================================
+  // SOUNDS SUPPORT
+  // ========================================================
+
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSoundsIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSoundsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });  
+
+  // ========================================================
   // DRAWING SUPPORT
   // ========================================================
 
@@ -399,19 +412,6 @@ export const registerSettings = function () {
     default: false,
     type: Boolean,
   });
-
-  // ========================================================
-  // SOUNDS SUPPORT
-  // ========================================================
-
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSoundsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSoundsIntegrationFeature`),
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean,
-  });  
 
   // ========================================================
   // TEMPLATES SUPPORT

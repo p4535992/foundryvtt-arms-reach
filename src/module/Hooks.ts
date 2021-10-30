@@ -2,7 +2,7 @@ import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
-import { checkTaggerForAmrsreach, getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInteraction } from './ArmsReachHelper';
+import { checkTaggerForAmrsreach, getFirstPlayerToken, getFirstPlayerTokenSelected, getMousePosition, getPlaceablesAt, reselectTokenAfterInteraction } from './ArmsReachHelper';
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { NotesReach } from './NotesReach';
 import { TokensReach } from './TokensReach';
@@ -83,8 +83,56 @@ export const readyHooks = async () => {
       }
     });
 
-    // Register custom sheets (if any)
+    // Hooks.on('canvasReady',function (canvas: Canvas) {
+      // const [target] = args;
+      // const canvas = this as Canvas;
+      getCanvas()?.stage?.on('mousedown', async (event) => {
+        const position = getMousePosition(getCanvas(),event);
+        
+        // const clickWalls:PlaceableObject[] = getPlaceablesAt(getCanvas()?.walls?.placeables, position) || [];
+        // const clickNotes:PlaceableObject[] = getPlaceablesAt(getCanvas()?.notes?.placeables, position) || [];
+        // const clickTokens:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tokens?.placeables, position) || [];
+        // const clickLights:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
+        // const clickSounds:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
+        const clickDrawings:PlaceableObject[] = getPlaceablesAt(getCanvas()?.drawings?.placeables, position) || [];
+        // const clickTiles:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tiles?.placeables, position) || [];
+        // const clickTemplates:PlaceableObject[] = getPlaceablesAt(getCanvas()?.templates?.placeables, position) || [];
+
+        const downTriggers:PlaceableObject[] = [];
+        // downTriggers.push(...clickLights);
+        // downTriggers.push(...clickSounds);
+        downTriggers.push(...clickDrawings);
+        // downTriggers.push(...clickTemplates);
+        if (downTriggers.length === 0){
+          return;
+        }
+        if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+          if(clickDrawings.length > 0){
+            const drawing = clickDrawings[0] as Drawing;
+            let tokenSelected;
+        
+            tokenSelected = <Token>getFirstPlayerTokenSelected();
+            if (!tokenSelected) {
+              tokenSelected = <Token>getFirstPlayerToken();
+            }
+        
+            if(taggerModuleActive && !checkTaggerForAmrsreach(drawing)){
+              reselectTokenAfterInteraction(tokenSelected);
+              return;
+            }
+            const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+            reselectTokenAfterInteraction(tokenSelected);
+            if (!isInReach) {
+              return;
+            }
+          }
+        }
+      });
+
+    // });
   }
+
+  // Register custom sheets (if any)
 };
 
 export const setupHooks = () => {
@@ -165,25 +213,37 @@ export const initHooks = () => {
       );
     }
 
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration')) {
       //@ts-ignore
       libWrapper.register(
         ARMS_REACH_MODULE_NAME,
-        'Drawing.prototype._onClickLeft', //'Drawing.prototype._onHandleMouseDown',
-        DrawingPrototypeOnClickLeftHandler,//DrawingPrototypeOnHandleMouseDownHandler,
+        'AmbientSound.prototype._onClickRight',
+        AmbientSoundPrototypeOnClickRightHandler,
         'MIXED',
       );
     }
 
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
-      //@ts-ignore
-      libWrapper.register(
-        ARMS_REACH_MODULE_NAME,
-        'Tile.prototype._onClickLeft', //'Tile.prototype._onHandleMouseDown',
-        TilePrototypeOnClickLeftHandler,//TilePrototypeOnHandleMouseDownHandler,
-        'MIXED',
-      );
-    }
+    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+    //   //@ts-ignore
+    //   libWrapper.register(
+    //     ARMS_REACH_MODULE_NAME,
+    //     'Drawing.prototype._onHandleMouseDown',
+    //     // 'Drawing.prototype._onClickLeft',
+    //     DrawingPrototypeOnClickLeftHandler,
+    //     'MIXED',
+    //   );
+    // }
+
+    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
+    //   //@ts-ignore
+    //   libWrapper.register(
+    //     ARMS_REACH_MODULE_NAME,
+    //     // 'Tile.prototype._onClickLeft',
+    //     'Tile.prototype._onHandleMouseDown',
+    //     TilePrototypeOnClickLeftHandler,
+    //     'MIXED',
+    //   );
+    // }
   }
 };
 
@@ -345,55 +405,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
   return wrapped(...args);
 };
 
-export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
-    const [target] = args;
-    const drawing = this as Drawing;
-    let tokenSelected;
-
-    tokenSelected = <Token>getFirstPlayerTokenSelected();
-    if (!tokenSelected) {
-      tokenSelected = <Token>getFirstPlayerToken();
-    }
-
-    if(taggerModuleActive && !checkTaggerForAmrsreach(drawing)){
-      reselectTokenAfterInteraction(tokenSelected);
-      return wrapped(...args);
-    }
-    const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
-    reselectTokenAfterInteraction(tokenSelected);
-    if (!isInReach) {
-      return;
-    }
-  }
-  return wrapped(...args);
-};
-
-export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
-    const [target] = args;
-    const tile = this as Tile;
-    let tokenSelected;
-
-    tokenSelected = <Token>getFirstPlayerTokenSelected();
-    if (!tokenSelected) {
-      tokenSelected = <Token>getFirstPlayerToken();
-    }
-
-    if(taggerModuleActive && !checkTaggerForAmrsreach(tile)){
-      reselectTokenAfterInteraction(tokenSelected);
-      return wrapped(...args);
-    }
-    const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
-    reselectTokenAfterInteraction(tokenSelected);
-    if (!isInReach) {
-      return;
-    }
-  }
-  return wrapped(...args);
-};
-
-export const SoundPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped, ...args) {
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration')) {
     const [target] = args;
     const sound = this as AmbientSound;
@@ -416,3 +428,51 @@ export const SoundPrototypeOnClickLeftHandler = async function (wrapped, ...args
   }
   return wrapped(...args);
 };
+
+// export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+//   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+//     const [target] = args;
+//     const drawing = this as Drawing;
+//     let tokenSelected;
+
+//     tokenSelected = <Token>getFirstPlayerTokenSelected();
+//     if (!tokenSelected) {
+//       tokenSelected = <Token>getFirstPlayerToken();
+//     }
+
+//     if(taggerModuleActive && !checkTaggerForAmrsreach(drawing)){
+//       reselectTokenAfterInteraction(tokenSelected);
+//       return wrapped(...args);
+//     }
+//     const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+//     reselectTokenAfterInteraction(tokenSelected);
+//     if (!isInReach) {
+//       return;
+//     }
+//   }
+//   return wrapped(...args);
+// };
+
+// export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+//   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
+//     const [target] = args;
+//     const tile = this as Tile;
+//     let tokenSelected;
+
+//     tokenSelected = <Token>getFirstPlayerTokenSelected();
+//     if (!tokenSelected) {
+//       tokenSelected = <Token>getFirstPlayerToken();
+//     }
+
+//     if(taggerModuleActive && !checkTaggerForAmrsreach(tile)){
+//       reselectTokenAfterInteraction(tokenSelected);
+//       return wrapped(...args);
+//     }
+//     const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
+//     reselectTokenAfterInteraction(tokenSelected);
+//     if (!isInReach) {
+//       return;
+//     }
+//   }
+//   return wrapped(...args);
+// };

@@ -467,3 +467,25 @@ export const checkTaggerForAmrsreach = function (placeable:PlaceableObject){
     return false;
   }
 }
+
+export const getMousePosition = function (canvas:Canvas, event):{x:number; y:number;} {
+  const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;
+  return {
+    x: (event.data.global.x - transform?.tx) / <number>canvas?.stage?.scale?.x,
+    y: (event.data.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
+  };
+}
+
+export const getPlaceablesAt  = function (placeables, position):PlaceableObject[] {
+  return placeables.filter((placeable) => placeableContains(placeable, position));
+}
+
+export const placeableContains = function (placeable, position):boolean {
+  // Tokens have getter (since width/height is in grid increments) but drawings use data.width/height directly
+  const w = placeable.w || placeable.data.width || placeable.width;
+  const h = placeable.h || placeable.data.height || placeable.height;
+  return (
+    Number.between(position.x, placeable.data.x, placeable.data.x + w) &&
+    Number.between(position.y, placeable.data.y, placeable.data.y + h)
+  );
+}
