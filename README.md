@@ -88,7 +88,7 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 ### Tagger Feature
 
-* Add integration with [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger), for specific waht placeable object you should add the distance calculation for any placeable object on the canvas
+* Add integration with [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger), you decide specifically for which placeable objects on the canvas the distance calculation should be triggered
 
 ### Reset Doors and Fog feature Feature
 
