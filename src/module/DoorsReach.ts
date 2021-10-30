@@ -99,8 +99,8 @@ export const DoorsReach = {
     }
   },
 
-  globalInteractionDistance: async function (doorControl: DoorControl, isRightHanler: boolean) {
-    let character: Token = <Token>getFirstPlayerTokenSelected();
+  globalInteractionDistance: async function (character: Token, doorControl: DoorControl, isRightHanler: boolean) {
+    // let character: Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

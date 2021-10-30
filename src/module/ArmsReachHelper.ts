@@ -1,4 +1,4 @@
-import { ARMS_REACH_MODULE_NAME, getCanvas, getGame } from './settings';
+import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_FLAG, getCanvas, getGame } from './settings';
 import { error, warn } from '../foundryvtt-arms-reach';
 
 /**
@@ -100,7 +100,7 @@ export const computeDistanceBetweenCoordinates = function (placeable: any, chara
     /*
     // Track the total number of diagonals
     let nDiagonalRight = 0;
-   
+
 
     const rayRight = new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken });
     const segmentsRight = [{ ray: rayRight }];
@@ -404,7 +404,7 @@ export const reselectTokenAfterInteraction = function (character: Token) {
   }
 };
 
-export function measureDistancesInternal(segments, entity, shape, options = {}) {
+export const measureDistancesInternal = function (segments, entity, shape, options = {}) {
   const opts: any = duplicate(options);
   if (opts.enableTerrainRuler) {
     opts.gridSpaces = true;
@@ -455,5 +455,15 @@ export function measureDistancesInternal(segments, entity, shape, options = {}) 
       const spaces = nd10 * 2 + (nd - nd10) + ns;
       return spaces * <number>getCanvas().dimensions?.distance;
     });
+  }
+}
+
+export const checkTaggerForAmrsreach = function (placeable:PlaceableObject){
+  //@ts-ignore
+  const tags = <string[]>Tagger.getTags(placeable) || [];
+  if(tags.includes(ARMS_REACH_TAGGER_FLAG)){
+    return true;
+  }else{
+    return false;
   }
 }

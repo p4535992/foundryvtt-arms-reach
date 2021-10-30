@@ -3,6 +3,8 @@ import { i18n } from '../foundryvtt-arms-reach';
 // import SoundPicker from "./libs/SoundPicker";
 
 export const ARMS_REACH_MODULE_NAME = 'foundryvtt-arms-reach';
+export const ARMS_REACH_TAGGER_MODULE_NAME = 'tagger';
+export const ARMS_REACH_TAGGER_FLAG ='armsreach';
 
 /**
  * Because typescript doesn't know when in the lifecycle of foundry your code runs, we have to assume that the
@@ -366,6 +368,32 @@ export const registerSettings = function () {
   getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameLightsIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintLightsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  // ========================================================
+  // DRAW SUPPORT
+  // ========================================================
+
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableDrawsIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDrawsIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDrawsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  // ========================================================
+  // TAGGER SUPPORT
+  // ========================================================
+
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTaggerIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTaggerIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,

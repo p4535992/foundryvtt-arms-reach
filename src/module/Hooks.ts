@@ -1,8 +1,8 @@
 import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
-import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
+import { getCanvas, ARMS_REACH_MODULE_NAME, getGame, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
-import { getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInteraction } from './ArmsReachHelper';
+import { checkTaggerForAmrsreach, getFirstPlayerToken, getFirstPlayerTokenSelected, reselectTokenAfterInteraction } from './ArmsReachHelper';
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { JournalsReach } from './JournalsReach';
 import { TokensReach } from './TokensReach';
@@ -11,7 +11,7 @@ import { LightsReach } from './LightsReach';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
-// const previewer = new SoundPreviewerApplication();
+export let taggerModuleActive;
 
 export const readyHooks = async () => {
   // setup all the hooks
@@ -100,6 +100,10 @@ export const setupHooks = () => {
 
 export const initHooks = () => {
   warn('Init Hooks processing');
+
+  taggerModuleActive = <boolean>getGame().modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active 
+    && <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration');
+
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
     if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
       DoorsReach.init();
@@ -190,6 +194,10 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
           tokenSelected = <Token>getFirstPlayerToken();
         }
       }
+
+      if(taggerModuleActive && !checkTaggerForAmrsreach(token)){
+        return wrapped(...args);
+      }
       const isInReach = await TokensReach.globalInteractionDistance(tokenSelected, token);
       reselectTokenAfterInteraction(tokenSelected);
       if (!isInReach) {
@@ -211,6 +219,9 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
+    if(taggerModuleActive && !checkTaggerForAmrsreach(note)){
+      return wrapped(...args);
+    }
     const isInReach = await JournalsReach.globalInteractionDistance(tokenSelected, note);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
@@ -230,7 +241,10 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
-    const isInReach = await DoorsReach.globalInteractionDistance(doorControl, false);
+    if(taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)){
+      return wrapped(...args);
+    }
+    const isInReach = await DoorsReach.globalInteractionDistance(tokenSelected, doorControl, false);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
       // Bug fix not sure why i need to do this
@@ -258,23 +272,27 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, ...args) {
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
     const doorControl = this as DoorControl; //evt.currentTarget;
-    let character: Token = <Token>getFirstPlayerTokenSelected();
+    let tokenSelected: Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
-    if (!character) {
-      character = <Token>getFirstPlayerToken();
-      if (character) {
+    if (!tokenSelected) {
+      tokenSelected = <Token>getFirstPlayerToken();
+      if (tokenSelected) {
         isOwned = true;
       }
     }
-    if (!character) {
+    if (!tokenSelected) {
       if (getGame().user?.isGM) {
         return wrapped(...args);
       } else {
         return;
       }
     }
-    const isInReach = await DoorsReach.globalInteractionDistance(doorControl, true);
-    reselectTokenAfterInteraction(character);
+
+    if(taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)){
+      return wrapped(...args);
+    }
+    const isInReach = await DoorsReach.globalInteractionDistance(tokenSelected, doorControl, true);
+    reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
       return;
     }
@@ -293,6 +311,9 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
+    if(taggerModuleActive && !checkTaggerForAmrsreach(light)){
+      return wrapped(...args);
+    }
     const isInReach = await LightsReach.globalInteractionDistance(tokenSelected, light);
     reselectTokenAfterInteraction(tokenSelected);
     if (!isInReach) {
@@ -301,3 +322,4 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
   }
   return wrapped(...args);
 };
+

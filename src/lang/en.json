@@ -105,5 +105,12 @@
   "foundryvtt-arms-reach.settingHintTokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)",
 
   "foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Enable/Disable Lights integration",
-  "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
+  "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameTaggerIntegrationFeature": "Enable/Disable Tagger Module integration",
+  "foundryvtt-arms-reach.settingHintTaggerIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it",
+
+  "foundryvtt-arms-reach.settingNameDrawsIntegrationFeature": "Enable/Disable Draws integration",
+  "foundryvtt-arms-reach.settingHintDrawsIntegrationFeature": "Max distance that a Draw can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
+
 }
