@@ -313,8 +313,8 @@ export const registerSettings = function () {
   // ========================================================
 
   getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameJournalsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintJournalsIntegrationFeature`),
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotesIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotesIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -375,17 +375,56 @@ export const registerSettings = function () {
   });
 
   // ========================================================
-  // DRAW SUPPORT
+  // DRAWING SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableDrawsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDrawsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDrawsIntegrationFeature`),
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDrawingsIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDrawingsIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
+
+  // ========================================================
+  // TILE SUPPORT
+  // ========================================================
+
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTilesIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTilesIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  // ========================================================
+  // SOUNDS SUPPORT
+  // ========================================================
+
+  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSoundsIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSoundsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });  
+
+  // ========================================================
+  // TEMPLATES SUPPORT
+  // ========================================================
+
+  // getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTemplatesIntegration', {
+  //   name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTemplatesIntegrationFeature`),
+  //   hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTemplatesIntegrationFeature`),
+  //   scope: 'world',
+  //   config: true,
+  //   default: false,
+  //   type: Boolean,
+  // });
 
   // ========================================================
   // TAGGER SUPPORT

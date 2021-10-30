@@ -15,10 +15,10 @@
   "foundryvtt-arms-reach.stairwaysNotInReach": "Stairway not in reach or is locked",
   "foundryvtt-arms-reach.stairwaysNotInReachFor": "Stairway not within {tokenName}'s reach or is locked",
 
-  "foundryvtt-arms-reach.journalsNotFoundInReach": "No journal was found within reach or is locked.",
-  "foundryvtt-arms-reach.journalsNotFoundInReachFor": "No journal was found within {tokenName}'s reach or is locked",
-  "foundryvtt-arms-reach.journalsNotInReach": "Journal not in reach or is locked",
-  "foundryvtt-arms-reach.journalsNotInReachFor": "Journal not within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.notesNotFoundInReach": "No note was found within reach or is locked.",
+  "foundryvtt-arms-reach.notesNotFoundInReachFor": "No note was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.notesNotInReach": "Note not in reach or is locked",
+  "foundryvtt-arms-reach.notesNotInReachFor": "Note not within {tokenName}'s reach or is locked",
 
   "foundryvtt-arms-reach.tokensNotFoundInReach": "No token was found within reach or is locked.",
   "foundryvtt-arms-reach.tokensNotFoundInReachFor": "No token was found within {tokenName}'s reach or is locked",
@@ -29,6 +29,26 @@
   "foundryvtt-arms-reach.lightsNotFoundInReachFor": "No light was found within {tokenName}'s reach or is locked",
   "foundryvtt-arms-reach.lightsNotInReach": "Light not in reach or is locked",
   "foundryvtt-arms-reach.lightsNotInReachFor": "Light not within {tokenName}'s reach or is locked",
+
+  "foundryvtt-arms-reach.drawingsNotFoundInReach": "No drawing was found within reach or is locked.",
+  "foundryvtt-arms-reach.drawingsNotFoundInReachFor": "No drawing was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.drawingsNotInReach": "Drawing not in reach or is locked",
+  "foundryvtt-arms-reach.drawingsNotInReachFor": "Drawing not within {tokenName}'s reach or is locked",
+
+  "foundryvtt-arms-reach.tilesNotFoundInReach": "No tile was found within reach or is locked.",
+  "foundryvtt-arms-reach.tilesNotFoundInReachFor": "No tile was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.tilesNotInReach": "Tile not in reach or is locked",
+  "foundryvtt-arms-reach.tilesNotInReachFor": "Tile not within {tokenName}'s reach or is locked",
+
+  "foundryvtt-arms-reach.soundsNotFoundInReach": "No sound was found within reach or is locked.",
+  "foundryvtt-arms-reach.soundsNotFoundInReachFor": "No sound was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.soundsNotInReach": "Sound not in reach or is locked",
+  "foundryvtt-arms-reach.soundsNotInReachFor": "Sound not within {tokenName}'s reach or is locked",
+  
+  "foundryvtt-arms-reach.templatesNotFoundInReach": "No template was found within reach or is locked.",
+  "foundryvtt-arms-reach.templatesNotFoundInReachFor": "No template was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.templatesNotInReach": "Template not in reach or is locked",
+  "foundryvtt-arms-reach.templatesNotInReachFor": "Template not within {tokenName}'s reach or is locked",
 
   "foundryvtt-arms-reach.warningNoSelectMoreThanOneToken": "Please selected a single token",
 
@@ -83,6 +103,9 @@
   "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
 
+  "foundryvtt-arms-reach.settingNameTaggerIntegrationFeature": "Enable/Disable Tagger Module integration",
+  "foundryvtt-arms-reach.settingHintTaggerIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it",
+
   "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
   "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the dorrs and reset the fog on a scene",
 
@@ -91,6 +114,9 @@
 
   "foundryvtt-arms-reach.settingNameJournalsIntegrationFeature": "Enable/Disable Journals integration",
   "foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Max distance that a token can interact with a journal... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameNotesIntegrationFeature": "Enable/Disable Notes integration",
+  "foundryvtt-arms-reach.settingHintNotesIntegrationFeature": "Max distance that a token can interact with a note... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameTokensIntegrationFeature": "Enable/Disable Tokens integration",
   "foundryvtt-arms-reach.settingHintTokensIntegrationFeature": "Max distance that a token can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
@@ -107,10 +133,16 @@
   "foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Enable/Disable Lights integration",
   "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
-  "foundryvtt-arms-reach.settingNameTaggerIntegrationFeature": "Enable/Disable Tagger Module integration",
-  "foundryvtt-arms-reach.settingHintTaggerIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it",
+  "foundryvtt-arms-reach.settingNameDrawingsIntegrationFeature": "Enable/Disable Drawings integration",
+  "foundryvtt-arms-reach.settingHintDrawingsIntegrationFeature": "Max distance that a Drawing can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
-  "foundryvtt-arms-reach.settingNameDrawsIntegrationFeature": "Enable/Disable Draws integration",
-  "foundryvtt-arms-reach.settingHintDrawsIntegrationFeature": "Max distance that a Draw can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
+  "foundryvtt-arms-reach.settingNameTilesIntegrationFeature": "Enable/Disable Tiles integration",
+  "foundryvtt-arms-reach.settingHintTilesIntegrationFeature": "Max distance that a Tile can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameSoundsIntegrationFeature": "Enable/Disable Sounds integration",
+  "foundryvtt-arms-reach.settingHintSoundsIntegrationFeature": "Max distance that a Sound can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Enable/Disable Templates integration",
+  "foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Max distance that a Template can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
 
 }
