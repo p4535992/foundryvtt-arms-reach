@@ -70,7 +70,7 @@ To interact with a door, journal, ecc., the player need to have a token selected
 * This feature make sense only with one of this module active [Lightswitch by theripper93](https://www.reddit.com/r/FoundryVTT/comments/pmu4z0/lightswitch_a_user_frendly_way_to_present/) (from [theripper93](https://www.patreon.com/theripper93) only patreon page) or [LightSwitch](https://github.com/zarmstrong/fvtt-lightswitch)
 * Add distance calculation for light on the canvas
 
-### Drawing Feature (Beta need feedback)
+### Drawing Feature (On developing, not sure if it's possible without hook on other module)
 
 * Add distance calculation for drawings on the canvas
 

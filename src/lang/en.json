@@ -34,7 +34,7 @@
   "foundryvtt-arms-reach.soundsNotFoundInReachFor": "No sound was found within {tokenName}'s reach or is locked",
   "foundryvtt-arms-reach.soundsNotInReach": "Sound not in reach or is locked",
   "foundryvtt-arms-reach.soundsNotInReachFor": "Sound not within {tokenName}'s reach or is locked",
-  
+
   "foundryvtt-arms-reach.drawingsNotFoundInReach": "No drawing was found within reach or is locked.",
   "foundryvtt-arms-reach.drawingsNotFoundInReachFor": "No drawing was found within {tokenName}'s reach or is locked",
   "foundryvtt-arms-reach.drawingsNotInReach": "Drawing not in reach or is locked",
@@ -144,5 +144,4 @@
 
   "foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Enable/Disable Templates integration",
   "foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Max distance that a Template can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
-
 }

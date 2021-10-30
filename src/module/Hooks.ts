@@ -2,7 +2,14 @@ import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
-import { checkTaggerForAmrsreach, getFirstPlayerToken, getFirstPlayerTokenSelected, getMousePosition, getPlaceablesAt, reselectTokenAfterInteraction } from './ArmsReachHelper';
+import {
+  checkTaggerForAmrsreach,
+  getFirstPlayerToken,
+  getFirstPlayerTokenSelected,
+  getMousePosition,
+  getPlaceablesAt,
+  reselectTokenAfterInteraction,
+} from './ArmsReachHelper';
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { NotesReach } from './NotesReach';
 import { TokensReach } from './TokensReach';
@@ -84,50 +91,50 @@ export const readyHooks = async () => {
     });
 
     // Hooks.on('canvasReady',function (canvas: Canvas) {
-      // const [target] = args;
-      // const canvas = this as Canvas;
-      getCanvas()?.stage?.on('mousedown', async (event) => {
-        const position = getMousePosition(getCanvas(),event);
-        
-        // const clickWalls:PlaceableObject[] = getPlaceablesAt(getCanvas()?.walls?.placeables, position) || [];
-        // const clickNotes:PlaceableObject[] = getPlaceablesAt(getCanvas()?.notes?.placeables, position) || [];
-        // const clickTokens:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tokens?.placeables, position) || [];
-        // const clickLights:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
-        // const clickSounds:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
-        const clickDrawings:PlaceableObject[] = getPlaceablesAt(getCanvas()?.drawings?.placeables, position) || [];
-        // const clickTiles:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tiles?.placeables, position) || [];
-        // const clickTemplates:PlaceableObject[] = getPlaceablesAt(getCanvas()?.templates?.placeables, position) || [];
+    // const [target] = args;
+    // const canvas = this as Canvas;
+    getCanvas()?.stage?.on('mousedown', async (event) => {
+      const position = getMousePosition(getCanvas(), event);
 
-        const downTriggers:PlaceableObject[] = [];
-        // downTriggers.push(...clickLights);
-        // downTriggers.push(...clickSounds);
-        downTriggers.push(...clickDrawings);
-        // downTriggers.push(...clickTemplates);
-        if (downTriggers.length === 0){
-          return;
-        }
-        if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
-          if(clickDrawings.length > 0){
-            const drawing = clickDrawings[0] as Drawing;
-            let tokenSelected;
-        
-            tokenSelected = <Token>getFirstPlayerTokenSelected();
-            if (!tokenSelected) {
-              tokenSelected = <Token>getFirstPlayerToken();
-            }
-        
-            if(taggerModuleActive && !checkTaggerForAmrsreach(drawing)){
-              reselectTokenAfterInteraction(tokenSelected);
-              return;
-            }
-            const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+      // const clickWalls:PlaceableObject[] = getPlaceablesAt(getCanvas()?.walls?.placeables, position) || [];
+      // const clickNotes:PlaceableObject[] = getPlaceablesAt(getCanvas()?.notes?.placeables, position) || [];
+      // const clickTokens:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tokens?.placeables, position) || [];
+      // const clickLights:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
+      // const clickSounds:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
+      const clickDrawings: PlaceableObject[] = getPlaceablesAt(getCanvas()?.drawings?.placeables, position) || [];
+      // const clickTiles:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tiles?.placeables, position) || [];
+      // const clickTemplates:PlaceableObject[] = getPlaceablesAt(getCanvas()?.templates?.placeables, position) || [];
+
+      const downTriggers: PlaceableObject[] = [];
+      // downTriggers.push(...clickLights);
+      // downTriggers.push(...clickSounds);
+      downTriggers.push(...clickDrawings);
+      // downTriggers.push(...clickTemplates);
+      if (downTriggers.length === 0) {
+        return;
+      }
+      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+        if (clickDrawings.length > 0) {
+          const drawing = clickDrawings[0] as Drawing;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+
+          if (taggerModuleActive && !checkTaggerForAmrsreach(drawing)) {
             reselectTokenAfterInteraction(tokenSelected);
-            if (!isInReach) {
-              return;
-            }
+            return;
+          }
+          const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+          reselectTokenAfterInteraction(tokenSelected);
+          if (!isInReach) {
+            return;
           }
         }
-      });
+      }
+    });
 
     // });
   }
@@ -146,8 +153,9 @@ export const setupHooks = () => {
 export const initHooks = () => {
   warn('Init Hooks processing');
 
-  taggerModuleActive = <boolean>getGame().modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active 
-    && <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration');
+  taggerModuleActive =
+    <boolean>getGame().modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active &&
+    <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration');
 
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
     if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
@@ -272,7 +280,7 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
         }
       }
 
-      if(taggerModuleActive && !checkTaggerForAmrsreach(token)){
+      if (taggerModuleActive && !checkTaggerForAmrsreach(token)) {
         reselectTokenAfterInteraction(tokenSelected);
         return wrapped(...args);
       }
@@ -297,7 +305,7 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
-    if(taggerModuleActive && !checkTaggerForAmrsreach(note)){
+    if (taggerModuleActive && !checkTaggerForAmrsreach(note)) {
       reselectTokenAfterInteraction(tokenSelected);
       return wrapped(...args);
     }
@@ -320,7 +328,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
-    if(taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)){
+    if (taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)) {
       reselectTokenAfterInteraction(tokenSelected);
       return wrapped(...args);
     }
@@ -368,7 +376,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
       }
     }
 
-    if(taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)){
+    if (taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)) {
       reselectTokenAfterInteraction(tokenSelected);
       return wrapped(...args);
     }
@@ -392,7 +400,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
-    if(taggerModuleActive && !checkTaggerForAmrsreach(light)){
+    if (taggerModuleActive && !checkTaggerForAmrsreach(light)) {
       reselectTokenAfterInteraction(tokenSelected);
       return wrapped(...args);
     }
@@ -416,7 +424,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
       tokenSelected = <Token>getFirstPlayerToken();
     }
 
-    if(taggerModuleActive && !checkTaggerForAmrsreach(sound)){
+    if (taggerModuleActive && !checkTaggerForAmrsreach(sound)) {
       reselectTokenAfterInteraction(tokenSelected);
       return wrapped(...args);
     }

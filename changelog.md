@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 2.1.1
+
+- Some bug fx
+- Preparation to drawings, tiles, sounds, measure templates
+
 # 2.1.0 [BREAKING CHANGES]
 
 - Removed dependency on drag-ruler

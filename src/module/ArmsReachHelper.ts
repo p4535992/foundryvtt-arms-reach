@@ -456,31 +456,31 @@ export const measureDistancesInternal = function (segments, entity, shape, optio
       return spaces * <number>getCanvas().dimensions?.distance;
     });
   }
-}
+};
 
-export const checkTaggerForAmrsreach = function (placeable:PlaceableObject){
+export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
   //@ts-ignore
   const tags = <string[]>Tagger.getTags(placeable) || [];
-  if(tags.includes(ARMS_REACH_TAGGER_FLAG)){
+  if (tags.includes(ARMS_REACH_TAGGER_FLAG)) {
     return true;
-  }else{
+  } else {
     return false;
   }
-}
+};
 
-export const getMousePosition = function (canvas:Canvas, event):{x:number; y:number;} {
+export const getMousePosition = function (canvas: Canvas, event): { x: number; y: number } {
   const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;
   return {
     x: (event.data.global.x - transform?.tx) / <number>canvas?.stage?.scale?.x,
     y: (event.data.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
   };
-}
+};
 
-export const getPlaceablesAt  = function (placeables, position):PlaceableObject[] {
+export const getPlaceablesAt = function (placeables, position): PlaceableObject[] {
   return placeables.filter((placeable) => placeableContains(placeable, position));
-}
+};
 
-export const placeableContains = function (placeable, position):boolean {
+export const placeableContains = function (placeable, position): boolean {
   // Tokens have getter (since width/height is in grid increments) but drawings use data.width/height directly
   const w = placeable.w || placeable.data.width || placeable.width;
   const h = placeable.h || placeable.data.height || placeable.height;
@@ -488,4 +488,4 @@ export const placeableContains = function (placeable, position):boolean {
     Number.between(position.x, placeable.data.x, placeable.data.x + w) &&
     Number.between(position.y, placeable.data.y, placeable.data.y + h)
   );
-}
+};

@@ -4,7 +4,7 @@ import { i18n } from '../foundryvtt-arms-reach';
 
 export const ARMS_REACH_MODULE_NAME = 'foundryvtt-arms-reach';
 export const ARMS_REACH_TAGGER_MODULE_NAME = 'tagger';
-export const ARMS_REACH_TAGGER_FLAG ='armsreach';
+export const ARMS_REACH_TAGGER_FLAG = 'armsreach';
 
 /**
  * Because typescript doesn't know when in the lifecycle of foundry your code runs, we have to assume that the
@@ -385,7 +385,7 @@ export const registerSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-  });  
+  });
 
   // ========================================================
   // DRAWING SUPPORT
