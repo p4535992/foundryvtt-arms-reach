@@ -1,4 +1,5 @@
 import { i18n } from '../foundryvtt-arms-reach';
+import { ArmsReach } from './ArmsReach';
 // import ImagePicker from "./libs/ImagePicker";
 // import SoundPicker from "./libs/SoundPicker";
 
@@ -36,6 +37,13 @@ export function getGame(): Game {
     throw new Error('Game Is Not Initialized');
   }
   return game;
+}
+
+export function getAPI(): ArmsReach {
+  if (!getGame()[ArmsReach.API]) {
+    throw new Error('API Is Not Initialized');
+  }
+  return getGame()[ArmsReach.API];
 }
 
 // export function manageSettingsArmsReachFeature(data){

@@ -13,11 +13,12 @@ import {
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { NotesReach } from './NotesReach';
 import { TokensReach } from './TokensReach';
-// import { socket, _socketRecalculate } from './ArmsReachSocket';
+import { socket, _socketIsReachable } from './ArmsReachSocket';
 import { LightsReach } from './LightsReach';
 import { DrawingsReach } from './DrawingsReach';
 import { TilesReach } from './TilesReach';
 import { SoundsReach } from './SoundsReach';
+import { ArmsReach } from './ArmsReach';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 
@@ -26,11 +27,8 @@ export let taggerModuleActive;
 export const readyHooks = async () => {
   // setup all the hooks
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    // Hooks.once('socketlib.ready', () => {
-    //   //@ts-ignore
-    //   socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
-    //   socket.register('recalculate', _socketRecalculate);
-    // });
+
+    getGame()[ArmsReach.API] = new ArmsReach();
 
     Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
       // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
