@@ -11,7 +11,7 @@ import {
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
 export const TilesReach = {
-  globalInteractionDistance: function (character: Token, tile: Tile): boolean {
+  globalInteractionDistance: function (character: Token, tile: Tile, userId?: String): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

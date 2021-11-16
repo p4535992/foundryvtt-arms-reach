@@ -27,7 +27,6 @@ export let taggerModuleActive;
 export const readyHooks = async () => {
   // setup all the hooks
   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-
     getGame()[ArmsReach.API] = new ArmsReach();
 
     Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {

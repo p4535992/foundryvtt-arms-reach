@@ -4,18 +4,38 @@ import { ARMS_REACH_MODULE_NAME, getAPI, getCanvas, getGame } from './settings';
 
 export let socket;
 
-if(!getGame().modules.get('socketlib')?.active){
-  Hooks.once('socketlib.ready', () => {
-    //@ts-ignore
-    socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
-    socket.register('isReachable', _socketIsReachable);
-  });
+Hooks.once('ready', async () => {
+  if (!getGame().modules.get('socketlib')?.active) {
+    Hooks.once('socketlib.ready', () => {
+      //@ts-ignore
+      socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
+      socket.register('isReachable', _socketIsReachable);
+      socket.register('isReachableByTag', _socketIsReachableByTag);
+      socket.register('isReachableById', _socketIsReachableById);
+    });
+  }
+});
+
+export function _socketIsReachable(token: Token, placeableObject: PlaceableObject, userId?: string): boolean {
+  return getAPI().isReachable(token, placeableObject, userId);
 }
 
-export function _socketIsReachable(token:Token, placeableObject:PlaceableObject, user:User):boolean {
-  return getAPI().isReachable(token, placeableObject, user);
+export function _socketIsReachableByTag(token: Token, tag: string, userId?: string): boolean {
+  return getAPI().isReachableByTag(token, tag, userId);
 }
 
-export function isReachable(token:Token, placeableObject:PlaceableObject, user:User):boolean {
-  return socket.executeAsGM(_socketIsReachable, token, placeableObject, user).then((reachable) => reachable);
+export function _socketIsReachableById(token: Token, placeableObjectId: string, userId?: string): boolean {
+  return getAPI().isReachableById(token, placeableObjectId, userId);
+}
+
+export function isReachable(token: Token, placeableObject: PlaceableObject, userId: string): boolean {
+  return socket.executeAsGM(_socketIsReachable, token, placeableObject, userId).then((reachable) => reachable);
+}
+
+export function isReachableByTag(token: Token, tag: string, userId: string): boolean {
+  return socket.executeAsGM(_socketIsReachableByTag, token, tag, userId).then((reachable) => reachable);
+}
+
+export function isReachableById(token: Token, placeableObjectId: string, userId: string): boolean {
+  return socket.executeAsGM(_socketIsReachableById, token, placeableObjectId, userId).then((reachable) => reachable);
 }

@@ -11,7 +11,7 @@ import {
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
 export const LightsReach = {
-  globalInteractionDistance: function (character: Token, light: AmbientLight): boolean {
+  globalInteractionDistance: function (character: Token, light: AmbientLight, userId?: String): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

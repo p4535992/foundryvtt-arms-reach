@@ -11,7 +11,7 @@ import {
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
 export const TemplatesReach = {
-  globalInteractionDistance: function (character: Token, template: MeasuredTemplate): boolean {
+  globalInteractionDistance: function (character: Token, template: MeasuredTemplate, userId?: String): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

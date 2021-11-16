@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 2.1.2
+
+- Add first version api
+
 # 2.1.1
 
 - Some bug fx

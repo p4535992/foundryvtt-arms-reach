@@ -32,6 +32,26 @@ To install this module manually:
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
+## API
+
+A little api to use in macro cc. for check if the placeable object reachable with variant based on the string id or the string tag from the module `tagger`.
+
+The api is reachable from the variable `game.armsReach` or from the socket libary `socketLib` if present and active
+
+`game.armsReach.isReachable(token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
+
+`game.armsReach.isReachableByTag(token: Token, tag: string, userId?: string): boolean`
+
+`game.armsReach.isReachableById(token: Token, placeableObjectId: string, userId?: string): boolean`
+
+
+
+`socket.executeAsGM('isReachable, token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
+
+`socket.executeAsGM('isReachableByTag', token: Token, tag: string, userId?: string): boolean`
+
+`socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, userId?: string): boolean`
+
 ## Features 
 
 The interaction distance is measure by the distance between a token and a placeable object like door, journal, stairways, ecc.

@@ -11,7 +11,7 @@ import {
 import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
 
 export const SoundsReach = {
-  globalInteractionDistance: function (character: Token, sound: AmbientSound): boolean {
+  globalInteractionDistance: function (character: Token, sound: AmbientSound, userId?: String): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

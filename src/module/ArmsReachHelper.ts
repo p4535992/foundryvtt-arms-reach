@@ -460,7 +460,7 @@ export const measureDistancesInternal = function (segments, entity, shape, optio
 
 export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
   //@ts-ignore
-  const tags = <string[]>Tagger.getTags(placeable) || [];
+  const tags = <string[]>Tagger?.getTags(placeable) || [];
   if (tags.includes(ARMS_REACH_TAGGER_FLAG)) {
     return true;
   } else {

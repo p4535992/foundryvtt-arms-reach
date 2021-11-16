@@ -99,7 +99,12 @@ export const DoorsReach = {
     }
   },
 
-  globalInteractionDistance: async function (character: Token, doorControl: DoorControl, isRightHanler: boolean) {
+  globalInteractionDistance: function (
+    character: Token,
+    doorControl: DoorControl,
+    isRightHanler: boolean,
+    userId?: String,
+  ): boolean {
     // let character: Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
     if (!character) {
@@ -248,6 +253,9 @@ export const DoorsReach = {
       } else if (getGame().user?.isGM) {
         return true;
       }
+      return false;
+    } else {
+      return false;
     }
   },
 
