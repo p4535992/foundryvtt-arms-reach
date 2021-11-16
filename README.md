@@ -46,7 +46,7 @@ The api is reachable from the variable `game.armsReach` or from the socket libar
 
 
 
-`socket.executeAsGM('isReachable, token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
+`socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
 
 `socket.executeAsGM('isReachableByTag', token: Token, tag: string, userId?: string): boolean`
 
