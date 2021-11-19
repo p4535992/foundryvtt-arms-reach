@@ -13,7 +13,7 @@ import { TokensReach } from './TokensReach';
 export class ArmsReach {
   static API = 'armsReach';
 
-  isReachableByTag(token: Token, tag: string, userId?: string): boolean {
+  async isReachableByTag(token: Token, tag: string, userId?: string): Promise<boolean> {
     //@ts-ignore
     if (!(<boolean>getGame().modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
       ui.notifications?.warn(
@@ -21,8 +21,10 @@ export class ArmsReach {
       );
       return false;
     } else {
-      //@ts-ignore
-      const placeableObjects = <PlaceableObject[]>Tagger?.getByTag(tag, { caseInsensitive: true }) || undefined;
+
+      const placeableObjects =
+        //@ts-ignore
+        (await (<PlaceableObject[]>Tagger?.getByTag(tag, { caseInsensitive: true }))) || undefined;
       if (!placeableObjects) {
         return false;
       }
@@ -105,7 +107,7 @@ export class ArmsReach {
       );
     } else {
       ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | The document '${relevantDocument.name}' is not supported from the API 'isReachable'`,
+        `${ARMS_REACH_MODULE_NAME} | The document '${relevantDocument?.name}' is not supported from the API 'isReachable'`,
       );
     }
     return isInReach;

@@ -36,21 +36,24 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 
 A little api to use in macro cc. for check if the placeable object reachable with variant based on the string id or the string tag from the module `tagger`.
 
-The api is reachable from the variable `game.armsReach` or from the socket libary `socketLib` if present and active
+The api is reachable from the variable `game.armsReach` or from the socket libary `socketLib` if present and active.
 
 `game.armsReach.isReachable(token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
 
-`game.armsReach.isReachableByTag(token: Token, tag: string, userId?: string): boolean`
+`async game.armsReach.isReachableByTag(token: Token, tag: string, userId?: string): Promise<boolean>` 
 
 `game.armsReach.isReachableById(token: Token, placeableObjectId: string, userId?: string): boolean`
 
 
 
-`socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
+`await socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, userId?: string):Promise<boolean>`
 
-`socket.executeAsGM('isReachableByTag', token: Token, tag: string, userId?: string): boolean`
+`await socket.executeAsGM('isReachableByTag', token: Token, tag: string, userId?: string): Promise<boolean>`
 
-`socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, userId?: string): boolean`
+`await socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, userId?: string): Promise<boolean>`
+
+**NOTE: the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work**
+**NOTE: for now the optional parameter 'userId' doesn't do nothing i'm planning some features so you can limit interaction only for specific user**
 
 ## Features 
 

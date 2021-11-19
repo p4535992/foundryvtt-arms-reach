@@ -20,7 +20,7 @@ export function _socketIsReachable(token: Token, placeableObject: PlaceableObjec
   return getAPI().isReachable(token, placeableObject, userId);
 }
 
-export function _socketIsReachableByTag(token: Token, tag: string, userId?: string): boolean {
+export async function _socketIsReachableByTag(token: Token, tag: string, userId?: string): Promise<boolean> {
   return getAPI().isReachableByTag(token, tag, userId);
 }
 
