@@ -53,6 +53,7 @@ The api is reachable from the variable `game.armsReach` or from the socket libar
 `await socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, userId?: string): Promise<boolean>`
 
 **NOTE: the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work**
+
 **NOTE: for now the optional parameter 'userId' doesn't do nothing i'm planning some features so you can limit interaction only for specific user**
 
 ## Features 
