@@ -1,5 +1,5 @@
 import { i18n } from '../foundryvtt-arms-reach';
-import { ArmsReach } from './ArmsReach';
+import { ArmsReach } from './ArmsReachApi';
 // import ImagePicker from "./libs/ImagePicker";
 // import SoundPicker from "./libs/SoundPicker";
 

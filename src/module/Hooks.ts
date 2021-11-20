@@ -13,12 +13,12 @@ import {
 import { ArmsReachVariables, DoorsReach } from './DoorsReach';
 import { NotesReach } from './NotesReach';
 import { TokensReach } from './TokensReach';
-import { socket, _socketIsReachable } from './ArmsReachSocket';
+import { armsReachSocket, _socketIsReachable } from './ArmsReachSocket';
 import { LightsReach } from './LightsReach';
 import { DrawingsReach } from './DrawingsReach';
 import { TilesReach } from './TilesReach';
 import { SoundsReach } from './SoundsReach';
-import { ArmsReach } from './ArmsReach';
+import { ArmsReach } from './ArmsReachApi';
 //@ts-ignore
 // import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
 

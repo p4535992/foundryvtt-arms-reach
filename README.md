@@ -1,6 +1,6 @@
-![](https://img.shields.io/badge/Foundry-v0.8.9-informational)
-
 #  FoundryVTT Arms Reach 
+
+![Latest Release Download Count](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/latest/module.zip?color=2b82fc&label=DOWNLOADS&style=for-the-badge) [![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundryvtt-arms-reach&colorB=03ff1c&style=for-the-badge)](https://forge-vtt.com/bazaar#package=foundryvtt-arms-reach) ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fp4535992%2Ffoundryvtt-arms-reach%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange&style=for-the-badge)
 
 Little Utilities, Arms Reach for door, journal, stairways, token, ecc.
 
@@ -13,7 +13,7 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 ## Known issue/Limitation
 
 - I know there is some measure distance issue expecially with diagonals, here some details [current issue](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
-  
+
 - The module setting "Avoid deselects the controlled token" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
 
 ## Installation

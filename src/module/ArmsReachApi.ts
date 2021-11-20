@@ -21,7 +21,6 @@ export class ArmsReach {
       );
       return false;
     } else {
-
       const placeableObjects =
         //@ts-ignore
         (await (<PlaceableObject[]>Tagger?.getByTag(tag, { caseInsensitive: true }))) || undefined;

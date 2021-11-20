@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 2.1.3
+
+- Bug fix api themodule tagger return a promise dha!
+- Little clean up
+
 # 2.1.2
 
 - Add first version api

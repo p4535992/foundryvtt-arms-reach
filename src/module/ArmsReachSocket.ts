@@ -1,17 +1,17 @@
 import { warn } from '../foundryvtt-arms-reach';
-import { ArmsReach } from './ArmsReach';
+import { ArmsReach } from './ArmsReachApi';
 import { ARMS_REACH_MODULE_NAME, getAPI, getCanvas, getGame } from './settings';
 
-export let socket;
+export let armsReachSocket;
 
 Hooks.once('ready', async () => {
   if (!getGame().modules.get('socketlib')?.active) {
     Hooks.once('socketlib.ready', () => {
       //@ts-ignore
-      socket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
-      socket.register('isReachable', _socketIsReachable);
-      socket.register('isReachableByTag', _socketIsReachableByTag);
-      socket.register('isReachableById', _socketIsReachableById);
+      armsReachSocket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
+      armsReachSocket.register('isReachable', _socketIsReachable);
+      armsReachSocket.register('isReachableByTag', _socketIsReachableByTag);
+      armsReachSocket.register('isReachableById', _socketIsReachableById);
     });
   }
 });
@@ -29,13 +29,15 @@ export function _socketIsReachableById(token: Token, placeableObjectId: string, 
 }
 
 export function isReachable(token: Token, placeableObject: PlaceableObject, userId: string): boolean {
-  return socket.executeAsGM(_socketIsReachable, token, placeableObject, userId).then((reachable) => reachable);
+  return armsReachSocket.executeAsGM(_socketIsReachable, token, placeableObject, userId).then((reachable) => reachable);
 }
 
 export function isReachableByTag(token: Token, tag: string, userId: string): boolean {
-  return socket.executeAsGM(_socketIsReachableByTag, token, tag, userId).then((reachable) => reachable);
+  return armsReachSocket.executeAsGM(_socketIsReachableByTag, token, tag, userId).then((reachable) => reachable);
 }
 
 export function isReachableById(token: Token, placeableObjectId: string, userId: string): boolean {
-  return socket.executeAsGM(_socketIsReachableById, token, placeableObjectId, userId).then((reachable) => reachable);
+  return armsReachSocket
+    .executeAsGM(_socketIsReachableById, token, placeableObjectId, userId)
+    .then((reachable) => reachable);
 }
