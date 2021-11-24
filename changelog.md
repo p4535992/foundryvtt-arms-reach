@@ -1,5 +1,8 @@
 # CHANGELOG
 
+# 2.1.4
+
+- Update API syncronization with Tagger module version 1.2.0, getByTag is not async anymore
 # 2.1.3
 
 - Bug fix api themodule tagger return a promise dha!

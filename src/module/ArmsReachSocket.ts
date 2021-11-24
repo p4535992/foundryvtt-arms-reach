@@ -20,7 +20,7 @@ export function _socketIsReachable(token: Token, placeableObject: PlaceableObjec
   return getAPI().isReachable(token, placeableObject, userId);
 }
 
-export async function _socketIsReachableByTag(token: Token, tag: string, userId?: string): Promise<boolean> {
+export function _socketIsReachableByTag(token: Token, tag: string, userId?: string): boolean {
   return getAPI().isReachableByTag(token, tag, userId);
 }
 
@@ -29,11 +29,15 @@ export function _socketIsReachableById(token: Token, placeableObjectId: string, 
 }
 
 export function isReachable(token: Token, placeableObject: PlaceableObject, userId: string): boolean {
-  return armsReachSocket.executeAsGM(_socketIsReachable, token, placeableObject, userId).then((reachable) => reachable);
+  return armsReachSocket
+    .executeAsGM(_socketIsReachable, token, placeableObject, userId)
+    .then((reachable) => reachable);
 }
 
 export function isReachableByTag(token: Token, tag: string, userId: string): boolean {
-  return armsReachSocket.executeAsGM(_socketIsReachableByTag, token, tag, userId).then((reachable) => reachable);
+  return armsReachSocket
+    .executeAsGM(_socketIsReachableByTag, token, tag, userId)
+    .then((reachable) => reachable);
 }
 
 export function isReachableById(token: Token, placeableObjectId: string, userId: string): boolean {

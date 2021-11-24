@@ -46,9 +46,11 @@ A little api to use in macro cc. for check if the placeable object reachable wit
 
 The api is reachable from the variable `game.armsReach` or from the socket libary `socketLib` if present and active.
 
+
+
 `game.armsReach.isReachable(token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
 
-`async game.armsReach.isReachableByTag(token: Token, tag: string, userId?: string): Promise<boolean>` 
+`game.armsReach.isReachableByTag(token: Token, tag: string, userId?: string): boolean` 
 
 `game.armsReach.isReachableById(token: Token, placeableObjectId: string, userId?: string): boolean`
 
@@ -62,7 +64,7 @@ The api is reachable from the variable `game.armsReach` or from the socket libar
 
 **NOTE: the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work**
 
-**NOTE: for now the optional parameter 'userId' doesn't do nothing i'm planning some features so you can limit interaction only for specific user**
+**NOTE: for now the optional parameter 'userId' is not used from the api, i hope to add in the future some filter so a specific actor for a specific user has some limitation.**
 
 ## Features 
 
@@ -80,7 +82,7 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * Double tapping movement on the direction of a door will interact with it
 
-### [Stairways]((https://gitlab.com/SWW13/foundryvtt-stairways)) Feature
+### [Stairways](https://gitlab.com/SWW13/foundryvtt-stairways) Feature
 
 * If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon.
 

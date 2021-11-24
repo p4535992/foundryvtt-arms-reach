@@ -13,7 +13,7 @@ import { TokensReach } from './TokensReach';
 export class ArmsReach {
   static API = 'armsReach';
 
-  async isReachableByTag(token: Token, tag: string, userId?: string): Promise<boolean> {
+  isReachableByTag(token: Token, tag: string, userId?: string): boolean {
     //@ts-ignore
     if (!(<boolean>getGame().modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
       ui.notifications?.warn(
@@ -23,7 +23,7 @@ export class ArmsReach {
     } else {
       const placeableObjects =
         //@ts-ignore
-        (await (<PlaceableObject[]>Tagger?.getByTag(tag, { caseInsensitive: true }))) || undefined;
+        (<PlaceableObject[]>Tagger?.getByTag(tag, { caseInsensitive: true })) || undefined;
       if (!placeableObjects) {
         return false;
       }
