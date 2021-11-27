@@ -365,10 +365,12 @@ export const DoorsReach = {
     if (!character) {
       return;
     }
-    if (
-      Date.now() - ArmsReachVariables.lastData[key] >
-      <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')
-    ) {
+    // if (
+    //   Date.now() - ArmsReachVariables.lastData[key] >
+    //   <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')
+    // ) {
+    if((Date.now() - ArmsReachVariables.lastData[key]) / 1000 > 
+      <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')){
       ArmsReachVariables.lastData.x = character.x;
       ArmsReachVariables.lastData.y = character.y;
       ArmsReachVariables.lastData[key] = Date.now();

@@ -284,11 +284,11 @@ export const registerSettings = function () {
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoubleTapInteraction`),
     scope: 'world',
     config: true,
-    default: 0, // 200
+    default: 1, // 200
     type: Number,
     //@ts-ignore
     //range: { min: 0, max: 750, step: 50 },
-    range: { min: 0, max: 50, step: 0.5 },
+    range: { min: 0, max: 5, step: 0.5 },
   });
 
   // DEPRECATED

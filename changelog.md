@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 2.1.5
+
+- Bug fix [[BUG] 'e' interraction not working to open doors](https://github.com/p4535992/foundryvtt-arms-reach/issues/32)
+- Updated some label
+
 # 2.1.4
 
 - Update API syncronization with Tagger module version 1.2.0, getByTag is not async anymore
