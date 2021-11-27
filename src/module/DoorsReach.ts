@@ -414,20 +414,40 @@ export const DoorsReach = {
     //charCenter.x += offsetx * gridSize;
     //charCenter.y += offsety * gridSize;
 
-    for (let i = 0; i < <number>getCanvas().controls?.doors?.children.length; i++) {
-      const door: DoorControl = <DoorControl>getCanvas().controls?.doors?.getChildAt(0);
-      if (!door.visible) {
-        continue;
+    // for (let i = 0; i < <number>getCanvas().controls?.doors?.children.length; i++) {
+    //   const door: DoorControl = <DoorControl>getCanvas().controls?.doors?.getChildAt(0);
+    getGame().scenes?.current?.walls.contents.forEach((wall:WallDocument) =>{
+      if( wall.data.door > 0){
+        const door: DoorControl = <DoorControl>getCanvas().controls?.doors?.children.find(
+          (x: DoorControl) => {
+            return x.wall.id == <string>wall.id;
+          },
+        );
+        // if (!door.visible) {
+        //   continue;
+        // }
+        let isNotNearEnough = false;
+        let dist;
+        // OLD SETTING
+        if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          dist = <number>computeDistanceBetweenCoordinatesOLD(door, token);
+          isNotNearEnough =
+            dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+        } 
+        else {
+          dist = computeDistanceBetweenCoordinates(door, token);
+          isNotNearEnough =
+            dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+        }
+        // const dist = computeDistanceBetweenCoordinates(door, token);
+        // const distInGridUnits = dist / gridSize - 0.1;
+        // if (distInGridUnits < maxDistance && dist < shortestDistance) {
+        if(!isNotNearEnough) {
+          closestDoor = door;
+          shortestDistance = dist;
+        }
       }
-
-      const dist = computeDistanceBetweenCoordinates(door, token);
-      const distInGridUnits = dist / gridSize - 0.1;
-
-      if (distInGridUnits < maxDistance && dist < shortestDistance) {
-        closestDoor = door;
-        shortestDistance = dist;
-      }
-    }
+    });
 
     // Operate the door
     if (closestDoor) {
@@ -436,6 +456,11 @@ export const DoorsReach = {
         stopPropagation: (event) => {
           return;
         },
+        data:{
+          originalEvent:{
+            button: 0
+          }
+        }
         //currentTarget: closestDoor
       };
       //@ts-ignore

@@ -287,7 +287,8 @@ export const registerSettings = function () {
     default: 0, // 200
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 750, step: 50 },
+    //range: { min: 0, max: 750, step: 50 },
+    range: { min: 0, max: 50, step: 0.5 },
   });
 
   // DEPRECATED
