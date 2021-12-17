@@ -93,3 +93,7 @@ Hooks.once('ready', () => {
 });
 
 // Add any additional hooks if necessary
+Hooks.once('libChangelogsReady', function () {
+  //@ts-ignore
+  libChangelogs.register(ARMS_REACH_MODULE_NAME, '- Add [CHANGELOGS & CONFLICTS](https://github.com/theripper93/libChangelogs) hooks for better management of the conflicts', 'minor');
+});

@@ -34,10 +34,25 @@ export class ArmsReach {
   isReachableById(token: Token, placeableObjectId: string, userId?: string): boolean {
     // const sceneId = getGame().scenes?.current?.id;
     const objects = this._getObjectsFromScene(<Scene>getGame().scenes?.current);
-    const object = objects.filter((obj) => obj.id === placeableObjectId)[0];
+    const object = objects.filter((obj:any) => {
+      obj.id === placeableObjectId
+    })[0];
     if (!object) {
       ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectId}'can't use the API 'isReachableById'`,
+        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableById'`,
+      );
+      return false;
+    }
+    return this.isReachable(token, <any>object, userId);
+  }
+
+  isReachableByIdOrName(token: Token, idOrName: string, userId?: string): boolean {
+    // const sceneId = getGame().scenes?.current?.id;
+    const objects = this._getObjectsFromScene(<Scene>getGame().scenes?.current);
+    const object = this._retrieveFromIdOrName(objects,idOrName);
+    if (!object) {
+      ui.notifications?.warn(
+        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${idOrName}' can't use the API 'isReachableByIdOrName'`,
       );
       return false;
     }
@@ -121,8 +136,46 @@ export class ArmsReach {
       ...Array.from(scene.tiles),
       ...Array.from(scene.walls),
       ...Array.from(scene.drawings),
+      //@ts-ignore
+      ...Array.from(scene.stairways) // Add module stairways...
     ]
       .deepFlatten()
       .filter(Boolean);
   }
+
+  _retrieveFromIdOrName(placeables, IdOrName){
+    let target;
+    if(!placeables || placeables.length == 0){
+      return target;
+    }
+    if(!IdOrName){
+      return target;
+    }
+    target = placeables?.find((x) => {
+      return x && x.id?.toLowerCase() == IdOrName.toLowerCase();
+    });
+    if(!target){
+      target = placeables?.find((x) => {
+        return x && x.name?.toLowerCase() == IdOrName.toLowerCase();
+      });
+    }
+    if(!target){
+      target = placeables?.find((x) => {
+        return x && x.data?.name?.toLowerCase() == IdOrName.toLowerCase();
+      });
+    }
+    if(!target){
+      target = placeables?.find((x) => {
+        return x && x.data?.text?.toLowerCase() == IdOrName.toLowerCase();
+      });
+    }
+    if(!target){
+      target = placeables?.find((x) => {
+        return x && x.data?.label?.toLowerCase() == IdOrName.toLowerCase();
+      });
+    }
+    return target;
+  }
+
+
 }

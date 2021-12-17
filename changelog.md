@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 2.1.6
+
+- Add [CHANGELOGS & CONFLICTS](https://github.com/theripper93/libChangelogs) hooks for better management of the conflicts
+- add `isReachableByIdOrName` on the api
+
 # 2.1.5
 
 - Bug fix [[BUG] 'e' interraction not working to open doors](https://github.com/p4535992/foundryvtt-arms-reach/issues/32)
