@@ -10,6 +10,9 @@
 
 [![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffoundryvtt-arms-reach%2Fshield%2Fendorsements&style=for-the-badge)](https://www.foundryvtt-hub.com/package/foundryvtt-arms-reach/)
 
+![GitHub all releases](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/total?style=for-the-badge)
+
+
 Little Utilities, Arms Reach for door, journal, stairways, token, ecc.
 
 This project is born like a upgrade of the project [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny), in preparation of foundry vtt 0.8.0, but after a while i put some feature here and there and now i got something a little more complex.
