@@ -12,6 +12,7 @@ Hooks.once('ready', async () => {
       armsReachSocket.register('isReachable', _socketIsReachable);
       armsReachSocket.register('isReachableByTag', _socketIsReachableByTag);
       armsReachSocket.register('isReachableById', _socketIsReachableById);
+      armsReachSocket.register('isReachableByIdOrName', _socketIsReachableByIdOrName);
     });
   }
 });
@@ -26,6 +27,10 @@ export function _socketIsReachableByTag(token: Token, tag: string, userId?: stri
 
 export function _socketIsReachableById(token: Token, placeableObjectId: string, userId?: string): boolean {
   return getAPI().isReachableById(token, placeableObjectId, userId);
+}
+
+export function _socketIsReachableByIdOrName(token: Token, placeableObjectIdOrName: string, userId?: string): boolean {
+  return getAPI().isReachableByIdOrName(token, placeableObjectIdOrName, userId);
 }
 
 export function isReachable(token: Token, placeableObject: PlaceableObject, userId: string): boolean {
@@ -43,5 +48,11 @@ export function isReachableByTag(token: Token, tag: string, userId: string): boo
 export function isReachableById(token: Token, placeableObjectId: string, userId: string): boolean {
   return armsReachSocket
     .executeAsGM(_socketIsReachableById, token, placeableObjectId, userId)
+    .then((reachable) => reachable);
+}
+
+export function isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, userId: string): boolean {
+  return armsReachSocket
+    .executeAsGM(_socketIsReachableByIdOrName, token, placeableObjectIdOrName, userId)
     .then((reachable) => reachable);
 }

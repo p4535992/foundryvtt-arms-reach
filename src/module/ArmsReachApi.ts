@@ -46,13 +46,13 @@ export class ArmsReach {
     return this.isReachable(token, <any>object, userId);
   }
 
-  isReachableByIdOrName(token: Token, idOrName: string, userId?: string): boolean {
+  isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, userId?: string): boolean {
     // const sceneId = getGame().scenes?.current?.id;
     const objects = this._getObjectsFromScene(<Scene>getGame().scenes?.current);
-    const object = this._retrieveFromIdOrName(objects,idOrName);
+    const object = this._retrieveFromIdOrName(objects,placeableObjectIdOrName);
     if (!object) {
       ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${idOrName}' can't use the API 'isReachableByIdOrName'`,
+        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrName'`,
       );
       return false;
     }
