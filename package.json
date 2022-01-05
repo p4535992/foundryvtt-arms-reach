@@ -3,7 +3,7 @@
   "name": "foundryvtt-arms-reach",
   "title": "FoundryVTT Arms Reach",
   "description": "Allows the GM to limit the distance that a player can interacted with a placeable object like door, journal, stairway, token, ecc..",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "scripts": {
     "package": "gulp package",
     "build": "gulp build && gulp link",
@@ -17,8 +17,8 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "@league-of-foundry-developers/foundry-vtt-types": "^0.8.9-9",
-    "@types/jquery": "^3.5.8",
+    "@league-of-foundry-developers/foundry-vtt-types": "^0.8.9-10",
+    "@types/jquery": "^3.5.11",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
@@ -28,7 +28,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-jquery": "^3.0.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-tsdoc": "^0.2.14",
@@ -51,6 +51,6 @@
     "*.(json|scss)": "prettier --write"
   },
   "dependencies": {
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.4"
   }
 }
