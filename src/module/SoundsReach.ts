@@ -4,9 +4,7 @@ import {
   computeDistanceBetweenCoordinatesOLD,
   getCharacterName,
   getFirstPlayerToken,
-  getFirstPlayerTokenSelected,
   getPlaceableCenter,
-  getTokenByTokenID,
   iteractionFailNotification,
 } from './ArmsReachHelper';
 import { ARMS_REACH_MODULE_NAME } from './settings';
