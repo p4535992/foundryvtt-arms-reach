@@ -84,13 +84,14 @@ export const StairwaysReach = {
   },
 
   getStairwaysCenter: function (stairway) {
-    // const stairwayCenter = { x: stairway.x, y: stairway.y };
-    // const stairwayCenter = {
-    //   x: stairway.x - <number>canvas.dimensions?.size / 2,
-    //   y: stairway.y - <number>canvas.dimensions?.size / 2,
-    // };
-    // return stairwayCenter;
-    return getPlaceableCenter(stairway);
+    const stairwayCenter = {
+      x: stairway.x - <number>canvas.dimensions?.size / 2, 
+      y: stairway.y - <number>canvas.dimensions?.size / 2,
+      w: stairway.width,
+      h: stairway.height
+    };
+    return stairwayCenter;
+    // return getPlaceableCenter(stairway);
   },
 
   globalInteractionDistanceSimple: function (

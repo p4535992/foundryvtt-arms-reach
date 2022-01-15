@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1.9
+
+- Big update of the distance calculation, based on the work done from [Haxxer](https://github.com/fantasycalendar) on the module [Item Piles](https://github.com/fantasycalendar/FoundryVTT-ItemPiles)
+- Bug fix [Can "reach" further to the east](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
+- Bug fix [[BUG] Token centers and placeable centers not consistent in Foundry - needs to be adjusted in module](https://github.com/p4535992/foundryvtt-arms-reach/issues/35)
+
 ## 2.1.8
 
 - Some little rewrite on the calculation of the distance

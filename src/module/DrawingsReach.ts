@@ -78,7 +78,13 @@ export const DrawingsReach = {
   },
 
   getDrawingsCenter: function (drawing: Drawing) {
-    // const drawCenter = { x: drawing.x, y: drawing.y };
+    // const drawCenter = { 
+    //   x: drawing.x, 
+    //   y: drawing.y,
+    //   w: drawing.width,
+    //   h: drawing.height
+    // };
+    // return drawCenter;
     return getPlaceableCenter(drawing);
   },
 };

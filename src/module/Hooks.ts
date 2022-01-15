@@ -98,13 +98,14 @@ export const readyHooks = async () => {
       // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
       // const clickSounds:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
       const clickDrawings: PlaceableObject[] = getPlaceablesAt(canvas?.drawings?.placeables, position) || [];
-      // const clickTiles:PlaceableObject[] = getPlaceablesAt(canvas?.tiles?.placeables, position) || [];
+      const clickTiles:PlaceableObject[] = getPlaceablesAt(canvas.background?.placeables, position) || [];
       // const clickTemplates:PlaceableObject[] = getPlaceablesAt(canvas?.templates?.placeables, position) || [];
 
       const downTriggers: PlaceableObject[] = [];
       // downTriggers.push(...clickLights);
       // downTriggers.push(...clickSounds);
       downTriggers.push(...clickDrawings);
+      downTriggers.push(...clickTiles);
       // downTriggers.push(...clickTemplates);
       if (downTriggers.length === 0) {
         return;
@@ -124,6 +125,27 @@ export const readyHooks = async () => {
             return;
           }
           const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+          reselectTokenAfterInteraction(tokenSelected);
+          if (!isInReach) {
+            return;
+          }
+        }
+      }
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
+        if (clickTiles.length > 0) {
+          const tile = clickTiles[0] as Tile;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+
+          if (taggerModuleActive && !checkTaggerForAmrsreach(tile)) {
+            reselectTokenAfterInteraction(tokenSelected);
+            return;
+          }
+          const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
           reselectTokenAfterInteraction(tokenSelected);
           if (!isInReach) {
             return;
