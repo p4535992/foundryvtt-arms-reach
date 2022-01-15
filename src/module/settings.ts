@@ -164,7 +164,7 @@ export const registerSettings = function () {
     default: 0, // instead of 1
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 50, step: 0.5 },
+    range: { min: 0, max: 5, step: 0.5 },
   });
 
   game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement', {
@@ -175,7 +175,7 @@ export const registerSettings = function () {
     default: 5,
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 50, step: 0.5 },
+    range: { min: 0, max: 20, step: 0.5 },
   });
 
   game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM', {

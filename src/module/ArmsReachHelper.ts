@@ -74,14 +74,20 @@ export const computeDistanceBetweenCoordinates = function (
   //@ts-ignore
   const unitSize = <number>canvas.dimensions.distance; //<number>canvas.grid?.grid?.options.dimensions.distance;
 
-  if (!xPlaceable || !yPlaceable || !character) {
-    //|| !xToken || !yToken) {
-    // error(
-    //   '[xPlaceable=' + xPlaceable + ', yPlaceable=' + yPlaceable + ', xToken=' + xToken + ', yToken=' + yToken + ']',
-    // );
-    // return computeDistanceBetweenCoordinatesOLD(placeable, character);
-    let dist = grids_between_token_and_placeable(character, placeable);
-    dist = dist * unitSize;
+  if (!xPlaceable || !yPlaceable || !character.x || !character.y) {
+    error(
+      '[xPlaceable=' +
+        xPlaceable +
+        ', yPlaceable=' +
+        yPlaceable +
+        ', xToken=' +
+        character.x +
+        ', yToken=' +
+        character.y +
+        ']',
+    );
+    // const dist = computeDistanceBetweenCoordinatesOLD(placeable, character);
+    const dist = grids_between_token_and_placeable(character, placeable);
     return dist;
   } else {
     if (documentName == 'Stairway') {
@@ -335,7 +341,12 @@ export const reselectTokenAfterInteraction = function (character: Token) {
 };
 
 function measureDistancesInternal(segments, options = {}) {
-  const opts: any = duplicate(options);
+  const opts = <any>duplicate(options);
+  //@ts-ignore
+  if (canvas.grid?.diagonalRule === 'EUCL') {
+    opts.ignoreGrid = true;
+    opts.gridSpaes = false;
+  }
   if (opts.enableTerrainRuler) {
     opts.gridSpaces = true;
     const firstNewSegmentIndex = segments.findIndex((segment) => !segment.ray.dragRulerVisitedSpaces);
@@ -359,7 +370,8 @@ function measureDistancesInternal(segments, options = {}) {
     if (!opts.ignoreGrid) {
       opts.gridSpaces = true;
     }
-    //return canvas.grid?.measureDistances(segments, opts);
+    return canvas.grid?.measureDistances(segments, opts);
+    /*
     if (!opts.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
     // Track the total number of diagonals
@@ -385,6 +397,7 @@ function measureDistancesInternal(segments, options = {}) {
       const spaces = nd10 * 2 + (nd - nd10) + ns;
       return spaces * <number>canvas.dimensions?.distance;
     });
+    */
   }
 }
 

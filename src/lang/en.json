@@ -61,8 +61,8 @@
   "foundryvtt-arms-reach.settingNameNotificationsFailedInteraction": "Notifications failed interactions",
   "foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
 
-  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Deprecated] Global maximum interaction distance in tiles",
-  "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Use instead 'Global maximum interaction distance measurement'], 0 will disable this setting limit (needs app reload). Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Not Recommended] Global maximum interaction distance in tiles",
+  "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[I do not recommend this feature use instead 'Global maximum interaction distance measurement' more 'Drag Ruler' perspective], 0 will disable this setting limit (needs app reload), if a value > 0 is used it will ignore the value of the setting 'Global maximum interaction distance measurement'. Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
   "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Max distance (in feet, meter, or the default system unit grid you are using) that a token can interact with a placeable object (door, journal, ...), 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",

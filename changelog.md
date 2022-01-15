@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.10
+
+- Little bug fixing on the old tiles grid
+
 ## 2.1.9
 
 - Big update of the distance calculation, based on the work done from [Haxxer](https://github.com/fantasycalendar) on the module [Item Piles](https://github.com/fantasycalendar/FoundryVTT-ItemPiles)
