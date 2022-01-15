@@ -3,6 +3,7 @@
 ## 2.1.10
 
 - Little bug fixing on the old tiles grid
+- Small fix on measure distance calculation
 
 ## 2.1.9
 
