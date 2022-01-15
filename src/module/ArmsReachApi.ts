@@ -159,6 +159,11 @@ export class ArmsReach {
     }
     if (!target) {
       target = placeables?.find((x) => {
+        return x && x.label?.toLowerCase() == IdOrName.toLowerCase();
+      });
+    }
+    if (!target) {
+      target = placeables?.find((x) => {
         return x && x.data?.name?.toLowerCase() == IdOrName.toLowerCase();
       });
     }
@@ -170,6 +175,11 @@ export class ArmsReach {
     if (!target) {
       target = placeables?.find((x) => {
         return x && x.data?.label?.toLowerCase() == IdOrName.toLowerCase();
+      });
+    }
+    if (!target) {
+      target = placeables?.find((x) => {
+        return x && x.data?.entryId?.toLowerCase() == IdOrName.toLowerCase();
       });
     }
     return target;

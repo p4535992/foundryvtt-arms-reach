@@ -51,7 +51,7 @@ export const TokensReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(TokensReach.getTokensCenter(token), character);
+            const dist = computeDistanceBetweenCoordinates(TokensReach.getTokensCenter(token), character, TokenDocument.documentName);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {

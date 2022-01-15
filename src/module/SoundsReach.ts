@@ -51,7 +51,7 @@ export const SoundsReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(SoundsReach.getSoundsCenter(sound), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(SoundsReach.getSoundsCenter(sound), character);
+            const dist = computeDistanceBetweenCoordinates(SoundsReach.getSoundsCenter(sound), character, AmbientSoundDocument.documentName);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {

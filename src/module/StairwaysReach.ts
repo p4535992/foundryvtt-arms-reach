@@ -56,7 +56,7 @@ export const StairwaysReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
+            const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character, 'Stairway');
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
@@ -137,7 +137,7 @@ export const StairwaysReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
+            const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character, 'Stairway');
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {

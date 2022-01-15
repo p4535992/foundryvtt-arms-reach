@@ -1,8 +1,10 @@
 import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_FLAG } from './settings';
 import { error, warn } from '../foundryvtt-arms-reach';
 import { canvas, game } from './settings';
+import { tokenToString } from 'typescript';
 
 /**
+ * Function for calcuate the distance in grid units
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
  * @param doorControl or placeable
  * @param charCenter
@@ -45,140 +47,49 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, ch
 export const computeDistanceBetweenCoordinates = function (
   placeable: { x: number; y: number; w: number; h: number },
   character: Token,
+  documentName: string
 ): number {
   const xPlaceable = placeable.x; //placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
   const yPlaceable = placeable.y; //placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
   const wPlaceable = placeable.w;
   const hPlaceable = placeable.h;
+
   //@ts-ignore
   // let xToken = character._validPosition?.x ? character._validPosition?.x : character.x;
   // //@ts-ignore
   // let yToken = character._validPosition?.y ? character._validPosition?.y : character.y;
   //const shape = getTokenCenter(character);
   // const shape = { x: character.x + character.w / 2, y: character.y + character.h / 2 };
-
   // const tokendoc = character.document;
   // //@ts-ignore
   // const tokenWidth = (tokendoc.parent?.dimensions.size * tokendoc.data.width) / 2;
   // //@ts-ignore
   // const tokenHeight = (tokendoc.parent?.dimensions.size * tokendoc.data.height) / 2;
-
   // const shape = {
   //   x: tokendoc.data.x + tokenWidth,
   //   y: tokendoc.data.y + tokenHeight,
   // };
-
   // xToken = shape.x;
   // yToken = shape.y;
-
   //@ts-ignore
-  const unitSize = <number>canvas.dimensions.distance; //<number>canvas.grid?.grid?.options.dimensions.distance;
+  // const unitSize = <number>canvas.dimensions.distance; //<number>canvas.grid?.grid?.options.dimensions.distance;
 
   if (!xPlaceable || !yPlaceable || !character) {
     //|| !xToken || !yToken) {
     // error(
     //   '[xPlaceable=' + xPlaceable + ', yPlaceable=' + yPlaceable + ', xToken=' + xToken + ', yToken=' + yToken + ']',
     // );
-    return computeDistanceBetweenCoordinatesOLD(placeable, character);
+    // return computeDistanceBetweenCoordinatesOLD(placeable, character);
+    const dist = grids_between_token_and_placeable(character,placeable);
+    return dist;
   } else {
-    const dist = units_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
-    return dist;
-
-    /*
-    const segmentsRight = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
-    //@ts-ignore
-    const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
-    // Sum up the distances
-    const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
-
-    const segmentsLeft = [{ ray: new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable }) }];
-    //@ts-ignore
-    const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
-    // Sum up the distances
-    const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
-
-    const dist = Math.max(distRight, distLeft);
-
-    return dist;
-    */
-
-    /*
-    const globalInteractionMeasurement = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement')
-    const res = Number.between(xToken, xPlaceable, xPlaceable + wPlaceable)
-      && Number.between(yToken - globalInteractionMeasurement, yPlaceable, yPlaceable + hPlaceable);
-    if(res){
-      return globalInteractionMeasurement - unitSize;
+    if(documentName == NoteDocument.documentName){
+      const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+      return dist;
     }else{
-      return globalInteractionMeasurement + unitSize;
+      const dist = units_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+      return dist;
     }
-    */
-
-    /*
-    // Track the total number of diagonals
-    let nDiagonalRight = 0;
-
-
-    const rayRight = new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken });
-    const segmentsRight = [{ ray: rayRight }];
-
-    // const dRight = <Canvas.Dimensions>canvas.dimensions;
-    // Determine the total distance traveled
-    // const nxRight = Math.abs(Math.ceil(rayRight.dx / dRight.size));
-    // const nyRight = Math.abs(Math.ceil(rayRight.dy / dRight.size));
-
-    // Determine the number of straight and diagonal moves
-    // const ndRight = Math.min(nxRight, nyRight);
-    // const nsRight = Math.abs(nyRight - nxRight);
-    // nDiagonalRight += ndRight;
-
-    const ndRight = Math.min(rayRight.dx, rayRight.dy);
-    nDiagonalRight += Math.sqrt(2) * ndRight;
-
-    //@ts-ignore
-    const distancesRight = measureDistancesInternal(segmentsRight, character, shape);
-    // Sum up the distances
-    const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
-    //const distRight = spacesRight * distancesRight.reduce((acc, val) => acc + val, 0);
-
-    // Track the total number of diagonals
-    let nDiagonalLeft = 0;
-
-    const rayLeft = new Ray({ x: xToken, y: yToken }, { x: xPlaceable, y: yPlaceable });
-    const segmentsLeft = [{ ray: rayLeft }];
-
-    // const dLeft = <Canvas.Dimensions>canvas.dimensions;
-    // Determine the total distance traveled
-    // const nxLeft = Math.abs(Math.ceil(rayLeft.dx / dLeft.size));
-    // const nyLeft = Math.abs(Math.ceil(rayLeft.dy / dLeft.size));
-
-    // Determine the number of straight and diagonal moves
-    // const ndLeft = Math.min(nxLeft, nyLeft);
-    // const nsLeft = Math.abs(nyLeft - nxLeft);
-    // nDiagonalLeft += ndLeft;
-    
-    const ndLeft = Math.min(rayLeft.dx, rayLeft.dy);
-    nDiagonalLeft += Math.sqrt(2) * ndLeft;
-
-    //@ts-ignore
-    const distancesLeft = measureDistancesInternal(segmentsLeft, character, shape);
-    // Sum up the distances
-    const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0) ;
-    //const distLeft = spacesLeft * distancesLeft.reduce((acc, val) => acc + val, 0);
-    let dist = 0;
-    if(distLeft > distRight){
-      dist = distLeft + (distLeft == unitSize  ? (nDiagonalLeft * unitSize) : 0 )
-    } else if(distRight > distLeft){
-      dist = distRight + (distRight == unitSize ? (nDiagonalRight * unitSize) : 0 )
-    } else{
-
-      dist = Math.max(distRight, distLeft);
-      if(distRight == unitSize && distLeft == unitSize && nDiagonalRight == 0 && nDiagonalLeft == 0) {
-        dist = dist + unitSize;
-      }
-    }
-    //const dist = Math.max(distRight, distLeft);
-    return dist;
-    */
   }
 };
 
@@ -294,18 +205,6 @@ export const iteractionFailNotification = function (message) {
   ui.notifications?.warn(message);
 };
 
-// /**
-//  * Returns the first selected token or owned token
-//  */
-// export const getFirstPlayerToken = function() {
-//     // Get first token ownted by the player
-//     let selectedTokens = getSelectedOrOwnedTokens();
-//     if(!selectedTokens || selectedTokens.length == 0){
-//       return null;
-//     }
-//     return selectedTokens[0];
-// }
-
 /**
  * Returns the first selected token
  */
@@ -356,14 +255,6 @@ export const getFirstPlayerToken = function (): Token | null {
   }
   return token;
 };
-
-// /**
-//  * Simple Manhattan Distance between two objects that have x and y attrs.
-//  */
-// export const getManhattanBetween = function(obj1, obj2)  {
-//   // console.log("[" + obj1.x + " , " + obj1.y + "],[" + obj2.x + " , " + obj2.y + "]"); // DEBUG
-//   return Math.abs(obj1.x - obj2.x) + Math.abs(obj1.y - obj2.y)-20; //The -20 seem to fix some calculation issue
-// }
 
 /**
  * Check if active document is the canvas
@@ -418,7 +309,7 @@ export const reselectTokenAfterInteraction = function (character: Token) {
   }
 };
 
-export const measureDistancesInternal = function (segments, options = {}) {
+function measureDistancesInternal(segments, options = {}) {
   const opts: any = duplicate(options);
   if (opts.enableTerrainRuler) {
     opts.gridSpaces = true;
@@ -586,7 +477,7 @@ function distance_between_rect(p1: Token, p2: { x: number; y: number; w: number;
 }
 
 function distance_between(a: { x: number; y: number }, b: { x: number; y: number }): number {
-  return new Ray(a, b).distance;
+  return Math.max(new Ray(a, b).distance,new Ray(b, a).distance);
   /*
   const segmentsRight = [{ ray: new Ray({ x: a.x, y: a.y }, { x: b.x, y: b.y }) }];
   //@ts-ignore
@@ -605,14 +496,31 @@ function distance_between(a: { x: number; y: number }, b: { x: number; y: number
   */
 }
 
-function grids_between_token_and_placeable(a: Token, b: { x: number; y: number; w: number; h: number }) {
-  return Math.floor(distance_between_rect(a, b) / <number>canvas.grid?.size) + 1;
+function grids_between_token_and_placeable(token: Token, b: { x: number; y: number; w: number; h: number }) {
+  return Math.floor(distance_between_rect(token, b) / <number>canvas.grid?.size) + 1;
 }
 
-function units_between_token_and_placeable(a: Token, b: { x: number; y: number; w: number; h: number }) {
-  return Math.floor(distance_between_rect(a, b));
+function units_between_token_and_placeable(token: Token, b: { x: number; y: number; w: number; h: number }) {
+  return Math.floor(distance_between_rect(token, b));
 }
 
+function units_between_token_and_placeableOLD(token: Token, b: { x: number; y: number; w: number; h: number }) {
+  const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
+  //@ts-ignore
+  const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
+  // Sum up the distances
+  const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
+
+  const segmentsLeft = [{ ray: new Ray({ x: token.x, y: token.y }, { x: b.x, y: b.y }) }];
+  //@ts-ignore
+  const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
+  // Sum up the distances
+  const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
+
+  const dist = Math.max(distRight, distLeft);
+
+  return dist;
+}
 // function tokens_close_enough(a, b, maxDistance){
 //   const distance = grids_between_token_and_placeable(a, b);
 //   return maxDistance >= distance;

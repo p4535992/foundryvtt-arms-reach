@@ -228,7 +228,7 @@ export const DoorsReach = {
               );
               isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
             } else {
-              const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(doorControl), character);
+              const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(doorControl), character, WallDocument.documentName);
               isNotNearEnough =
                 dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
             }
@@ -437,7 +437,7 @@ export const DoorsReach = {
           dist = <number>computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(door), token);
           isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
         } else {
-          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token);
+          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token, WallDocument.documentName);
           isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
         }
         // const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token);

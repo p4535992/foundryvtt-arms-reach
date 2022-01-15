@@ -51,7 +51,7 @@ export const TemplatesReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(TemplatesReach.getTemplatesCenter(template), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(TemplatesReach.getTemplatesCenter(template), character);
+            const dist = computeDistanceBetweenCoordinates(TemplatesReach.getTemplatesCenter(template), character, MeasuredTemplateDocument.documentName);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {

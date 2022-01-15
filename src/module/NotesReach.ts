@@ -4,9 +4,7 @@ import {
   computeDistanceBetweenCoordinatesOLD,
   getCharacterName,
   getFirstPlayerToken,
-  getFirstPlayerTokenSelected,
   getPlaceableCenter,
-  getTokenByTokenID,
   iteractionFailNotification,
 } from './ArmsReachHelper';
 import { ARMS_REACH_MODULE_NAME } from './settings';
@@ -53,7 +51,7 @@ export const NotesReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(NotesReach.getNotesCenter(note), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(NotesReach.getNotesCenter(note), character);
+            const dist = computeDistanceBetweenCoordinates(NotesReach.getNotesCenter(note), character, NoteDocument.documentName);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
@@ -80,12 +78,13 @@ export const NotesReach = {
   },
 
   getNotesCenter: function (note: Note) {
-    // const noteCenter = { x: note.x, y: note.y };
-    // const noteCenter = {
-    //   x: note.x - <number>canvas.dimensions?.size / 2,
-    //   y: note.y - <number>canvas.dimensions?.size / 2,
-    // };
-    // return noteCenter;
-    return getPlaceableCenter(note);
+    const noteCenter = { 
+      x: note.x - <number>canvas.dimensions?.size / 2, 
+      y: note.y - <number>canvas.dimensions?.size / 2,
+      w: note.width,
+      h: note.height
+    };
+    return noteCenter;
+    // return getPlaceableCenter(note);
   },
 };
