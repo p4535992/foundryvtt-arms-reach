@@ -1,11 +1,12 @@
 import { warn } from '../foundryvtt-arms-reach';
 import { ArmsReach } from './ArmsReachApi';
-import { ARMS_REACH_MODULE_NAME, getAPI, getCanvas, getGame } from './settings';
+import { ARMS_REACH_MODULE_NAME, getAPI } from './settings';
+import { canvas, game } from './settings';
 
 export let armsReachSocket;
 
 Hooks.once('ready', async () => {
-  if (!getGame().modules.get('socketlib')?.active) {
+  if (!game.modules.get('socketlib')?.active) {
     Hooks.once('socketlib.ready', () => {
       //@ts-ignore
       armsReachSocket = socketlib.registerModule(ARMS_REACH_MODULE_NAME);
@@ -34,15 +35,11 @@ export function _socketIsReachableByIdOrName(token: Token, placeableObjectIdOrNa
 }
 
 export function isReachable(token: Token, placeableObject: PlaceableObject, userId: string): boolean {
-  return armsReachSocket
-    .executeAsGM(_socketIsReachable, token, placeableObject, userId)
-    .then((reachable) => reachable);
+  return armsReachSocket.executeAsGM(_socketIsReachable, token, placeableObject, userId).then((reachable) => reachable);
 }
 
 export function isReachableByTag(token: Token, tag: string, userId: string): boolean {
-  return armsReachSocket
-    .executeAsGM(_socketIsReachableByTag, token, tag, userId)
-    .then((reachable) => reachable);
+  return armsReachSocket.executeAsGM(_socketIsReachableByTag, token, tag, userId).then((reachable) => reachable);
 }
 
 export function isReachableById(token: Token, placeableObjectId: string, userId: string): boolean {

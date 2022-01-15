@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.8
+
+- Some little rewrite on the calculation of the distance
+
 ## 2.1.7
 
 - Update module.json to foundry version 9

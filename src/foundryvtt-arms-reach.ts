@@ -12,10 +12,11 @@
 // Import JavaScript modules
 
 // Import TypeScript modules
-import { getGame, registerSettings } from './module/settings';
+import { registerSettings } from './module/settings';
 import { preloadTemplates } from './module/preloadTemplates';
 import { ARMS_REACH_MODULE_NAME } from './module/settings';
 import { initHooks, readyHooks, setupHooks } from './module/Hooks';
+import { game } from './module/settings';
 
 export let debugEnabled = 0;
 // 0 = none, warnings = 1, debug = 2, all = 3
@@ -30,10 +31,10 @@ export const error = (...args) => console.error(`${ARMS_REACH_MODULE_NAME} | `, 
 export const timelog = (...args) => warn(`${ARMS_REACH_MODULE_NAME} | `, Date.now(), ...args);
 
 export const i18n = (key) => {
-  return getGame().i18n.localize(key);
+  return game.i18n.localize(key);
 };
 export const i18nFormat = (key, data = {}) => {
-  return getGame().i18n.format(key, data);
+  return game.i18n.format(key, data);
 };
 
 export const setDebugLevel = (debugText: string) => {
@@ -77,13 +78,13 @@ Hooks.once('setup', function () {
 /* ------------------------------------ */
 Hooks.once('ready', () => {
   // Do anything once the module is ready
-  if (!getGame().modules.get('lib-wrapper')?.active && getGame().user?.isGM) {
+  if (!game.modules.get('lib-wrapper')?.active && game.user?.isGM) {
     ui.notifications?.error(
       `The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`,
     );
     return;
   }
-  // if (!getGame().modules.get('drag-ruler')?.active && getGame().user?.isGM) {
+  // if (!game.modules.get('drag-ruler')?.active && game.user?.isGM) {
   //   ui.notifications?.error(
   //     `The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'drag-ruler' module.`,
   //   );
@@ -95,5 +96,5 @@ Hooks.once('ready', () => {
 // Add any additional hooks if necessary
 Hooks.once('libChangelogsReady', function () {
   //@ts-ignore
-  libChangelogs.register(ARMS_REACH_MODULE_NAME, '- Add [CHANGELOGS & CONFLICTS](https://github.com/theripper93/libChangelogs) hooks for better management of the conflicts', 'minor');
+  libChangelogs.register(ARMS_REACH_MODULE_NAME, '- Some little rewrite on the calculation of the distance', 'minor');
 });

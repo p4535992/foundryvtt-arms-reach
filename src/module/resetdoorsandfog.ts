@@ -7,12 +7,12 @@ RESET DOORS AND FOG BUTTONS
  ******************************************************************************************/
 
 import { log } from '../foundryvtt-arms-reach';
-import { getCanvas, getGame } from './settings';
+import { canvas, game } from './settings';
 
 export const ResetDoorsAndFog = {
   //Just a parent function for both sub functions. Kept functionality separate in case I want to detangle them later.
   resetDoorsAndFog: async function (scene) {
-    const isCurrentScene = scene.data._id == getCanvas().scene?.data._id;
+    const isCurrentScene = scene.data._id == canvas.scene?.data._id;
     await this.resetDoors(isCurrentScene, scene.data._id);
     await this.resetFog(isCurrentScene, scene.data._id);
   },
@@ -20,18 +20,12 @@ export const ResetDoorsAndFog = {
 
   resetDoors: async function (isCurrentScene, id) {
     if (isCurrentScene) {
-      await getCanvas()
-        .walls?.doors.filter((item) => item.data.ds == 1)
-        .forEach((item) => item.update({ ds: 0 }, {}));
+      await canvas.walls?.doors.filter((item) => item.data.ds == 1).forEach((item) => item.update({ ds: 0 }, {}));
     } else {
       if (id) {
-        log(
-          getGame()
-            .scenes?.get(id)
-            ?.data.walls.filter((item) => item.data.door != 0),
-        );
-        await getGame()
-          .scenes?.get(id)
+        log(game.scenes?.get(id)?.data.walls.filter((item) => item.data.door != 0));
+        await game.scenes
+          ?.get(id)
           ?.data.walls.filter((item) => item.data.door != 0)
           .forEach((x) => (x.data.ds = 0));
       }
@@ -45,7 +39,7 @@ export const ResetDoorsAndFog = {
 
   resetFog: async function (isCurrentScene, id = null) {
     if (isCurrentScene) {
-      getCanvas().sight?.resetFog();
+      canvas.sight?.resetFog();
     } else {
       //@ts-ignore
       const response = await SocketInterface.dispatch('modifyDocument', {
@@ -65,9 +59,9 @@ export const ResetDoorsAndFog = {
     return {
       name: 'Reset Doors & Fog',
       icon: '<i class="fas fa-dungeon"></i>',
-      condition: (li) => getGame().user?.isGM,
+      condition: (li) => game.user?.isGM,
       callback: (li) => {
-        const scene = getGame().scenes?.get(li.data(idField));
+        const scene = game.scenes?.get(li.data(idField));
         ResetDoorsAndFog.resetDoorsAndFog(scene);
       },
     };

@@ -1,5 +1,5 @@
 import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
-import { getCanvas, ARMS_REACH_MODULE_NAME, getGame, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
+import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
 import {
@@ -19,30 +19,29 @@ import { DrawingsReach } from './DrawingsReach';
 import { TilesReach } from './TilesReach';
 import { SoundsReach } from './SoundsReach';
 import { ArmsReach } from './ArmsReachApi';
-//@ts-ignore
-// import { KeybindLib } from "/modules/keybind-lib/keybind-lib.js";
+import { canvas, game } from './settings';
 
 export let taggerModuleActive;
 
 export const readyHooks = async () => {
   // setup all the hooks
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    getGame()[ArmsReach.API] = new ArmsReach();
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    game[ArmsReach.API] = new ArmsReach();
 
     Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
       // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
         // if ambient door is present and active dont' do this
-        if (!getGame().modules.get('ambientdoors')?.active) {
+        if (!game.modules.get('ambientdoors')?.active) {
           DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
         }
       }
     });
 
     // Management of the Stairways module
-    if (getGame().modules.get('stairways')?.active) {
+    if (game.modules.get('stairways')?.active) {
       Hooks.on('PreStairwayTeleport', (data) => {
-        if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
+        if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
           const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
           let tokenSelected;
 
@@ -60,20 +59,20 @@ export const readyHooks = async () => {
 
     // Adds menu option to Scene Nav and Directory
     Hooks.on('getSceneNavigationContext', (html, contextOptions) => {
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
         contextOptions.push(<any>ResetDoorsAndFog.getContextOption2('sceneId'));
       }
     });
 
     Hooks.on('getSceneDirectoryEntryContext', (html, contextOptions) => {
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
         contextOptions.push(ResetDoorsAndFog.getContextOption2('entityId'));
       }
     });
 
     // Adds Shut All Doors button to Walls Control Layer
     Hooks.on('getSceneControlButtons', function (controls) {
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
         controls[4].tools.splice(controls[4].tools.length - 2, 0, {
           name: 'close',
           title: 'Close Open Doors',
@@ -90,17 +89,17 @@ export const readyHooks = async () => {
     // Hooks.on('canvasReady',function (canvas: Canvas) {
     // const [target] = args;
     // const canvas = this as Canvas;
-    getCanvas()?.stage?.on('mousedown', async (event) => {
-      const position = getMousePosition(getCanvas(), event);
+    canvas?.stage?.on('mousedown', async (event) => {
+      const position = getMousePosition(canvas, event);
 
-      // const clickWalls:PlaceableObject[] = getPlaceablesAt(getCanvas()?.walls?.placeables, position) || [];
-      // const clickNotes:PlaceableObject[] = getPlaceablesAt(getCanvas()?.notes?.placeables, position) || [];
-      // const clickTokens:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tokens?.placeables, position) || [];
-      // const clickLights:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
-      // const clickSounds:PlaceableObject[] = getPlaceablesAt(getCanvas()?.lighting?.placeables, position) || [];
-      const clickDrawings: PlaceableObject[] = getPlaceablesAt(getCanvas()?.drawings?.placeables, position) || [];
-      // const clickTiles:PlaceableObject[] = getPlaceablesAt(getCanvas()?.tiles?.placeables, position) || [];
-      // const clickTemplates:PlaceableObject[] = getPlaceablesAt(getCanvas()?.templates?.placeables, position) || [];
+      // const clickWalls:PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
+      // const clickNotes:PlaceableObject[] = getPlaceablesAt(canvas?.notes?.placeables, position) || [];
+      // const clickTokens:PlaceableObject[] = getPlaceablesAt(canvas?.tokens?.placeables, position) || [];
+      // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
+      // const clickSounds:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
+      const clickDrawings: PlaceableObject[] = getPlaceablesAt(canvas?.drawings?.placeables, position) || [];
+      // const clickTiles:PlaceableObject[] = getPlaceablesAt(canvas?.tiles?.placeables, position) || [];
+      // const clickTemplates:PlaceableObject[] = getPlaceablesAt(canvas?.templates?.placeables, position) || [];
 
       const downTriggers: PlaceableObject[] = [];
       // downTriggers.push(...clickLights);
@@ -110,7 +109,7 @@ export const readyHooks = async () => {
       if (downTriggers.length === 0) {
         return;
       }
-      if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
         if (clickDrawings.length > 0) {
           const drawing = clickDrawings[0] as Drawing;
           let tokenSelected;
@@ -140,9 +139,9 @@ export const readyHooks = async () => {
 };
 
 export const setupHooks = () => {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
-      getGame().settings.set('core', 'notesDisplayToggle', true);
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+      game.settings.set('core', 'notesDisplayToggle', true);
     }
   }
 };
@@ -151,11 +150,11 @@ export const initHooks = () => {
   warn('Init Hooks processing');
 
   taggerModuleActive =
-    <boolean>getGame().modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active &&
-    <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration');
+    <boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active &&
+    <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration');
 
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
       DoorsReach.init();
 
       //@ts-ignore
@@ -174,7 +173,7 @@ export const initHooks = () => {
       );
     }
 
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
       //@ts-ignore
       // libWrapper.register(
       //   ARMS_REACH_MODULE_NAME,
@@ -191,7 +190,7 @@ export const initHooks = () => {
       );
     }
 
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
       // //@ts-ignore
       // libWrapper.register(
       //   ARMS_REACH_MODULE_NAME,
@@ -208,7 +207,7 @@ export const initHooks = () => {
       );
     }
 
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration')) {
       //@ts-ignore
       libWrapper.register(
         ARMS_REACH_MODULE_NAME,
@@ -218,7 +217,7 @@ export const initHooks = () => {
       );
     }
 
-    if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration')) {
       //@ts-ignore
       libWrapper.register(
         ARMS_REACH_MODULE_NAME,
@@ -228,7 +227,7 @@ export const initHooks = () => {
       );
     }
 
-    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+    // if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
     //   //@ts-ignore
     //   libWrapper.register(
     //     ARMS_REACH_MODULE_NAME,
@@ -239,7 +238,7 @@ export const initHooks = () => {
     //   );
     // }
 
-    // if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
+    // if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
     //   //@ts-ignore
     //   libWrapper.register(
     //     ARMS_REACH_MODULE_NAME,
@@ -253,23 +252,19 @@ export const initHooks = () => {
 };
 
 export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
     const [target] = args;
     const token = this as Token;
-    const prefixToCheck = <string>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationByPrefix');
+    const prefixToCheck = <string>game.settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationByPrefix');
     const isTokenNameChecked = token.name?.startsWith(prefixToCheck);
     // lootsheetnpc5e/template/npc-sheet.html
     const isNPCLootSheet = token.document.actor?.sheet?.template.includes('lootsheetnpc5e/template/npc-sheet.html');
-    const enableNPCLootSheet = <boolean>(
-      getGame().settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationWithLootSheet')
-    );
+    const enableNPCLootSheet = <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationWithLootSheet');
     if (isTokenNameChecked || (isNPCLootSheet && enableNPCLootSheet)) {
-      const nameSourceToken = <string>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationExplicitName');
+      const nameSourceToken = <string>game.settings.get(ARMS_REACH_MODULE_NAME, 'tokensIntegrationExplicitName');
       let tokenSelected;
       if (nameSourceToken) {
-        tokenSelected = <Token>(
-          getCanvas().tokens?.placeables.find((tokenTmp: Token) => tokenTmp.name === nameSourceToken)
-        );
+        tokenSelected = <Token>canvas.tokens?.placeables.find((tokenTmp: Token) => tokenTmp.name === nameSourceToken);
       } else {
         tokenSelected = <Token>getFirstPlayerTokenSelected();
         if (!tokenSelected) {
@@ -292,7 +287,7 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
 };
 
 export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
     const [target] = args;
     const note = this as Note;
     let tokenSelected;
@@ -316,7 +311,7 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
 };
 
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
     const doorControl = this as DoorControl;
     let tokenSelected;
 
@@ -346,7 +341,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
   }
 
   // YOU NEED THIS ANYWAY FOR A STRANGE BUG WITH OVERRIDE AND SOUND OF DOOR
-  //if(<boolean>getGame().settings.get(MODULE_NAME, "enableAmbientDoor")) {
+  //if(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
   //  AmbientDoors.onDoorMouseDownCheck(doorControl);
   //}
   // Call original method
@@ -355,7 +350,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 };
 
 export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
     const doorControl = this as DoorControl; //evt.currentTarget;
     let tokenSelected: Token = <Token>getFirstPlayerTokenSelected();
     let isOwned = false;
@@ -366,7 +361,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
       }
     }
     if (!tokenSelected) {
-      if (getGame().user?.isGM) {
+      if (game.user?.isGM) {
         return wrapped(...args);
       } else {
         return;
@@ -387,7 +382,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
 };
 
 export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
     const [target] = args;
     const light = this as AmbientLight;
     let tokenSelected;
@@ -411,7 +406,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
 };
 
 export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped, ...args) {
-  if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration')) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration')) {
     const [target] = args;
     const sound = this as AmbientSound;
     let tokenSelected;
@@ -435,7 +430,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 };
 
 // export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-//   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+//   if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
 //     const [target] = args;
 //     const drawing = this as Drawing;
 //     let tokenSelected;
@@ -459,7 +454,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 // };
 
 // export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-//   if (<boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
+//   if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
 //     const [target] = args;
 //     const tile = this as Tile;
 //     let tokenSelected;

@@ -1,7 +1,8 @@
 import { i18n } from '../foundryvtt-arms-reach';
 import { ArmsReach } from './ArmsReachApi';
-// import ImagePicker from "./libs/ImagePicker";
-// import SoundPicker from "./libs/SoundPicker";
+
+export const game = getGame();
+export const canvas = getCanvas();
 
 export const ARMS_REACH_MODULE_NAME = 'foundryvtt-arms-reach';
 export const ARMS_REACH_TAGGER_MODULE_NAME = 'tagger';
@@ -16,7 +17,7 @@ export const ARMS_REACH_TAGGER_FLAG = 'armsreach';
  * So you will need to deal with the fact that there might not be an initialized canvas at any point in time.
  * @returns
  */
-export function getCanvas(): Canvas {
+function getCanvas(): Canvas {
   if (!(canvas instanceof Canvas) || !canvas.ready) {
     throw new Error('Canvas Is Not Initialized');
   }
@@ -32,7 +33,7 @@ export function getCanvas(): Canvas {
  * So you will need to deal with the fact that there might not be an initialized canvas at any point in time.
  * @returns
  */
-export function getGame(): Game {
+function getGame(): Game {
   if (!(game instanceof Game)) {
     throw new Error('Game Is Not Initialized');
   }
@@ -112,9 +113,9 @@ export function getAPI(): ArmsReach {
 
 // Hooks.on("renderSettingsConfig", (app, html, user) => {
 
-//   // manageSettingsArmsReachFeature(<boolean>getGame().settings.get(MODULE_NAME, "enableArmsReach"));
-//   // manageSettingsAmbientDoorFeature(<boolean>getGame().settings.get(MODULE_NAME, "enableAmbientDoor"));
-//   // manageSettingsDesignerDoorFeature(<boolean>getGame().settings.get(MODULE_NAME, "enableDesignerDoor"));
+//   // manageSettingsArmsReachFeature(<boolean>game.settings.get(MODULE_NAME, "enableArmsReach"));
+//   // manageSettingsAmbientDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableAmbientDoor"));
+//   // manageSettingsDesignerDoorFeature(<boolean>game.settings.get(MODULE_NAME, "enableDesignerDoor"));
 
 // });
 
@@ -123,7 +124,7 @@ export const registerSettings = function () {
   // Arms Reach
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableArmsReach', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableArmsReach', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameEnableArmsReachFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintEnableArmsReachFeature`),
     scope: 'world',
@@ -144,7 +145,7 @@ export const registerSettings = function () {
   //   }
   // });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteraction`),
     scope: 'world',
@@ -155,7 +156,7 @@ export const registerSettings = function () {
 
   // DEPRECATED
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
     scope: 'world',
@@ -166,7 +167,7 @@ export const registerSettings = function () {
     range: { min: 0, max: 50, step: 0.5 },
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
     scope: 'world',
@@ -177,7 +178,7 @@ export const registerSettings = function () {
     range: { min: 0, max: 50, step: 0.5 },
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
     scope: 'world',
@@ -186,7 +187,7 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'forceReSelection', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'forceReSelection', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
     scope: 'world',
@@ -195,7 +196,7 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
     scope: 'world',
@@ -215,7 +216,7 @@ export const registerSettings = function () {
   // 	}
   // });
 
-  //   getGame().settings.register(ARMS_REACH_MODULE_NAME,'setDistanceModeForDoorInteraction',{
+  //   game.settings.register(ARMS_REACH_MODULE_NAME,'setDistanceModeForDoorInteraction',{
   //     name: i18n(ARMS_REACH_MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
   //     hint: i18n(ARMS_REACH_MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
   //     scope: "world",
@@ -233,7 +234,7 @@ export const registerSettings = function () {
   // DOOR SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoorsIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoorsIntegrationFeature`),
     scope: 'world',
@@ -244,7 +245,7 @@ export const registerSettings = function () {
 
   // DEPRECATED AND REMOVED
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
     scope: 'world',
@@ -255,7 +256,7 @@ export const registerSettings = function () {
     range: { min: 0, max: 10, step: 0.5 },
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
     scope: 'world',
@@ -268,7 +269,7 @@ export const registerSettings = function () {
 
   // DEPRECATED
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyForInteraction`),
     scope: 'world',
@@ -279,7 +280,7 @@ export const registerSettings = function () {
 
   // DEPRECATED (double tap)
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoubleTapInteraction`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoubleTapInteraction`),
     scope: 'world',
@@ -293,7 +294,7 @@ export const registerSettings = function () {
 
   // DEPRECATED
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyToCenterCamera`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyToCenterCamera`),
     scope: 'world',
@@ -308,7 +309,7 @@ export const registerSettings = function () {
 
   // First of all Depends if the module is present and active
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
     scope: 'world',
@@ -321,7 +322,7 @@ export const registerSettings = function () {
   // JOURNAL SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotesIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotesIntegrationFeature`),
     scope: 'world',
@@ -334,7 +335,7 @@ export const registerSettings = function () {
   // TOKEN SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationFeature`),
     scope: 'world',
@@ -343,7 +344,7 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationWithLootSheet', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationWithLootSheet', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationWithLootSheet`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationWithLootSheet`),
     scope: 'world',
@@ -352,7 +353,7 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationByPrefix', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationByPrefix', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationByPrefix`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationByPrefix`),
     scope: 'world',
@@ -361,7 +362,7 @@ export const registerSettings = function () {
     type: String,
   });
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationExplicitName', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationExplicitName', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationExplicitName`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationExplicitName`),
     scope: 'client',
@@ -374,7 +375,7 @@ export const registerSettings = function () {
   // LIGHT SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameLightsIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintLightsIntegrationFeature`),
     scope: 'world',
@@ -387,7 +388,7 @@ export const registerSettings = function () {
   // SOUNDS SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSoundsIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSoundsIntegrationFeature`),
     scope: 'world',
@@ -400,7 +401,7 @@ export const registerSettings = function () {
   // DRAWING SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDrawingsIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDrawingsIntegrationFeature`),
     scope: 'world',
@@ -413,7 +414,7 @@ export const registerSettings = function () {
   // TILE SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTilesIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTilesIntegrationFeature`),
     scope: 'world',
@@ -426,7 +427,7 @@ export const registerSettings = function () {
   // TEMPLATES SUPPORT
   // ========================================================
 
-  // getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTemplatesIntegration', {
+  // game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTemplatesIntegration', {
   //   name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTemplatesIntegrationFeature`),
   //   hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTemplatesIntegrationFeature`),
   //   scope: 'world',
@@ -439,7 +440,7 @@ export const registerSettings = function () {
   // TAGGER SUPPORT
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTaggerIntegrationFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTaggerIntegrationFeature`),
     scope: 'world',
@@ -452,7 +453,7 @@ export const registerSettings = function () {
   // Reset Doors and Fog
   // ========================================================
 
-  getGame().settings.register(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog', {
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
     scope: 'world',

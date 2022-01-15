@@ -1,20 +1,22 @@
 import { error, i18n, i18nFormat } from '../foundryvtt-arms-reach';
 import { DoorData, DoorSourceData, DoorTargetData } from './ArmsReachModels';
-import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
+import { ARMS_REACH_MODULE_NAME } from './settings';
 import {
   computeDistanceBetweenCoordinates,
   computeDistanceBetweenCoordinatesOLD,
   getCharacterName,
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
+  getPlaceableCenter,
   getTokenCenter,
   isFocusOnCanvas,
   iteractionFailNotification,
 } from './ArmsReachHelper';
+import { canvas, game } from './settings';
 
 export const DoorsReach = {
   init: function () {
-    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter')) {
+    if (game.settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter')) {
       // Door interaction
       document.addEventListener('keydown', (evt) => {
         //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
@@ -43,14 +45,14 @@ export const DoorsReach = {
               }
 
               ArmsReachVariables.door_interaction_cameraCentered = true;
-              getCanvas().animatePan({ x: character.x, y: character.y });
+              canvas.animatePan({ x: character.x, y: character.y });
             }
           }
         }
       });
     }
 
-    if (getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction')) {
+    if (game.settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction')) {
       document.addEventListener('keyup', (evt) => {
         //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
         if (evt.key === 'e') {
@@ -78,7 +80,7 @@ export const DoorsReach = {
     }
 
     // Double Tap to open nearest door -------------------------------------------------
-    if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') > 0) {
+    if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay') > 0) {
       document.addEventListener('keyup', (evt) => {
         if (evt.key === 'ArrowUp' || evt.key === 'w') {
           DoorsReach.ifStuckInteract('up', 0, -0.5);
@@ -114,16 +116,16 @@ export const DoorsReach = {
       }
     }
     if (!character) {
-      if (getGame().user?.isGM) {
+      if (game.user?.isGM) {
         return true;
       } else {
         return false;
       }
     }
     // OLD SETTING
-    let globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+    let globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
     if (globalInteraction <= 0) {
-      globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
     }
 
     // Sets the global maximum interaction distance
@@ -132,12 +134,11 @@ export const DoorsReach = {
       // Check distance
       //let character:Token = getFirstPlayerToken();
       if (
-        !getGame().user?.isGM ||
-        (getGame().user?.isGM &&
-          <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
+        !game.user?.isGM ||
+        (game.user?.isGM && <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         const sourceData: DoorSourceData = {
-          scene: <Scene>getCanvas().scene,
+          scene: <Scene>canvas.scene,
           name: doorControl.name,
           label: doorControl.name,
           icon: '', //doorControl.icon.texture.baseTexture., // TODO
@@ -151,7 +152,7 @@ export const DoorsReach = {
         const tokenCenter = getTokenCenter(character);
 
         const targetData: DoorTargetData = {
-          scene: <Scene>getCanvas().scene,
+          scene: <Scene>canvas.scene,
           name: character.name,
           label: character.name,
           icon: '', //doorControl.icon.texture.baseTexture., // TODO
@@ -162,14 +163,14 @@ export const DoorsReach = {
           y: tokenCenter.y,
         };
 
-        //const sourceSceneId = getCanvas().scene.id;
-        //const selectedOrOwnedTokenId = getCanvas().tokens.controlled.map((token) => token.id)
+        //const sourceSceneId = canvas.scene.id;
+        //const selectedOrOwnedTokenId = canvas.tokens.controlled.map((token) => token.id)
         //const targetSceneId = targetScene ? targetScene.id : null
         const doorData: DoorData = {
           sourceData: sourceData,
           selectedOrOwnedTokenId: character.id,
           targetData: targetData,
-          userId: <string>getGame().userId,
+          userId: <string>game.userId,
         };
 
         if (!character) {
@@ -221,17 +222,18 @@ export const DoorsReach = {
           // Standard computing distance
           if (!jumDefaultComputation) {
             // OLD SETTING
-            if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-              const dist = <number>computeDistanceBetweenCoordinatesOLD(doorControl, character);
-              isNotNearEnough =
-                dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+            if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+              const dist = <number>(
+                computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(doorControl), character)
+              );
+              isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
             } else {
-              const dist = computeDistanceBetweenCoordinates(doorControl, character);
+              const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(doorControl), character);
               isNotNearEnough =
-                dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+                dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
             }
           }
-          if (getGame().user?.isGM && isRightHanler) {
+          if (game.user?.isGM && isRightHanler) {
             isNotNearEnough = false;
           }
           if (isNotNearEnough) {
@@ -250,7 +252,7 @@ export const DoorsReach = {
           }
           // END MOD ABD 4535992
         }
-      } else if (getGame().user?.isGM) {
+      } else if (game.user?.isGM) {
         return true;
       }
       return false;
@@ -264,9 +266,9 @@ export const DoorsReach = {
     //       (
     //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
     //   ||
-    //       getGame().data.users.find(x => x._id === userID )['role'] >= getGame().settings.get(MODULE_NAME, "stealthDoor")
+    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
     //       )
-    //       && getGame().keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
     // {
     //   return;
     // }
@@ -305,9 +307,9 @@ export const DoorsReach = {
     //       (
     //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
     //   ||
-    //       getGame().data.users.find(x => x._id === userID )['role'] >= getGame().settings.get(MODULE_NAME, "stealthDoor")
+    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
     //       )
-    //       && getGame().keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
+    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
     // {
     //   return;
     // }
@@ -367,10 +369,12 @@ export const DoorsReach = {
     }
     // if (
     //   Date.now() - ArmsReachVariables.lastData[key] >
-    //   <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')
+    //   <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')
     // ) {
-    if((Date.now() - ArmsReachVariables.lastData[key]) / 1000 > 
-      <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')){
+    if (
+      (Date.now() - ArmsReachVariables.lastData[key]) / 1000 >
+      <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay')
+    ) {
       ArmsReachVariables.lastData.x = character.x;
       ArmsReachVariables.lastData.y = character.y;
       ArmsReachVariables.lastData[key] = Date.now();
@@ -388,12 +392,12 @@ export const DoorsReach = {
    */
   interactWithNearestDoor: function (token: Token, offsetx = 0, offsety = 0) {
     // Max distance definition
-    const gridSize = <number>getCanvas().dimensions?.size;
+    const gridSize = <number>canvas.dimensions?.size;
     let maxDistance = Infinity;
     // OLD SETTING
-    let globalMaxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+    let globalMaxDistance = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
     if (globalMaxDistance <= 0) {
-      globalMaxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      globalMaxDistance = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
     }
     if (globalMaxDistance > 0) {
       if (globalMaxDistance < maxDistance) {
@@ -401,9 +405,9 @@ export const DoorsReach = {
       }
     } else {
       // DEPRECATED AND REMOVED
-      // maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance');
+      // maxDistance = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance');
       // if (maxDistance <= 0) {
-      maxDistance = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement');
+      maxDistance = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement');
       // }
     }
 
@@ -416,35 +420,30 @@ export const DoorsReach = {
     //charCenter.x += offsetx * gridSize;
     //charCenter.y += offsety * gridSize;
 
-    // for (let i = 0; i < <number>getCanvas().controls?.doors?.children.length; i++) {
-    //   const door: DoorControl = <DoorControl>getCanvas().controls?.doors?.getChildAt(0);
-    getGame().scenes?.current?.walls.contents.forEach((wall:WallDocument) =>{
-      if( wall.data.door > 0){
-        const door: DoorControl = <DoorControl>getCanvas().controls?.doors?.children.find(
-          (x: DoorControl) => {
-            return x.wall.id == <string>wall.id;
-          },
-        );
+    // for (let i = 0; i < <number>canvas.controls?.doors?.children.length; i++) {
+    //   const door: DoorControl = <DoorControl>canvas.controls?.doors?.getChildAt(0);
+    game.scenes?.current?.walls.contents.forEach((wall: WallDocument) => {
+      if (wall.data.door > 0) {
+        const door: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+          return x.wall.id == <string>wall.id;
+        });
         // if (!door.visible) {
         //   continue;
         // }
         let isNotNearEnough = false;
         let dist;
         // OLD SETTING
-        if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-          dist = <number>computeDistanceBetweenCoordinatesOLD(door, token);
-          isNotNearEnough =
-            dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-        } 
-        else {
-          dist = computeDistanceBetweenCoordinates(door, token);
-          isNotNearEnough =
-            dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+        if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          dist = <number>computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(door), token);
+          isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+        } else {
+          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token);
+          isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
         }
-        // const dist = computeDistanceBetweenCoordinates(door, token);
+        // const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token);
         // const distInGridUnits = dist / gridSize - 0.1;
         // if (distInGridUnits < maxDistance && dist < shortestDistance) {
-        if(!isNotNearEnough) {
+        if (!isNotNearEnough) {
           closestDoor = door;
           shortestDistance = dist;
         }
@@ -458,11 +457,11 @@ export const DoorsReach = {
         stopPropagation: (event) => {
           return;
         },
-        data:{
-          originalEvent:{
-            button: 0
-          }
-        }
+        data: {
+          originalEvent: {
+            button: 0,
+          },
+        },
         //currentTarget: closestDoor
       };
       //@ts-ignore
@@ -486,10 +485,9 @@ export const DoorsReach = {
   /**
    * Get dorr center
    */
-  getDoorCenter: function (token) {
-    // let tokenCenter = {x: token.x + token.width / 2, y: token.y + token.height / 2}
-    const tokenCenter = { x: token.x, y: token.y };
-    return tokenCenter;
+  getDoorCenter: function (doorCoontrol: DoorControl) {
+    //const doorCenter = { x: doorCoontrol.x, y: doorCoontrol.y };
+    return getPlaceableCenter(doorCoontrol);
   },
 };
 

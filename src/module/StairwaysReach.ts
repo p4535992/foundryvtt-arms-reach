@@ -5,10 +5,12 @@ import {
   getCharacterName,
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
+  getPlaceableCenter,
   getTokenByTokenID,
   iteractionFailNotification,
 } from './ArmsReachHelper';
-import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
+import { ARMS_REACH_MODULE_NAME } from './settings';
+import { canvas, game } from './settings';
 
 export const StairwaysReach = {
   globalInteractionDistance: function (stairway: SourceData, selectedTokenIds: string[], userId?: String): boolean {
@@ -32,18 +34,17 @@ export const StairwaysReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+    let globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
     if (globalInteraction <= 0) {
-      globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
       // Check distance
       //let character:Token = getFirstPlayerToken();
       if (
-        !getGame().user?.isGM ||
-        (getGame().user?.isGM &&
-          <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
+        !game.user?.isGM ||
+        (game.user?.isGM && <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
           iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForStairway`));
@@ -51,14 +52,12 @@ export const StairwaysReach = {
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
-          if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
             const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
-            isNotNearEnough =
-              dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
             const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
-            isNotNearEnough =
-              dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
@@ -75,7 +74,7 @@ export const StairwaysReach = {
           }
           // END MOD ABD 4535992
         }
-      } else if (getGame().user?.isGM) {
+      } else if (game.user?.isGM) {
         // DO NOTHING
         return true;
       }
@@ -85,8 +84,13 @@ export const StairwaysReach = {
   },
 
   getStairwaysCenter: function (stairway) {
-    const stairwayCenter = { x: stairway.x, y: stairway.y };
-    return stairwayCenter;
+    // const stairwayCenter = { x: stairway.x, y: stairway.y };
+    // const stairwayCenter = {
+    //   x: stairway.x - <number>canvas.dimensions?.size / 2,
+    //   y: stairway.y - <number>canvas.dimensions?.size / 2,
+    // };
+    // return stairwayCenter;
+    return getPlaceableCenter(stairway);
   },
 
   globalInteractionDistanceSimple: function (
@@ -102,7 +106,7 @@ export const StairwaysReach = {
       }
     }
     if (!character) {
-      if (getGame().user?.isGM) {
+      if (game.user?.isGM) {
         return true;
       } else {
         return false;
@@ -111,18 +115,17 @@ export const StairwaysReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+    let globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
     if (globalInteraction <= 0) {
-      globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
       // Check distance
       //let character:Token = getFirstPlayerToken();
       if (
-        !getGame().user?.isGM ||
-        (getGame().user?.isGM &&
-          <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
+        !game.user?.isGM ||
+        (game.user?.isGM && <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
           iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForStairway`));
@@ -130,14 +133,12 @@ export const StairwaysReach = {
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
-          if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
             const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
-            isNotNearEnough =
-              dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
             const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character);
-            isNotNearEnough =
-              dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
@@ -154,7 +155,7 @@ export const StairwaysReach = {
           }
           // END MOD ABD 4535992
         }
-      } else if (getGame().user?.isGM) {
+      } else if (game.user?.isGM) {
         // DO NOTHING
         return true;
       }

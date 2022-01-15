@@ -5,10 +5,12 @@ import {
   getCharacterName,
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
+  getPlaceableCenter,
   getTokenByTokenID,
   iteractionFailNotification,
 } from './ArmsReachHelper';
-import { getCanvas, ARMS_REACH_MODULE_NAME, getGame } from './settings';
+import { ARMS_REACH_MODULE_NAME } from './settings';
+import { canvas, game } from './settings';
 
 export const TilesReach = {
   globalInteractionDistance: function (character: Token, tile: Tile, userId?: String): boolean {
@@ -20,7 +22,7 @@ export const TilesReach = {
       }
     }
     if (!character) {
-      if (getGame().user?.isGM) {
+      if (game.user?.isGM) {
         return true;
       } else {
         return false;
@@ -29,18 +31,17 @@ export const TilesReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+    let globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
     if (globalInteraction <= 0) {
-      globalInteraction = <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
       // Check distance
       //let character:Token = getFirstPlayerToken();
       if (
-        !getGame().user?.isGM ||
-        (getGame().user?.isGM &&
-          <boolean>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
+        !game.user?.isGM ||
+        (game.user?.isGM && <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
           iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForTile`));
@@ -48,14 +49,12 @@ export const TilesReach = {
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
-          if (<number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
             const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
-            isNotNearEnough =
-              dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
             const dist = computeDistanceBetweenCoordinates(TilesReach.getTilesCenter(tile), character);
-            isNotNearEnough =
-              dist > <number>getGame().settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
@@ -71,7 +70,7 @@ export const TilesReach = {
             return true;
           }
         }
-      } else if (getGame().user?.isGM) {
+      } else if (game.user?.isGM) {
         // DO NOTHING
         return true;
       }
@@ -81,7 +80,8 @@ export const TilesReach = {
   },
 
   getTilesCenter: function (tile: Tile) {
-    const drawCenter = { x: tile.x, y: tile.y };
-    return drawCenter;
+    // const tileCenter = { x: tile.x, y: tile.y };
+    // return tileCenter;
+    return getPlaceableCenter(tile);
   },
 };
