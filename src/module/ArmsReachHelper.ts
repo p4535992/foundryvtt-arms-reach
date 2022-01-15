@@ -31,32 +31,9 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, ch
   const deltaRight = (yMinA - yMaxB) / delta;
   //@ts-ignore
   const unitSize = <number>canvas.dimensions?.distance || 5;
-  //return unitSize + Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
   let dist = Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
   dist = dist / unitSize;
-  //let gridSize = <number>canvas.dimensions?.distance;
-  //dist = (dist / gridSize);
   return dist;
-  /*
-    const SQRT_2 = Math.sqrt(2);
-    const charCenter = getTokenCenter(character);
-    const x1 = placeable.x;
-    const y1 = placeable.y;
-    const x2 = charCenter.x;
-    const y2 = charCenter.y;
-    const  dx = Math.abs(x2 - x1);
-    const  dy = Math.abs(y2 - y1);
-
-    const  min = Math.min(dx, dy);
-    const  max = Math.max(dx, dy);
-
-    const  diagonalSteps = min;
-    const  straightSteps = max - min;
-
-    return (SQRT_2 * diagonalSteps + straightSteps) - <number>canvas.dimensions?.size;
-    */
-  //return Math.sqrt(canvas.dimensions.size) * diagonalSteps + straightSteps;
-  //return getManhattanBetween(doorControl, charCenter);
 };
 
 /**
@@ -74,43 +51,40 @@ export const computeDistanceBetweenCoordinates = function (
   const wPlaceable = placeable.w;
   const hPlaceable = placeable.h;
   //@ts-ignore
-  let xToken = character._validPosition?.x ? character._validPosition?.x : character.x;
-  //@ts-ignore
-  let yToken = character._validPosition?.y ? character._validPosition?.y : character.y;
+  // let xToken = character._validPosition?.x ? character._validPosition?.x : character.x;
+  // //@ts-ignore
+  // let yToken = character._validPosition?.y ? character._validPosition?.y : character.y;
   //const shape = getTokenCenter(character);
   // const shape = { x: character.x + character.w / 2, y: character.y + character.h / 2 };
 
-  const tokendoc = character.document;
-  //@ts-ignore
-  const tokenWidth = (tokendoc.parent?.dimensions.size * tokendoc.data.width) / 2;
-  //@ts-ignore
-  const tokenHeight = (tokendoc.parent?.dimensions.size * tokendoc.data.height) / 2;
+  // const tokendoc = character.document;
+  // //@ts-ignore
+  // const tokenWidth = (tokendoc.parent?.dimensions.size * tokendoc.data.width) / 2;
+  // //@ts-ignore
+  // const tokenHeight = (tokendoc.parent?.dimensions.size * tokendoc.data.height) / 2;
 
-  const shape = {
-    x: tokendoc.data.x + tokenWidth,
-    y: tokendoc.data.y + tokenHeight,
-  };
+  // const shape = {
+  //   x: tokendoc.data.x + tokenWidth,
+  //   y: tokendoc.data.y + tokenHeight,
+  // };
 
-  xToken = shape.x;
-  yToken = shape.y;
+  // xToken = shape.x;
+  // yToken = shape.y;
 
   //@ts-ignore
   const unitSize = <number>canvas.dimensions.distance; //<number>canvas.grid?.grid?.options.dimensions.distance;
 
-  if (!xPlaceable || !yPlaceable || !xToken || !yToken) {
-    error(
-      '[xPlaceable=' + xPlaceable + ', yPlaceable=' + yPlaceable + ', xToken=' + xToken + ', yToken=' + yToken + ']',
-    );
+  if (!xPlaceable || !yPlaceable || !character) {
+    //|| !xToken || !yToken) {
+    // error(
+    //   '[xPlaceable=' + xPlaceable + ', yPlaceable=' + yPlaceable + ', xToken=' + xToken + ', yToken=' + yToken + ']',
+    // );
     return computeDistanceBetweenCoordinatesOLD(placeable, character);
   } else {
-    // const globalInteractionMeasurement = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement')
-    // const res = Number.between(xToken, xPlaceable, xPlaceable + wPlaceable)
-    //   && Number.between(yToken - globalInteractionMeasurement, yPlaceable, yPlaceable + hPlaceable);
-    // if(res){
-    //   return globalInteractionMeasurement - unitSize;
-    // }else{
-    //   return globalInteractionMeasurement + unitSize;
-    // }
+    const dist = units_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+    return dist;
+
+    /*
     const segmentsRight = [{ ray: new Ray({ x: xPlaceable, y: yPlaceable }, { x: xToken, y: yToken }) }];
     //@ts-ignore
     const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
@@ -126,6 +100,18 @@ export const computeDistanceBetweenCoordinates = function (
     const dist = Math.max(distRight, distLeft);
 
     return dist;
+    */
+
+    /*
+    const globalInteractionMeasurement = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement')
+    const res = Number.between(xToken, xPlaceable, xPlaceable + wPlaceable)
+      && Number.between(yToken - globalInteractionMeasurement, yPlaceable, yPlaceable + hPlaceable);
+    if(res){
+      return globalInteractionMeasurement - unitSize;
+    }else{
+      return globalInteractionMeasurement + unitSize;
+    }
+    */
 
     /*
     // Track the total number of diagonals
@@ -497,10 +483,16 @@ export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
 };
 
 export const getMousePosition = function (canvas: Canvas, event): { x: number; y: number } {
-  const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;
+  // const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;
+  // return {
+  //   x: (event.data.global.x - transform?.tx) / <number>canvas?.stage?.scale?.x,
+  //   y: (event.data.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
+  // };
+  // NEW METHOD SEEM MORE PRECISE
+  const position = canvas.app?.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage);
   return {
-    x: (event.data.global.x - transform?.tx) / <number>canvas?.stage?.scale?.x,
-    y: (event.data.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
+    x: position.x,
+    y: position.y,
   };
 };
 
@@ -509,13 +501,11 @@ export const getPlaceablesAt = function (placeables, position): PlaceableObject[
 };
 
 export const placeableContains = function (placeable, position): boolean {
-  // Tokens have getter (since width/height is in grid increments) but drawings use data.width/height directly
-  const w = placeable.w || placeable.data?.width || placeable.width;
-  const h = placeable.h || placeable.data?.height || placeable.height;
-  return (
-    Number.between(position.x, placeable.data.x, placeable.data.x + w) &&
-    Number.between(position.y, placeable.data.y, placeable.data.y + h)
-  );
+  const x = getPlaceableX(placeable);
+  const y = getPlaceableY(placeable);
+  const w = getPlaceableWidth(placeable);
+  const h = getPlaceableHeight(placeable);
+  return Number.between(position.x, x, x + w) && Number.between(position.y, y, y + h);
 };
 
 export const getPlaceableCenter = function (placeable: any): any {
@@ -557,3 +547,73 @@ export const getPlaceableY = function (placeable: any): number {
   }
   return y;
 };
+
+function distance_between_rect(p1: Token, p2: { x: number; y: number; w: number; h: number }) {
+  const x1 = p1.x;
+  const y1 = p1.y;
+  const x1b = p1.x + p1.w;
+  const y1b = p1.y + p1.h;
+
+  const x2 = p2.x;
+  const y2 = p2.y;
+  const x2b = p2.x + p2.w;
+  const y2b = p2.y + p2.h;
+
+  const left = x2b < x1;
+  const right = x1b < x2;
+  const bottom = y2b < y1;
+  const top = y1b < y2;
+
+  if (top && left) {
+    return distance_between({ x: x1, y: y1b }, { x: x2b, y: y2 });
+  } else if (left && bottom) {
+    return distance_between({ x: x1, y: y1 }, { x: x2b, y: y2b });
+  } else if (bottom && right) {
+    return distance_between({ x: x1b, y: y1 }, { x: x2, y: y2b });
+  } else if (right && top) {
+    return distance_between({ x: x1b, y: y1b }, { x: x2, y: y2 });
+  } else if (left) {
+    return x1 - x2b;
+  } else if (right) {
+    return x2 - x1b;
+  } else if (bottom) {
+    return y1 - y2b;
+  } else if (top) {
+    return y2 - y1b;
+  }
+
+  return 0;
+}
+
+function distance_between(a: { x: number; y: number }, b: { x: number; y: number }): number {
+  return new Ray(a, b).distance;
+  /*
+  const segmentsRight = [{ ray: new Ray({ x: a.x, y: a.y }, { x: b.x, y: b.y }) }];
+  //@ts-ignore
+  const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
+  // Sum up the distances
+  const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
+
+  const segmentsLeft = [{ ray: new Ray({ x: b.x, y: b.y }, { x: a.x, y: a.y }) }];
+  //@ts-ignore
+  const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
+  // Sum up the distances
+  const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
+
+  const dist = Math.max(distRight, distLeft);
+  return dist;
+  */
+}
+
+function grids_between_token_and_placeable(a: Token, b: { x: number; y: number; w: number; h: number }) {
+  return Math.floor(distance_between_rect(a, b) / <number>canvas.grid?.size) + 1;
+}
+
+function units_between_token_and_placeable(a: Token, b: { x: number; y: number; w: number; h: number }) {
+  return Math.floor(distance_between_rect(a, b));
+}
+
+// function tokens_close_enough(a, b, maxDistance){
+//   const distance = grids_between_token_and_placeable(a, b);
+//   return maxDistance >= distance;
+// }
