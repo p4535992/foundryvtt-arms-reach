@@ -51,7 +51,11 @@ export const DrawingsReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(DrawingsReach.getDrawingsCenter(drawing), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(DrawingsReach.getDrawingsCenter(drawing), character, DrawingDocument.documentName);
+            const dist = computeDistanceBetweenCoordinates(
+              DrawingsReach.getDrawingsCenter(drawing),
+              character,
+              DrawingDocument.documentName,
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
@@ -78,8 +82,8 @@ export const DrawingsReach = {
   },
 
   getDrawingsCenter: function (drawing: Drawing) {
-    // const drawCenter = { 
-    //   x: drawing.x, 
+    // const drawCenter = {
+    //   x: drawing.x,
     //   y: drawing.y,
     //   w: drawing.width,
     //   h: drawing.height

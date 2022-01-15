@@ -104,7 +104,7 @@
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
 
   "foundryvtt-arms-reach.settingNameTaggerIntegrationFeature": "Enable/Disable Tagger Module integration",
-  "foundryvtt-arms-reach.settingHintTaggerIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it",
+  "foundryvtt-arms-reach.settingHintTaggerIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
 
   "foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
   "foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the doors and reset the fog on a scene",

@@ -51,7 +51,11 @@ export const LightsReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(LightsReach.getLightsCenter(light), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(LightsReach.getLightsCenter(light), character, AmbientLightDocument.documentName);
+            const dist = computeDistanceBetweenCoordinates(
+              LightsReach.getLightsCenter(light),
+              character,
+              AmbientLightDocument.documentName,
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {

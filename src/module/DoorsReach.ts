@@ -228,7 +228,11 @@ export const DoorsReach = {
               );
               isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
             } else {
-              const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(doorControl), character, WallDocument.documentName);
+              const dist = computeDistanceBetweenCoordinates(
+                DoorsReach.getDoorCenter(doorControl),
+                character,
+                WallDocument.documentName,
+              );
               isNotNearEnough =
                 dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
             }

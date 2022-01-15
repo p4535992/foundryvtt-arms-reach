@@ -98,7 +98,7 @@ export const readyHooks = async () => {
       // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
       // const clickSounds:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
       const clickDrawings: PlaceableObject[] = getPlaceablesAt(canvas?.drawings?.placeables, position) || [];
-      const clickTiles:PlaceableObject[] = getPlaceablesAt(canvas.background?.placeables, position) || [];
+      const clickTiles: PlaceableObject[] = getPlaceablesAt(canvas.background?.placeables, position) || [];
       // const clickTemplates:PlaceableObject[] = getPlaceablesAt(canvas?.templates?.placeables, position) || [];
 
       const downTriggers: PlaceableObject[] = [];

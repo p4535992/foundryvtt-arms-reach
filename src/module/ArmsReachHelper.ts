@@ -47,7 +47,7 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, ch
 export const computeDistanceBetweenCoordinates = function (
   placeable: { x: number; y: number; w: number; h: number },
   character: Token,
-  documentName: string
+  documentName: string,
 ): number {
   const xPlaceable = placeable.x; //placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
   const yPlaceable = placeable.y; //placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
@@ -80,24 +80,39 @@ export const computeDistanceBetweenCoordinates = function (
     //   '[xPlaceable=' + xPlaceable + ', yPlaceable=' + yPlaceable + ', xToken=' + xToken + ', yToken=' + yToken + ']',
     // );
     // return computeDistanceBetweenCoordinatesOLD(placeable, character);
-    let dist = grids_between_token_and_placeable(character,placeable);
+    let dist = grids_between_token_and_placeable(character, placeable);
     dist = dist * unitSize;
     return dist;
   } else {
-    if(documentName == 'Stairway'){
+    if (documentName == 'Stairway') {
       // const dist = grids_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
       // return dist;
-      const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+      const dist = units_between_token_and_placeableOLD(character, {
+        x: xPlaceable,
+        y: yPlaceable,
+        w: wPlaceable,
+        h: hPlaceable,
+      });
       return dist;
-    }else if(documentName == NoteDocument.documentName){
+    } else if (documentName == NoteDocument.documentName) {
       // const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
       // return dist;
       // let dist = grids_between_token_and_placeable(character,placeable);
       // dist = dist * unitSize;
-      const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+      const dist = units_between_token_and_placeableOLD(character, {
+        x: xPlaceable,
+        y: yPlaceable,
+        w: wPlaceable,
+        h: hPlaceable,
+      });
       return dist;
-    }else{
-      const dist = units_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+    } else {
+      const dist = units_between_token_and_placeable(character, {
+        x: xPlaceable,
+        y: yPlaceable,
+        w: wPlaceable,
+        h: hPlaceable,
+      });
       return dist;
     }
   }
@@ -371,7 +386,7 @@ function measureDistancesInternal(segments, options = {}) {
       return spaces * <number>canvas.dimensions?.distance;
     });
   }
-};
+}
 
 export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
   //@ts-ignore
@@ -466,28 +481,28 @@ function distance_between_rect(p1: Token, p2: { x: number; y: number; w: number;
   const top = y1b < y2;
 
   if (top && left) {
-      return distance_between({ x: x1, y: y1b }, { x: x2b, y: y2 });
+    return distance_between({ x: x1, y: y1b }, { x: x2b, y: y2 });
   } else if (left && bottom) {
-      return distance_between({ x: x1, y: y1 }, { x: x2b, y: y2b });
+    return distance_between({ x: x1, y: y1 }, { x: x2b, y: y2b });
   } else if (bottom && right) {
-      return distance_between({ x: x1b, y: y1 }, { x: x2, y: y2b });
+    return distance_between({ x: x1b, y: y1 }, { x: x2, y: y2b });
   } else if (right && top) {
-      return distance_between({ x: x1b, y: y1b }, { x: x2, y: y2 });
+    return distance_between({ x: x1b, y: y1b }, { x: x2, y: y2 });
   } else if (left) {
-      return x1 - x2b;
+    return x1 - x2b;
   } else if (right) {
-      return x2 - x1b;
+    return x2 - x1b;
   } else if (bottom) {
-      return y1 - y2b;
+    return y1 - y2b;
   } else if (top) {
-      return y2 - y1b;
+    return y2 - y1b;
   }
 
   return 0;
 }
 
 function distance_between(a: { x: number; y: number }, b: { x: number; y: number }): number {
-  return Math.max(new Ray(a, b).distance,new Ray(b, a).distance);
+  return Math.max(new Ray(a, b).distance, new Ray(b, a).distance);
 }
 
 // function distance_between_2(a: { x: number; y: number }, b: { x: number; y: number }): number {
@@ -516,9 +531,8 @@ function units_between_token_and_placeable(token: Token, b: { x: number; y: numb
 }
 
 function units_between_token_and_placeableOLD(token: Token, b: { x: number; y: number; w: number; h: number }) {
-
   let dist = distance_between_rect(token, b);
-  if(dist == 0){
+  if (dist == 0) {
     const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
     //@ts-ignore
     const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape

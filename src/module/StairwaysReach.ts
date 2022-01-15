@@ -56,7 +56,11 @@ export const StairwaysReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character, 'Stairway');
+            const dist = computeDistanceBetweenCoordinates(
+              StairwaysReach.getStairwaysCenter(stairway),
+              character,
+              'Stairway',
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
@@ -85,10 +89,10 @@ export const StairwaysReach = {
 
   getStairwaysCenter: function (stairway) {
     const stairwayCenter = {
-      x: stairway.x - <number>canvas.dimensions?.size / 2, 
+      x: stairway.x - <number>canvas.dimensions?.size / 2,
       y: stairway.y - <number>canvas.dimensions?.size / 2,
       w: stairway.width,
-      h: stairway.height
+      h: stairway.height,
     };
     return stairwayCenter;
     // return getPlaceableCenter(stairway);
@@ -138,7 +142,11 @@ export const StairwaysReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(StairwaysReach.getStairwaysCenter(stairway), character, 'Stairway');
+            const dist = computeDistanceBetweenCoordinates(
+              StairwaysReach.getStairwaysCenter(stairway),
+              character,
+              'Stairway',
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {

@@ -51,7 +51,11 @@ export const NotesReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(NotesReach.getNotesCenter(note), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(NotesReach.getNotesCenter(note), character, NoteDocument.documentName);
+            const dist = computeDistanceBetweenCoordinates(
+              NotesReach.getNotesCenter(note),
+              character,
+              NoteDocument.documentName,
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
@@ -78,11 +82,11 @@ export const NotesReach = {
   },
 
   getNotesCenter: function (note: Note) {
-    const noteCenter = { 
-      x: note.x - <number>canvas.dimensions?.size / 2, 
+    const noteCenter = {
+      x: note.x - <number>canvas.dimensions?.size / 2,
       y: note.y - <number>canvas.dimensions?.size / 2,
       w: note.width,
-      h: note.height
+      h: note.height,
     };
     return noteCenter;
     // return getPlaceableCenter(note);

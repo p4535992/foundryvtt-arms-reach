@@ -51,7 +51,11 @@ export const TilesReach = {
             const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
-            const dist = computeDistanceBetweenCoordinates(TilesReach.getTilesCenter(tile), character, TileDocument.documentName);
+            const dist = computeDistanceBetweenCoordinates(
+              TilesReach.getTilesCenter(tile),
+              character,
+              TileDocument.documentName,
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
           if (isNotNearEnough) {
