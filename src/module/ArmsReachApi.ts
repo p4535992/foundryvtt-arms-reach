@@ -13,7 +13,7 @@ import { canvas, game } from './settings';
 export class ArmsReach {
   static API = 'armsReach';
 
-  isReachableByTag(token: Token, tag: string, userId?: string): boolean {
+  isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean {
     //@ts-ignore
     if (!(<boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
       ui.notifications?.warn(
@@ -27,11 +27,17 @@ export class ArmsReach {
       if (!placeableObjects) {
         return false;
       }
-      return this.isReachable(token, placeableObjects[0], userId);
+      return this.isReachable(token, placeableObjects[0], maxDistance, useGrid, userId);
     }
   }
 
-  isReachableById(token: Token, placeableObjectId: string, userId?: string): boolean {
+  isReachableById(
+    token: Token,
+    placeableObjectId: string,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
     // const sceneId = game.scenes?.current?.id;
     const objects = this._getObjectsFromScene(<Scene>game.scenes?.current);
     const object = objects.filter((obj: any) => {
@@ -43,10 +49,16 @@ export class ArmsReach {
       );
       return false;
     }
-    return this.isReachable(token, <any>object, userId);
+    return this.isReachable(token, <any>object, maxDistance, useGrid, userId);
   }
 
-  isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, userId?: string): boolean {
+  isReachableByIdOrName(
+    token: Token,
+    placeableObjectIdOrName: string,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
     // const sceneId = game.scenes?.current?.id;
     const objects = this._getObjectsFromScene(<Scene>game.scenes?.current);
     const object = this._retrieveFromIdOrName(objects, placeableObjectIdOrName);
@@ -56,10 +68,16 @@ export class ArmsReach {
       );
       return false;
     }
-    return this.isReachable(token, <any>object, userId);
+    return this.isReachable(token, <any>object, maxDistance, useGrid, userId);
   }
 
-  isReachable(token: Token, placeableObject: PlaceableObject, userId?: string): boolean {
+  isReachable(
+    token: Token,
+    placeableObject: PlaceableObject,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
     // const userId = <string>game.users?.find((u:User) => return u.id = gameUserId)[0];
     let relevantDocument;
     if (placeableObject instanceof PlaceableObject) {
@@ -72,17 +90,29 @@ export class ArmsReach {
       const tokenTarget = <Token>canvas.tokens?.placeables?.find((x: Token) => {
         return x.id == <string>placeableObject.id;
       });
-      isInReach = TokensReach.globalInteractionDistance(token, tokenTarget, <string>userId);
+      isInReach = TokensReach.globalInteractionDistance(token, tokenTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof AmbientLightDocument) {
       const ambientLightTarget = <AmbientLight>canvas.lighting?.placeables?.find((x: AmbientLight) => {
         return x.id == <string>placeableObject.id;
       });
-      isInReach = LightsReach.globalInteractionDistance(token, ambientLightTarget, <string>userId);
+      isInReach = LightsReach.globalInteractionDistance(
+        token,
+        ambientLightTarget,
+        maxDistance,
+        useGrid,
+        <string>userId,
+      );
     } else if (relevantDocument instanceof AmbientSoundDocument) {
       const ambientSoundTarget = <AmbientSound>canvas.sounds?.placeables?.find((x: AmbientSound) => {
         return x.id == <string>placeableObject.id;
       });
-      isInReach = SoundsReach.globalInteractionDistance(token, ambientSoundTarget, <string>userId);
+      isInReach = SoundsReach.globalInteractionDistance(
+        token,
+        ambientSoundTarget,
+        maxDistance,
+        useGrid,
+        <string>userId,
+      );
       // } else if(relevantDocument instanceof MeasuredTemplateDocument){
       //   const measuredTarget = <MeasuredTemplate>canvas.templates?.placeables?.find((x:MeasuredTemplate) => {return x.id == <string>placeableObject.id;});
       //   isInReach = MeasuredsReach.globalInteractionDistance(token,ambientSoundTarget);
@@ -90,23 +120,30 @@ export class ArmsReach {
       const tileTarget = <Tile>canvas.foreground?.placeables?.find((x: Tile) => {
         return x.id == <string>placeableObject.id;
       });
-      isInReach = TilesReach.globalInteractionDistance(token, tileTarget, <string>userId);
+      isInReach = TilesReach.globalInteractionDistance(token, tileTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof WallDocument) {
       const doorControlTarget: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
         return x.wall.id == <string>placeableObject.id;
       });
       // const wallTarget = <Wall>canvas.walls?.placeables?.find((x:Wall) => {return x.id == <string>placeableObject.id;});
-      isInReach = DoorsReach.globalInteractionDistance(token, doorControlTarget, false, <string>userId);
+      isInReach = DoorsReach.globalInteractionDistance(
+        token,
+        doorControlTarget,
+        false,
+        maxDistance,
+        useGrid,
+        <string>userId,
+      );
     } else if (relevantDocument instanceof DrawingDocument) {
       const drawingTarget = <Drawing>canvas.drawings?.placeables?.find((x: Drawing) => {
         return x.id == <string>placeableObject.id;
       });
-      isInReach = DrawingsReach.globalInteractionDistance(token, drawingTarget, <string>userId);
+      isInReach = DrawingsReach.globalInteractionDistance(token, drawingTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof NoteDocument) {
       const noteTarget = <Note>canvas.notes?.placeables?.find((x: Note) => {
         return x.id == <string>placeableObject.id;
       });
-      isInReach = NotesReach.globalInteractionDistance(token, noteTarget, <string>userId);
+      isInReach = NotesReach.globalInteractionDistance(token, noteTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument.name == 'Stairway') {
       //@ts-ignore
       const stairwayTarget = <Note>canvas.stairways?.placeables?.find((x: PlaceableObject) => {
@@ -115,6 +152,8 @@ export class ArmsReach {
       isInReach = StairwaysReach.globalInteractionDistanceSimple(
         token,
         { x: stairwayTarget.x, y: stairwayTarget.y },
+        maxDistance,
+        useGrid,
         userId,
       );
     } else {

@@ -11,7 +11,13 @@ import { ARMS_REACH_MODULE_NAME } from './settings';
 import { canvas, game } from './settings';
 
 export const TilesReach = {
-  globalInteractionDistance: function (character: Token, tile: Tile, userId?: String): boolean {
+  globalInteractionDistance: function (
+    character: Token,
+    tile: Tile,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: String,
+  ): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();
@@ -47,16 +53,24 @@ export const TilesReach = {
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
-          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
+            const maxDist =
+              maxDistance && maxDistance > 0
+                ? maxDistance
+                : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
             const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
-            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+            isNotNearEnough = dist > maxDist;
           } else {
+            const maxDist =
+              maxDistance && maxDistance > 0
+                ? maxDistance
+                : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
             const dist = computeDistanceBetweenCoordinates(
               TilesReach.getTilesCenter(tile),
               character,
               TileDocument.documentName,
             );
-            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+            isNotNearEnough = dist > maxDist;
           }
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);

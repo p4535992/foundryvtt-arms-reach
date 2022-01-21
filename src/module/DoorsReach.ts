@@ -105,6 +105,8 @@ export const DoorsReach = {
     character: Token,
     doorControl: DoorControl,
     isRightHanler: boolean,
+    maxDistance?: number,
+    useGrid?: boolean,
     userId?: String,
   ): boolean {
     // let character: Token = <Token>getFirstPlayerTokenSelected();
@@ -222,19 +224,26 @@ export const DoorsReach = {
           // Standard computing distance
           if (!jumDefaultComputation) {
             // OLD SETTING
-            if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+            if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
+              const maxDist =
+                maxDistance && maxDistance > 0
+                  ? maxDistance
+                  : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
               const dist = <number>(
                 computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(doorControl), character)
               );
-              isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+              isNotNearEnough = dist > maxDist;
             } else {
+              const maxDist =
+                maxDistance && maxDistance > 0
+                  ? maxDistance
+                  : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
               const dist = computeDistanceBetweenCoordinates(
                 DoorsReach.getDoorCenter(doorControl),
                 character,
                 WallDocument.documentName,
               );
-              isNotNearEnough =
-                dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+              isNotNearEnough = dist > maxDist;
             }
           }
           if (game.user?.isGM && isRightHanler) {

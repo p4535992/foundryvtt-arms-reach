@@ -49,25 +49,82 @@ A little api to use in macro cc. for check if the placeable object reachable wit
 
 The api is reachable from the variable `game.armsReach` or from the socket libary `socketLib` if present and active.
 
+#### isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>Token</code> | The source token |
+| placeableObject | <code>placeableObject</code> | The target placeable object |
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+
+#### isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet, the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work.
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>Token</code> | The source token |
+| tag | <code>string</code> | The tag from the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) to check for start the distance calculation |
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
+
+#### isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>Token</code> | The source token |
+| placeableObjectId | <code>string</code> | The target placeable object id reference|
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+
+#### isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>Token</code> | The source token |
+| placeableObjectIdOrName | <code>placeableObject</code> | The target placeable object id or name or label or entry reference|
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 
-`game.armsReach.isReachable(token: Token, placeableObject: PlaceableObject, userId?: string):boolean`
+### Integration with Socketlib module
 
-`game.armsReach.isReachableByTag(token: Token, tag: string, userId?: string): boolean` 
+You can use the socketLib for call the same functions:
 
-`game.armsReach.isReachableById(token: Token, placeableObjectId: string, userId?: string): boolean`
+`await socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise<boolean>`
 
-`game.armsReach.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, userId?: string): boolean`
+`await socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
 
-`await socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, userId?: string):Promise<boolean>`
+`await socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
 
-`await socket.executeAsGM('isReachableByTag', token: Token, tag: string, userId?: string): Promise<boolean>`
-
-`await socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, userId?: string): Promise<boolean>`
-
-`await socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, userId?: string): Promise<boolean>`
-
-**NOTE: the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work**
+`await socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
 
 **NOTE: for now the optional parameter 'userId' is not used from the api, i hope to add in the future some filter so a specific actor for a specific user has some limitation.**
 

@@ -11,7 +11,13 @@ import { ARMS_REACH_MODULE_NAME } from './settings';
 import { canvas, game } from './settings';
 
 export const DrawingsReach = {
-  globalInteractionDistance: function (character: Token, drawing: Drawing, userId?: String): boolean {
+  globalInteractionDistance: function (
+    character: Token,
+    drawing: Drawing,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: String,
+  ): boolean {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();
@@ -47,16 +53,24 @@ export const DrawingsReach = {
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
-          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
+          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
+            const maxDist =
+              maxDistance && maxDistance > 0
+                ? maxDistance
+                : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
             const dist = computeDistanceBetweenCoordinatesOLD(DrawingsReach.getDrawingsCenter(drawing), character);
-            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+            isNotNearEnough = dist > maxDist;
           } else {
+            const maxDist =
+              maxDistance && maxDistance > 0
+                ? maxDistance
+                : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
             const dist = computeDistanceBetweenCoordinates(
               DrawingsReach.getDrawingsCenter(drawing),
               character,
               DrawingDocument.documentName,
             );
-            isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+            isNotNearEnough = dist > maxDist;
           }
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
