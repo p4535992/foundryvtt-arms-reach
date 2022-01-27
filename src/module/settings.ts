@@ -367,7 +367,7 @@ export const registerSettings = function () {
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationExplicitName`),
     scope: 'client',
     config: true,
-    default: '',
+    default: game.user?.character?.name ?? '',
     type: String,
   });
 

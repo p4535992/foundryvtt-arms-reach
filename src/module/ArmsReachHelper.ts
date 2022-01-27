@@ -162,37 +162,35 @@ export const getTokenCenter = function (token) {
  * Get center
  * from tokenAttacher module
  */
-export const getCenter = function (placeableObject: PlaceableObject, grid:any = {}): { x: number; y: number } {
+export const getCenter = function (placeableObject: PlaceableObject, grid: any = {}): { x: number; y: number } {
   const data = placeableObject.data;
   //getCenter(type, data, grid = {}){
   let isGridSpace = false;
-  if(placeableObject.document.documentName == TileDocument.documentName) {
+  if (placeableObject.document.documentName == TileDocument.documentName) {
     isGridSpace = false;
-  }
-  else if(placeableObject.document.documentName == DrawingDocument.documentName){
+  } else if (placeableObject.document.documentName == DrawingDocument.documentName) {
     isGridSpace = false;
-  }
-	else 	{
+  } else {
     isGridSpace = true;
-	}
-  grid = mergeObject({w: canvas.grid?.w, h:canvas.grid?.h}, grid);
-  const [x,y] = [data.x, data.y];
-  let center = {x:x, y:y};
+  }
+  grid = mergeObject({ w: canvas.grid?.w, h: canvas.grid?.h }, grid);
+  const [x, y] = [data.x, data.y];
+  let center = { x: x, y: y };
   //Tokens, Tiles
-  if ( "width" in data && "height" in data ) {
+  if ('width' in data && 'height' in data) {
     let [width, height] = [data.width, data.height];
-    if(isGridSpace){
+    if (isGridSpace) {
       [width, height] = [width * grid.w, height * grid.h];
     }
-    center={x:x + (Math.abs(width) / 2), y:y + (Math.abs(height) / 2)};
+    center = { x: x + Math.abs(width) / 2, y: y + Math.abs(height) / 2 };
   }
   //Walls
-  if("c" in data){
+  if ('c' in data) {
     //@ts-ignore
-    center = {x:(data.c[0] + data.c[2]) / 2, y: (data.c[1] + data.c[3]) / 2}
+    center = { x: (data.c[0] + data.c[2]) / 2, y: (data.c[1] + data.c[3]) / 2 };
   }
   return center;
-}
+};
 
 /**
  * Get token shape center
@@ -480,6 +478,19 @@ export const placeableContains = function (placeable, position): boolean {
   return Number.between(position.x, x, x + w) && Number.between(position.y, y, y + h);
 };
 
+export const getPlaceableDoorCenter = function (placeable: any): any {
+  const x = getPlaceableX(placeable);
+  const y = getPlaceableY(placeable);
+
+  // const center = getCenter(placeable);
+  // const x = center.x;
+  // const y = center.y;
+
+  const w = getPlaceableWidth(placeable);
+  const h = getPlaceableHeight(placeable);
+  return { x: x, y: y, w: w, h: h };
+};
+
 export const getPlaceableCenter = function (placeable: any): any {
   // const x = getPlaceableX(placeable);
   // const y = getPlaceableY(placeable);
@@ -509,21 +520,21 @@ const getPlaceableHeight = function (placeable: any): number {
   return h;
 };
 
-// const getPlaceableX = function (placeable: any): number {
-//   let x = placeable._validPosition?.x || placeable.x || placeable?.data?.x;
-//   if (placeable?.object) {
-//     x = placeable?.object?.x || placeable?.object?.data?.x || x;
-//   }
-//   return x;
-// };
+const getPlaceableX = function (placeable: any): number {
+  let x = placeable._validPosition?.x || placeable.x || placeable?.data?.x;
+  if (placeable?.object) {
+    x = placeable?.object?.x || placeable?.object?.data?.x || x;
+  }
+  return x;
+};
 
-// const getPlaceableY = function (placeable: any): number {
-//   let y = placeable._validPosition?.y || placeable?.y || placeable?.data?.y;
-//   if (placeable?.object) {
-//     y = placeable?.object?.y || placeable?.object?.data?.y || placeable?.object?.y || y;
-//   }
-//   return y;
-// };
+const getPlaceableY = function (placeable: any): number {
+  let y = placeable._validPosition?.y || placeable?.y || placeable?.data?.y;
+  if (placeable?.object) {
+    y = placeable?.object?.y || placeable?.object?.data?.y || placeable?.object?.y || y;
+  }
+  return y;
+};
 
 function distance_between_rect(p1: Token, p2: { x: number; y: number; w: number; h: number }) {
   const x1 = p1.x;

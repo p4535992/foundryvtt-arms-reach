@@ -8,6 +8,7 @@ import {
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
   getPlaceableCenter,
+  getPlaceableDoorCenter,
   getTokenCenter,
   isFocusOnCanvas,
   iteractionFailNotification,
@@ -500,7 +501,7 @@ export const DoorsReach = {
    */
   getDoorCenter: function (doorCoontrol: DoorControl) {
     //const doorCenter = { x: doorCoontrol.x, y: doorCoontrol.y };
-    return getPlaceableCenter(doorCoontrol);
+    return getPlaceableDoorCenter(doorCoontrol);
   },
 };
 

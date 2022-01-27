@@ -128,7 +128,7 @@
   "foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "If true by default enable the distance integration for all the target token with the prefix setted on the name of the token (not the character name)",
 
   "foundryvtt-arms-reach.settingNameTokensIntegrationExplicitName": "Set the name of the source token you want to use for the iteraction",
-  "foundryvtt-arms-reach.settingHintTokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name)",
+  "foundryvtt-arms-reach.settingHintTokensIntegrationExplicitName": "The name of the source token setted here is the one used for the distance interaction with the target token (not the character name). By default is the character name linked to the user",
 
   "foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Enable/Disable Lights integration",
   "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",

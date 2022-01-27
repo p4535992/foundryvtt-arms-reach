@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.12
+
+- Some little update
+
 ## 2.1.11
 
 - Update API
