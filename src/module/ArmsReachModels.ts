@@ -52,3 +52,16 @@ export class DoorSourceData {
   /// y position of target door
   y: number;
 }
+
+export class ArmsreachData {
+  /// x position of target
+  x: number;
+  /// y position of target
+  y: number;
+  /// w width of target
+  w?: number;
+  /// h height of target
+  h?: number;
+  /// document type
+  documentName: string;
+}

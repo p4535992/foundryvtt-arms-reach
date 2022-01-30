@@ -96,7 +96,10 @@ Hooks.once('ready', () => {
 // Add any additional hooks if necessary
 Hooks.once('libChangelogsReady', function () {
   //@ts-ignore
-  libChangelogs.register(ARMS_REACH_MODULE_NAME, `
-  - Some little update`, 
-  'minor');
+  libChangelogs.register(
+    ARMS_REACH_MODULE_NAME,
+    `
+  - Some little update`,
+    'minor',
+  );
 });

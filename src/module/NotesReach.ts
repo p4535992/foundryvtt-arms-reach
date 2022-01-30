@@ -96,13 +96,13 @@ export const NotesReach = {
   },
 
   getNotesCenter: function (note: Note) {
-    const noteCenter = {
-      x: note.x - <number>canvas.dimensions?.size / 2,
-      y: note.y - <number>canvas.dimensions?.size / 2,
-      w: note.width,
-      h: note.height,
-    };
-    return noteCenter;
-    // return getPlaceableCenter(note);
+    // const noteCenter = {
+    //   x: note.x - <number>canvas.dimensions?.size / 2,
+    //   y: note.y - <number>canvas.dimensions?.size / 2,
+    //   w: note.width,
+    //   h: note.height,
+    // };
+    // return noteCenter;
+    return getPlaceableCenter(note);
   },
 };

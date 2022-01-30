@@ -2,6 +2,7 @@ import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_FLAG } from './settings';
 import { error, warn } from '../foundryvtt-arms-reach';
 import { canvas, game } from './settings';
 import { tokenToString } from 'typescript';
+import { ArmsreachData } from './ArmsReachModels';
 
 /**
  * Function for calcuate the distance in grid units
@@ -45,7 +46,7 @@ export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, ch
  * @returns
  */
 export const computeDistanceBetweenCoordinates = function (
-  placeable: { x: number; y: number; w: number; h: number },
+  placeable: ArmsreachData,
   character: Token,
   documentName: string,
 ): number {
@@ -90,37 +91,38 @@ export const computeDistanceBetweenCoordinates = function (
     const dist = grids_between_token_and_placeable(character, placeable);
     return dist;
   } else {
-    if (documentName == 'Stairway') {
-      // const dist = grids_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
-      // return dist;
-      const dist = units_between_token_and_placeableOLD(character, {
-        x: xPlaceable,
-        y: yPlaceable,
-        w: wPlaceable,
-        h: hPlaceable,
-      });
-      return dist;
-    } else if (documentName == NoteDocument.documentName) {
-      // const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
-      // return dist;
-      // let dist = grids_between_token_and_placeable(character,placeable);
-      // dist = dist * unitSize;
-      const dist = units_between_token_and_placeableOLD(character, {
-        x: xPlaceable,
-        y: yPlaceable,
-        w: wPlaceable,
-        h: hPlaceable,
-      });
-      return dist;
-    } else {
-      const dist = units_between_token_and_placeable(character, {
-        x: xPlaceable,
-        y: yPlaceable,
-        w: wPlaceable,
-        h: hPlaceable,
-      });
-      return dist;
-    }
+    // if (documentName == 'Stairway') {
+    //   // const dist = grids_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+    //   // return dist;
+    //   const dist = units_between_token_and_placeableOLD(character, {
+    //     x: xPlaceable,
+    //     y: yPlaceable,
+    //     w: wPlaceable,
+    //     h: hPlaceable,
+    //   });
+    //   return dist;
+    // } else if (documentName == NoteDocument.documentName) {
+    //   // const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
+    //   // return dist;
+    //   // let dist = grids_between_token_and_placeable(character,placeable);
+    //   // dist = dist * unitSize;
+    //   const dist = units_between_token_and_placeableOLD(character, {
+    //     x: xPlaceable,
+    //     y: yPlaceable,
+    //     w: wPlaceable,
+    //     h: hPlaceable,
+    //   });
+    //   return dist;
+    // } else {
+    const dist = units_between_token_and_placeable(character, {
+      x: xPlaceable,
+      y: yPlaceable,
+      w: wPlaceable,
+      h: hPlaceable,
+      documentName: documentName,
+    });
+    return dist;
+    // }
   }
 };
 
@@ -163,7 +165,7 @@ export const getTokenCenter = function (token) {
  * from tokenAttacher module
  */
 export const getCenter = function (placeableObject: PlaceableObject, grid: any = {}): { x: number; y: number } {
-  const data = placeableObject.data;
+  const data = placeableObject.data ? placeableObject.data : placeableObject;
   //getCenter(type, data, grid = {}){
   let isGridSpace = false;
   if (placeableObject.document.documentName == TileDocument.documentName) {
@@ -473,8 +475,8 @@ export const placeableContains = function (placeable, position): boolean {
   const x = center.x;
   const y = center.y;
 
-  const w = getPlaceableWidth(placeable);
-  const h = getPlaceableHeight(placeable);
+  const w = getPlaceableWidth(placeable) || 0;
+  const h = getPlaceableHeight(placeable) || 0;
   return Number.between(position.x, x, x + w) && Number.between(position.y, y, y + h);
 };
 
@@ -486,8 +488,8 @@ export const getPlaceableDoorCenter = function (placeable: any): any {
   // const x = center.x;
   // const y = center.y;
 
-  const w = getPlaceableWidth(placeable);
-  const h = getPlaceableHeight(placeable);
+  const w = getPlaceableWidth(placeable) || 0;
+  const h = getPlaceableHeight(placeable) || 0;
   return { x: x, y: y, w: w, h: h };
 };
 
@@ -499,8 +501,8 @@ export const getPlaceableCenter = function (placeable: any): any {
   const x = center.x;
   const y = center.y;
 
-  const w = getPlaceableWidth(placeable);
-  const h = getPlaceableHeight(placeable);
+  const w = getPlaceableWidth(placeable) || 0;
+  const h = getPlaceableHeight(placeable) || 0;
   return { x: x, y: y, w: w, h: h };
 };
 
@@ -536,7 +538,7 @@ const getPlaceableY = function (placeable: any): number {
   return y;
 };
 
-function distance_between_rect(p1: Token, p2: { x: number; y: number; w: number; h: number }) {
+function distance_between_rect(p1: Token, p2: ArmsreachData) {
   const x1 = p1.x;
   const y1 = p1.y;
   const x1b = p1.x + p1.w;
@@ -544,8 +546,8 @@ function distance_between_rect(p1: Token, p2: { x: number; y: number; w: number;
 
   const x2 = p2.x;
   const y2 = p2.y;
-  const x2b = p2.x + p2.w;
-  const y2b = p2.y + p2.h;
+  const x2b = p2.x + <number>p2.w;
+  const y2b = p2.y + <number>p2.h;
 
   const left = x2b < x1;
   const right = x1b < x2;
@@ -577,15 +579,27 @@ function distance_between(a: { x: number; y: number }, b: { x: number; y: number
   return Math.max(new Ray(a, b).distance, new Ray(b, a).distance);
 }
 
-function grids_between_token_and_placeable(token: Token, b: { x: number; y: number; w: number; h: number }) {
+function grids_between_token_and_placeable(token: Token, b: ArmsreachData) {
   return Math.floor(distance_between_rect(token, b) / <number>canvas.grid?.size) + 1;
 }
 
-function units_between_token_and_placeable(token: Token, b: { x: number; y: number; w: number; h: number }) {
-  return Math.floor(distance_between_rect(token, b));
+function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
+  let dist = Math.floor(distance_between_rect(token, b));
+  if (dist == 0) {
+    //
+  } else {
+    const unitSize = <number>canvas.dimensions?.distance || 5;
+    const unitGridSize = <number>canvas.grid?.size || 50;
+    // TODO i don't understand this
+    if (b.documentName != WallDocument.documentName) {
+      dist = (Math.floor(dist) / unitGridSize) * unitSize;
+    }
+  }
+  return dist;
+  // return Math.floor(distance_between_rect(token, b));
 }
 
-function units_between_token_and_placeableOLD(token: Token, b: { x: number; y: number; w: number; h: number }) {
+function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
   let dist = distance_between_rect(token, b);
   if (dist == 0) {
     const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
@@ -601,12 +615,11 @@ function units_between_token_and_placeableOLD(token: Token, b: { x: number; y: n
     const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
 
     dist = Math.max(distRight, distLeft);
+  } else {
+    const unitSize = <number>canvas.dimensions?.distance || 5;
+    const unitGridSize = <number>canvas.grid?.size || 50;
+    dist = (Math.floor(dist) / unitGridSize) * unitSize;
   }
-  // else {
-  //   const unitSize = <number>canvas.dimensions?.distance || 5;
-  //   const unitGridSize = <number>canvas.grid?.size || 50;
-  //   dist = (Math.floor(dist) / unitGridSize) * unitSize;
-  // }
   return dist;
 }
 
