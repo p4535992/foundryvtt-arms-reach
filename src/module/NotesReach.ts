@@ -103,6 +103,10 @@ export const NotesReach = {
     //   h: note.height,
     // };
     // return noteCenter;
-    return getPlaceableCenter(note);
+    const noteCenter = getPlaceableCenter(note);
+    // TODO i don't understand this w = 0, h = 0 seem to make the distnace right ?
+    noteCenter.w = 0;
+    noteCenter.h = 0;
+    return noteCenter;
   },
 };

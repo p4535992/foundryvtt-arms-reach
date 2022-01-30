@@ -541,8 +541,8 @@ const getPlaceableY = function (placeable: any): number {
 function distance_between_rect(p1: Token, p2: ArmsreachData) {
   const x1 = p1.x;
   const y1 = p1.y;
-  const x1b = p1.x + p1.w;
-  const y1b = p1.y + p1.h;
+  const x1b = p1.x + <number>p1.w;
+  const y1b = p1.y + <number>p1.h;
 
   const x2 = p2.x;
   const y2 = p2.y;
@@ -599,6 +599,12 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
   // return Math.floor(distance_between_rect(token, b));
 }
 
+/**
+ * @deprecated
+ * @param token 
+ * @param b 
+ * @returns 
+ */
 function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
   let dist = distance_between_rect(token, b);
   if (dist == 0) {

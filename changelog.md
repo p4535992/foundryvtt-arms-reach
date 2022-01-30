@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.13
+
+- Update of the calculation distance again... i'm not good to this
+- Bug fix [Distance calculation for Stairways incorrect (wrong center of stairways)](https://github.com/p4535992/foundryvtt-arms-reach/issues/38)
+
 ## 2.1.12
 
 - Some little update
