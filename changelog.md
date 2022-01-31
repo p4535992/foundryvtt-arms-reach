@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.14
+
+- little update for the reset fog and door feature
+
 ## 2.1.13
 
 - Update of the calculation distance again... i'm not good to this

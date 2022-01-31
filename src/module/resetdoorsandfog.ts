@@ -20,13 +20,15 @@ export const ResetDoorsAndFog = {
 
   resetDoors: async function (isCurrentScene, id) {
     if (isCurrentScene) {
-      await canvas.walls?.doors.filter((item) => item.data.ds == 1).forEach((item) => item.update({ ds: 0 }, {}));
+      await canvas.walls?.doors
+        .filter((item: Wall) => item.data.ds == 1)
+        .forEach((item: Wall) => item.document.update({ ds: 0 }, {}));
     } else {
       if (id) {
-        log(game.scenes?.get(id)?.data.walls.filter((item) => item.data.door != 0));
+        log(game.scenes?.get(id)?.data.walls.filter((item: WallDocument) => item.data.door != 0));
         await game.scenes
           ?.get(id)
-          ?.data.walls.filter((item) => item.data.door != 0)
+          ?.data.walls.filter((item: WallDocument) => item.data.door != 0)
           .forEach((x) => (x.data.ds = 0));
       }
     }

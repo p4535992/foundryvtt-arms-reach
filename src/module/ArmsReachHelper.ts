@@ -601,9 +601,9 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
 
 /**
  * @deprecated
- * @param token 
- * @param b 
- * @returns 
+ * @param token
+ * @param b
+ * @returns
  */
 function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
   let dist = distance_between_rect(token, b);
