@@ -45,6 +45,11 @@
   "foundryvtt-arms-reach.tilesNotInReach": "Tile not in reach or is locked",
   "foundryvtt-arms-reach.tilesNotInReachFor": "Tile not within {tokenName}'s reach or is locked",
 
+  "foundryvtt-arms-reach.wallsNotFoundInReach": "No wall was found within reach or is locked.",
+  "foundryvtt-arms-reach.wallsNotFoundInReachFor": "No wall was found within {tokenName}'s reach or is locked",
+  "foundryvtt-arms-reach.wallsNotInReach": "Wall not in reach or is locked",
+  "foundryvtt-arms-reach.wallsNotInReachFor": "Wall not within {tokenName}'s reach or is locked",
+
   "foundryvtt-arms-reach.templatesNotFoundInReach": "No template was found within reach or is locked.",
   "foundryvtt-arms-reach.templatesNotFoundInReachFor": "No template was found within {tokenName}'s reach or is locked",
   "foundryvtt-arms-reach.templatesNotInReach": "Template not in reach or is locked",
@@ -61,7 +66,7 @@
   "foundryvtt-arms-reach.settingNameNotificationsFailedInteraction": "Notifications failed interactions",
   "foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Emit notifications for when a player fails to interact with a door. Good for debugging.",
 
-  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Not Recommended] Global maximum interaction distance in tiles",
+  "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Not Recommended] Global maximum interaction distance in grids",
   "foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[I do not recommend this feature use instead 'Global maximum interaction distance measurement' more 'Drag Ruler' perspective], 0 will disable this setting limit (needs app reload), if a value > 0 is used it will ignore the value of the setting 'Global maximum interaction distance measurement'. Max distance (in tiles) that a token can interact with a (door, journal, ...). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Global maximum interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
@@ -73,7 +78,7 @@
   "foundryvtt-arms-reach.settingNameDoubleTapInteraction": "[Not Recommended] Interaction door with double tap delay in seconds",
   "foundryvtt-arms-reach.settingHintDoubleTapInteraction": "[I do not recommend this feature because of some incompatibility with other movement verification modules, but otherwise it works] Double tapping a move key on the direction of a door will interact with it. This option sets the delay between required key presses (the lower the faster you need to tap). Setting this option to zero will disable interaction with double tap.",
 
-  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance in tiles",
+  "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance in grids",
   "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Use instead 'Maximum door interaction distance measurement'], 0 will disable this setting limit (needs app reload).",
 
   "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
@@ -141,6 +146,9 @@
 
   "foundryvtt-arms-reach.settingNameTilesIntegrationFeature": "Enable/Disable Tiles integration",
   "foundryvtt-arms-reach.settingHintTilesIntegrationFeature": "Max distance that a Tile can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameWallsIntegrationFeature": "Enable/Disable Walls integration",
+  "foundryvtt-arms-reach.settingHintWallsIntegrationFeature": "Max distance that a Wall can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Enable/Disable Templates integration",
   "foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Max distance that a Template can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."

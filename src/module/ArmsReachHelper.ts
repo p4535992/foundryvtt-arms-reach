@@ -120,7 +120,7 @@ export const computeDistanceBetweenCoordinates = function (
       w: wPlaceable,
       h: hPlaceable,
       documentName: documentName,
-      id: placeable.id
+      id: placeable.id,
     });
     return dist;
     // }
@@ -488,11 +488,12 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   // const center = getCenter(placeable);
   // const x = center.x;
   // const y = center.y;
-
+  // const w = getPlaceableWidth(placeable) || 0;
+  // const h = getPlaceableHeight(placeable) || 0;
   const w = getPlaceableWidth(placeable) || 0;
   const h = getPlaceableHeight(placeable) || 0;
-  const id = placeable?.document ? placeable?.document.id : placeable.id;
-  const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
+  const id = placeable?.wall.document ? placeable?.wall.document.id : placeable.id;
+  const documentName = placeable?.wall.document ? placeable?.wall.document.documentName : placeable.documentName;
   return { x: x, y: y, w: w, h: h, documentName: documentName, id: id };
 };
 
@@ -595,19 +596,17 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
   } else {
     const unitSize = <number>canvas.dimensions?.distance || 5;
     const unitGridSize = <number>canvas.grid?.size || 50;
-    // TODO i don't understand this
+    // TODO i don't understand this for manage the door control
     if (b.documentName != WallDocument.documentName) {
       dist = (Math.floor(dist) / unitGridSize) * unitSize;
+    } else {
+      const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+        return x.wall.id == <string>b.id;
+      });
+      if (!isDoor) {
+        dist = (Math.floor(dist) / unitGridSize) * unitSize;
+      }
     }
-    // TODO DA VERIFICARE
-    // else {
-    //   const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-    //     return x.wall.id == <string>b.id;
-    //   });
-    //   if(isDoor && dist <= 0){
-    //     dist = unitSize;
-    //   }
-    // }
   }
   return dist;
   // return Math.floor(distance_between_rect(token, b));
@@ -648,8 +647,11 @@ function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
 //   return maxDistance >= distance;
 // }
 
-export const globalInteractionDistanceUniversal = function(placeableObjectSource: PlaceableObject, placeableObjectTarget: PlaceableObject, useGrids:boolean){
-
+export const globalInteractionDistanceUniversal = function (
+  placeableObjectSource: PlaceableObject,
+  placeableObjectTarget: PlaceableObject,
+  useGrids: boolean,
+) {
   const placeableSource = <ArmsreachData>getPlaceableCenter(placeableObjectSource);
   placeableSource.documentName = placeableObjectSource.document.documentName;
   const placeableTarget = <ArmsreachData>getPlaceableCenter(placeableObjectTarget);
@@ -659,10 +661,10 @@ export const globalInteractionDistanceUniversal = function(placeableObjectSource
     const dist = grids_between_placeable_and_placeable(placeableSource, placeableTarget);
     return dist;
   } else {
-    const dist = units_between_placeable_and_placeable(placeableSource,placeableTarget);
+    const dist = units_between_placeable_and_placeable(placeableSource, placeableTarget);
     return dist;
   }
-}
+};
 
 function grids_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachData) {
   return Math.floor(distance_between_placeable_rect(a, b) / <number>canvas.grid?.size) + 1;
@@ -675,19 +677,17 @@ function units_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachDat
   } else {
     const unitSize = <number>canvas.dimensions?.distance || 5;
     const unitGridSize = <number>canvas.grid?.size || 50;
-    // TODO i don't understand this dorr contorl thing
+    // TODO i don't understand this for manage the door control
     if (b.documentName != WallDocument.documentName) {
       dist = (Math.floor(dist) / unitGridSize) * unitSize;
+    } else {
+      const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+        return x.wall.id == <string>b.id;
+      });
+      if (!isDoor) {
+        dist = (Math.floor(dist) / unitGridSize) * unitSize;
+      }
     }
-    // TODO DA VERIFICARE
-    // else {
-    //   const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-    //     return x.wall.id == <string>b.id;
-    //   });
-    //   if(isDoor && dist <= 0){
-    //     dist = unitSize;
-    //   }
-    // }
   }
   return dist;
   // return Math.floor(distance_between_rect(token, b));

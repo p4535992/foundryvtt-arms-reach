@@ -99,7 +99,10 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     ARMS_REACH_MODULE_NAME,
     `
-  - Some little update`,
+    - Add Walls Reach
+    - Add more API
+    - Add bug fix for [Not working well with Doors on Diagonal walls](https://github.com/p4535992/foundryvtt-arms-reach/issues/40)
+    `,
     'minor',
   );
 });

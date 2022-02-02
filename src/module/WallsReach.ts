@@ -95,7 +95,7 @@ export const WallsReach = {
     return false;
   },
 
-  getWallsCenter: function (wall: Wall) {;
+  getWallsCenter: function (wall: Wall) {
     const wallCenter = getPlaceableCenter(wall);
     return wallCenter;
   },

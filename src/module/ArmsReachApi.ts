@@ -127,7 +127,7 @@ export class ArmsReach {
       const doorControlTarget: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
         return x.wall.id == <string>placeableObject.id;
       });
-      if(doorControlTarget) {
+      if (doorControlTarget) {
         isInReach = DoorsReach.globalInteractionDistance(
           token,
           doorControlTarget,
@@ -136,17 +136,11 @@ export class ArmsReach {
           useGrid,
           <string>userId,
         );
-      }else{
-        const wallTarget = <Wall>canvas.walls?.placeables?.find((x:Wall) => {
+      } else {
+        const wallTarget = <Wall>canvas.walls?.placeables?.find((x: Wall) => {
           return x.id == <string>placeableObject.id;
         });
-        isInReach = WallsReach.globalInteractionDistance(
-          token,
-          wallTarget,
-          maxDistance,
-          useGrid,
-          <string>userId,
-        );
+        isInReach = WallsReach.globalInteractionDistance(token, wallTarget, maxDistance, useGrid, <string>userId);
       }
     } else if (relevantDocument instanceof DrawingDocument) {
       const drawingTarget = <Drawing>canvas.drawings?.placeables?.find((x: Drawing) => {
@@ -178,7 +172,13 @@ export class ArmsReach {
     return isInReach;
   }
 
-  isReachableByTagUniversal(placeableObjectSource: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean {
+  isReachableByTagUniversal(
+    placeableObjectSource: PlaceableObject,
+    tag: string,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
     //@ts-ignore
     if (!(<boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
       ui.notifications?.warn(

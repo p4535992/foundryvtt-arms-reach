@@ -424,6 +424,19 @@ export const registerSettings = function () {
   });
 
   // ========================================================
+  // WALL SUPPORT
+  // ========================================================
+
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableWallsIntegration', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameWallsIntegrationFeature`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintWallsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  // ========================================================
   // TEMPLATES SUPPORT
   // ========================================================
 

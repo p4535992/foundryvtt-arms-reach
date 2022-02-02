@@ -23,7 +23,7 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 
 ## Known issue/Limitation
 
-- I know there is some measure distance issue expecially with diagonals, here some details [current issue](https://github.com/p4535992/foundryvtt-arms-reach/issues/28)
+- I know there is some measure distance issue expecially with diagonals, here some details [Can "reach" further to the east](https://github.com/p4535992/foundryvtt-arms-reach/issues/28) and [Not working well with Doors on Diagonal walls](https://github.com/p4535992/foundryvtt-arms-reach/issues/40)
 
 - The module setting "Avoid deselects the controlled token" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
 
@@ -113,6 +113,70 @@ Calculate the distance between the source token and the target placeable objet
 **Example**:
 `game.armsReach.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
+#### isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>Token</code> | The source token |
+| placeableObject | <code>placeableObject</code> | The target placeable object |
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+
+#### isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the first target placeable objet with a specific tag, the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work.
+**Returns**: <code>boolean</code> - The boolean value for tell if the first target with the specific tag is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| placeableObject | <code>placeableObject</code> | The source placeableobject |
+| tag | <code>string</code> | The tag from the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) to check for start the distance calculation |
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
+
+#### isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| placeableObject | <code>placeableObject</code> | The source placeableobject |
+| placeableObjectId | <code>string</code> | The target placeable object id reference|
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+
+#### isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
+
+Calculate the distance between the source token and the target placeable objet
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| placeableObject | <code>placeableObject</code> | The source placeableobject |
+| placeableObjectIdOrName | <code>placeableObject</code> | The target placeable object id or name or label or entry reference|
+| maxDistance | <code>number</code> | OPTIONAL: explicit distance (units or grid) to check |
+| useGrid | <code>boolean</code> | OPTIONAL: if true it will explicit calculate the grid distance instead the unit distance |
+| userID | <code>string</code> | OPTIONAL: user id for the distance checking |
+
+**Example**:
+`game.armsReach.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+
 
 ### Integration with Socketlib module
 
@@ -182,9 +246,9 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * Add distance calculation for templates on the canvas
 
-### Wall Feature (Beta need feedback)
+### Wall Feature (On developing)
 
-* Add distance calculation for walls on the canvas (door are a special case)
+* Add distance calculation for walls on the canvas (door are a special case with specific rule)
 
 ### Tagger Feature
 
