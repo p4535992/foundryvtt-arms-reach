@@ -120,6 +120,7 @@ export const computeDistanceBetweenCoordinates = function (
       w: wPlaceable,
       h: hPlaceable,
       documentName: documentName,
+      id: placeable.id
     });
     return dist;
     // }
@@ -480,7 +481,7 @@ export const placeableContains = function (placeable, position): boolean {
   return Number.between(position.x, x, x + w) && Number.between(position.y, y, y + h);
 };
 
-export const getPlaceableDoorCenter = function (placeable: any): any {
+export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   const x = getPlaceableX(placeable);
   const y = getPlaceableY(placeable);
 
@@ -490,10 +491,12 @@ export const getPlaceableDoorCenter = function (placeable: any): any {
 
   const w = getPlaceableWidth(placeable) || 0;
   const h = getPlaceableHeight(placeable) || 0;
-  return { x: x, y: y, w: w, h: h };
+  const id = placeable?.document ? placeable?.document.id : placeable.id;
+  const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
+  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id };
 };
 
-export const getPlaceableCenter = function (placeable: any): any {
+export const getPlaceableCenter = function (placeable: any): ArmsreachData {
   // const x = getPlaceableX(placeable);
   // const y = getPlaceableY(placeable);
 
@@ -503,7 +506,9 @@ export const getPlaceableCenter = function (placeable: any): any {
 
   const w = getPlaceableWidth(placeable) || 0;
   const h = getPlaceableHeight(placeable) || 0;
-  return { x: x, y: y, w: w, h: h };
+  const id = placeable?.document ? placeable?.document.id : placeable.id;
+  const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
+  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id };
 };
 
 const getPlaceableWidth = function (placeable: any): number {
@@ -538,7 +543,7 @@ const getPlaceableY = function (placeable: any): number {
   return y;
 };
 
-function distance_between_rect(p1: Token, p2: ArmsreachData) {
+function distance_between_token_rect(p1: Token, p2: ArmsreachData) {
   const x1 = p1.x;
   const y1 = p1.y;
   const x1b = p1.x + <number>p1.w;
@@ -580,11 +585,11 @@ function distance_between(a: { x: number; y: number }, b: { x: number; y: number
 }
 
 function grids_between_token_and_placeable(token: Token, b: ArmsreachData) {
-  return Math.floor(distance_between_rect(token, b) / <number>canvas.grid?.size) + 1;
+  return Math.floor(distance_between_token_rect(token, b) / <number>canvas.grid?.size) + 1;
 }
 
 function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
-  let dist = Math.floor(distance_between_rect(token, b));
+  let dist = Math.floor(distance_between_token_rect(token, b));
   if (dist == 0) {
     //
   } else {
@@ -594,6 +599,15 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
     if (b.documentName != WallDocument.documentName) {
       dist = (Math.floor(dist) / unitGridSize) * unitSize;
     }
+    // TODO DA VERIFICARE
+    // else {
+    //   const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+    //     return x.wall.id == <string>b.id;
+    //   });
+    //   if(isDoor && dist <= 0){
+    //     dist = unitSize;
+    //   }
+    // }
   }
   return dist;
   // return Math.floor(distance_between_rect(token, b));
@@ -606,7 +620,7 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
  * @returns
  */
 function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
-  let dist = distance_between_rect(token, b);
+  let dist = distance_between_token_rect(token, b);
   if (dist == 0) {
     const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
     //@ts-ignore
@@ -633,3 +647,85 @@ function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
 //   const distance = grids_between_token_and_placeable(a, b);
 //   return maxDistance >= distance;
 // }
+
+export const globalInteractionDistanceUniversal = function(placeableObjectSource: PlaceableObject, placeableObjectTarget: PlaceableObject, useGrids:boolean){
+
+  const placeableSource = <ArmsreachData>getPlaceableCenter(placeableObjectSource);
+  placeableSource.documentName = placeableObjectSource.document.documentName;
+  const placeableTarget = <ArmsreachData>getPlaceableCenter(placeableObjectTarget);
+  placeableTarget.documentName = placeableObjectTarget.document.documentName;
+
+  if (useGrids) {
+    const dist = grids_between_placeable_and_placeable(placeableSource, placeableTarget);
+    return dist;
+  } else {
+    const dist = units_between_placeable_and_placeable(placeableSource,placeableTarget);
+    return dist;
+  }
+}
+
+function grids_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachData) {
+  return Math.floor(distance_between_placeable_rect(a, b) / <number>canvas.grid?.size) + 1;
+}
+
+function units_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachData) {
+  let dist = Math.floor(distance_between_placeable_rect(a, b));
+  if (dist == 0) {
+    //
+  } else {
+    const unitSize = <number>canvas.dimensions?.distance || 5;
+    const unitGridSize = <number>canvas.grid?.size || 50;
+    // TODO i don't understand this dorr contorl thing
+    if (b.documentName != WallDocument.documentName) {
+      dist = (Math.floor(dist) / unitGridSize) * unitSize;
+    }
+    // TODO DA VERIFICARE
+    // else {
+    //   const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+    //     return x.wall.id == <string>b.id;
+    //   });
+    //   if(isDoor && dist <= 0){
+    //     dist = unitSize;
+    //   }
+    // }
+  }
+  return dist;
+  // return Math.floor(distance_between_rect(token, b));
+}
+
+function distance_between_placeable_rect(p1: ArmsreachData, p2: ArmsreachData) {
+  const x1 = p1.x;
+  const y1 = p1.y;
+  const x1b = p1.x + <number>p1.w;
+  const y1b = p1.y + <number>p1.h;
+
+  const x2 = p2.x;
+  const y2 = p2.y;
+  const x2b = p2.x + <number>p2.w;
+  const y2b = p2.y + <number>p2.h;
+
+  const left = x2b < x1;
+  const right = x1b < x2;
+  const bottom = y2b < y1;
+  const top = y1b < y2;
+
+  if (top && left) {
+    return distance_between({ x: x1, y: y1b }, { x: x2b, y: y2 });
+  } else if (left && bottom) {
+    return distance_between({ x: x1, y: y1 }, { x: x2b, y: y2b });
+  } else if (bottom && right) {
+    return distance_between({ x: x1b, y: y1 }, { x: x2, y: y2b });
+  } else if (right && top) {
+    return distance_between({ x: x1b, y: y1b }, { x: x2, y: y2 });
+  } else if (left) {
+    return x1 - x2b;
+  } else if (right) {
+    return x2 - x1b;
+  } else if (bottom) {
+    return y1 - y2b;
+  } else if (top) {
+    return y2 - y1b;
+  }
+
+  return 0;
+}

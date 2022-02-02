@@ -9,6 +9,8 @@ import { StairwaysReach } from './StairwaysReach';
 import { TilesReach } from './TilesReach';
 import { TokensReach } from './TokensReach';
 import { canvas, game } from './settings';
+import { WallsReach } from './WallsReach';
+import { globalInteractionDistanceUniversal } from './ArmsReachHelper';
 
 export class ArmsReach {
   static API = 'armsReach';
@@ -125,15 +127,27 @@ export class ArmsReach {
       const doorControlTarget: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
         return x.wall.id == <string>placeableObject.id;
       });
-      // const wallTarget = <Wall>canvas.walls?.placeables?.find((x:Wall) => {return x.id == <string>placeableObject.id;});
-      isInReach = DoorsReach.globalInteractionDistance(
-        token,
-        doorControlTarget,
-        false,
-        maxDistance,
-        useGrid,
-        <string>userId,
-      );
+      if(doorControlTarget) {
+        isInReach = DoorsReach.globalInteractionDistance(
+          token,
+          doorControlTarget,
+          false,
+          maxDistance,
+          useGrid,
+          <string>userId,
+        );
+      }else{
+        const wallTarget = <Wall>canvas.walls?.placeables?.find((x:Wall) => {
+          return x.id == <string>placeableObject.id;
+        });
+        isInReach = WallsReach.globalInteractionDistance(
+          token,
+          wallTarget,
+          maxDistance,
+          useGrid,
+          <string>userId,
+        );
+      }
     } else if (relevantDocument instanceof DrawingDocument) {
       const drawingTarget = <Drawing>canvas.drawings?.placeables?.find((x: Drawing) => {
         return x.id == <string>placeableObject.id;
@@ -163,6 +177,100 @@ export class ArmsReach {
     }
     return isInReach;
   }
+
+  isReachableByTagUniversal(placeableObjectSource: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean {
+    //@ts-ignore
+    if (!(<boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
+      ui.notifications?.warn(
+        `${ARMS_REACH_MODULE_NAME} | The module '${ARMS_REACH_TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTagUniversal'`,
+      );
+      return false;
+    } else {
+      const placeableObjects =
+        //@ts-ignore
+        <PlaceableObject[]>Tagger?.getByTag(tag, { caseInsensitive: true }) || undefined;
+      if (!placeableObjects) {
+        return false;
+      }
+      return this.isReachableUniversal(placeableObjectSource, placeableObjects[0], maxDistance, useGrid, userId);
+    }
+  }
+
+  isReachableByIdUniversal(
+    placeableObjectSource: PlaceableObject,
+    placeableObjectId: string,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
+    // const sceneId = game.scenes?.current?.id;
+    const objects = this._getObjectsFromScene(<Scene>game.scenes?.current);
+    const object = objects.filter((obj: any) => {
+      obj.id === placeableObjectId;
+    })[0];
+    if (!object) {
+      ui.notifications?.warn(
+        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableByIdUniversal'`,
+      );
+      return false;
+    }
+    return this.isReachableUniversal(placeableObjectSource, <any>object, maxDistance, useGrid, userId);
+  }
+
+  isReachableByIdOrNameUniversal(
+    placeableObjectSource: PlaceableObject,
+    placeableObjectIdOrName: string,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
+    // const sceneId = game.scenes?.current?.id;
+    const objects = this._getObjectsFromScene(<Scene>game.scenes?.current);
+    const object = this._retrieveFromIdOrName(objects, placeableObjectIdOrName);
+    if (!object) {
+      ui.notifications?.warn(
+        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrNameUniversal'`,
+      );
+      return false;
+    }
+    return this.isReachableUniversal(placeableObjectSource, <any>object, maxDistance, useGrid, userId);
+  }
+
+  isReachableUniversal(
+    placeableObjectSource: PlaceableObject,
+    placeableObjectTarget: PlaceableObject,
+    maxDistance?: number,
+    useGrid?: boolean,
+    userId?: string,
+  ): boolean {
+    // const userId = <string>game.users?.find((u:User) => return u.id = gameUserId)[0];
+    const dist = globalInteractionDistanceUniversal(placeableObjectSource, placeableObjectTarget, <boolean>useGrid);
+    let isNotNearEnough = false;
+    // OLD SETTING
+    if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
+      const maxDist =
+        maxDistance && maxDistance > 0
+          ? maxDistance
+          : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+      isNotNearEnough = dist > maxDist;
+    } else {
+      const maxDist =
+        maxDistance && maxDistance > 0
+          ? maxDistance
+          : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      isNotNearEnough = dist > maxDist;
+    }
+    if (isNotNearEnough) {
+      // TODO add a warning  dialog ?
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  // ==========================================
+  // UTILITY
+  // ==========================================
 
   _getObjectsFromScene(scene: Scene) {
     return [

@@ -67,8 +67,8 @@ Calculate the distance between the source token and the target placeable objet
 
 #### isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
-Calculate the distance between the source token and the target placeable objet, the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work.
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+Calculate the distance between the source token and the first target placeable objet with a specific tag, the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work.
+**Returns**: <code>boolean</code> - The boolean value for tell if the first target with the specific tag is near enough to the source token 
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -181,6 +181,10 @@ To interact with a door, journal, ecc., the player need to have a token selected
 ### Templates Feature (On developing)
 
 * Add distance calculation for templates on the canvas
+
+### Wall Feature (Beta need feedback)
+
+* Add distance calculation for walls on the canvas (door are a special case)
 
 ### Tagger Feature
 

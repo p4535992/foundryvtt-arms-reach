@@ -64,4 +64,6 @@ export class ArmsreachData {
   h?: number;
   /// document type
   documentName: string;
+  /// id document
+  id: string;
 }
