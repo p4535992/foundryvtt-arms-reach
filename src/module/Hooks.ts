@@ -19,6 +19,7 @@ import { DrawingsReach } from './DrawingsReach';
 import { TilesReach } from './TilesReach';
 import { SoundsReach } from './SoundsReach';
 import { ArmsReach } from './ArmsReachApi';
+import { WallsReach } from './WallsReach';
 import { canvas, game } from './settings';
 
 export let taggerModuleActive;
@@ -60,13 +61,13 @@ export const readyHooks = async () => {
     // Adds menu option to Scene Nav and Directory
     Hooks.on('getSceneNavigationContext', (html, contextOptions) => {
       if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-        contextOptions.push(<any>ResetDoorsAndFog.getContextOption2('sceneId'));
+        contextOptions.push(<any>ResetDoorsAndFog.getContextOption('sceneId'));
       }
     });
 
     Hooks.on('getSceneDirectoryEntryContext', (html, contextOptions) => {
       if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-        contextOptions.push(ResetDoorsAndFog.getContextOption2('entityId'));
+        contextOptions.push(ResetDoorsAndFog.getContextOption(undefined));
       }
     });
 
@@ -78,7 +79,7 @@ export const readyHooks = async () => {
           title: 'Close Open Doors',
           icon: 'fas fa-door-closed',
           onClick: () => {
-            ResetDoorsAndFog.resetDoors(true, null);
+            ResetDoorsAndFog.resetDoors(true, <string>game.scenes?.current?.id);
           },
           button: true,
         });
@@ -92,7 +93,7 @@ export const readyHooks = async () => {
     canvas?.stage?.on('mousedown', async (event) => {
       const position = getMousePosition(canvas, event);
 
-      // const clickWalls:PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
+      const clickWalls:PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
       // const clickNotes:PlaceableObject[] = getPlaceablesAt(canvas?.notes?.placeables, position) || [];
       // const clickTokens:PlaceableObject[] = getPlaceablesAt(canvas?.tokens?.placeables, position) || [];
       // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
@@ -102,6 +103,7 @@ export const readyHooks = async () => {
       // const clickTemplates:PlaceableObject[] = getPlaceablesAt(canvas?.templates?.placeables, position) || [];
 
       const downTriggers: PlaceableObject[] = [];
+      downTriggers.push(...clickWalls);
       // downTriggers.push(...clickLights);
       // downTriggers.push(...clickSounds);
       downTriggers.push(...clickDrawings);
@@ -146,6 +148,27 @@ export const readyHooks = async () => {
             return;
           }
           const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
+          reselectTokenAfterInteraction(tokenSelected);
+          if (!isInReach) {
+            return;
+          }
+        }
+      }
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableWallsIntegration')) {
+        if (clickWalls.length > 0) {
+          const wall = clickWalls[0] as Wall;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+
+          if (taggerModuleActive && !checkTaggerForAmrsreach(wall)) {
+            reselectTokenAfterInteraction(tokenSelected);
+            return;
+          }
+          const isInReach = await WallsReach.globalInteractionDistance(tokenSelected, wall);
           reselectTokenAfterInteraction(tokenSelected);
           if (!isInReach) {
             return;

@@ -99,9 +99,9 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     ARMS_REACH_MODULE_NAME,
     `
-    - Add Walls Reach
-    - Add more API
-    - Add bug fix for [Not working well with Doors on Diagonal walls](https://github.com/p4535992/foundryvtt-arms-reach/issues/40)
+    - Bug fix [[BUG] Reset door and fog bug with token attacher ](https://github.com/p4535992/foundryvtt-arms-reach/issues/39)
+    - Bug fix [[BUG] Close Open Doors/ Reset Doors and Fog doesn't work if doors are open](https://github.com/p4535992/foundryvtt-arms-reach/issues/33)
+    - Bug fix [[BUG] "reset doors and fog" feature, the doors glitch and disappear.](https://github.com/p4535992/foundryvtt-arms-reach/issues/31)
     `,
     'minor',
   );
