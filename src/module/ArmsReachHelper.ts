@@ -54,24 +54,8 @@ export const computeDistanceBetweenCoordinates = function (
   const yPlaceable = placeable.y; //placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
   const wPlaceable = placeable.w;
   const hPlaceable = placeable.h;
-
-  //@ts-ignore
-  // let xToken = character._validPosition?.x ? character._validPosition?.x : character.x;
-  // //@ts-ignore
-  // let yToken = character._validPosition?.y ? character._validPosition?.y : character.y;
-  //const shape = getTokenCenter(character);
-  // const shape = { x: character.x + character.w / 2, y: character.y + character.h / 2 };
-  // const tokendoc = character.document;
-  // //@ts-ignore
-  // const tokenWidth = (tokendoc.parent?.dimensions.size * tokendoc.data.width) / 2;
-  // //@ts-ignore
-  // const tokenHeight = (tokendoc.parent?.dimensions.size * tokendoc.data.height) / 2;
-  // const shape = {
-  //   x: tokendoc.data.x + tokenWidth,
-  //   y: tokendoc.data.y + tokenHeight,
-  // };
-  // xToken = shape.x;
-  // yToken = shape.y;
+  const centerX = placeable.centerX;
+  const centerY = placeable.centerY;
   //@ts-ignore
   const unitSize = <number>canvas.dimensions.distance; //<number>canvas.grid?.grid?.options.dimensions.distance;
 
@@ -91,36 +75,15 @@ export const computeDistanceBetweenCoordinates = function (
     const dist = grids_between_token_and_placeable(character, placeable);
     return dist;
   } else {
-    // if (documentName == 'Stairway') {
-    //   // const dist = grids_between_token_and_placeable(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
-    //   // return dist;
-    //   const dist = units_between_token_and_placeableOLD(character, {
-    //     x: xPlaceable,
-    //     y: yPlaceable,
-    //     w: wPlaceable,
-    //     h: hPlaceable,
-    //   });
-    //   return dist;
-    // } else if (documentName == NoteDocument.documentName) {
-    //   // const dist = units_between_token_and_placeableOLD(character, { x: xPlaceable, y: yPlaceable, w: wPlaceable, h: hPlaceable });
-    //   // return dist;
-    //   // let dist = grids_between_token_and_placeable(character,placeable);
-    //   // dist = dist * unitSize;
-    //   const dist = units_between_token_and_placeableOLD(character, {
-    //     x: xPlaceable,
-    //     y: yPlaceable,
-    //     w: wPlaceable,
-    //     h: hPlaceable,
-    //   });
-    //   return dist;
-    // } else {
-    const dist = units_between_token_and_placeable(character, {
+    const dist = units_between_token_and_placeableV2(character, {
       x: xPlaceable,
       y: yPlaceable,
       w: wPlaceable,
       h: hPlaceable,
       documentName: documentName,
       id: placeable.id,
+      centerX: centerX,
+      centerY: centerY,
     });
     return dist;
     // }
@@ -379,66 +342,66 @@ export const reselectTokenAfterInteraction = function (character: Token) {
   }
 };
 
-function measureDistancesInternal(segments, options = {}) {
-  const opts = <any>duplicate(options);
-  //@ts-ignore
-  if (canvas.grid?.diagonalRule === 'EUCL') {
-    opts.ignoreGrid = true;
-    opts.gridSpaes = false;
-  }
-  if (opts.enableTerrainRuler) {
-    opts.gridSpaces = true;
-    const firstNewSegmentIndex = segments.findIndex((segment) => !segment.ray.dragRulerVisitedSpaces);
-    const previousSegments = segments.slice(0, firstNewSegmentIndex);
-    const newSegments = segments.slice(firstNewSegmentIndex);
-    const distances = previousSegments.map(
-      (segment) => segment.ray.dragRulerVisitedSpaces[segment.ray.dragRulerVisitedSpaces.length - 1].distance,
-    );
-    previousSegments.forEach(
-      (segment) => (segment.ray.terrainRulerVisitedSpaces = duplicate(segment.ray.dragRulerVisitedSpaces)),
-    );
-    //opts.costFunction = (x, y, costOptions={}) => {	return getCostFromSpeedProvider(entity, getAreaFromPositionAndShape({x, y}, shape), costOptions); }
-    if (previousSegments.length > 0) {
-      opts.terrainRulerInitialState = previousSegments[previousSegments.length - 1].ray.dragRulerFinalState;
-    }
-    //@ts-ignore
-    return distances.concat(terrainRuler.measureDistances(newSegments, opts));
-  } else {
-    // If another module wants to enable grid measurements but disable grid highlighting,
-    // manually set the *duplicate* option's gridSpaces value to true for the Foundry logic to work properly
-    if (!opts.ignoreGrid) {
-      opts.gridSpaces = true;
-    }
-    return canvas.grid?.measureDistances(segments, opts);
-    /*
-    if (!opts.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
+// function measureDistancesInternalOLD(segments, options = {}) {
+//   const opts = <any>duplicate(options);
+//   //@ts-ignore
+//   if (canvas.grid?.diagonalRule === 'EUCL') {
+//     opts.ignoreGrid = true;
+//     opts.gridSpaes = false;
+//   }
+//   if (opts.enableTerrainRuler) {
+//     opts.gridSpaces = true;
+//     const firstNewSegmentIndex = segments.findIndex((segment) => !segment.ray.dragRulerVisitedSpaces);
+//     const previousSegments = segments.slice(0, firstNewSegmentIndex);
+//     const newSegments = segments.slice(firstNewSegmentIndex);
+//     const distances = previousSegments.map(
+//       (segment) => segment.ray.dragRulerVisitedSpaces[segment.ray.dragRulerVisitedSpaces.length - 1].distance,
+//     );
+//     previousSegments.forEach(
+//       (segment) => (segment.ray.terrainRulerVisitedSpaces = duplicate(segment.ray.dragRulerVisitedSpaces)),
+//     );
+//     //opts.costFunction = (x, y, costOptions={}) => {	return getCostFromSpeedProvider(entity, getAreaFromPositionAndShape({x, y}, shape), costOptions); }
+//     if (previousSegments.length > 0) {
+//       opts.terrainRulerInitialState = previousSegments[previousSegments.length - 1].ray.dragRulerFinalState;
+//     }
+//     //@ts-ignore
+//     return distances.concat(terrainRuler.measureDistances(newSegments, opts));
+//   } else {
+//     // If another module wants to enable grid measurements but disable grid highlighting,
+//     // manually set the *duplicate* option's gridSpaces value to true for the Foundry logic to work properly
+//     if (!opts.ignoreGrid) {
+//       opts.gridSpaces = true;
+//     }
+//     return canvas.grid?.measureDistances(segments, opts);
+//     /*
+//     if (!opts.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
-    // Track the total number of diagonals
-    let nDiagonal = 0;
-    // const rule = canvas.parent.diagonalRule;
-    const d = <Canvas.Dimensions>canvas.dimensions;
+//     // Track the total number of diagonals
+//     let nDiagonal = 0;
+//     // const rule = canvas.parent.diagonalRule;
+//     const d = <Canvas.Dimensions>canvas.dimensions;
 
-    // Iterate over measured segments
-    return segments.map((s) => {
-      const r: Ray = s.ray;
+//     // Iterate over measured segments
+//     return segments.map((s) => {
+//       const r: Ray = s.ray;
 
-      // Determine the total distance traveled
-      const nx = Math.abs(Math.ceil(r.dx / d.size));
-      const ny = Math.abs(Math.ceil(r.dy / d.size));
+//       // Determine the total distance traveled
+//       const nx = Math.abs(Math.ceil(r.dx / d.size));
+//       const ny = Math.abs(Math.ceil(r.dy / d.size));
 
-      // Determine the number of straight and diagonal moves
-      const nd = Math.min(nx, ny);
-      const ns = Math.abs(ny - nx);
+//       // Determine the number of straight and diagonal moves
+//       const nd = Math.min(nx, ny);
+//       const ns = Math.abs(ny - nx);
 
-      nDiagonal += nd;
+//       nDiagonal += nd;
 
-      const nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
-      const spaces = nd10 * 2 + (nd - nd10) + ns;
-      return spaces * <number>canvas.dimensions?.distance;
-    });
-    */
-  }
-}
+//       const nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
+//       const spaces = nd10 * 2 + (nd - nd10) + ns;
+//       return spaces * <number>canvas.dimensions?.distance;
+//     });
+//     */
+//   }
+// }
 
 export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
   //@ts-ignore
@@ -464,11 +427,13 @@ export const getMousePosition = function (canvas: Canvas, event): { x: number; y
   };
 };
 
+// ====================================================================================================
+
 export const getPlaceablesAt = function (placeables, position): PlaceableObject[] {
   return placeables.filter((placeable) => placeableContains(placeable, position));
 };
 
-export const placeableContains = function (placeable, position): boolean {
+function placeableContains(placeable, position): boolean {
   // const x = getPlaceableX(placeable);
   // const y = getPlaceableY(placeable);
 
@@ -479,7 +444,7 @@ export const placeableContains = function (placeable, position): boolean {
   const w = getPlaceableWidth(placeable) || 0;
   const h = getPlaceableHeight(placeable) || 0;
   return Number.between(position.x, x, x + w) && Number.between(position.y, y, y + h);
-};
+}
 
 export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   const x = getPlaceableX(placeable);
@@ -494,7 +459,9 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   const h = getPlaceableHeight(placeable) || 0;
   const id = placeable?.wall.document ? placeable?.wall.document.id : placeable.id;
   const documentName = placeable?.wall.document ? placeable?.wall.document.documentName : placeable.documentName;
-  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id };
+  const centerX = placeable.center ? placeable.center.x : x;
+  const centerY = placeable.center ? placeable.center.y : y;
+  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY };
 };
 
 export const getPlaceableCenter = function (placeable: any): ArmsreachData {
@@ -509,7 +476,9 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
   const h = getPlaceableHeight(placeable) || 0;
   const id = placeable?.document ? placeable?.document.id : placeable.id;
   const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
-  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id };
+  const centerX = placeable.center ? placeable.center.x : x;
+  const centerY = placeable.center ? placeable.center.y : y;
+  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY };
 };
 
 const getPlaceableWidth = function (placeable: any): number {
@@ -543,6 +512,8 @@ const getPlaceableY = function (placeable: any): number {
   }
   return y;
 };
+
+// ============================================================================================
 
 function distance_between_token_rect(p1: Token, p2: ArmsreachData) {
   const x1 = p1.x;
@@ -612,40 +583,37 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
   // return Math.floor(distance_between_rect(token, b));
 }
 
-/**
- * @deprecated
- * @param token
- * @param b
- * @returns
- */
-function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
-  let dist = distance_between_token_rect(token, b);
-  if (dist == 0) {
-    const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
-    //@ts-ignore
-    const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
-    // Sum up the distances
-    const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
+// /**
+//  * @deprecated
+//  * @param token
+//  * @param b
+//  * @returns
+//  */
+// function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
+//   let dist = distance_between_token_rect(token, b);
+//   if (dist == 0) {
+//     const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
+//     //@ts-ignore
+//     const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
+//     // Sum up the distances
+//     const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
 
-    const segmentsLeft = [{ ray: new Ray({ x: token.x, y: token.y }, { x: b.x, y: b.y }) }];
-    //@ts-ignore
-    const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
-    // Sum up the distances
-    const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
+//     const segmentsLeft = [{ ray: new Ray({ x: token.x, y: token.y }, { x: b.x, y: b.y }) }];
+//     //@ts-ignore
+//     const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
+//     // Sum up the distances
+//     const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
 
-    dist = Math.max(distRight, distLeft);
-  } else {
-    const unitSize = <number>canvas.dimensions?.distance || 5;
-    const unitGridSize = <number>canvas.grid?.size || 50;
-    dist = (Math.floor(dist) / unitGridSize) * unitSize;
-  }
-  return dist;
-}
-
-// function tokens_close_enough(a, b, maxDistance){
-//   const distance = grids_between_token_and_placeable(a, b);
-//   return maxDistance >= distance;
+//     dist = Math.max(distRight, distLeft);
+//   } else {
+//     const unitSize = <number>canvas.dimensions?.distance || 5;
+//     const unitGridSize = <number>canvas.grid?.size || 50;
+//     dist = (Math.floor(dist) / unitGridSize) * unitSize;
+//   }
+//   return dist;
 // }
+
+// ================================================
 
 export const globalInteractionDistanceUniversal = function (
   placeableObjectSource: PlaceableObject,
@@ -728,4 +696,55 @@ function distance_between_placeable_rect(p1: ArmsreachData, p2: ArmsreachData) {
   }
 
   return 0;
+}
+
+// ================================================
+
+function units_between_token_and_placeableV2(sourceToken: Token, placeableObject: ArmsreachData) {
+  // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
+  // if (range === 0) return false;
+  // if (range === Infinity) return true;
+  const tokensSizeAdjust = (Math.min(<number>placeableObject.w, <number>placeableObject.h) || 0) / Math.SQRT2;
+  const dist =
+    (getUnitTokenDist(sourceToken, placeableObject) * <number>canvas.dimensions?.size) /
+      <number>canvas.dimensions?.distance -
+    tokensSizeAdjust;
+  // return dist <= range;
+  return dist;
+}
+
+function getUnitTokenDist(token1: Token, placeableObject: ArmsreachData) {
+  const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
+  const x1 = token1.center.x;
+  const y1 = token1.center.y;
+  const z1 = getTokenLOSheight(token1) * unitsToPixel;
+  const x2 = placeableObject.centerX;
+  const y2 = placeableObject.centerY;
+  const z2 = getTokenLOSheight(placeableObject) * unitsToPixel;
+
+  const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
+  return d;
+}
+
+/**
+ * Get the total LOS height for a token
+ * @param {Object} token - a token object
+ * @returns {Integer} returns token elevation plus the LOS height stored in the flags
+ **/
+
+function getTokenLOSheight(token) {
+  const defaultTokenHeight = 6;
+  const autoLOSHeight = false;
+  let losDiff;
+  const divideBy = token.data.flags.levelsautocover?.ducking ? 3 : 1;
+  if (autoLOSHeight) {
+    losDiff =
+      token.data.flags.levels?.tokenHeight ||
+      //@ts-ignore
+      <number>canvas.scene?.dimensions.distance * Math.max(token.data.width, token.data.height) * token.data.scale;
+  } else {
+    losDiff = token.data.flags.levels?.tokenHeight || defaultTokenHeight;
+  }
+
+  return token.data.elevation + losDiff / divideBy;
 }

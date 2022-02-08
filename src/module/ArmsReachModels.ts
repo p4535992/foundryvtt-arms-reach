@@ -66,4 +66,6 @@ export class ArmsreachData {
   documentName: string;
   /// id document
   id: string;
+  centerX: number;
+  centerY: number;
 }
