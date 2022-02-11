@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## 2.1.17
+
+- Better calculation, some clean up and add reset settings ty to Haxxer
+
 ## 2.1.16
 
 - Bug fix [[BUG] Reset door and fog bug with token attacher ](https://github.com/p4535992/foundryvtt-arms-reach/issues/39)
