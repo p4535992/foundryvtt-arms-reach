@@ -58,7 +58,13 @@ export const TokensReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
+            const dist = computeDistanceBetweenCoordinates(
+              TokensReach.getTokensCenter(token),
+              character,
+              TokenDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const TokensReach = {
               TokensReach.getTokensCenter(token),
               character,
               TokenDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

@@ -151,5 +151,13 @@
   "foundryvtt-arms-reach.settingHintWallsIntegrationFeature": "Max distance that a Wall can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Enable/Disable Templates integration",
-  "foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Max distance that a Template can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation."
+  "foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Max distance that a Template can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.setting.reset.name": "Reset settings to default",
+  "foundryvtt-arms-reach.setting.reset.label": "Reset Settings To Default",
+  "foundryvtt-arms-reach.setting.reset.hint": "This will reset all of the settings of back to the active game system's default.",
+  "foundryvtt-arms-reach.dialogs.resetsettings.title": "Reset Module Settings",
+  "foundryvtt-arms-reach.dialogs.resetsettings.content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>THIS CANNOT BE UNDONE!</strong>",
+  "foundryvtt-arms-reach.dialogs.resetsettings.confirm": "Reset Module Settings",
+  "foundryvtt-arms-reach.dialogs.resetsettings.cancel": "Cancel"
 }

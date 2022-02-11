@@ -68,4 +68,5 @@ export class ArmsreachData {
   id: string;
   centerX: number;
   centerY: number;
+  placeableObjectData: any;
 }

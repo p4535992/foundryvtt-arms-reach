@@ -58,7 +58,13 @@ export const LightsReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(LightsReach.getLightsCenter(light), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(LightsReach.getLightsCenter(light), character);
+            const dist = computeDistanceBetweenCoordinates(
+              LightsReach.getLightsCenter(light),
+              character,
+              AmbientLightDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const LightsReach = {
               LightsReach.getLightsCenter(light),
               character,
               AmbientLightDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

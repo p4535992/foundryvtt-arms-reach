@@ -53,13 +53,20 @@ export const StairwaysReach = {
           let isNotNearEnough = false;
           // OLD SETTING
           if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-            const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
+            const dist = computeDistanceBetweenCoordinates(
+              StairwaysReach.getStairwaysCenter(stairway),
+              character,
+              'Stairway',
+              true
+            );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
             const dist = computeDistanceBetweenCoordinates(
               StairwaysReach.getStairwaysCenter(stairway),
               character,
               'Stairway',
+              false
             );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
@@ -145,7 +152,13 @@ export const StairwaysReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
+            const dist = computeDistanceBetweenCoordinates(
+              StairwaysReach.getStairwaysCenter(stairway),
+              character,
+              'Stairway',
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -156,6 +169,7 @@ export const StairwaysReach = {
               StairwaysReach.getStairwaysCenter(stairway),
               character,
               'Stairway',
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

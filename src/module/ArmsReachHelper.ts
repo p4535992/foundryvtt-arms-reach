@@ -6,6 +6,7 @@ import { ArmsreachData } from './ArmsReachModels';
 
 /**
  * Function for calcuate the distance in grid units
+ * @deprecated to remove
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
  * @param doorControl or placeable
  * @param charCenter
@@ -49,6 +50,7 @@ export const computeDistanceBetweenCoordinates = function (
   placeable: ArmsreachData,
   character: Token,
   documentName: string,
+  useGrids:boolean
 ): number {
   const xPlaceable = placeable.x; //placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
   const yPlaceable = placeable.y; //placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
@@ -56,26 +58,16 @@ export const computeDistanceBetweenCoordinates = function (
   const hPlaceable = placeable.h;
   const centerX = placeable.centerX;
   const centerY = placeable.centerY;
+  const placeableObjectData = placeable.placeableObjectData;
   //@ts-ignore
   const unitSize = <number>canvas.dimensions.distance; //<number>canvas.grid?.grid?.options.dimensions.distance;
 
-  if (!xPlaceable || !yPlaceable || !character.x || !character.y) {
-    error(
-      '[xPlaceable=' +
-        xPlaceable +
-        ', yPlaceable=' +
-        yPlaceable +
-        ', xToken=' +
-        character.x +
-        ', yToken=' +
-        character.y +
-        ']',
-    );
+  if (useGrids) {
     // const dist = computeDistanceBetweenCoordinatesOLD(placeable, character);
     const dist = grids_between_token_and_placeable(character, placeable);
     return dist;
   } else {
-    const dist = units_between_token_and_placeableV2(character, {
+    const dist = units_between_token_and_placeableV1(character, {
       x: xPlaceable,
       y: yPlaceable,
       w: wPlaceable,
@@ -84,6 +76,7 @@ export const computeDistanceBetweenCoordinates = function (
       id: placeable.id,
       centerX: centerX,
       centerY: centerY,
+      placeableObjectData: placeableObjectData
     });
     return dist;
     // }
@@ -461,7 +454,8 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   const documentName = placeable?.wall.document ? placeable?.wall.document.documentName : placeable.documentName;
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
-  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY };
+  const placeableObjectData = placeable?.wall.document ? placeable?.wall.document.data : placeable.data;
+  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY,placeableObjectData:placeableObjectData };
 };
 
 export const getPlaceableCenter = function (placeable: any): ArmsreachData {
@@ -478,7 +472,8 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
   const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
-  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY };
+  const placeableObjectData = placeable.document ? placeable.document.data : placeable.data;
+  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY, placeableObjectData:placeableObjectData };
 };
 
 const getPlaceableWidth = function (placeable: any): number {
@@ -560,7 +555,7 @@ function grids_between_token_and_placeable(token: Token, b: ArmsreachData) {
   return Math.floor(distance_between_token_rect(token, b) / <number>canvas.grid?.size) + 1;
 }
 
-function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
+function units_between_token_and_placeableV1(token: Token, b: ArmsreachData) {
   let dist = Math.floor(distance_between_token_rect(token, b));
   if (dist == 0) {
     //
@@ -629,7 +624,7 @@ export const globalInteractionDistanceUniversal = function (
     const dist = grids_between_placeable_and_placeable(placeableSource, placeableTarget);
     return dist;
   } else {
-    const dist = units_between_placeable_and_placeable(placeableSource, placeableTarget);
+    const dist = units_between_placeable_and_placeableV2(placeableSource, placeableTarget);
     return dist;
   }
 };
@@ -638,7 +633,7 @@ function grids_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachDat
   return Math.floor(distance_between_placeable_rect(a, b) / <number>canvas.grid?.size) + 1;
 }
 
-function units_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachData) {
+function units_between_placeable_and_placeableV1(a: ArmsreachData, b: ArmsreachData) {
   let dist = Math.floor(distance_between_placeable_rect(a, b));
   if (dist == 0) {
     //
@@ -698,18 +693,49 @@ function distance_between_placeable_rect(p1: ArmsreachData, p2: ArmsreachData) {
   return 0;
 }
 
+function units_between_placeable_and_placeableV2(a: ArmsreachData, b: ArmsreachData) {
+  // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
+  // if (range === 0) return false;
+  // if (range === Infinity) return true;
+  const tokensSizeAdjust = (Math.min(<number>b.w, <number>b.h) || 0) / Math.SQRT2;
+  let dist =
+    (getUnitTokenDistUniversal(a, b) * <number>canvas.dimensions?.size) /
+      <number>canvas.dimensions?.distance -
+    tokensSizeAdjust;
+  // return dist <= range;
+  const unitSize = <number>canvas.dimensions?.distance || 5;
+  const unitGridSize = <number>canvas.grid?.size || 50;
+  dist = (Math.floor(dist) / unitGridSize) * unitSize;
+  return dist;
+}
+
+function getUnitTokenDistUniversal(a: ArmsreachData, b: ArmsreachData) {
+  const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
+  const x1 = a.centerX;
+  const y1 = a.centerY;
+  const z1 = getElevationPlaceableObject(a.placeableObjectData) * unitsToPixel;
+  const x2 = b.centerX;
+  const y2 = b.centerY;
+  const z2 = getElevationPlaceableObject(b.placeableObjectData) * unitsToPixel;
+  const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
+  return d;
+}
+
 // ================================================
 
-function units_between_token_and_placeableV2(sourceToken: Token, placeableObject: ArmsreachData) {
+function units_between_token_and_placeable_not_work(sourceToken: Token, placeableObject: ArmsreachData) {
   // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
   // if (range === 0) return false;
   // if (range === Infinity) return true;
   const tokensSizeAdjust = (Math.min(<number>placeableObject.w, <number>placeableObject.h) || 0) / Math.SQRT2;
-  const dist =
+  let dist =
     (getUnitTokenDist(sourceToken, placeableObject) * <number>canvas.dimensions?.size) /
       <number>canvas.dimensions?.distance -
     tokensSizeAdjust;
   // return dist <= range;
+  const unitSize = <number>canvas.dimensions?.distance || 5;
+  const unitGridSize = <number>canvas.grid?.size || 50;
+  dist = (Math.floor(dist) / unitGridSize) * unitSize;
   return dist;
 }
 
@@ -717,34 +743,54 @@ function getUnitTokenDist(token1: Token, placeableObject: ArmsreachData) {
   const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
   const x1 = token1.center.x;
   const y1 = token1.center.y;
-  const z1 = getTokenLOSheight(token1) * unitsToPixel;
+  const z1 = getElevationPlaceableObject(token1) * unitsToPixel;
   const x2 = placeableObject.centerX;
   const y2 = placeableObject.centerY;
-  const z2 = getTokenLOSheight(placeableObject) * unitsToPixel;
-
+  const z2 = getElevationPlaceableObject(placeableObject.placeableObjectData) * unitsToPixel;
   const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
   return d;
 }
+
+// /**
+//  * Get the total LOS height for a token
+//  * @param {Object} token - a token object
+//  * @returns {Integer} returns token elevation plus the LOS height stored in the flags
+//  */
+// function getTokenLOSheight(token:Token) {
+//   const defaultTokenHeight = 6;
+//   const autoLOSHeight = false;
+//   let losDiff;
+//   const divideBy = (<any>token.data.flags.levelsautocover)?.ducking ? 3 : 1;
+//   if (autoLOSHeight) {
+//     losDiff = (<any>token.data.flags.levels)?.tokenHeight ||
+//       //@ts-ignore
+//       <number>canvas.scene?.dimensions.distance * Math.max(token.data.width, token.data.height) * token.data.scale;
+//   } else {
+//     losDiff = (<any>token.data.flags.levels)?.tokenHeight || defaultTokenHeight;
+//   }
+
+//   return token.data.elevation + losDiff / divideBy;
+// }
 
 /**
  * Get the total LOS height for a token
  * @param {Object} token - a token object
  * @returns {Integer} returns token elevation plus the LOS height stored in the flags
- **/
-
-function getTokenLOSheight(token) {
-  const defaultTokenHeight = 6;
-  const autoLOSHeight = false;
-  let losDiff;
-  const divideBy = token.data.flags.levelsautocover?.ducking ? 3 : 1;
-  if (autoLOSHeight) {
-    losDiff =
-      token.data.flags.levels?.tokenHeight ||
-      //@ts-ignore
-      <number>canvas.scene?.dimensions.distance * Math.max(token.data.width, token.data.height) * token.data.scale;
-  } else {
-    losDiff = token.data.flags.levels?.tokenHeight || defaultTokenHeight;
+ */
+function getElevationPlaceableObject(placeableObject: any): number {
+  if(!placeableObject){
+    return 0;
   }
-
-  return token.data.elevation + losDiff / divideBy;
+  const base = placeableObject.data ? placeableObject.data : placeableObject;
+  const base_elevation =
+    //@ts-ignore
+    typeof _levels !== 'undefined' && _levels?.advancedLOS && placeableObject instanceof Token
+      ? //@ts-ignore
+        _levels.getTokenLOSheight(placeableObject)
+      : base.elevation ??
+        base.flags['levels']?.elevation ??
+        base.flags['levels']?.rangeBottom ??
+        base.flags['wallHeight']?.wallHeightBottom ??
+        0;
+  return base_elevation;
 }

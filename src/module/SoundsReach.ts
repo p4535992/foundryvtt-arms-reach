@@ -58,7 +58,13 @@ export const SoundsReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(SoundsReach.getSoundsCenter(sound), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(SoundsReach.getSoundsCenter(sound), character);
+            const dist = computeDistanceBetweenCoordinates(
+              SoundsReach.getSoundsCenter(sound),
+              character,
+              AmbientSoundDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const SoundsReach = {
               SoundsReach.getSoundsCenter(sound),
               character,
               AmbientSoundDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

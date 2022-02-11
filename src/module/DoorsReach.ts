@@ -230,8 +230,14 @@ export const DoorsReach = {
                 maxDistance && maxDistance > 0
                   ? maxDistance
                   : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-              const dist = <number>(
-                computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(doorControl), character)
+              // const dist = <number>(
+              //   computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(doorControl), character)
+              // );
+              const dist = computeDistanceBetweenCoordinates(
+                DoorsReach.getDoorCenter(doorControl),
+                character,
+                WallDocument.documentName,
+                true
               );
               isNotNearEnough = dist > maxDist;
             } else {
@@ -243,6 +249,7 @@ export const DoorsReach = {
                 DoorsReach.getDoorCenter(doorControl),
                 character,
                 WallDocument.documentName,
+                false
               );
               isNotNearEnough = dist > maxDist;
             }
@@ -448,10 +455,11 @@ export const DoorsReach = {
         let dist;
         // OLD SETTING
         if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
-          dist = <number>computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(door), token);
+          // dist = <number>computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(door), token);
+          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token, WallDocument.documentName, true);
           isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
         } else {
-          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token, WallDocument.documentName);
+          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token, WallDocument.documentName, false);
           isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
         }
         // const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token);

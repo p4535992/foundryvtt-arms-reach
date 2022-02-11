@@ -3,7 +3,7 @@
   "name": "foundryvtt-arms-reach",
   "title": "FoundryVTT Arms Reach",
   "description": "Allows the GM to limit the distance that a player can interacted with a placeable object like door, journal, stairway, token, ecc..",
-  "version": "2.1.16",
+  "version": "2.1.17",
   "scripts": {
     "package": "gulp package",
     "build": "gulp build && gulp link",

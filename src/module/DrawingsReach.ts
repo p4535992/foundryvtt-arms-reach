@@ -58,7 +58,13 @@ export const DrawingsReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(DrawingsReach.getDrawingsCenter(drawing), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(DrawingsReach.getDrawingsCenter(drawing), character);
+            const dist = computeDistanceBetweenCoordinates(
+              DrawingsReach.getDrawingsCenter(drawing),
+              character,
+              DrawingDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const DrawingsReach = {
               DrawingsReach.getDrawingsCenter(drawing),
               character,
               DrawingDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

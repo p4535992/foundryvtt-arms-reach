@@ -58,7 +58,13 @@ export const TilesReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
+            const dist = computeDistanceBetweenCoordinates(
+              TilesReach.getTilesCenter(tile),
+              character,
+              TileDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const TilesReach = {
               TilesReach.getTilesCenter(tile),
               character,
               TileDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

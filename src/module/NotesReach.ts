@@ -58,7 +58,13 @@ export const NotesReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(NotesReach.getNotesCenter(note), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(NotesReach.getNotesCenter(note), character);
+            const dist = computeDistanceBetweenCoordinates(
+              NotesReach.getNotesCenter(note),
+              character,
+              NoteDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const NotesReach = {
               NotesReach.getNotesCenter(note),
               character,
               NoteDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }

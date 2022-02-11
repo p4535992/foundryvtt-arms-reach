@@ -58,7 +58,13 @@ export const WallsReach = {
               maxDistance && maxDistance > 0
                 ? maxDistance
                 : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
-            const dist = computeDistanceBetweenCoordinatesOLD(WallsReach.getWallsCenter(wall), character);
+            // const dist = computeDistanceBetweenCoordinatesOLD(WallsReach.getWallsCenter(wall), character);
+            const dist = computeDistanceBetweenCoordinates(
+              WallsReach.getWallsCenter(wall),
+              character,
+              WallDocument.documentName,
+              true
+            );
             isNotNearEnough = dist > maxDist;
           } else {
             const maxDist =
@@ -69,6 +75,7 @@ export const WallsReach = {
               WallsReach.getWallsCenter(wall),
               character,
               WallDocument.documentName,
+              false
             );
             isNotNearEnough = dist > maxDist;
           }
