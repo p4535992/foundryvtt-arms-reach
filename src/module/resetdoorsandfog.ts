@@ -2,13 +2,12 @@ import { log } from '../foundryvtt-arms-reach';
 import { canvas, game } from './settings';
 
 export const ResetDoorsAndFog = {
-
   resetDoorsAndFog: async function (isCurrentScene: boolean, id: string) {
     await ResetDoorsAndFog.resetDoors(isCurrentScene, id);
     await ResetDoorsAndFog.resetFog(isCurrentScene, id);
   },
 
-  resetDoors: async function (isCurrentScene:boolean, id:string) {
+  resetDoors: async function (isCurrentScene: boolean, id: string) {
     const updates = <any[]>[];
     if (isCurrentScene) {
       canvas.walls?.doors.filter((item) => item.data.ds === 1).forEach((item) => updates.push({ _id: item.id, ds: 0 }));
@@ -23,7 +22,7 @@ export const ResetDoorsAndFog = {
     ui.notifications?.info(`Doors have been shut.`);
   },
 
-  resetFog: async function (isCurrentScene:boolean, id:string) {
+  resetFog: async function (isCurrentScene: boolean, id: string) {
     if (isCurrentScene) {
       canvas.sight?.resetFog();
     } else {

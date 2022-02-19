@@ -63,7 +63,7 @@ export const NotesReach = {
               NotesReach.getNotesCenter(note),
               character,
               NoteDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const NotesReach = {
               NotesReach.getNotesCenter(note),
               character,
               NoteDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

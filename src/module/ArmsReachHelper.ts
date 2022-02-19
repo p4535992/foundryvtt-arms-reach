@@ -50,7 +50,7 @@ export const computeDistanceBetweenCoordinates = function (
   placeable: ArmsreachData,
   character: Token,
   documentName: string,
-  useGrids:boolean
+  useGrids: boolean,
 ): number {
   const xPlaceable = placeable.x; //placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
   const yPlaceable = placeable.y; //placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
@@ -76,7 +76,7 @@ export const computeDistanceBetweenCoordinates = function (
       id: placeable.id,
       centerX: centerX,
       centerY: centerY,
-      placeableObjectData: placeableObjectData
+      placeableObjectData: placeableObjectData,
     });
     return dist;
     // }
@@ -455,7 +455,17 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
   const placeableObjectData = placeable?.wall.document ? placeable?.wall.document.data : placeable.data;
-  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY,placeableObjectData:placeableObjectData };
+  return {
+    x: x,
+    y: y,
+    w: w,
+    h: h,
+    documentName: documentName,
+    id: id,
+    centerX: centerX,
+    centerY: centerY,
+    placeableObjectData: placeableObjectData,
+  };
 };
 
 export const getPlaceableCenter = function (placeable: any): ArmsreachData {
@@ -473,7 +483,17 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
   const placeableObjectData = placeable.document ? placeable.document.data : placeable.data;
-  return { x: x, y: y, w: w, h: h, documentName: documentName, id: id, centerX: centerX, centerY: centerY, placeableObjectData:placeableObjectData };
+  return {
+    x: x,
+    y: y,
+    w: w,
+    h: h,
+    documentName: documentName,
+    id: id,
+    centerX: centerX,
+    centerY: centerY,
+    placeableObjectData: placeableObjectData,
+  };
 };
 
 const getPlaceableWidth = function (placeable: any): number {
@@ -699,8 +719,7 @@ function units_between_placeable_and_placeableV2(a: ArmsreachData, b: ArmsreachD
   // if (range === Infinity) return true;
   const tokensSizeAdjust = (Math.min(<number>b.w, <number>b.h) || 0) / Math.SQRT2;
   let dist =
-    (getUnitTokenDistUniversal(a, b) * <number>canvas.dimensions?.size) /
-      <number>canvas.dimensions?.distance -
+    (getUnitTokenDistUniversal(a, b) * <number>canvas.dimensions?.size) / <number>canvas.dimensions?.distance -
     tokensSizeAdjust;
   // return dist <= range;
   const unitSize = <number>canvas.dimensions?.distance || 5;
@@ -778,7 +797,7 @@ function getUnitTokenDist(token1: Token, placeableObject: ArmsreachData) {
  * @returns {Integer} returns token elevation plus the LOS height stored in the flags
  */
 function getElevationPlaceableObject(placeableObject: any): number {
-  if(!placeableObject){
+  if (!placeableObject) {
     return 0;
   }
   const base = placeableObject.data ? placeableObject.data : placeableObject;

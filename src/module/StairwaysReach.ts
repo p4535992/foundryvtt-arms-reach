@@ -58,7 +58,7 @@ export const StairwaysReach = {
               StairwaysReach.getStairwaysCenter(stairway),
               character,
               'Stairway',
-              true
+              true,
             );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
           } else {
@@ -66,7 +66,7 @@ export const StairwaysReach = {
               StairwaysReach.getStairwaysCenter(stairway),
               character,
               'Stairway',
-              false
+              false,
             );
             isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
           }
@@ -157,7 +157,7 @@ export const StairwaysReach = {
               StairwaysReach.getStairwaysCenter(stairway),
               character,
               'Stairway',
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -169,7 +169,7 @@ export const StairwaysReach = {
               StairwaysReach.getStairwaysCenter(stairway),
               character,
               'Stairway',
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

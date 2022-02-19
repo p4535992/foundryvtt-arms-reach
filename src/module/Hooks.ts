@@ -93,7 +93,7 @@ export const readyHooks = async () => {
     canvas?.stage?.on('mousedown', async (event) => {
       const position = getMousePosition(canvas, event);
 
-      const clickWalls:PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
+      const clickWalls: PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
       // const clickNotes:PlaceableObject[] = getPlaceablesAt(canvas?.notes?.placeables, position) || [];
       // const clickTokens:PlaceableObject[] = getPlaceablesAt(canvas?.tokens?.placeables, position) || [];
       // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
@@ -374,6 +374,9 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     if (!isInReach) {
       // Bug fix not sure why i need to do this
       if (doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {
+        if (game.settings.get(ARMS_REACH_MODULE_NAME, 'disableDoorSound')) {
+          return;
+        }
         // Door Lock
         const doorData = DoorsReach.defaultDoorData();
         const playpath = doorData.lockPath;

@@ -63,7 +63,7 @@ export const TokensReach = {
               TokensReach.getTokensCenter(token),
               character,
               TokenDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const TokensReach = {
               TokensReach.getTokensCenter(token),
               character,
               TokenDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

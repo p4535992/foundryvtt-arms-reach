@@ -48,7 +48,6 @@ export function getAPI(): ArmsReach {
 }
 
 export const registerSettings = function () {
-
   game.settings.registerMenu(ARMS_REACH_MODULE_NAME, 'resetAllSettings', {
     name: `${ARMS_REACH_MODULE_NAME}.setting.reset.name`,
     hint: `${ARMS_REACH_MODULE_NAME}.setting.reset.hint`,
@@ -56,15 +55,6 @@ export const registerSettings = function () {
     type: ResetSettingsDialog,
     restricted: true,
   });
-
-  const settings = defaultSettings();
-  for (const [name, data] of Object.entries(settings)) {
-      game.settings.register(ARMS_REACH_MODULE_NAME, name, <any>data);
-  }
-
-  // for (const [name, data] of Object.entries(otherSettings)) {
-  //     game.settings.register(ARMS_REACH_MODULE_NAME, name, data);
-  // }
 
   // ========================================================
   // Arms Reach
@@ -234,6 +224,15 @@ export const registerSettings = function () {
   game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter', {
     name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyToCenterCamera`),
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyToCenterCamera`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  game.settings.register(ARMS_REACH_MODULE_NAME, 'disableDoorSound', {
+    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDisableDoorSound`),
+    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDisableDoorSound`),
     scope: 'world',
     config: true,
     default: false,
@@ -412,11 +411,22 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  // =========================================================
+
+  // const settings = defaultSettings();
+  // for (const [name, data] of Object.entries(settings)) {
+  //     game.settings.register(ARMS_REACH_MODULE_NAME, name, <any>data);
+  // }
+
+  // for (const [name, data] of Object.entries(otherSettings)) {
+  //     game.settings.register(ARMS_REACH_MODULE_NAME, name, data);
+  // }
 };
 
-class ResetSettingsDialog extends FormApplication {
-  constructor(...args: any[]) {
-    super(args);
+class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object, any> {
+  constructor(...args) {
+    //@ts-ignore
+    super(...args);
     //@ts-ignore
     return new Dialog({
       title: game.i18n.localize(`${ARMS_REACH_MODULE_NAME}.dialogs.resetsettings.title`),
@@ -448,13 +458,23 @@ class ResetSettingsDialog extends FormApplication {
 }
 
 async function applyDefaultSettings() {
-  const settings = defaultSettings(true);
-  for (const [name, data] of Object.entries(settings)) {
+  // const settings = defaultSettings(true);
+  // for (const [name, data] of Object.entries(settings)) {
+  //   await game.settings.set(ARMS_REACH_MODULE_NAME, name, data.default);
+  // }
+  const settings2 = otherSettings(true);
+  for (const [name, data] of Object.entries(settings2)) {
     await game.settings.set(ARMS_REACH_MODULE_NAME, name, data.default);
   }
 }
 
-function defaultSettings(apply = false) {
+// function defaultSettings(apply = false) {
+//   return {
+//     //
+//   };
+// }
+
+function otherSettings(apply = false) {
   return {
     // senses: {
     //   scope: 'world',
@@ -808,6 +828,6 @@ function defaultSettings(apply = false) {
       config: true,
       default: false,
       type: Boolean,
-    }
+    },
   };
 }

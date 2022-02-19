@@ -63,7 +63,7 @@ export const LightsReach = {
               LightsReach.getLightsCenter(light),
               character,
               AmbientLightDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const LightsReach = {
               LightsReach.getLightsCenter(light),
               character,
               AmbientLightDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

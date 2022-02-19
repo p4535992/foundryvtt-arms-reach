@@ -99,7 +99,7 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     ARMS_REACH_MODULE_NAME,
     `
-    - Better calculation, some clean up and add reset settings ty to Haxxer
+    - add a new settings (only for door feature), disable the default door sound if is not in reach.
     `,
     'minor',
   );

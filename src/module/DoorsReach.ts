@@ -237,7 +237,7 @@ export const DoorsReach = {
                 DoorsReach.getDoorCenter(doorControl),
                 character,
                 WallDocument.documentName,
-                true
+                true,
               );
               isNotNearEnough = dist > maxDist;
             } else {
@@ -249,7 +249,7 @@ export const DoorsReach = {
                 DoorsReach.getDoorCenter(doorControl),
                 character,
                 WallDocument.documentName,
-                false
+                false,
               );
               isNotNearEnough = dist > maxDist;
             }
@@ -283,14 +283,7 @@ export const DoorsReach = {
   },
 
   preUpdateWallBugFixSoundHandler: async function (object, updateData, diff, userID) {
-    // if(
-    //       (
-    //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
-    //   ||
-    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
-    //       )
-    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
-    // {
+    // if (game.settings.get(ARMS_REACH_MODULE_NAME, 'disableDoorSound')) {
     //   return;
     // }
 
@@ -324,14 +317,7 @@ export const DoorsReach = {
   },
 
   preUpdateWallBugFixSoundSimpleHandler: async function (updateData) {
-    // if(
-    //       (
-    //       (object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
-    //   ||
-    //       game.data.users.find(x => x._id === userID )['role'] >= game.settings.get(MODULE_NAME, "stealthDoor")
-    //       )
-    //       && game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
-    // {
+    // if (game.settings.get(ARMS_REACH_MODULE_NAME, 'disableDoorSound')) {
     //   return;
     // }
 
@@ -456,10 +442,20 @@ export const DoorsReach = {
         // OLD SETTING
         if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0) {
           // dist = <number>computeDistanceBetweenCoordinatesOLD(DoorsReach.getDoorCenter(door), token);
-          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token, WallDocument.documentName, true);
+          dist = computeDistanceBetweenCoordinates(
+            DoorsReach.getDoorCenter(door),
+            token,
+            WallDocument.documentName,
+            true,
+          );
           isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
         } else {
-          dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token, WallDocument.documentName, false);
+          dist = computeDistanceBetweenCoordinates(
+            DoorsReach.getDoorCenter(door),
+            token,
+            WallDocument.documentName,
+            false,
+          );
           isNotNearEnough = dist > <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
         }
         // const dist = computeDistanceBetweenCoordinates(DoorsReach.getDoorCenter(door), token);

@@ -63,7 +63,7 @@ export const WallsReach = {
               WallsReach.getWallsCenter(wall),
               character,
               WallDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const WallsReach = {
               WallsReach.getWallsCenter(wall),
               character,
               WallDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

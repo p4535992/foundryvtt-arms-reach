@@ -63,7 +63,7 @@ export const TilesReach = {
               TilesReach.getTilesCenter(tile),
               character,
               TileDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const TilesReach = {
               TilesReach.getTilesCenter(tile),
               character,
               TileDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

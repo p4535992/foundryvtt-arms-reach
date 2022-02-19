@@ -63,7 +63,7 @@ export const DrawingsReach = {
               DrawingsReach.getDrawingsCenter(drawing),
               character,
               DrawingDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const DrawingsReach = {
               DrawingsReach.getDrawingsCenter(drawing),
               character,
               DrawingDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

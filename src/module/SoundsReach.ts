@@ -63,7 +63,7 @@ export const SoundsReach = {
               SoundsReach.getSoundsCenter(sound),
               character,
               AmbientSoundDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const SoundsReach = {
               SoundsReach.getSoundsCenter(sound),
               character,
               AmbientSoundDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

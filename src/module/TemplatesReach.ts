@@ -63,7 +63,7 @@ export const TemplatesReach = {
               TemplatesReach.getTemplatesCenter(template),
               character,
               MeasuredTemplateDocument.documentName,
-              true
+              true,
             );
             isNotNearEnough = dist > maxDist;
           } else {
@@ -75,7 +75,7 @@ export const TemplatesReach = {
               TemplatesReach.getTemplatesCenter(template),
               character,
               MeasuredTemplateDocument.documentName,
-              false
+              false,
             );
             isNotNearEnough = dist > maxDist;
           }

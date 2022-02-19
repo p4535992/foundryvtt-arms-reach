@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.18
+
+- add a new settings (only for door feature), disable the default door sound if is not in reach.
+
 ## 2.1.17
 
 - Better calculation, some clean up and add reset settings ty to Haxxer
