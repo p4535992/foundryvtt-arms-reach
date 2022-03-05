@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.20
+
+- Bug fix [[BUG] Token unable to open door unless directly in front of it](https://github.com/p4535992/foundryvtt-arms-reach/issues/43)
+- Bug fix [[BUG] GM cannot interact with doors when "Notifications for failed interactions even for GM" is checked](https://github.com/p4535992/foundryvtt-arms-reach/issues/42)
+
 ## 2.1.19
 
 - Add new feature "If no token is selected and you are a GM this feature is not activated"

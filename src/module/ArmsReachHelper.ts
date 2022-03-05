@@ -591,7 +591,14 @@ function units_between_token_and_placeableV1(token: Token, b: ArmsreachData) {
         return x.wall.id == <string>b.id;
       });
       if (!isDoor) {
-        dist = (Math.floor(dist) / unitGridSize) * unitSize;
+        // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize
+        dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
+      } else {
+        const globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+        if (globalInteraction > 5) {
+          // TODO WHY ? is a door but i need to multiply anyway for antoher unitsize
+          dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
+        }
       }
     }
   }
@@ -669,7 +676,14 @@ function units_between_placeable_and_placeableV1(a: ArmsreachData, b: ArmsreachD
         return x.wall.id == <string>b.id;
       });
       if (!isDoor) {
-        dist = (Math.floor(dist) / unitGridSize) * unitSize;
+        // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize
+        dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
+      } else {
+        const globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+        if (globalInteraction > 5) {
+          // TODO WHY ? is a door but i need to multiply anyway for antoher unitsize
+          dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
+        }
       }
     }
   }

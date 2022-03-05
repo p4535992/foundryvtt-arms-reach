@@ -53,17 +53,18 @@ export const initHooks = () => {
 
     if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
       //@ts-ignore
-      // libWrapper.register(
-      //   ARMS_REACH_MODULE_NAME,
-      //   'Note.prototype._onClickLeft',
-      //   NotePrototypeOnClickLeftHandler,
-      //   'MIXED');
+      libWrapper.register(
+        ARMS_REACH_MODULE_NAME,
+        'Note.prototype._onClickLeft',
+        NotePrototypeOnClickLeft1Handler,
+        'MIXED',
+      );
 
       //@ts-ignore
       libWrapper.register(
         ARMS_REACH_MODULE_NAME,
         'Note.prototype._onClickLeft2',
-        NotePrototypeOnClickLeftHandler,
+        NotePrototypeOnClickLeft2Handler,
         'MIXED',
       );
     }
@@ -385,7 +386,9 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
   return wrapped(...args);
 };
 
-export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+let currentTokenForNote: Token;
+
+export const NotePrototypeOnClickLeft1Handler = async function (wrapped, ...args) {
   if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
     const [target] = args;
     const note = this as Note;
@@ -394,6 +397,25 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
     tokenSelected = <Token>getFirstPlayerTokenSelected();
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
+    }
+    currentTokenForNote = tokenSelected;
+  }
+  return wrapped(...args);
+};
+
+export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args) {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+    const [target] = args;
+    const note = this as Note;
+    let tokenSelected;
+    if (currentTokenForNote) {
+      tokenSelected = currentTokenForNote;
+      reselectTokenAfterInteraction(tokenSelected);
+    } else {
+      tokenSelected = <Token>getFirstPlayerTokenSelected();
+      if (!tokenSelected) {
+        tokenSelected = <Token>getFirstPlayerToken();
+      }
     }
     // Check if no token is selected and you are the GM avoid the distance calculation
     let doNotReselectIfGM = false;
