@@ -1,4 +1,3 @@
-import { log } from '../foundryvtt-arms-reach';
 import { canvas, game } from './settings';
 
 export const ResetDoorsAndFog = {

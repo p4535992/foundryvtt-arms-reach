@@ -1,5 +1,5 @@
 import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_FLAG } from './settings';
-import { error, warn } from '../foundryvtt-arms-reach';
+import { error, warn } from './lib/lib';
 import { canvas, game } from './settings';
 import { tokenToString } from 'typescript';
 import { ArmsreachData } from './ArmsReachModels';
@@ -228,7 +228,8 @@ export const iteractionFailNotification = function (message) {
   if (!game.settings.get(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail')) {
     return;
   }
-  ui.notifications?.warn(message);
+  //ui.notifications?.warn(message);
+  warn(message, true);
 };
 
 /**

@@ -1,4 +1,4 @@
-import { warn, error, debug, i18n, i18nFormat } from '../foundryvtt-arms-reach';
+import { warn, error, debug, i18n, i18nFormat } from './lib/lib';
 import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
 import { StairwaysReach } from './StairwaysReach';
 import { ResetDoorsAndFog } from './resetdoorsandfog';
@@ -22,174 +22,7 @@ import { ArmsReach } from './ArmsReachApi';
 import { WallsReach } from './WallsReach';
 import { canvas, game } from './settings';
 
-export let taggerModuleActive;
-
-export const readyHooks = async () => {
-  // setup all the hooks
-  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    game[ArmsReach.API] = new ArmsReach();
-
-    Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
-      // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
-        // if ambient door is present and active dont' do this
-        if (!game.modules.get('ambientdoors')?.active) {
-          DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
-        }
-      }
-    });
-
-    // Management of the Stairways module
-    if (game.modules.get('stairways')?.active) {
-      Hooks.on('PreStairwayTeleport', (data) => {
-        if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
-          const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
-          let tokenSelected;
-
-          tokenSelected = <Token>getFirstPlayerTokenSelected();
-          if (!tokenSelected) {
-            tokenSelected = <Token>getFirstPlayerToken();
-          }
-
-          const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
-          reselectTokenAfterInteraction(tokenSelected);
-          return result;
-        }
-      });
-    }
-
-    // Adds menu option to Scene Nav and Directory
-    Hooks.on('getSceneNavigationContext', (html, contextOptions) => {
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-        contextOptions.push(<any>ResetDoorsAndFog.getContextOption('sceneId'));
-      }
-    });
-
-    Hooks.on('getSceneDirectoryEntryContext', (html, contextOptions) => {
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-        contextOptions.push(ResetDoorsAndFog.getContextOption(undefined));
-      }
-    });
-
-    // Adds Shut All Doors button to Walls Control Layer
-    Hooks.on('getSceneControlButtons', function (controls) {
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
-        controls[4].tools.splice(controls[4].tools.length - 2, 0, {
-          name: 'close',
-          title: 'Close Open Doors',
-          icon: 'fas fa-door-closed',
-          onClick: () => {
-            ResetDoorsAndFog.resetDoors(true, <string>game.scenes?.current?.id);
-          },
-          button: true,
-        });
-        return controls;
-      }
-    });
-
-    // Hooks.on('canvasReady',function (canvas: Canvas) {
-    // const [target] = args;
-    // const canvas = this as Canvas;
-    canvas?.stage?.on('mousedown', async (event) => {
-      const position = getMousePosition(canvas, event);
-
-      const clickWalls: PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
-      // const clickNotes:PlaceableObject[] = getPlaceablesAt(canvas?.notes?.placeables, position) || [];
-      // const clickTokens:PlaceableObject[] = getPlaceablesAt(canvas?.tokens?.placeables, position) || [];
-      // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
-      // const clickSounds:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
-      const clickDrawings: PlaceableObject[] = getPlaceablesAt(canvas?.drawings?.placeables, position) || [];
-      const clickTiles: PlaceableObject[] = getPlaceablesAt(canvas.background?.placeables, position) || [];
-      // const clickTemplates:PlaceableObject[] = getPlaceablesAt(canvas?.templates?.placeables, position) || [];
-
-      const downTriggers: PlaceableObject[] = [];
-      downTriggers.push(...clickWalls);
-      // downTriggers.push(...clickLights);
-      // downTriggers.push(...clickSounds);
-      downTriggers.push(...clickDrawings);
-      downTriggers.push(...clickTiles);
-      // downTriggers.push(...clickTemplates);
-      if (downTriggers.length === 0) {
-        return;
-      }
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
-        if (clickDrawings.length > 0) {
-          const drawing = clickDrawings[0] as Drawing;
-          let tokenSelected;
-
-          tokenSelected = <Token>getFirstPlayerTokenSelected();
-          if (!tokenSelected) {
-            tokenSelected = <Token>getFirstPlayerToken();
-          }
-
-          if (taggerModuleActive && !checkTaggerForAmrsreach(drawing)) {
-            reselectTokenAfterInteraction(tokenSelected);
-            return;
-          }
-          const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
-          reselectTokenAfterInteraction(tokenSelected);
-          if (!isInReach) {
-            return;
-          }
-        }
-      }
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
-        if (clickTiles.length > 0) {
-          const tile = clickTiles[0] as Tile;
-          let tokenSelected;
-
-          tokenSelected = <Token>getFirstPlayerTokenSelected();
-          if (!tokenSelected) {
-            tokenSelected = <Token>getFirstPlayerToken();
-          }
-
-          if (taggerModuleActive && !checkTaggerForAmrsreach(tile)) {
-            reselectTokenAfterInteraction(tokenSelected);
-            return;
-          }
-          const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
-          reselectTokenAfterInteraction(tokenSelected);
-          if (!isInReach) {
-            return;
-          }
-        }
-      }
-      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableWallsIntegration')) {
-        if (clickWalls.length > 0) {
-          const wall = clickWalls[0] as Wall;
-          let tokenSelected;
-
-          tokenSelected = <Token>getFirstPlayerTokenSelected();
-          if (!tokenSelected) {
-            tokenSelected = <Token>getFirstPlayerToken();
-          }
-
-          if (taggerModuleActive && !checkTaggerForAmrsreach(wall)) {
-            reselectTokenAfterInteraction(tokenSelected);
-            return;
-          }
-          const isInReach = await WallsReach.globalInteractionDistance(tokenSelected, wall);
-          reselectTokenAfterInteraction(tokenSelected);
-          if (!isInReach) {
-            return;
-          }
-        }
-      }
-    });
-
-    // });
-  }
-
-  // Register custom sheets (if any)
-};
-
-export const setupHooks = () => {
-  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
-      game.settings.set('core', 'notesDisplayToggle', true);
-    }
-  }
-};
+let taggerModuleActive;
 
 export const initHooks = () => {
   warn('Init Hooks processing');
@@ -296,6 +129,216 @@ export const initHooks = () => {
   }
 };
 
+export const setupHooks = () => {
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration')) {
+      game.settings.set('core', 'notesDisplayToggle', true);
+    }
+  }
+};
+
+export const readyHooks = async () => {
+  // setup all the hooks
+  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
+    game[ArmsReach.API] = new ArmsReach();
+
+    Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
+      // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {
+        // if ambient door is present and active dont' do this
+        if (!game.modules.get('ambientdoors')?.active) {
+          DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
+        }
+      }
+    });
+
+    // Management of the Stairways module
+    if (game.modules.get('stairways')?.active) {
+      Hooks.on('PreStairwayTeleport', (data) => {
+        if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration')) {
+          const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+          // Check if no token is selected and you are the GM avoid the distance calculation
+          let doNotReselectIfGM = false;
+          if (
+            (!canvas.tokens?.controlled && game.user?.isGM) ||
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+          ) {
+            doNotReselectIfGM = true;
+          }
+
+          const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
+          if (!doNotReselectIfGM) {
+            reselectTokenAfterInteraction(tokenSelected);
+          }
+          return result;
+        }
+      });
+    }
+
+    // Adds menu option to Scene Nav and Directory
+    Hooks.on('getSceneNavigationContext', (html, contextOptions) => {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+        contextOptions.push(<any>ResetDoorsAndFog.getContextOption('sceneId'));
+      }
+    });
+
+    Hooks.on('getSceneDirectoryEntryContext', (html, contextOptions) => {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+        contextOptions.push(ResetDoorsAndFog.getContextOption(undefined));
+      }
+    });
+
+    // Adds Shut All Doors button to Walls Control Layer
+    Hooks.on('getSceneControlButtons', function (controls) {
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog')) {
+        controls[4].tools.splice(controls[4].tools.length - 2, 0, {
+          name: 'close',
+          title: 'Close Open Doors',
+          icon: 'fas fa-door-closed',
+          onClick: () => {
+            ResetDoorsAndFog.resetDoors(true, <string>game.scenes?.current?.id);
+          },
+          button: true,
+        });
+        return controls;
+      }
+    });
+
+    // Hooks.on('canvasReady',function (canvas: Canvas) {
+    // const [target] = args;
+    // const canvas = this as Canvas;
+    canvas?.stage?.on('mousedown', async (event) => {
+      const position = getMousePosition(canvas, event);
+
+      const clickWalls: PlaceableObject[] = getPlaceablesAt(canvas?.walls?.placeables, position) || [];
+      // const clickNotes:PlaceableObject[] = getPlaceablesAt(canvas?.notes?.placeables, position) || [];
+      // const clickTokens:PlaceableObject[] = getPlaceablesAt(canvas?.tokens?.placeables, position) || [];
+      // const clickLights:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
+      // const clickSounds:PlaceableObject[] = getPlaceablesAt(canvas?.lighting?.placeables, position) || [];
+      const clickDrawings: PlaceableObject[] = getPlaceablesAt(canvas?.drawings?.placeables, position) || [];
+      const clickTiles: PlaceableObject[] = getPlaceablesAt(canvas.background?.placeables, position) || [];
+      // const clickTemplates:PlaceableObject[] = getPlaceablesAt(canvas?.templates?.placeables, position) || [];
+
+      const downTriggers: PlaceableObject[] = [];
+      downTriggers.push(...clickWalls);
+      // downTriggers.push(...clickLights);
+      // downTriggers.push(...clickSounds);
+      downTriggers.push(...clickDrawings);
+      downTriggers.push(...clickTiles);
+      // downTriggers.push(...clickTemplates);
+      if (downTriggers.length === 0) {
+        return;
+      }
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration')) {
+        if (clickDrawings.length > 0) {
+          const drawing = clickDrawings[0] as Drawing;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+          // Check if no token is selected and you are the GM avoid the distance calculation
+          let doNotReselectIfGM = false;
+          if (
+            (!canvas.tokens?.controlled && game.user?.isGM) ||
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+          ) {
+            doNotReselectIfGM = true;
+          }
+          if (taggerModuleActive && !checkTaggerForAmrsreach(drawing)) {
+            if (!doNotReselectIfGM) {
+              reselectTokenAfterInteraction(tokenSelected);
+            }
+            return;
+          }
+          const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+          if (!doNotReselectIfGM) {
+            reselectTokenAfterInteraction(tokenSelected);
+          }
+          if (!isInReach) {
+            return;
+          }
+        }
+      }
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration')) {
+        if (clickTiles.length > 0) {
+          const tile = clickTiles[0] as Tile;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+          // Check if no token is selected and you are the GM avoid the distance calculation
+          let doNotReselectIfGM = false;
+          if (
+            (!canvas.tokens?.controlled && game.user?.isGM) ||
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+          ) {
+            doNotReselectIfGM = true;
+          }
+          if (taggerModuleActive && !checkTaggerForAmrsreach(tile)) {
+            if (!doNotReselectIfGM) {
+              reselectTokenAfterInteraction(tokenSelected);
+            }
+            return;
+          }
+          const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
+          if (!doNotReselectIfGM) {
+            reselectTokenAfterInteraction(tokenSelected);
+          }
+          if (!isInReach) {
+            return;
+          }
+        }
+      }
+      if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableWallsIntegration')) {
+        if (clickWalls.length > 0) {
+          const wall = clickWalls[0] as Wall;
+          let tokenSelected;
+
+          tokenSelected = <Token>getFirstPlayerTokenSelected();
+          if (!tokenSelected) {
+            tokenSelected = <Token>getFirstPlayerToken();
+          }
+          // Check if no token is selected and you are the GM avoid the distance calculation
+          let doNotReselectIfGM = false;
+          if (
+            (!canvas.tokens?.controlled && game.user?.isGM) ||
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+          ) {
+            doNotReselectIfGM = true;
+          }
+          if (taggerModuleActive && !checkTaggerForAmrsreach(wall)) {
+            if (!doNotReselectIfGM) {
+              reselectTokenAfterInteraction(tokenSelected);
+            }
+            return;
+          }
+          const isInReach = await WallsReach.globalInteractionDistance(tokenSelected, wall);
+          if (!doNotReselectIfGM) {
+            reselectTokenAfterInteraction(tokenSelected);
+          }
+          if (!isInReach) {
+            return;
+          }
+        }
+      }
+    });
+
+    // });
+  }
+
+  // Register custom sheets (if any)
+};
+
 export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
   if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration')) {
     const [target] = args;
@@ -316,13 +359,24 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
           tokenSelected = <Token>getFirstPlayerToken();
         }
       }
-
+      // Check if no token is selected and you are the GM avoid the distance calculation
+      let doNotReselectIfGM = false;
+      if (
+        (!canvas.tokens?.controlled && game.user?.isGM) ||
+        (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      ) {
+        doNotReselectIfGM = true;
+      }
       if (taggerModuleActive && !checkTaggerForAmrsreach(token)) {
-        reselectTokenAfterInteraction(tokenSelected);
+        if (!doNotReselectIfGM) {
+          reselectTokenAfterInteraction(tokenSelected);
+        }
         return wrapped(...args);
       }
       const isInReach = await TokensReach.globalInteractionDistance(tokenSelected, token);
-      reselectTokenAfterInteraction(tokenSelected);
+      if (!doNotReselectIfGM) {
+        reselectTokenAfterInteraction(tokenSelected);
+      }
       if (!isInReach) {
         return;
       }
@@ -341,13 +395,24 @@ export const NotePrototypeOnClickLeftHandler = async function (wrapped, ...args)
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    let doNotReselectIfGM = false;
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      doNotReselectIfGM = true;
+    }
     if (taggerModuleActive && !checkTaggerForAmrsreach(note)) {
-      reselectTokenAfterInteraction(tokenSelected);
+      if (!doNotReselectIfGM) {
+        reselectTokenAfterInteraction(tokenSelected);
+      }
       return wrapped(...args);
     }
     const isInReach = await NotesReach.globalInteractionDistance(tokenSelected, note);
-    reselectTokenAfterInteraction(tokenSelected);
+    if (!doNotReselectIfGM) {
+      reselectTokenAfterInteraction(tokenSelected);
+    }
     if (!isInReach) {
       return;
     }
@@ -364,13 +429,24 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    let doNotReselectIfGM = false;
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      doNotReselectIfGM = true;
+    }
     if (taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)) {
-      reselectTokenAfterInteraction(tokenSelected);
+      if (!doNotReselectIfGM) {
+        reselectTokenAfterInteraction(tokenSelected);
+      }
       return wrapped(...args);
     }
     const isInReach = await DoorsReach.globalInteractionDistance(tokenSelected, doorControl, false);
-    reselectTokenAfterInteraction(tokenSelected);
+    if (!doNotReselectIfGM) {
+      reselectTokenAfterInteraction(tokenSelected);
+    }
     if (!isInReach) {
       // Bug fix not sure why i need to do this
       if (doorControl.wall.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {
@@ -415,13 +491,24 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
         return;
       }
     }
-
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    let doNotReselectIfGM = false;
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      doNotReselectIfGM = true;
+    }
     if (taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)) {
-      reselectTokenAfterInteraction(tokenSelected);
+      if (!doNotReselectIfGM) {
+        reselectTokenAfterInteraction(tokenSelected);
+      }
       return wrapped(...args);
     }
     const isInReach = await DoorsReach.globalInteractionDistance(tokenSelected, doorControl, true);
-    reselectTokenAfterInteraction(tokenSelected);
+    if (!doNotReselectIfGM) {
+      reselectTokenAfterInteraction(tokenSelected);
+    }
     if (!isInReach) {
       return;
     }
@@ -439,13 +526,24 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    let doNotReselectIfGM = false;
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      doNotReselectIfGM = true;
+    }
     if (taggerModuleActive && !checkTaggerForAmrsreach(light)) {
-      reselectTokenAfterInteraction(tokenSelected);
+      if (!doNotReselectIfGM) {
+        reselectTokenAfterInteraction(tokenSelected);
+      }
       return wrapped(...args);
     }
     const isInReach = await LightsReach.globalInteractionDistance(tokenSelected, light);
-    reselectTokenAfterInteraction(tokenSelected);
+    if (!doNotReselectIfGM) {
+      reselectTokenAfterInteraction(tokenSelected);
+    }
     if (!isInReach) {
       return;
     }
@@ -463,13 +561,24 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
     if (!tokenSelected) {
       tokenSelected = <Token>getFirstPlayerToken();
     }
-
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    let doNotReselectIfGM = false;
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      doNotReselectIfGM = true;
+    }
     if (taggerModuleActive && !checkTaggerForAmrsreach(sound)) {
-      reselectTokenAfterInteraction(tokenSelected);
+      if (!doNotReselectIfGM) {
+        reselectTokenAfterInteraction(tokenSelected);
+      }
       return wrapped(...args);
     }
     const isInReach = await SoundsReach.globalInteractionDistance(tokenSelected, sound);
-    reselectTokenAfterInteraction(tokenSelected);
+    if (!doNotReselectIfGM) {
+      reselectTokenAfterInteraction(tokenSelected);
+    }
     if (!isInReach) {
       return;
     }
@@ -489,11 +598,15 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 //     }
 
 //     if(taggerModuleActive && !checkTaggerForAmrsreach(drawing)){
-//       reselectTokenAfterInteraction(tokenSelected);
+// if(!doNotReselectIfGM){
+//   reselectTokenAfterInteraction(tokenSelected);
+// }
 //       return wrapped(...args);
 //     }
 //     const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
-//     reselectTokenAfterInteraction(tokenSelected);
+// if(!doNotReselectIfGM){
+//   reselectTokenAfterInteraction(tokenSelected);
+// }
 //     if (!isInReach) {
 //       return;
 //     }
@@ -513,11 +626,15 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 //     }
 
 //     if(taggerModuleActive && !checkTaggerForAmrsreach(tile)){
-//       reselectTokenAfterInteraction(tokenSelected);
+// if(!doNotReselectIfGM){
+//   reselectTokenAfterInteraction(tokenSelected);
+// }
 //       return wrapped(...args);
 //     }
 //     const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
-//     reselectTokenAfterInteraction(tokenSelected);
+// if(!doNotReselectIfGM){
+//   reselectTokenAfterInteraction(tokenSelected);
+// }
 //     if (!isInReach) {
 //       return;
 //     }

@@ -1,4 +1,4 @@
-import { warn } from '../foundryvtt-arms-reach';
+import { warn } from './lib/lib';
 import { ArmsReach } from './ArmsReachApi';
 import { ARMS_REACH_MODULE_NAME, getAPI } from './settings';
 import { canvas, game } from './settings';

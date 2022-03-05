@@ -1,7 +1,6 @@
-import { i18n, i18nFormat } from '../foundryvtt-arms-reach';
+import { i18n, i18nFormat } from './lib/lib';
 import {
   computeDistanceBetweenCoordinates,
-  computeDistanceBetweenCoordinatesOLD,
   getCharacterName,
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
@@ -14,6 +13,17 @@ import { canvas, game } from './settings';
 
 export const StairwaysReach = {
   globalInteractionDistance: function (stairway: SourceData, selectedTokenIds: string[], userId?: String): boolean {
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      return true;
+    }
+    if (<number>canvas.tokens?.controlled?.length > 1) {
+      iteractionFailNotification(i18n('foundryvtt-arms-reach.warningNoSelectMoreThanOneToken'));
+      return false;
+    }
     let isOwned = false;
     let character: Token = <Token>getFirstPlayerTokenSelected();
     if (selectedTokenIds) {
@@ -112,6 +122,17 @@ export const StairwaysReach = {
     useGrid?: boolean,
     userId?: String,
   ): boolean {
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      return true;
+    }
+    if (<number>canvas.tokens?.controlled?.length > 1) {
+      iteractionFailNotification(i18n('foundryvtt-arms-reach.warningNoSelectMoreThanOneToken'));
+      return false;
+    }
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();

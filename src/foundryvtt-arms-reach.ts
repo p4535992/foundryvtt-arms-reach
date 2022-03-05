@@ -18,31 +18,6 @@ import { ARMS_REACH_MODULE_NAME } from './module/settings';
 import { initHooks, readyHooks, setupHooks } from './module/Hooks';
 import { game } from './module/settings';
 
-export let debugEnabled = 0;
-// 0 = none, warnings = 1, debug = 2, all = 3
-export const debug = (...args) => {
-  if (debugEnabled > 1) console.log(`DEBUG:${ARMS_REACH_MODULE_NAME} | `, ...args);
-};
-export const log = (...args) => console.log(`${ARMS_REACH_MODULE_NAME} | `, ...args);
-export const warn = (...args) => {
-  if (debugEnabled > 0) console.warn(`${ARMS_REACH_MODULE_NAME} | `, ...args);
-};
-export const error = (...args) => console.error(`${ARMS_REACH_MODULE_NAME} | `, ...args);
-export const timelog = (...args) => warn(`${ARMS_REACH_MODULE_NAME} | `, Date.now(), ...args);
-
-export const i18n = (key) => {
-  return game.i18n.localize(key);
-};
-export const i18nFormat = (key, data = {}) => {
-  return game.i18n.format(key, data);
-};
-
-export const setDebugLevel = (debugText: string) => {
-  debugEnabled = { none: 0, warn: 1, debug: 2, all: 3 }[debugText] || 0;
-  // 0 = none, warnings = 1, debug = 2, all = 3
-  if (debugEnabled >= 3) CONFIG.debug.hooks = true;
-};
-
 /* ------------------------------------ */
 /* Initialize module					*/
 /* ------------------------------------ */

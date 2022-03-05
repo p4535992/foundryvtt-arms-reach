@@ -91,7 +91,7 @@
   "foundryvtt-arms-reach.settingHintDisableDoorSound": "This feature is only for door, if enabled this setting will disable the door sound interaction if is not in reach",
 
   "foundryvtt-arms-reach.settingNameNotificationsFailedInteractionEvenForGM": "Notifications failed interactions even for GM",
-  "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for fails the distance interaction even for GM. Good for debugging.",
+  "foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for fails the distance interaction even for GM. Good for debugging. If no token is selected and you are a GM this feature is not activated",
 
   "foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Avoid deselects the controlled token when open/close the door",
   "foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Avoid deselects the controlled token if opening the door with a mouse click and 'Left-Click to Release Objects' is checked in the Core",

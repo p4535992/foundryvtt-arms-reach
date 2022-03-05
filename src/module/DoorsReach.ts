@@ -1,9 +1,8 @@
-import { error, i18n, i18nFormat } from '../foundryvtt-arms-reach';
+import { error, i18n, i18nFormat } from './lib/lib';
 import { DoorData, DoorSourceData, DoorTargetData } from './ArmsReachModels';
 import { ARMS_REACH_MODULE_NAME } from './settings';
 import {
   computeDistanceBetweenCoordinates,
-  computeDistanceBetweenCoordinatesOLD,
   getCharacterName,
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
@@ -110,7 +109,17 @@ export const DoorsReach = {
     useGrid?: boolean,
     userId?: String,
   ): boolean {
-    // let character: Token = <Token>getFirstPlayerTokenSelected();
+    // Check if no token is selected and you are the GM avoid the distance calculation
+    if (
+      (!canvas.tokens?.controlled && game.user?.isGM) ||
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+    ) {
+      return true;
+    }
+    if (<number>canvas.tokens?.controlled?.length > 1) {
+      iteractionFailNotification(i18n('foundryvtt-arms-reach.warningNoSelectMoreThanOneToken'));
+      return false;
+    }
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerToken();
@@ -283,10 +292,6 @@ export const DoorsReach = {
   },
 
   preUpdateWallBugFixSoundHandler: async function (object, updateData, diff, userID) {
-    // if (game.settings.get(ARMS_REACH_MODULE_NAME, 'disableDoorSound')) {
-    //   return;
-    // }
-
     const doorData = DoorsReach.defaultDoorData();
 
     let playpath = '';
@@ -317,10 +322,6 @@ export const DoorsReach = {
   },
 
   preUpdateWallBugFixSoundSimpleHandler: async function (updateData) {
-    // if (game.settings.get(ARMS_REACH_MODULE_NAME, 'disableDoorSound')) {
-    //   return;
-    // }
-
     const doorData = DoorsReach.defaultDoorData();
 
     let playpath = '';

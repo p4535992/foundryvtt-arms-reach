@@ -208,6 +208,8 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * Double tapping movement on the direction of a door will interact with it
 
+**NOTE: If no token is selected and you are a GM this feature is not activated**
+
 ### [Stairways](https://gitlab.com/SWW13/foundryvtt-stairways) Feature
 
 * If the module 'stairways' is present and active and the module settings is true there is a distance check interaction when you click on the stairways icon.

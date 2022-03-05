@@ -1,10 +1,11 @@
-import { i18n } from '../foundryvtt-arms-reach';
+import { i18n } from './lib/lib';
 import { ArmsReach } from './ArmsReachApi';
+import CONSTANTS from './constants';
 
 export const game = getGame();
 export const canvas = getCanvas();
 
-export const ARMS_REACH_MODULE_NAME = 'foundryvtt-arms-reach';
+export const ARMS_REACH_MODULE_NAME = CONSTANTS.MODULE_NAME;
 export const ARMS_REACH_TAGGER_MODULE_NAME = 'tagger';
 export const ARMS_REACH_TAGGER_FLAG = 'armsreach';
 
@@ -235,7 +236,7 @@ export const registerSettings = function () {
     hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDisableDoorSound`),
     scope: 'world',
     config: true,
-    default: false,
+    default: true,
     type: Boolean,
   });
 
@@ -655,6 +656,15 @@ function otherSettings(apply = false) {
       scope: 'world',
       config: true,
       default: false,
+      type: Boolean,
+    },
+
+    disableDoorSound: {
+      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDisableDoorSound`),
+      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDisableDoorSound`),
+      scope: 'world',
+      config: true,
+      default: true,
       type: Boolean,
     },
 
