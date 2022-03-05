@@ -74,7 +74,9 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     ARMS_REACH_MODULE_NAME,
     `
-    - add a new settings (only for door feature), disable the default door sound if is not in reach.
+    - Add new feature "If no token is selected and you are a GM this feature is not activated"
+    - Set module setting "disableDoorSound" default value from false to true
+    - Add warning for "No Select More Than One Token" for avoid strange distance calculation
     `,
     'minor',
   );

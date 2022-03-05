@@ -43,6 +43,14 @@ To install this module manually:
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
+## Module compatibility
+
+- [Ambient Door](https://github.com/EndlesNights/ambientdoors)
+- [Designer Door](https://github.com/Exitalterego/designerdoors)
+- [Smart Door](https://github.com/manuelVo/foundryvtt-smart-doors)
+- [Door Color](https://github.com/jessev14/door-colors)
+
+
 ## API
 
 A little api to use in macro cc. for check if the placeable object reachable with variant based on the string id or the string tag from the module `tagger`.
