@@ -81,8 +81,8 @@
   "foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Deprecated] Maximum door interaction distance in grids",
   "foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Use instead 'Maximum door interaction distance measurement'], 0 will disable this setting limit (needs app reload).",
 
-  "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
-  "foundryvtt-arms-reach.settingHintMaximumDoorMeasurementInteraction": "Is the distance calculation used only for the 'Interaction door with the hotkey 'e'' module setting and and is completely indipendent from the similar module setting 'Global maximum interaction distance measurement'. Maximum door interaction distance measurement (in feet, meter, or the default system unit grid you are using)",
+  "foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "[Not Recommended] Maximum door interaction distance measurement (ft, mt, ...), support Hex Grid,Gridless and Difficult Terrain Ruler",
+  "foundryvtt-arms-reach.settingHintMaximumDoorMeasurementInteraction": "[I do not recommend this feature because of some incompatibility with other movement verification modules, but otherwise it works] Is the distance calculation used only for the 'Interaction door with the hotkey 'e'' module setting and and is completely indipendent from the similar module setting 'Global maximum interaction distance measurement'. Maximum door interaction distance measurement (in feet, meter, or the default system unit grid you are using)",
 
   "foundryvtt-arms-reach.settingNameHotKeyToCenterCamera": "[Not Recommended] Hotkey 'e' to center camera",
   "foundryvtt-arms-reach.settingHintHotKeyToCenterCamera": "[I do not recommend this feature because of some incompatibility with other movement verification modules, but otherwise it works] Holding 'e' will center the camera on current selected token.",
