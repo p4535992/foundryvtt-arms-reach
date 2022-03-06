@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.21
+
+- Update labels
+
 ## 2.1.20
 
 - Bug fix [[BUG] Token unable to open door unless directly in front of it](https://github.com/p4535992/foundryvtt-arms-reach/issues/43)
@@ -8,7 +12,7 @@
 ## 2.1.19
 
 - Add new feature "If no token is selected and you are a GM this feature is not activated"
-- Set module setting "disableDoorSound" default value from false to true
+- Set module setting "Disable sound of the door if is not reachable (disableDoorSound)" default value from false to true
 - Add warning for "No Select More Than One Token" for avoid strange distance calculation
 
 ## 2.1.18
