@@ -18,9 +18,10 @@ import { LightsReach } from './LightsReach';
 import { DrawingsReach } from './DrawingsReach';
 import { TilesReach } from './TilesReach';
 import { SoundsReach } from './SoundsReach';
-import { ArmsReach } from './ArmsReachApi';
 import { WallsReach } from './WallsReach';
 import { canvas, game } from './settings';
+import CONSTANTS from './constants';
+import API from './api';
 
 let taggerModuleActive;
 
@@ -128,6 +129,11 @@ export const initHooks = () => {
     //   );
     // }
   }
+
+  //@ts-ignore
+  window.armsReach = {
+    API,
+  };
 };
 
 export const setupHooks = () => {
@@ -136,13 +142,20 @@ export const setupHooks = () => {
       game.settings.set('core', 'notesDisplayToggle', true);
     }
   }
+
+  if (!game[CONSTANTS.MODULE_NAME]) {
+    game[CONSTANTS.MODULE_NAME] = {};
+  }
+  if (!game[CONSTANTS.MODULE_NAME].API) {
+    game[CONSTANTS.MODULE_NAME].API = {};
+  }
+  //@ts-ignore
+  game[CONSTANTS.MODULE_NAME].API = API;
 };
 
 export const readyHooks = async () => {
   // setup all the hooks
   if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableArmsReach')) {
-    game[ArmsReach.API] = new ArmsReach();
-
     Hooks.on('preUpdateWall', async (object, updateData, diff, userID) => {
       // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
       if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration')) {

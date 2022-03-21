@@ -1,5 +1,5 @@
 import { i18n } from './lib/lib';
-import { ArmsReach } from './ArmsReachApi';
+import API from './api';
 import CONSTANTS from './constants';
 
 export const game = getGame();
@@ -39,13 +39,6 @@ function getGame(): Game {
     throw new Error('Game Is Not Initialized');
   }
   return game;
-}
-
-export function getAPI(): ArmsReach {
-  if (!getGame()[ArmsReach.API]) {
-    throw new Error('API Is Not Initialized');
-  }
-  return getGame()[ArmsReach.API];
 }
 
 export const registerSettings = function () {

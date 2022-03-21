@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.23
+
+- Little clean up
+
 ## 2.1.22
 
 - Update labels

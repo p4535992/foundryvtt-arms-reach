@@ -1,6 +1,6 @@
 import { warn } from './lib/lib';
-import { ArmsReach } from './ArmsReachApi';
-import { ARMS_REACH_MODULE_NAME, getAPI } from './settings';
+import API from './api';
+import { ARMS_REACH_MODULE_NAME } from './settings';
 import { canvas, game } from './settings';
 
 export let armsReachSocket;
@@ -25,7 +25,7 @@ export function _socketIsReachable(
   useGrid?: boolean,
   userId?: string,
 ): boolean {
-  return getAPI().isReachable(token, placeableObject, maxDistance, useGrid, userId);
+  return API.isReachable(token, placeableObject, maxDistance, useGrid, userId);
 }
 
 export function _socketIsReachableByTag(
@@ -35,7 +35,7 @@ export function _socketIsReachableByTag(
   useGrid?: boolean,
   userId?: string,
 ): boolean {
-  return getAPI().isReachableByTag(token, tag, maxDistance, useGrid, userId);
+  return API.isReachableByTag(token, tag, maxDistance, useGrid, userId);
 }
 
 export function _socketIsReachableById(
@@ -45,7 +45,7 @@ export function _socketIsReachableById(
   useGrid?: boolean,
   userId?: string,
 ): boolean {
-  return getAPI().isReachableById(token, placeableObjectId, maxDistance, useGrid, userId);
+  return API.isReachableById(token, placeableObjectId, maxDistance, useGrid, userId);
 }
 
 export function _socketIsReachableByIdOrName(
@@ -55,7 +55,7 @@ export function _socketIsReachableByIdOrName(
   useGrid?: boolean,
   userId?: string,
 ): boolean {
-  return getAPI().isReachableByIdOrName(token, placeableObjectIdOrName, maxDistance, useGrid, userId);
+  return API.isReachableByIdOrName(token, placeableObjectIdOrName, maxDistance, useGrid, userId);
 }
 
 export function isReachable(

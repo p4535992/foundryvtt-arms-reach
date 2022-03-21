@@ -15,7 +15,7 @@
 import { registerSettings } from './module/settings';
 import { preloadTemplates } from './module/preloadTemplates';
 import { ARMS_REACH_MODULE_NAME } from './module/settings';
-import { initHooks, readyHooks, setupHooks } from './module/Hooks';
+import { initHooks, readyHooks, setupHooks } from './module/module';
 import { game } from './module/settings';
 
 /* ------------------------------------ */
@@ -74,9 +74,7 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     ARMS_REACH_MODULE_NAME,
     `
-    - Add new feature "If no token is selected and you are a GM this feature is not activated"
-    - Set module setting "disableDoorSound" default value from false to true
-    - Add warning for "No Select More Than One Token" for avoid strange distance calculation
+    - Little clean up
     `,
     'minor',
   );

@@ -12,9 +12,7 @@ import { canvas, game } from './settings';
 import { WallsReach } from './WallsReach';
 import { globalInteractionDistanceUniversal } from './ArmsReachHelper';
 
-export class ArmsReach {
-  static API = 'armsReach';
-
+const API = {
   isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean {
     //@ts-ignore
     if (!(<boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
@@ -31,7 +29,7 @@ export class ArmsReach {
       }
       return this.isReachable(token, placeableObjects[0], maxDistance, useGrid, userId);
     }
-  }
+  },
 
   isReachableById(
     token: Token,
@@ -52,7 +50,7 @@ export class ArmsReach {
       return false;
     }
     return this.isReachable(token, <any>object, maxDistance, useGrid, userId);
-  }
+  },
 
   isReachableByIdOrName(
     token: Token,
@@ -71,7 +69,7 @@ export class ArmsReach {
       return false;
     }
     return this.isReachable(token, <any>object, maxDistance, useGrid, userId);
-  }
+  },
 
   isReachable(
     token: Token,
@@ -170,7 +168,7 @@ export class ArmsReach {
       );
     }
     return isInReach;
-  }
+  },
 
   isReachableByTagUniversal(
     placeableObjectSource: PlaceableObject,
@@ -194,7 +192,7 @@ export class ArmsReach {
       }
       return this.isReachableUniversal(placeableObjectSource, placeableObjects[0], maxDistance, useGrid, userId);
     }
-  }
+  },
 
   isReachableByIdUniversal(
     placeableObjectSource: PlaceableObject,
@@ -215,7 +213,7 @@ export class ArmsReach {
       return false;
     }
     return this.isReachableUniversal(placeableObjectSource, <any>object, maxDistance, useGrid, userId);
-  }
+  },
 
   isReachableByIdOrNameUniversal(
     placeableObjectSource: PlaceableObject,
@@ -234,7 +232,7 @@ export class ArmsReach {
       return false;
     }
     return this.isReachableUniversal(placeableObjectSource, <any>object, maxDistance, useGrid, userId);
-  }
+  },
 
   isReachableUniversal(
     placeableObjectSource: PlaceableObject,
@@ -266,7 +264,7 @@ export class ArmsReach {
     } else {
       return true;
     }
-  }
+  },
 
   // ==========================================
   // UTILITY
@@ -286,7 +284,7 @@ export class ArmsReach {
     ]
       .deepFlatten()
       .filter(Boolean);
-  }
+  },
 
   _retrieveFromIdOrName(placeables, IdOrName): any {
     let target;
@@ -330,5 +328,7 @@ export class ArmsReach {
       });
     }
     return target;
-  }
-}
+  },
+};
+
+export default API;
