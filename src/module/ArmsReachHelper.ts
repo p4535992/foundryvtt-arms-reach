@@ -782,7 +782,7 @@ export function isTokenInRange(objectSource: PlaceableObject, objectTarget: Plac
     let rangeBottom = <number>objectTarget.document.getFlag('levels', 'rangeBottom');
     if (!rangeTop && rangeTop !== 0) rangeTop = Infinity;
     if (!rangeBottom && rangeBottom !== 0) rangeBottom = -Infinity;
-    const elevation = getElevationPlaceableObject(objectSource);//token.data.elevation;
+    const elevation = getElevationPlaceableObject(objectSource); //token.data.elevation;
     return elevation <= rangeTop && elevation >= rangeBottom;
   } else {
     // TODO maybe some other integration

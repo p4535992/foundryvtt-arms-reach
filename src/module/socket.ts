@@ -40,18 +40,10 @@ export function registerSocket() {
   /**
    * Automated Polymorpher sockets
    */
-  armsReachSocket.register('isReachable',  (...args) =>
-    API.isReachableArr(...args),
-  );
-  armsReachSocket.register('isReachableByTag',  (...args) =>
-    API.isReachableByTagArr(...args),
-  );
-  armsReachSocket.register('isReachableById',  (...args) =>
-    API.isReachableByIdArr(...args),
-  );
-  armsReachSocket.register('isReachableByIdOrName',  (...args) =>
-    API.isReachableByIdOrNameArr(...args),
-  );
+  armsReachSocket.register('isReachable', (...args) => API.isReachableArr(...args));
+  armsReachSocket.register('isReachableByTag', (...args) => API.isReachableByTagArr(...args));
+  armsReachSocket.register('isReachableById', (...args) => API.isReachableByIdArr(...args));
+  armsReachSocket.register('isReachableByIdOrName', (...args) => API.isReachableByIdOrNameArr(...args));
 
   /**
    * UI sockets
@@ -84,7 +76,6 @@ async function callHook(inHookName, ...args) {
   }
   return Hooks.callAll(inHookName, ...newArgs);
 }
-
 
 // export function _socketIsReachable(
 //   token: Token,

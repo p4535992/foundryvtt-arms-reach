@@ -261,7 +261,6 @@ export function getTokenByTokenName(name) {
   // return canvas.tokens.placeables.find( x => { return x.id == game.user.id});
 }
 
-
 /**
  * Get chracter name from token
  */
@@ -273,7 +272,4 @@ export const getCharacterName = function (token: Token) {
     tokenName = token.actor.data.name;
   }
   return tokenName;
-}
-
-
-
+};
