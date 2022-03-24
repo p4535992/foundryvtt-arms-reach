@@ -1,3 +1,4 @@
+import { info } from './lib/lib';
 import { canvas, game } from './settings';
 
 export const ResetDoorsAndFog = {
@@ -18,7 +19,7 @@ export const ResetDoorsAndFog = {
         await scene.updateEmbeddedDocuments('Wall', updates);
       }
     }
-    ui.notifications?.info(`Doors have been shut.`);
+    info(`Doors have been shut.`, true);
   },
 
   resetFog: async function (isCurrentScene: boolean, id: string) {
@@ -34,7 +35,7 @@ export const ResetDoorsAndFog = {
           parentId: '',
           parentType: '',
         });
-        ui.notifications?.info(`Fog of War exploration progress was reset.`);
+        info(`Fog of War exploration progress was reset.`, true);
       }
     }
   },

@@ -5,9 +5,9 @@ import CONSTANTS from './constants';
 export const game = getGame();
 export const canvas = getCanvas();
 
-export const ARMS_REACH_MODULE_NAME = CONSTANTS.MODULE_NAME;
-export const ARMS_REACH_TAGGER_MODULE_NAME = 'tagger';
-export const ARMS_REACH_TAGGER_FLAG = 'armsreach';
+// export const CONSTANTS.MODULE_NAME = CONSTANTS.MODULE_NAME;
+// export const ARMS_REACH_TAGGER_MODULE_NAME = 'tagger';
+// export const ARMS_REACH_TAGGER_FLAG = 'armsreach';
 
 /**
  * Because typescript doesn't know when in the lifecycle of foundry your code runs, we have to assume that the
@@ -42,9 +42,9 @@ function getGame(): Game {
 }
 
 export const registerSettings = function () {
-  game.settings.registerMenu(ARMS_REACH_MODULE_NAME, 'resetAllSettings', {
-    name: `${ARMS_REACH_MODULE_NAME}.setting.reset.name`,
-    hint: `${ARMS_REACH_MODULE_NAME}.setting.reset.hint`,
+  game.settings.registerMenu(CONSTANTS.MODULE_NAME, 'resetAllSettings', {
+    name: `${CONSTANTS.MODULE_NAME}.setting.reset.name`,
+    hint: `${CONSTANTS.MODULE_NAME}.setting.reset.hint`,
     icon: 'fas fa-coins',
     type: ResetSettingsDialog,
     restricted: true,
@@ -54,9 +54,9 @@ export const registerSettings = function () {
   // Arms Reach
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableArmsReach', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameEnableArmsReachFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintEnableArmsReachFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableArmsReach', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameEnableArmsReachFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintEnableArmsReachFeature`),
     scope: 'world',
     config: true,
     default: true,
@@ -66,9 +66,9 @@ export const registerSettings = function () {
     },
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteraction`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteraction`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'notificationsInteractionFail', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotificationsFailedInteraction`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotificationsFailedInteraction`),
     scope: 'world',
     config: true,
     default: true,
@@ -77,9 +77,9 @@ export const registerSettings = function () {
 
   // DEPRECATED
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistance', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
     scope: 'world',
     config: true,
     default: 0, // instead of 1
@@ -88,9 +88,9 @@ export const registerSettings = function () {
     range: { min: 0, max: 5, step: 0.5 },
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
     scope: 'world',
     config: true,
     default: 5,
@@ -99,27 +99,27 @@ export const registerSettings = function () {
     range: { min: 0, max: 20, step: 0.5 },
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'forceReSelection', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'forceReSelection', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
     scope: 'world',
     config: true,
     default: true,
@@ -128,8 +128,8 @@ export const registerSettings = function () {
 
   //@ts-ignore
   // KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction", {
-  // 	name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSetCustomKeyBindForDoorInteraction`),
-  // 	hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSetCustomKeyBindForDoorInteraction`),
+  // 	name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameSetCustomKeyBindForDoorInteraction`),
+  // 	hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintSetCustomKeyBindForDoorInteraction`),
   // 	config: true,
   // 	default: "KeyE",
   // 	onKeyDown: () => {
@@ -137,9 +137,9 @@ export const registerSettings = function () {
   // 	}
   // });
 
-  //   game.settings.register(ARMS_REACH_MODULE_NAME,'setDistanceModeForDoorInteraction',{
-  //     name: i18n(ARMS_REACH_MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
-  //     hint: i18n(ARMS_REACH_MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
+  //   game.settings.register(CONSTANTS.MODULE_NAME,'setDistanceModeForDoorInteraction',{
+  //     name: i18n(CONSTANTS.MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
+  //     hint: i18n(CONSTANTS.MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
   //     scope: "world",
   //     config: false,
   //     default: "0",
@@ -155,9 +155,9 @@ export const registerSettings = function () {
   // DOOR SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableDoorsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoorsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoorsIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableDoorsIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDoorsIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDoorsIntegrationFeature`),
     scope: 'world',
     config: true,
     default: true,
@@ -166,9 +166,9 @@ export const registerSettings = function () {
 
   // DEPRECATED AND REMOVED
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionDistance', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'doorInteractionDistance', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
     scope: 'world',
     config: false,
     default: 0, // instead of 1
@@ -177,9 +177,9 @@ export const registerSettings = function () {
     range: { min: 0, max: 10, step: 0.5 },
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'doorInteractionMeasurement', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'doorInteractionMeasurement', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
     scope: 'world',
     config: true,
     default: 5,
@@ -190,9 +190,9 @@ export const registerSettings = function () {
 
   // DEPRECATED
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteraction', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyForInteraction`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'hotkeyDoorInteraction', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameHotKeyForInteraction`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintHotKeyForInteraction`),
     scope: 'world',
     config: true,
     default: true,
@@ -201,9 +201,9 @@ export const registerSettings = function () {
 
   // DEPRECATED (double tap)
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionDelay', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoubleTapInteraction`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoubleTapInteraction`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'hotkeyDoorInteractionDelay', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDoubleTapInteraction`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDoubleTapInteraction`),
     scope: 'world',
     config: true,
     default: 1, // 200
@@ -215,18 +215,18 @@ export const registerSettings = function () {
 
   // DEPRECATED
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'hotkeyDoorInteractionCenter', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyToCenterCamera`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyToCenterCamera`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'hotkeyDoorInteractionCenter', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameHotKeyToCenterCamera`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintHotKeyToCenterCamera`),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'disableDoorSound', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDisableDoorSound`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDisableDoorSound`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'disableDoorSound', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDisableDoorSound`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDisableDoorSound`),
     scope: 'world',
     config: true,
     default: true,
@@ -239,9 +239,9 @@ export const registerSettings = function () {
 
   // First of all Depends if the module is present and active
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableStairwaysIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableStairwaysIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -252,9 +252,9 @@ export const registerSettings = function () {
   // JOURNAL SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableJournalsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotesIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotesIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableJournalsIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotesIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotesIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -265,36 +265,36 @@ export const registerSettings = function () {
   // TOKEN SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTokensIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableTokensIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationWithLootSheet', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationWithLootSheet`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationWithLootSheet`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'tokensIntegrationWithLootSheet', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationWithLootSheet`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationWithLootSheet`),
     scope: 'world',
     config: true,
     default: false,
     type: Boolean,
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationByPrefix', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationByPrefix`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationByPrefix`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'tokensIntegrationByPrefix', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationByPrefix`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationByPrefix`),
     scope: 'world',
     config: true,
     default: 'ART_',
     type: String,
   });
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'tokensIntegrationExplicitName', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationExplicitName`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationExplicitName`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'tokensIntegrationExplicitName', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationExplicitName`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationExplicitName`),
     scope: 'client',
     config: true,
     default: game.user?.character?.name ?? '',
@@ -305,9 +305,9 @@ export const registerSettings = function () {
   // LIGHT SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableLightsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameLightsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintLightsIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableLightsIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameLightsIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintLightsIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -318,9 +318,9 @@ export const registerSettings = function () {
   // SOUNDS SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableSoundsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSoundsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSoundsIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableSoundsIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameSoundsIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintSoundsIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -331,9 +331,9 @@ export const registerSettings = function () {
   // DRAWING SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableDrawingsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDrawingsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDrawingsIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableDrawingsIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDrawingsIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDrawingsIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -344,9 +344,9 @@ export const registerSettings = function () {
   // TILE SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTilesIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTilesIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTilesIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableTilesIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTilesIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTilesIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -357,9 +357,9 @@ export const registerSettings = function () {
   // WALL SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableWallsIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameWallsIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintWallsIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableWallsIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameWallsIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintWallsIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -370,9 +370,9 @@ export const registerSettings = function () {
   // TEMPLATES SUPPORT
   // ========================================================
 
-  // game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTemplatesIntegration', {
-  //   name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTemplatesIntegrationFeature`),
-  //   hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTemplatesIntegrationFeature`),
+  // game.settings.register(CONSTANTS.MODULE_NAME, 'enableTemplatesIntegration', {
+  //   name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTemplatesIntegrationFeature`),
+  //   hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTemplatesIntegrationFeature`),
   //   scope: 'world',
   //   config: true,
   //   default: false,
@@ -383,9 +383,9 @@ export const registerSettings = function () {
   // TAGGER SUPPORT
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableTaggerIntegration', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTaggerIntegrationFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTaggerIntegrationFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableTaggerIntegration', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTaggerIntegrationFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTaggerIntegrationFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -396,9 +396,9 @@ export const registerSettings = function () {
   // Reset Doors and Fog
   // ========================================================
 
-  game.settings.register(ARMS_REACH_MODULE_NAME, 'enableResetDoorsAndFog', {
-    name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
-    hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableResetDoorsAndFog', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
     scope: 'world',
     config: true,
     default: false,
@@ -409,11 +409,11 @@ export const registerSettings = function () {
 
   // const settings = defaultSettings();
   // for (const [name, data] of Object.entries(settings)) {
-  //     game.settings.register(ARMS_REACH_MODULE_NAME, name, <any>data);
+  //     game.settings.register(CONSTANTS.MODULE_NAME, name, <any>data);
   // }
 
   // for (const [name, data] of Object.entries(otherSettings)) {
-  //     game.settings.register(ARMS_REACH_MODULE_NAME, name, data);
+  //     game.settings.register(CONSTANTS.MODULE_NAME, name, data);
   // }
 };
 
@@ -423,15 +423,15 @@ class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object
     super(...args);
     //@ts-ignore
     return new Dialog({
-      title: game.i18n.localize(`${ARMS_REACH_MODULE_NAME}.dialogs.resetsettings.title`),
+      title: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.title`),
       content:
         '<p style="margin-bottom:1rem;">' +
-        game.i18n.localize(`${ARMS_REACH_MODULE_NAME}.dialogs.resetsettings.content`) +
+        game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.content`) +
         '</p>',
       buttons: {
         confirm: {
           icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize(`${ARMS_REACH_MODULE_NAME}.dialogs.resetsettings.confirm`),
+          label: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.confirm`),
           callback: async () => {
             await applyDefaultSettings();
             window.location.reload();
@@ -439,7 +439,7 @@ class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: game.i18n.localize(`${ARMS_REACH_MODULE_NAME}.dialogs.resetsettings.cancel`),
+          label: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.cancel`),
         },
       },
       default: 'cancel',
@@ -454,11 +454,11 @@ class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object
 async function applyDefaultSettings() {
   // const settings = defaultSettings(true);
   // for (const [name, data] of Object.entries(settings)) {
-  //   await game.settings.set(ARMS_REACH_MODULE_NAME, name, data.default);
+  //   await game.settings.set(CONSTANTS.MODULE_NAME, name, data.default);
   // }
   const settings2 = otherSettings(true);
   for (const [name, data] of Object.entries(settings2)) {
-    await game.settings.set(ARMS_REACH_MODULE_NAME, name, data.default);
+    await game.settings.set(CONSTANTS.MODULE_NAME, name, data.default);
   }
 }
 
@@ -483,8 +483,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableArmsReach: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameEnableArmsReachFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintEnableArmsReachFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameEnableArmsReachFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintEnableArmsReachFeature`),
       scope: 'world',
       config: true,
       default: true,
@@ -495,8 +495,8 @@ function otherSettings(apply = false) {
     },
 
     notificationsInteractionFail: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteraction`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteraction`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotificationsFailedInteraction`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotificationsFailedInteraction`),
       scope: 'world',
       config: true,
       default: true,
@@ -506,8 +506,8 @@ function otherSettings(apply = false) {
     // DEPRECATED
 
     globalInteractionDistance: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalMaximumInteractionDistance`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalMaximumInteractionDistance`),
       scope: 'world',
       config: true,
       default: 0, // instead of 1
@@ -517,8 +517,8 @@ function otherSettings(apply = false) {
     },
 
     globalInteractionMeasurement: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalMaximumInteractionMeasurement`),
       scope: 'world',
       config: true,
       default: 5,
@@ -528,8 +528,8 @@ function otherSettings(apply = false) {
     },
 
     globalInteractionDistanceForGM: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
       scope: 'world',
       config: true,
       default: false,
@@ -537,8 +537,8 @@ function otherSettings(apply = false) {
     },
 
     forceReSelection: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintAvoidSelectsTheControlledToken`),
       scope: 'world',
       config: true,
       default: false,
@@ -546,8 +546,8 @@ function otherSettings(apply = false) {
     },
 
     useOwnedTokenIfNoTokenIsSelected: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
       scope: 'world',
       config: true,
       default: true,
@@ -556,8 +556,8 @@ function otherSettings(apply = false) {
 
     //@ts-ignore
     // KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction: {
-    // 	name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSetCustomKeyBindForDoorInteraction`),
-    // 	hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSetCustomKeyBindForDoorInteraction`),
+    // 	name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameSetCustomKeyBindForDoorInteraction`),
+    // 	hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintSetCustomKeyBindForDoorInteraction`),
     // 	config: true,
     // 	default: "KeyE",
     // 	onKeyDown: () => {
@@ -566,8 +566,8 @@ function otherSettings(apply = false) {
     // },
 
     // setDistanceModeForDoorInteraction: {
-    //     name: i18n(ARMS_REACH_MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
-    //     hint: i18n(ARMS_REACH_MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
+    //     name: i18n(CONSTANTS.MODULE_NAME+".settingNameSetDistanceModeForDoorInteraction"),
+    //     hint: i18n(CONSTANTS.MODULE_NAME+".settingHintSetDistanceModeForDoorInteraction"),
     //     scope: "world",
     //     config: false,
     //     default: "0",
@@ -584,8 +584,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableDoorsIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoorsIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoorsIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDoorsIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDoorsIntegrationFeature`),
       scope: 'world',
       config: true,
       default: true,
@@ -595,8 +595,8 @@ function otherSettings(apply = false) {
     // DEPRECATED AND REMOVED
 
     doorInteractionDistance: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorDistanceInteraction`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintMaximumDoorDistanceInteraction`),
       scope: 'world',
       config: false,
       default: 0, // instead of 1
@@ -606,8 +606,8 @@ function otherSettings(apply = false) {
     },
 
     doorInteractionMeasurement: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
       scope: 'world',
       config: true,
       default: 5,
@@ -619,8 +619,8 @@ function otherSettings(apply = false) {
     // DEPRECATED
 
     hotkeyDoorInteraction: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyForInteraction`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyForInteraction`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameHotKeyForInteraction`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintHotKeyForInteraction`),
       scope: 'world',
       config: true,
       default: true,
@@ -630,8 +630,8 @@ function otherSettings(apply = false) {
     // DEPRECATED (double tap)
 
     hotkeyDoorInteractionDelay: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDoubleTapInteraction`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDoubleTapInteraction`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDoubleTapInteraction`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDoubleTapInteraction`),
       scope: 'world',
       config: true,
       default: 1, // 200
@@ -644,8 +644,8 @@ function otherSettings(apply = false) {
     // DEPRECATED
 
     hotkeyDoorInteractionCenter: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameHotKeyToCenterCamera`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintHotKeyToCenterCamera`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameHotKeyToCenterCamera`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintHotKeyToCenterCamera`),
       scope: 'world',
       config: true,
       default: false,
@@ -653,8 +653,8 @@ function otherSettings(apply = false) {
     },
 
     disableDoorSound: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDisableDoorSound`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDisableDoorSound`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDisableDoorSound`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDisableDoorSound`),
       scope: 'world',
       config: true,
       default: true,
@@ -668,8 +668,8 @@ function otherSettings(apply = false) {
     // First of all Depends if the module is present and active
 
     enableStairwaysIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameStairwaysIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintStairwaysIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -681,8 +681,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableJournalsIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameNotesIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintNotesIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotesIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotesIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -694,8 +694,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableTokensIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -703,8 +703,8 @@ function otherSettings(apply = false) {
     },
 
     tokensIntegrationWithLootSheet: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationWithLootSheet`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationWithLootSheet`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationWithLootSheet`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationWithLootSheet`),
       scope: 'world',
       config: true,
       default: false,
@@ -712,8 +712,8 @@ function otherSettings(apply = false) {
     },
 
     tokensIntegrationByPrefix: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationByPrefix`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationByPrefix`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationByPrefix`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationByPrefix`),
       scope: 'world',
       config: true,
       default: 'ART_',
@@ -721,8 +721,8 @@ function otherSettings(apply = false) {
     },
 
     tokensIntegrationExplicitName: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTokensIntegrationExplicitName`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTokensIntegrationExplicitName`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationExplicitName`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationExplicitName`),
       scope: 'client',
       config: true,
       default: game.user?.character?.name ?? '',
@@ -734,8 +734,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableLightsIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameLightsIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintLightsIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameLightsIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintLightsIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -747,8 +747,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableSoundsIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameSoundsIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintSoundsIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameSoundsIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintSoundsIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -760,8 +760,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableDrawingsIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameDrawingsIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintDrawingsIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameDrawingsIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDrawingsIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -773,8 +773,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableTilesIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTilesIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTilesIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTilesIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTilesIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -786,8 +786,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableWallsIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameWallsIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintWallsIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameWallsIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintWallsIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -799,8 +799,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     // enableTemplatesIntegration: {
-    //   name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTemplatesIntegrationFeature`),
-    //   hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTemplatesIntegrationFeature`),
+    //   name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTemplatesIntegrationFeature`),
+    //   hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTemplatesIntegrationFeature`),
     //   scope: 'world',
     //   config: true,
     //   default: false,
@@ -812,8 +812,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableTaggerIntegration: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameTaggerIntegrationFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintTaggerIntegrationFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTaggerIntegrationFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTaggerIntegrationFeature`),
       scope: 'world',
       config: true,
       default: false,
@@ -825,8 +825,8 @@ function otherSettings(apply = false) {
     // ========================================================
 
     enableResetDoorsAndFog: {
-      name: i18n(`${ARMS_REACH_MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
-      hint: i18n(`${ARMS_REACH_MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameResetDoorsAndFogFeature`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintResetDoorsAndFogFeature`),
       scope: 'world',
       config: true,
       default: false,

@@ -14,15 +14,16 @@
 // Import TypeScript modules
 import { registerSettings } from './module/settings';
 import { preloadTemplates } from './module/preloadTemplates';
-import { ARMS_REACH_MODULE_NAME } from './module/settings';
 import { initHooks, readyHooks, setupHooks } from './module/module';
 import { game } from './module/settings';
+import API from './module/api';
+import CONSTANTS from './module/constants';
 
 /* ------------------------------------ */
 /* Initialize module					*/
 /* ------------------------------------ */
 Hooks.once('init', async () => {
-  console.log(`${ARMS_REACH_MODULE_NAME} | Initializing ${ARMS_REACH_MODULE_NAME}`);
+  console.log(`${CONSTANTS.MODULE_NAME} | Initializing ${CONSTANTS.MODULE_NAME}`);
 
   // Register custom module settings
   registerSettings();
@@ -55,13 +56,13 @@ Hooks.once('ready', () => {
   // Do anything once the module is ready
   if (!game.modules.get('lib-wrapper')?.active && game.user?.isGM) {
     ui.notifications?.error(
-      `The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`,
+      `The '${CONSTANTS.MODULE_NAME}' module requires to install and activate the 'libWrapper' module.`,
     );
     return;
   }
   // if (!game.modules.get('drag-ruler')?.active && game.user?.isGM) {
-  //   ui.notifications?.error(
-  //     `The '${ARMS_REACH_MODULE_NAME}' module requires to install and activate the 'drag-ruler' module.`,
+  //   error(
+  //     `The '${CONSTANTS.MODULE_NAME}' module requires to install and activate the 'drag-ruler' module.`,
   //   );
   //   return;
   //}
@@ -69,10 +70,52 @@ Hooks.once('ready', () => {
 });
 
 // Add any additional hooks if necessary
+
+export interface ArmsReachModuleData {
+  api: typeof API;
+  socket: any;
+}
+
+/**
+ * Initialization helper, to set API.
+ * @param api to set to game module.
+ */
+export function setApi(api: typeof API): void {
+  const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+  data.api = api;
+}
+
+/**
+ * Returns the set API.
+ * @returns Api from games module.
+ */
+export function getApi(): typeof API {
+  const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+  return data.api;
+}
+
+/**
+ * Initialization helper, to set Socket.
+ * @param socket to set to game module.
+ */
+export function setSocket(socket: any): void {
+  const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+  data.socket = socket;
+}
+
+/*
+ * Returns the set socket.
+ * @returns Socket from games module.
+ */
+export function getSocket() {
+  const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+  return data.socket;
+}
+
 Hooks.once('libChangelogsReady', function () {
   //@ts-ignore
   libChangelogs.register(
-    ARMS_REACH_MODULE_NAME,
+    CONSTANTS.MODULE_NAME,
     `
     - Little clean up
     `,

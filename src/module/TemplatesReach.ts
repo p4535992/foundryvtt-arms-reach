@@ -1,13 +1,12 @@
-import { i18n, i18nFormat } from './lib/lib';
+import { getCharacterName, i18n, i18nFormat } from './lib/lib';
 import {
   computeDistanceBetweenCoordinates,
-  getCharacterName,
   getFirstPlayerToken,
   getPlaceableCenter,
   iteractionFailNotification,
 } from './ArmsReachHelper';
-import { ARMS_REACH_MODULE_NAME } from './settings';
 import { canvas, game } from './settings';
+import CONSTANTS from './constants';
 
 export const TemplatesReach = {
   globalInteractionDistance: function (
@@ -25,7 +24,7 @@ export const TemplatesReach = {
       return true;
     }
     if (<number>canvas.tokens?.controlled?.length > 1) {
-      iteractionFailNotification(i18n('foundryvtt-arms-reach.warningNoSelectMoreThanOneToken'));
+      iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     let isOwned = false;
@@ -45,9 +44,9 @@ export const TemplatesReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+    let globalInteraction = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance');
     if (globalInteraction <= 0) {
-      globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+      globalInteraction = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
@@ -55,19 +54,19 @@ export const TemplatesReach = {
       //let character:Token = getFirstPlayerToken();
       if (
         !game.user?.isGM ||
-        (game.user?.isGM && <boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistanceForGM'))
+        (game.user?.isGM && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.noCharacterSelectedForTemplate`));
+          iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForTemplate`));
           return false;
         } else {
           let isNotNearEnough = false;
           // OLD SETTING
-          if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
+          if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+                : <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance');
             // const dist = computeDistanceBetweenCoordinatesOLD(TemplatesReach.getTemplatesCenter(template), character);
             const dist = computeDistanceBetweenCoordinates(
               TemplatesReach.getTemplatesCenter(template),
@@ -80,7 +79,7 @@ export const TemplatesReach = {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+                : <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
             const dist = computeDistanceBetweenCoordinates(
               TemplatesReach.getTemplatesCenter(template),
               character,
@@ -93,10 +92,10 @@ export const TemplatesReach = {
             const tokenName = getCharacterName(character);
             if (tokenName) {
               iteractionFailNotification(
-                i18nFormat(`${ARMS_REACH_MODULE_NAME}.templatesNotInReachFor`, { tokenName: tokenName }),
+                i18nFormat(`${CONSTANTS.MODULE_NAME}.templatesNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(`${ARMS_REACH_MODULE_NAME}.templatesNotInReach`));
+              iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.templatesNotInReach`));
             }
             return false;
           } else {

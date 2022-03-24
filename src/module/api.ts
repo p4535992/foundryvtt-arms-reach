@@ -1,9 +1,7 @@
-import { isReachable } from './ArmsReachSocket';
 import { DoorsReach } from './DoorsReach';
 import { DrawingsReach } from './DrawingsReach';
 import { LightsReach } from './LightsReach';
 import { NotesReach } from './NotesReach';
-import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_MODULE_NAME } from './settings';
 import { SoundsReach } from './SoundsReach';
 import { StairwaysReach } from './StairwaysReach';
 import { TilesReach } from './TilesReach';
@@ -11,14 +9,59 @@ import { TokensReach } from './TokensReach';
 import { canvas, game } from './settings';
 import { WallsReach } from './WallsReach';
 import { globalInteractionDistanceUniversal } from './ArmsReachHelper';
+import { error, warn } from './lib/lib';
+import CONSTANTS from './constants';
 
 const API = {
+
+  async isReachableArr(...inAttributes: any[]) {
+    if (!Array.isArray(inAttributes)) {
+      throw error('isReachable | inAttributes must be of type array');
+    }
+    const [token, placeableObject, maxDistance, useGrid, userId] = inAttributes;
+    const result = await (this as typeof API).isReachable(
+      token, placeableObject, maxDistance, useGrid, userId
+    );
+    return result;
+  },
+
+  async isReachableByTagArr(...inAttributes: any[]) {
+    if (!Array.isArray(inAttributes)) {
+      throw error('isReachableByTag | inAttributes must be of type array');
+    }
+    const [token, tag, maxDistance, useGrid, userId] = inAttributes;
+    const result = await (this as typeof API).isReachableByTag(
+      token, tag, maxDistance, useGrid, userId
+    );
+    return result;
+  },
+
+  async isReachableByIdArr(...inAttributes: any[]) {
+    if (!Array.isArray(inAttributes)) {
+      throw error('isReachableById | inAttributes must be of type array');
+    }
+    const [token, placeableObjectId, maxDistance, useGrid, userId] = inAttributes;
+    const result = await (this as typeof API).isReachableById(
+      token, placeableObjectId, maxDistance, useGrid, userId
+    );
+    return result;
+  },
+
+  async isReachableByIdOrNameArr(...inAttributes: any[]) {
+    if (!Array.isArray(inAttributes)) {
+      throw error('isReachableByIdOrName | inAttributes must be of type array');
+    }
+    const [token, placeableObjectIdOrName, maxDistance, useGrid, userId] = inAttributes;
+    const result = await (this as typeof API).isReachableByIdOrName(
+      token, placeableObjectIdOrName, maxDistance, useGrid, userId,
+    );
+    return result;
+  },
+
   isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean {
     //@ts-ignore
-    if (!(<boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | The module '${ARMS_REACH_TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTag'`,
-      );
+    if (!(<boolean>game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active)) {
+      warn(`The module '${CONSTANTS.TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTag'`, true);
       return false;
     } else {
       const placeableObjects =
@@ -44,9 +87,7 @@ const API = {
       obj.id === placeableObjectId;
     })[0];
     if (!object) {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableById'`,
-      );
+      warn(`No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableById'`, true);
       return false;
     }
     return this.isReachable(token, <any>object, maxDistance, useGrid, userId);
@@ -63,9 +104,7 @@ const API = {
     const objects = this._getObjectsFromScene(<Scene>game.scenes?.current);
     const object = this._retrieveFromIdOrName(objects, placeableObjectIdOrName);
     if (!object) {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrName'`,
-      );
+      warn(`No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrName'`, true);
       return false;
     }
     return this.isReachable(token, <any>object, maxDistance, useGrid, userId);
@@ -163,9 +202,7 @@ const API = {
         userId,
       );
     } else {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | The document '${relevantDocument?.name}' is not supported from the API 'isReachable'`,
-      );
+      warn(` The document '${relevantDocument?.name}' is not supported from the API 'isReachable'`,true);
     }
     return isInReach;
   },
@@ -178,10 +215,8 @@ const API = {
     userId?: string,
   ): boolean {
     //@ts-ignore
-    if (!(<boolean>game.modules.get(ARMS_REACH_TAGGER_MODULE_NAME)?.active)) {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | The module '${ARMS_REACH_TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTagUniversal'`,
-      );
+    if (!(<boolean>game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active)) {
+      warn(`The module '${CONSTANTS.TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTagUniversal'`,true);
       return false;
     } else {
       const placeableObjects =
@@ -207,9 +242,7 @@ const API = {
       obj.id === placeableObjectId;
     })[0];
     if (!object) {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableByIdUniversal'`,
-      );
+      warn(`No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableByIdUniversal'`, true);
       return false;
     }
     return this.isReachableUniversal(placeableObjectSource, <any>object, maxDistance, useGrid, userId);
@@ -226,9 +259,7 @@ const API = {
     const objects = this._getObjectsFromScene(<Scene>game.scenes?.current);
     const object = this._retrieveFromIdOrName(objects, placeableObjectIdOrName);
     if (!object) {
-      ui.notifications?.warn(
-        `${ARMS_REACH_MODULE_NAME} | No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrNameUniversal'`,
-      );
+      warn(`No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrNameUniversal'`, true);
       return false;
     }
     return this.isReachableUniversal(placeableObjectSource, <any>object, maxDistance, useGrid, userId);
@@ -245,17 +276,17 @@ const API = {
     const dist = globalInteractionDistanceUniversal(placeableObjectSource, placeableObjectTarget, <boolean>useGrid);
     let isNotNearEnough = false;
     // OLD SETTING
-    if (<number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
+    if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
       const maxDist =
         maxDistance && maxDistance > 0
           ? maxDistance
-          : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionDistance');
+          : <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance');
       isNotNearEnough = dist > maxDist;
     } else {
       const maxDist =
         maxDistance && maxDistance > 0
           ? maxDistance
-          : <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+          : <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
       isNotNearEnough = dist > maxDist;
     }
     if (isNotNearEnough) {

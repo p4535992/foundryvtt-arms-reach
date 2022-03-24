@@ -1,44 +1,44 @@
-import { ARMS_REACH_MODULE_NAME, ARMS_REACH_TAGGER_FLAG } from './settings';
-import { error, warn } from './lib/lib';
+import { error, getElevationPlaceableObject, warn } from './lib/lib';
 import { canvas, game } from './settings';
 import { tokenToString } from 'typescript';
 import { ArmsreachData } from './ArmsReachModels';
+import CONSTANTS from './constants';
 
-/**
- * Function for calcuate the distance in grid units
- * @deprecated to remove
- * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
- * @param doorControl or placeable
- * @param charCenter
- * @returns
- */
-export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, character: Token): number {
-  const charCenter = getTokenCenter(character);
-  //@ts-ignore
-  const xMinA = character._validPosition?.x ? character._validPosition?.x : charCenter.x;
-  //@ts-ignore
-  const yMinA = character._validPosition?.y ? character._validPosition?.y : charCenter.y;
-  //@ts-ignore
-  const xMaxA = xMinA + (character.hitArea?.width ? character.hitArea?.width : 0);
-  //@ts-ignore
-  const yMaxA = yMinA + (character.hitArea?.height ? character.hitArea?.height : 0);
+// /**
+//  * Function for calcuate the distance in grid units
+//  * @deprecated to remove
+//  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
+//  * @param doorControl or placeable
+//  * @param charCenter
+//  * @returns
+//  */
+// export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, character: Token): number {
+//   const charCenter = getTokenCenter(character);
+//   //@ts-ignore
+//   const xMinA = character._validPosition?.x ? character._validPosition?.x : charCenter.x;
+//   //@ts-ignore
+//   const yMinA = character._validPosition?.y ? character._validPosition?.y : charCenter.y;
+//   //@ts-ignore
+//   const xMaxA = xMinA + (character.hitArea?.width ? character.hitArea?.width : 0);
+//   //@ts-ignore
+//   const yMaxA = yMinA + (character.hitArea?.height ? character.hitArea?.height : 0);
 
-  const xMinB = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
-  const yMinB = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
-  const xMaxB = xMinB + (placeable.hitArea?.width ? placeable.hitArea?.width : 0);
-  const yMaxB = yMinB + (placeable.hitArea?.height ? placeable.hitArea?.height : 0);
+//   const xMinB = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
+//   const yMinB = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
+//   const xMaxB = xMinB + (placeable.hitArea?.width ? placeable.hitArea?.width : 0);
+//   const yMaxB = yMinB + (placeable.hitArea?.height ? placeable.hitArea?.height : 0);
 
-  const delta = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance || 20;
-  const deltaBeneath = (xMinB - xMaxA) / delta;
-  const deltaLeft = (xMinA - xMaxB) / delta;
-  const deltaAbove = (yMinB - yMaxA) / delta;
-  const deltaRight = (yMinA - yMaxB) / delta;
-  //@ts-ignore
-  const unitSize = <number>canvas.dimensions?.distance || 5;
-  let dist = Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-  dist = dist / unitSize;
-  return dist;
-};
+//   const delta = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance || 20;
+//   const deltaBeneath = (xMinB - xMaxA) / delta;
+//   const deltaLeft = (xMinA - xMaxB) / delta;
+//   const deltaAbove = (yMinB - yMaxA) / delta;
+//   const deltaRight = (yMinA - yMaxB) / delta;
+//   //@ts-ignore
+//   const unitSize = <number>canvas.dimensions?.distance || 5;
+//   let dist = Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
+//   dist = dist / unitSize;
+//   return dist;
+// };
 
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
@@ -67,7 +67,7 @@ export const computeDistanceBetweenCoordinates = function (
     const dist = grids_between_token_and_placeable(character, placeable);
     return dist;
   } else {
-    const dist = units_between_token_and_placeableV1(character, {
+    const dist = units_between_token_and_placeable(character, {
       x: xPlaceable,
       y: yPlaceable,
       w: wPlaceable,
@@ -82,21 +82,6 @@ export const computeDistanceBetweenCoordinates = function (
     // }
   }
 };
-
-export function getTokenByTokenID(id) {
-  // return await game.scenes.active.data.tokens.find( x => {return x.id === id});
-  return canvas.tokens?.placeables.find((x) => {
-    return x.id === id;
-  });
-}
-
-export function getTokenByTokenName(name) {
-  // return await game.scenes.active.data.tokens.find( x => {return x._name === name});
-  return canvas.tokens?.placeables.find((x) => {
-    return x.name == name;
-  });
-  // return canvas.tokens.placeables.find( x => { return x.id == game.user.id});
-}
 
 /**
  * Get token center
@@ -209,26 +194,12 @@ function getTokenShape(token): any[] {
 }
 
 /**
- * Get chracter name from token
- */
-export const getCharacterName = function (token: Token) {
-  let tokenName = '';
-  if (token.name) {
-    tokenName = token.name;
-  } else if (token.actor && token.actor.data && token.actor.data.name) {
-    tokenName = token.actor.data.name;
-  }
-  return tokenName;
-};
-
-/**
  * Interation fail messages
  */
 export const iteractionFailNotification = function (message) {
-  if (!game.settings.get(ARMS_REACH_MODULE_NAME, 'notificationsInteractionFail')) {
+  if (!game.settings.get(CONSTANTS.MODULE_NAME, 'notificationsInteractionFail')) {
     return;
   }
-  //ui.notifications?.warn(message);
   warn(message, true);
 };
 
@@ -239,7 +210,7 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
   // Get first token ownted by the player
   const selectedTokens = <Token[]>canvas.tokens?.controlled;
   if (selectedTokens.length > 1) {
-    //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
+    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
     return null;
   }
   if (!selectedTokens || selectedTokens.length == 0) {
@@ -263,13 +234,13 @@ export const getFirstPlayerToken = function (): Token | null {
   const controlled: Token[] = <Token[]>canvas.tokens?.controlled;
   // Do nothing if multiple tokens are selected
   if (controlled.length && controlled.length > 1) {
-    //iteractionFailNotification(i18n("foundryvtt-arms-reach.warningNoSelectMoreThanOneToken"));
+    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
     return null;
   }
   // If exactly one token is selected, take that
   token = controlled[0];
   if (!token) {
-    if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected')) {
+    if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected')) {
       if (!controlled.length || controlled.length == 0) {
         // If no token is selected use the token of the users character
         token = <Token>canvas.tokens?.placeables.find((token) => token.data._id === game.user?.character?.data?._id);
@@ -301,7 +272,7 @@ export const isFocusOnCanvas = function () {
 
 export const reselectTokenAfterInteraction = function (character: Token) {
   // If settings is true do not deselect the current select token
-  if (<boolean>game.settings.get(ARMS_REACH_MODULE_NAME, 'forceReSelection')) {
+  if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'forceReSelection')) {
     let isOwned = false;
     if (!character) {
       character = <Token>getFirstPlayerTokenSelected();
@@ -400,7 +371,7 @@ export const reselectTokenAfterInteraction = function (character: Token) {
 export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
   //@ts-ignore
   const tags = <string[]>Tagger?.getTags(placeable) || [];
-  if (tags.includes(ARMS_REACH_TAGGER_FLAG)) {
+  if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
   } else {
     return false;
@@ -576,13 +547,14 @@ function grids_between_token_and_placeable(token: Token, b: ArmsreachData) {
   return Math.floor(distance_between_token_rect(token, b) / <number>canvas.grid?.size) + 1;
 }
 
-function units_between_token_and_placeableV1(token: Token, b: ArmsreachData) {
+function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
   let dist = Math.floor(distance_between_token_rect(token, b));
   if (dist == 0) {
     //
   } else {
     const unitSize = <number>canvas.dimensions?.distance || 5;
     const unitGridSize = <number>canvas.grid?.size || 50;
+    dist = getUnitTokenDist(token, b);
     // TODO i don't understand this for manage the door control
     if (b.documentName != WallDocument.documentName) {
       dist = (Math.floor(dist) / unitGridSize) * unitSize;
@@ -594,7 +566,7 @@ function units_between_token_and_placeableV1(token: Token, b: ArmsreachData) {
         // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize
         dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
       } else {
-        const globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+        const globalInteraction = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
         if (globalInteraction > 5) {
           // TODO WHY ? is a door but i need to multiply anyway for antoher unitsize
           dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
@@ -606,35 +578,31 @@ function units_between_token_and_placeableV1(token: Token, b: ArmsreachData) {
   // return Math.floor(distance_between_rect(token, b));
 }
 
-// /**
-//  * @deprecated
-//  * @param token
-//  * @param b
-//  * @returns
-//  */
-// function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
-//   let dist = distance_between_token_rect(token, b);
-//   if (dist == 0) {
-//     const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
-//     //@ts-ignore
-//     const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
-//     // Sum up the distances
-//     const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
+/*
+function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
+  let dist = distance_between_token_rect(token, b);
+  if (dist == 0) {
+    const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
+    //@ts-ignore
+    const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
+    // Sum up the distances
+    const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
 
-//     const segmentsLeft = [{ ray: new Ray({ x: token.x, y: token.y }, { x: b.x, y: b.y }) }];
-//     //@ts-ignore
-//     const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
-//     // Sum up the distances
-//     const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
+    const segmentsLeft = [{ ray: new Ray({ x: token.x, y: token.y }, { x: b.x, y: b.y }) }];
+    //@ts-ignore
+    const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
+    // Sum up the distances
+    const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
 
-//     dist = Math.max(distRight, distLeft);
-//   } else {
-//     const unitSize = <number>canvas.dimensions?.distance || 5;
-//     const unitGridSize = <number>canvas.grid?.size || 50;
-//     dist = (Math.floor(dist) / unitGridSize) * unitSize;
-//   }
-//   return dist;
-// }
+    dist = Math.max(distRight, distLeft);
+  } else {
+    const unitSize = <number>canvas.dimensions?.distance || 5;
+    const unitGridSize = <number>canvas.grid?.size || 50;
+    dist = (Math.floor(dist) / unitGridSize) * unitSize;
+  }
+  return dist;
+}
+*/
 
 // ================================================
 
@@ -652,7 +620,7 @@ export const globalInteractionDistanceUniversal = function (
     const dist = grids_between_placeable_and_placeable(placeableSource, placeableTarget);
     return dist;
   } else {
-    const dist = units_between_placeable_and_placeableV2(placeableSource, placeableTarget);
+    const dist = units_between_placeable_and_placeable(placeableSource, placeableTarget);
     return dist;
   }
 };
@@ -661,7 +629,8 @@ function grids_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachDat
   return Math.floor(distance_between_placeable_rect(a, b) / <number>canvas.grid?.size) + 1;
 }
 
-function units_between_placeable_and_placeableV1(a: ArmsreachData, b: ArmsreachData) {
+/*
+function units_between_placeable_and_placeable_work_but_not_optimal(a: ArmsreachData, b: ArmsreachData) {
   let dist = Math.floor(distance_between_placeable_rect(a, b));
   if (dist == 0) {
     //
@@ -679,7 +648,7 @@ function units_between_placeable_and_placeableV1(a: ArmsreachData, b: ArmsreachD
         // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize
         dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
       } else {
-        const globalInteraction = <number>game.settings.get(ARMS_REACH_MODULE_NAME, 'globalInteractionMeasurement');
+        const globalInteraction = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
         if (globalInteraction > 5) {
           // TODO WHY ? is a door but i need to multiply anyway for antoher unitsize
           dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
@@ -690,7 +659,7 @@ function units_between_placeable_and_placeableV1(a: ArmsreachData, b: ArmsreachD
   return dist;
   // return Math.floor(distance_between_rect(token, b));
 }
-
+*/
 function distance_between_placeable_rect(p1: ArmsreachData, p2: ArmsreachData) {
   const x1 = p1.x;
   const y1 = p1.y;
@@ -728,7 +697,7 @@ function distance_between_placeable_rect(p1: ArmsreachData, p2: ArmsreachData) {
   return 0;
 }
 
-function units_between_placeable_and_placeableV2(a: ArmsreachData, b: ArmsreachData) {
+function units_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachData) {
   // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
   // if (range === 0) return false;
   // if (range === Infinity) return true;
@@ -757,6 +726,7 @@ function getUnitTokenDistUniversal(a: ArmsreachData, b: ArmsreachData) {
 
 // ================================================
 
+/*
 function units_between_token_and_placeable_not_work(sourceToken: Token, placeableObject: ArmsreachData) {
   // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
   // if (range === 0) return false;
@@ -772,7 +742,9 @@ function units_between_token_and_placeable_not_work(sourceToken: Token, placeabl
   dist = (Math.floor(dist) / unitGridSize) * unitSize;
   return dist;
 }
+*/
 
+/*
 function getUnitTokenDist(token1: Token, placeableObject: ArmsreachData) {
   const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
   const x1 = token1.center.x;
@@ -784,47 +756,36 @@ function getUnitTokenDist(token1: Token, placeableObject: ArmsreachData) {
   const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
   return d;
 }
+*/
 
-// /**
-//  * Get the total LOS height for a token
-//  * @param {Object} token - a token object
-//  * @returns {Integer} returns token elevation plus the LOS height stored in the flags
-//  */
-// function getTokenLOSheight(token:Token) {
-//   const defaultTokenHeight = 6;
-//   const autoLOSHeight = false;
-//   let losDiff;
-//   const divideBy = (<any>token.data.flags.levelsautocover)?.ducking ? 3 : 1;
-//   if (autoLOSHeight) {
-//     losDiff = (<any>token.data.flags.levels)?.tokenHeight ||
-//       //@ts-ignore
-//       <number>canvas.scene?.dimensions.distance * Math.max(token.data.width, token.data.height) * token.data.scale;
-//   } else {
-//     losDiff = (<any>token.data.flags.levels)?.tokenHeight || defaultTokenHeight;
-//   }
-
-//   return token.data.elevation + losDiff / divideBy;
-// }
+function getUnitTokenDist(token: Token, placeableObjectTarget: ArmsreachData) {
+  const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
+  const x1 = token.center.x;
+  const y1 = token.center.y;
+  const z1 = getElevationPlaceableObject(token) * unitsToPixel;
+  const x2 = placeableObjectTarget.centerX;
+  const y2 = placeableObjectTarget.centerY;
+  const z2 = getElevationPlaceableObject(placeableObjectTarget.placeableObjectData) * unitsToPixel;
+  const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
+  return d;
+}
 
 /**
- * Get the total LOS height for a token
- * @param {Object} token - a token object
- * @returns {Integer} returns token elevation plus the LOS height stored in the flags
- */
-function getElevationPlaceableObject(placeableObject: any): number {
-  if (!placeableObject) {
-    return 0;
+ * Find out if a token is in the range of a particular object
+ * @param {Object} token - a token
+ * @param {Object} objectTarget - a tile/drawing/light/note
+ * @returns {Boolean} - true if in range, false if not
+ **/
+export function isTokenInRange(objectSource: PlaceableObject, objectTarget: PlaceableObject) {
+  if (game.modules.get('levels')?.active) {
+    let rangeTop = <number>objectTarget.document.getFlag('levels', 'rangeTop');
+    let rangeBottom = <number>objectTarget.document.getFlag('levels', 'rangeBottom');
+    if (!rangeTop && rangeTop !== 0) rangeTop = Infinity;
+    if (!rangeBottom && rangeBottom !== 0) rangeBottom = -Infinity;
+    const elevation = getElevationPlaceableObject(objectSource);//token.data.elevation;
+    return elevation <= rangeTop && elevation >= rangeBottom;
+  } else {
+    // TODO maybe some other integration
+    return true;
   }
-  const base = placeableObject.data ? placeableObject.data : placeableObject;
-  const base_elevation =
-    //@ts-ignore
-    typeof _levels !== 'undefined' && _levels?.advancedLOS && placeableObject instanceof Token
-      ? //@ts-ignore
-        _levels.getTokenLOSheight(placeableObject)
-      : base.elevation ??
-        base.flags['levels']?.elevation ??
-        base.flags['levels']?.rangeBottom ??
-        base.flags['wallHeight']?.wallHeightBottom ??
-        0;
-  return base_elevation;
 }
