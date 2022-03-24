@@ -3,7 +3,7 @@ import {
   computeDistanceBetweenCoordinates,
   getFirstPlayerToken,
   getPlaceableCenter,
-  iteractionFailNotification,
+  interactionFailNotification,
 } from './ArmsReachHelper';
 import { canvas, game } from './settings';
 import CONSTANTS from './constants';
@@ -24,7 +24,7 @@ export const DrawingsReach = {
       return true;
     }
     if (<number>canvas.tokens?.controlled?.length > 1) {
-      iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     let isOwned = false;
@@ -57,7 +57,7 @@ export const DrawingsReach = {
         (game.user?.isGM && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForDrawing`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForDrawing`));
           return false;
         } else {
           let isNotNearEnough = false;
@@ -91,11 +91,11 @@ export const DrawingsReach = {
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
             if (tokenName) {
-              iteractionFailNotification(
+              interactionFailNotification(
                 i18nFormat(`${CONSTANTS.MODULE_NAME}.drawingsNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.drawingsNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.drawingsNotInReach`));
             }
             return false;
           } else {

@@ -4,7 +4,7 @@ import {
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
   getPlaceableCenter,
-  iteractionFailNotification,
+  interactionFailNotification,
 } from './ArmsReachHelper';
 import { canvas, game } from './settings';
 import CONSTANTS from './constants';
@@ -19,7 +19,7 @@ export const StairwaysReach = {
       return true;
     }
     if (<number>canvas.tokens?.controlled?.length > 1) {
-      iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     let isOwned = false;
@@ -55,7 +55,7 @@ export const StairwaysReach = {
         (game.user?.isGM && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
           return false;
         } else {
           let isNotNearEnough = false;
@@ -81,11 +81,11 @@ export const StairwaysReach = {
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
             if (tokenName) {
-              iteractionFailNotification(
+              interactionFailNotification(
                 i18nFormat(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReach`));
             }
             return false;
           } else {
@@ -128,7 +128,7 @@ export const StairwaysReach = {
       return true;
     }
     if (<number>canvas.tokens?.controlled?.length > 1) {
-      iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     let isOwned = false;
@@ -161,7 +161,7 @@ export const StairwaysReach = {
         (game.user?.isGM && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM'))
       ) {
         if (!character) {
-          iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
           return false;
         } else {
           let isNotNearEnough = false;
@@ -195,11 +195,11 @@ export const StairwaysReach = {
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
             if (tokenName) {
-              iteractionFailNotification(
+              interactionFailNotification(
                 i18nFormat(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReach`));
             }
             return false;
           } else {

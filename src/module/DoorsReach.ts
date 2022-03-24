@@ -8,7 +8,7 @@ import {
   getPlaceableDoorCenter,
   getTokenCenter,
   isFocusOnCanvas,
-  iteractionFailNotification,
+  interactionFailNotification,
 } from './ArmsReachHelper';
 import { canvas, game } from './settings';
 import CONSTANTS from './constants';
@@ -39,7 +39,7 @@ export const DoorsReach = {
               ArmsReachVariables.door_interaction_lastTime = Date.now();
               const character = getFirstPlayerToken();
               if (!character) {
-                iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedToCenterCamera`));
+                interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedToCenterCamera`));
                 return;
               }
 
@@ -69,7 +69,7 @@ export const DoorsReach = {
           const character = getFirstPlayerToken();
 
           if (!character) {
-            iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelected`));
+            interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelected`));
             return;
           }
 
@@ -116,7 +116,7 @@ export const DoorsReach = {
       return true;
     }
     if (<number>canvas.tokens?.controlled?.length > 1) {
-      iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     let isOwned = false;
@@ -185,7 +185,7 @@ export const DoorsReach = {
         };
 
         if (!character) {
-          iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelected`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelected`));
           return false;
         } else {
           // PreHook (can abort the interaction with the door)
@@ -268,11 +268,11 @@ export const DoorsReach = {
           if (isNotNearEnough) {
             const tokenName = getCharacterName(character);
             if (tokenName) {
-              iteractionFailNotification(
+              interactionFailNotification(
                 i18nFormat(`${CONSTANTS.MODULE_NAME}.doorNotInReachFor`, { tokenName: tokenName }),
               );
             } else {
-              iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.doorNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.doorNotInReach`));
             }
             return false;
           } else {
@@ -488,12 +488,12 @@ export const DoorsReach = {
       const tokenName = getCharacterName(token);
 
       if (tokenName) {
-        iteractionFailNotification(
+        interactionFailNotification(
           i18nFormat(`${CONSTANTS.MODULE_NAME}.doorNotFoundInReachFor`, { tokenName: tokenName }),
         );
         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       } else {
-        iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.doorNotFoundInReach`));
+        interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.doorNotFoundInReach`));
         //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }
       return;

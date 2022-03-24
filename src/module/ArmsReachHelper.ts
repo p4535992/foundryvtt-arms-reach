@@ -196,7 +196,7 @@ function getTokenShape(token): any[] {
 /**
  * Interation fail messages
  */
-export const iteractionFailNotification = function (message) {
+export const interactionFailNotification = function (message) {
   if (!game.settings.get(CONSTANTS.MODULE_NAME, 'notificationsInteractionFail')) {
     return;
   }

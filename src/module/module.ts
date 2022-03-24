@@ -21,7 +21,7 @@ import { canvas, game } from './settings';
 import CONSTANTS from './constants';
 import API from './api';
 import { setApi } from '../foundryvtt-arms-reach';
-import { registerSocket } from './ArmsReachSocket';
+import { registerSocket } from './socket';
 
 let taggerModuleActive;
 
