@@ -50,12 +50,11 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 - [Smart Door](https://github.com/manuelVo/foundryvtt-smart-doors)
 - [Door Color](https://github.com/jessev14/door-colors)
 
-
 ## API
 
 A little api to use in macro cc. for check if the placeable object reachable with variant based on the string id or the string tag from the module `tagger`.
 
-The api is reachable from the variable `game.armsReach` or from the socket libary `socketLib` if present and active.
+The api is reachable from the variable `game.modules.get('foundryvtt-arms-reach').api` or from the socket libary `socketLib` on the variable `game.modules.get('foundryvtt-arms-reach').socket` if present and active.
 
 #### isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -71,7 +70,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+`game.modules.get('foundryvtt-arms-reach').api.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
 
 #### isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -87,7 +86,7 @@ Calculate the distance between the source token and the first target placeable o
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
+`game.modules.get('foundryvtt-arms-reach').api.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
 
 #### isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -103,7 +102,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('foundryvtt-arms-reach').api.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -119,7 +118,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('foundryvtt-arms-reach').api.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -135,7 +134,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+`game.modules.get('foundryvtt-arms-reach').api.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
 
 #### isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -151,7 +150,7 @@ Calculate the distance between the source token and the first target placeable o
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
+`game.modules.get('foundryvtt-arms-reach').api.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
 
 #### isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -167,7 +166,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('foundryvtt-arms-reach').api.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -183,20 +182,20 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.armsReach.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('foundryvtt-arms-reach').api.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 
 ### Integration with Socketlib module
 
 You can use the socketLib for call the same functions:
 
-`await socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise<boolean>`
+`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise<boolean>`
 
-`await socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
+`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
 
-`await socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
+`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
 
-`await socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
+`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
 
 **NOTE: for now the optional parameter 'userId' is not used from the api, i hope to add in the future some filter so a specific actor for a specific user has some limitation.**
 
