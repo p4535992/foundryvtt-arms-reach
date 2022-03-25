@@ -1,10 +1,14 @@
 # CHANGELOG
 
-### 2.1.23
+### 2.1.24
 
 - Update the distance calculation
 - Better design pattern for the api and the socket
 - Modify some setting for better interaction
+
+### 2.1.23
+
+- Clean up
 
 ### 2.1.22
 
