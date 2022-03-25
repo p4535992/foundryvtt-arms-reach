@@ -85,7 +85,7 @@ export const registerSettings = function () {
     default: 0, // instead of 1
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 5, step: 0.5 },
+    range: { min: 0, max: 5, step: 1 },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement', {
@@ -96,7 +96,7 @@ export const registerSettings = function () {
     default: 5,
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 20, step: 0.5 },
+    range: { min: 0, max: 20, step: 5 },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM', {
@@ -185,7 +185,7 @@ export const registerSettings = function () {
     default: 5,
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 50, step: 0.5 },
+    range: { min: 0, max: 50, step: 5 },
   });
 
   // DEPRECATED
@@ -513,7 +513,7 @@ function otherSettings(apply = false) {
       default: 0, // instead of 1
       type: Number,
       //@ts-ignore
-      range: { min: 0, max: 5, step: 0.5 },
+      range: { min: 0, max: 5, step: 1 },
     },
 
     globalInteractionMeasurement: {
@@ -524,7 +524,7 @@ function otherSettings(apply = false) {
       default: 5,
       type: Number,
       //@ts-ignore
-      range: { min: 0, max: 20, step: 0.5 },
+      range: { min: 0, max: 20, step: 5 },
     },
 
     globalInteractionDistanceForGM: {
@@ -613,7 +613,7 @@ function otherSettings(apply = false) {
       default: 5,
       type: Number,
       //@ts-ignore
-      range: { min: 0, max: 50, step: 0.5 },
+      range: { min: 0, max: 50, step: 5 },
     },
 
     // DEPRECATED

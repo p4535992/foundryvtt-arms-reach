@@ -557,19 +557,19 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
     dist = getUnitTokenDist(token, b);
     // TODO i don't understand this for manage the door control
     if (b.documentName != WallDocument.documentName) {
-      dist = (Math.floor(dist) / unitGridSize) * unitSize;
+      // dist = (Math.floor(dist) / unitGridSize) * unitSize;
     } else {
       const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
         return x.wall.id == <string>b.id;
       });
       if (!isDoor) {
-        // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize
-        dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
+        // WHY ? is a wall but i need to multiply anyway for antoher unitsize
+        // dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
       } else {
         const globalInteraction = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
         if (globalInteraction > 5) {
-          // TODO WHY ? is a door but i need to multiply anyway for antoher unitsize
-          dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
+          // WHY ? is a door but i need to multiply anyway for antoher unitsize
+          // dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
         }
       }
     }

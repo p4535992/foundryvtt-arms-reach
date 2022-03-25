@@ -117,7 +117,9 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     CONSTANTS.MODULE_NAME,
     `
-    - Little clean up
+    - Update the distance calculation
+    - Better design pattern for the api and the socket
+    - Modify some setting for better interaction
     `,
     'minor',
   );
