@@ -15,8 +15,7 @@
 import { registerSettings } from './module/settings';
 import { preloadTemplates } from './module/preloadTemplates';
 import { initHooks, readyHooks, setupHooks } from './module/module';
-import { game } from './module/settings';
-import API from './module/api';
+import type API from './module/api';
 import CONSTANTS from './module/constants';
 
 /* ------------------------------------ */
@@ -117,9 +116,7 @@ Hooks.once('libChangelogsReady', function () {
   libChangelogs.register(
     CONSTANTS.MODULE_NAME,
     `
-    - Update the distance calculation
-    - Better design pattern for the api and the socket
-    - Modify some setting for better interaction
+    - Update typescript
     `,
     'minor',
   );

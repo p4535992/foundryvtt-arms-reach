@@ -17,7 +17,6 @@ import { DrawingsReach } from './DrawingsReach';
 import { TilesReach } from './TilesReach';
 import { SoundsReach } from './SoundsReach';
 import { WallsReach } from './WallsReach';
-import { canvas, game } from './settings';
 import CONSTANTS from './constants';
 import API from './api';
 import { setApi } from '../foundryvtt-arms-reach';
@@ -200,7 +199,7 @@ export const readyHooks = async () => {
     // Adds Shut All Doors button to Walls Control Layer
     Hooks.on('getSceneControlButtons', function (controls) {
       if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'enableResetDoorsAndFog')) {
-        controls[4].tools.splice(controls[4].tools.length - 2, 0, {
+        controls[4]?.tools.splice(controls[4].tools.length - 2, 0, {
           name: 'close',
           title: 'Close Open Doors',
           icon: 'fas fa-door-closed',

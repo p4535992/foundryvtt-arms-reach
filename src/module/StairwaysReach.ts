@@ -6,7 +6,6 @@ import {
   getPlaceableCenter,
   interactionFailNotification,
 } from './ArmsReachHelper';
-import { canvas, game } from './settings';
 import CONSTANTS from './constants';
 
 export const StairwaysReach = {

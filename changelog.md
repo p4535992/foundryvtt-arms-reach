@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.1.25
+
+- Update typescript
+
 ### 2.1.24
 
 - Update the distance calculation

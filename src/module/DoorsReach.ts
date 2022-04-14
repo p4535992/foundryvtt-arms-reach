@@ -1,5 +1,5 @@
 import { error, getCharacterName, i18n, i18nFormat } from './lib/lib';
-import { DoorData, DoorSourceData, DoorTargetData } from './ArmsReachModels';
+import type { DoorData, DoorSourceData, DoorTargetData } from './ArmsReachModels';
 import {
   computeDistanceBetweenCoordinates,
   getFirstPlayerToken,
@@ -10,7 +10,6 @@ import {
   isFocusOnCanvas,
   interactionFailNotification,
 } from './ArmsReachHelper';
-import { canvas, game } from './settings';
 import CONSTANTS from './constants';
 
 export const DoorsReach = {

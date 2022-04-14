@@ -1,7 +1,6 @@
 import { error, getElevationPlaceableObject, warn } from './lib/lib';
-import { canvas, game } from './settings';
-import { tokenToString } from 'typescript';
-import { ArmsreachData } from './ArmsReachModels';
+import type { tokenToString } from 'typescript';
+import type { ArmsreachData } from './ArmsReachModels';
 import CONSTANTS from './constants';
 
 // /**
@@ -221,7 +220,7 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
     return null;
     //}
   }
-  return selectedTokens[0];
+  return <Token>selectedTokens[0];
 };
 
 /**
@@ -238,7 +237,7 @@ export const getFirstPlayerToken = function (): Token | null {
     return null;
   }
   // If exactly one token is selected, take that
-  token = controlled[0];
+  token = <Token>controlled[0];
   if (!token) {
     if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected')) {
       if (!controlled.length || controlled.length == 0) {
@@ -300,7 +299,7 @@ export const reselectTokenAfterInteraction = function (character: Token) {
       } else {
         const observable = canvas.tokens?.placeables.filter((t) => t.id === character.id);
         if (observable !== undefined) {
-          observable[0].control();
+          (<Token>observable[0]).control();
         }
       }
     }

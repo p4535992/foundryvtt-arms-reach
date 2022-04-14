@@ -6,7 +6,6 @@ import { SoundsReach } from './SoundsReach';
 import { StairwaysReach } from './StairwaysReach';
 import { TilesReach } from './TilesReach';
 import { TokensReach } from './TokensReach';
-import { canvas, game } from './settings';
 import { WallsReach } from './WallsReach';
 import { globalInteractionDistanceUniversal } from './ArmsReachHelper';
 import { error, warn } from './lib/lib';

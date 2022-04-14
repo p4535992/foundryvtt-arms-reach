@@ -1,6 +1,5 @@
 import { debug, warn } from './lib/lib';
 import API from './api';
-import { canvas, game } from './settings';
 import { setSocket } from '../foundryvtt-arms-reach';
 
 export const SOCKET_HANDLERS = {

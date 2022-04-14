@@ -1,5 +1,4 @@
 import { info } from './lib/lib';
-import { canvas, game } from './settings';
 
 export const ResetDoorsAndFog = {
   resetDoorsAndFog: async function (isCurrentScene: boolean, id: string) {
