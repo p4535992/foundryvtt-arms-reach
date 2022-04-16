@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.1.26
+
+- Bug fix
+
 ### 2.1.25
 
 - Update typescript
