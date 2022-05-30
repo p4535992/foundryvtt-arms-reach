@@ -1,0 +1,40 @@
+<form>
+ <div class="flexcol">
+  <h1>Combat Range Overlay</h1>
+ </div>
+ <div class="readme flexcol">
+  <h2>Basic Usage</h2>
+  <p>
+   Click <img src="https://i.imgur.com/Q3baWqE.png"/> to toggle the Overlay on and off. Once the Overlay is enabled, it should Just Work™ with little to no interaction from you. By default, it assumes your weapon has a range of 5 feet; shift-click the button to change it for your currently selected token. Normally the Overlay will reread your position at the end of your combat turn; control-click the button to force the Overlay to reposition. Display preferences are available in the module's Settings page.
+  </p>
+
+  <h2>Understanding the Overlay</h2>
+  <p><img width="450" height="450" src="https://i.imgur.com/1YCtMlcm.png" alt="legend" title="legend"/></p>
+  <p>
+  The overlay in this image assumes a movement speed of 15ft/action and a weapon range of 10ft.<br/>
+  1) Tiles tinted blue can be reached in a single action.<br/>
+  2) Tiles tinted yellow can be reached in 2 actions.<br/>
+  3) Enemies circled in white can be attacked without moving.<br/>
+  4) Enemies circled in blue can be attacked in a single move.</br>
+  5) Enemies circled in yellow can be attacked with 2 moves.<br/>
+  6) Enemies circled in red require 3 or more movements to attack.<br/>
+  7) All tokens (other than the selected token) in combat are annotated with their initiative order relative to the current token.<br/>
+  8) The selected token is annotated with the currently selected weapon range.<br/>
+  </p>
+
+  <p><img width="450" height="450" src="https://i.imgur.com/hvcAz8Dm.png" alt="legend" title="legend"/></p>
+  <p>
+  If a target is selected, tiles in your movement range <i>and</i> in range of the target will be highlighted in white, and only tiles on the shortest path to the highlighted squares will remain tinted.<br/>
+  If multiple targets are selected, only tiles in range of <i>all</i> targeted enemies will be highlighted. If there's no way to hit all targeted enemies at once, the Overlay will display a warning and act as if no enemies are targeted.
+  </p>
+
+  <p>
+   <a href="https://github.com/nazrax/fvtt-combat-range-overlay#readme" title="Documentation"><i class="fas fa-book-open"></i> Documentation</a>
+   <!-- <a href="https://github.com/nazrax/fvtt-combat-range-overlay/wiki" title="Wiki"><i class="fas fa-book"></i> Wiki / More Info</a> -->
+   <a href="https://github.com/nazrax/fvtt-combat-range-overlay/issues" title="Issues"><i class="fas fa-exclamation-circle"></i> Issues</a>
+  </p>
+  <p>
+   <span class="version">Version {{version}}</span>
+  </p>
+ </div>
+</form>

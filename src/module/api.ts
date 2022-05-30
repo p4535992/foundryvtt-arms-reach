@@ -12,6 +12,9 @@ import { error, warn } from './lib/lib';
 import CONSTANTS from './constants';
 
 const API = {
+
+  combatRangeOverlay:<any>{},
+
   async isReachableArr(...inAttributes: any[]) {
     if (!Array.isArray(inAttributes)) {
       throw error('isReachable | inAttributes must be of type array');

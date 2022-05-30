@@ -367,6 +367,149 @@ export const registerSettings = function () {
   });
 
   // =========================================================
+  // RANGE OVERLAY
+  // =========================================================
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'enableRangeOverlay', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameRangeOverlayFeature`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintRangeOverlayFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  const settingNames = {
+    IS_ACTIVE: 'is-active',
+    IC_VISIBILITY: 'ic_visibility',
+    OOC_VISIBILITY: 'ooc_visibility',
+    SHOW_TURN_ORDER: 'show-turn-order',
+    SHOW_POTENTIAL_TARGETS: 'show-potential-targets',
+    SHOW_DIFFICULT_TERRAIN: 'show-difficult-terrain',
+    SHOW_WALLS: 'show-walls',
+    MOVEMENT_ALPHA: 'movement-alpha',
+    RANGES: 'ranges',
+    DIAGONALS: 'diagonals',
+    SHOW_WEAPON_RANGE: "show-weapon-range",
+    SPEED_ATTR_PATH: "speed-attr-path",
+    INFO_BUTTON: "info-button",
+    IGNORE_DIFFICULT_TERRAIN: 'ignore-difficult-terrain'
+  };
+  const hiddenSettings = [settingNames.IS_ACTIVE];
+
+  const defaultFalse = [
+    settingNames.IS_ACTIVE,
+    settingNames.SHOW_DIFFICULT_TERRAIN,
+    settingNames.SHOW_WALLS,
+    settingNames.IGNORE_DIFFICULT_TERRAIN
+  ];
+
+  const ignore = [
+    settingNames.MOVEMENT_ALPHA,
+    settingNames.IC_VISIBILITY,
+    settingNames.OOC_VISIBILITY,
+    settingNames.RANGES,
+    settingNames.DIAGONALS,
+    settingNames.SPEED_ATTR_PATH,
+    settingNames.INFO_BUTTON
+  ];
+
+  // noinspection JSUnusedLocalSymbols
+  for (const [key, settingName] of Object.entries(settingNames)) {
+    if (!ignore.includes(settingName)) {
+      game.settings.register(CONSTANTS.MODULE_NAME, settingName, {
+        name: `${CONSTANTS.MODULE_NAME}.${settingName}`,
+        hint: `${CONSTANTS.MODULE_NAME}.${settingName}-hint`,
+        scope: "client",
+        config: !hiddenSettings.includes(settingName),
+        type: Boolean,
+        default: !defaultFalse.includes(settingName),
+        onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+      });
+    }
+  }
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'movement-alpha', {
+    name: `${CONSTANTS.MODULE_NAME}.movement-alpha`,
+    hint: `${CONSTANTS.MODULE_NAME}.movement-alpha-hint`,
+    scope: 'client',
+    config: true,
+    type: Number,
+    default: .1,
+    range: <any>{
+      min: 0,
+      max: 1,
+      step: .05
+    },
+    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'ic_visibility', {
+    name: `${CONSTANTS.MODULE_NAME}.ic_visibility`,
+    hint: `${CONSTANTS.MODULE_NAME}.ic_visibility-hint`,
+    scope: 'client',
+    config: true,
+    type: String,
+    default: `never`,
+    choices: <any>{
+      always: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.always`,
+      hotkeys: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.hotkeys`,
+      never: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.never`,
+    },
+    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'ooc_visibility', {
+    name: `${CONSTANTS.MODULE_NAME}.ooc_visibility`,
+    hint: `${CONSTANTS.MODULE_NAME}.ooc_visibility-hint`,
+    scope: 'client',
+    config: true,
+    type: String,
+    default: `never`,
+    choices: <any>{
+      always: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.always`,
+      hotkeys: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.hotkeys`,
+      never: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.never`,
+    },
+    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'ranges', {
+    name: `${CONSTANTS.MODULE_NAME}.ranges`,
+    hint: `${CONSTANTS.MODULE_NAME}.ranges-hint`,
+    scope: 'client',
+    config: true,
+    type: String,
+    default: '5',
+    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'diagonals', {
+    name: `${CONSTANTS.MODULE_NAME}.diagonals.name`,
+    hint: `${CONSTANTS.MODULE_NAME}.diagonals.hint`,
+    scope: 'world',
+    config: true,
+    type: String,
+    default: 'fiveTenFive',
+    choices: <any>{
+      fiveTenFive: `${CONSTANTS.MODULE_NAME}.diagonals.fiveTenFive`,
+      tenFiveTen: `${CONSTANTS.MODULE_NAME}.diagonals.tenFiveTen`,
+      five: `${CONSTANTS.MODULE_NAME}.diagonals.five`,
+      ten: `${CONSTANTS.MODULE_NAME}.diagonals.ten`,
+    },
+    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'speed-attr-path', {
+    name: `${CONSTANTS.MODULE_NAME}.speed-attr-path`,
+    hint: `${CONSTANTS.MODULE_NAME}.speed-attr-path-hint`,
+    scope: 'world',
+    config: true,
+    type: String,
+    default: ""
+  });
+
+  // =========================================================
 
   // const settings = defaultSettings();
   // for (const [name, data] of Object.entries(settings)) {

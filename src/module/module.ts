@@ -21,6 +21,10 @@ import CONSTANTS from './constants';
 import API from './api';
 import { setApi } from '../foundryvtt-arms-reach';
 import { registerSocket } from './socket';
+import { Overlay } from './apps/range_overlay/overlay';
+import { keyboard } from './apps/range_overlay/keyboard';
+import { mouse } from './apps/range_overlay/mouse';
+import { toggleButton, TOGGLE_BUTTON, _toggleButtonClick } from './apps/range_overlay/controls';
 
 let taggerModuleActive;
 
@@ -338,7 +342,51 @@ export const readyHooks = async () => {
     // });
   }
 
-  // Register custom sheets (if any)
+  // [EXPERIMENTAL] Range Overlay Integration
+  if(game.settings.get(CONSTANTS.MODULE_NAME,'enableRangeOverlay')){
+    Hooks.on('getSceneControlButtons', (controls:SceneControl[]) => {
+      const tokenButton = controls.find((b) => b.name == 'token');
+
+      if (tokenButton) {
+        tokenButton.tools.push({
+          name: TOGGLE_BUTTON,
+          title: `${CONSTANTS.MODULE_NAME}.controlButton`,
+          icon: "fas fa-people-arrows",
+          toggle: true,
+          active: <boolean>game.settings.get(CONSTANTS.MODULE_NAME,'is-active'),
+          onClick: (toggled) => _toggleButtonClick(toggled, controls),
+          visible: true,  // TODO: Figure out how to disable this from Settings
+          // onClick: (value) => {
+          //   game.settings.set(TRIGGER_HAPPY_MODULE_NAME, 'enableTriggers', value);
+          //   if (game.triggers) game.triggers._parseJournals.bind(game.triggers)();
+          // },
+        });
+      }
+    });
+
+    //@ts-ignore
+    libWrapper.ignore_conflicts(CONSTANTS.MODULE_NAME, ['drag-ruler', 'enhanced-terrain-layer'], ['Token.prototype._onDragLeftStart', 'Token.prototype._onDragLeftDrop', 'Token.prototype._onDragLeftCancel'])
+
+    //@ts-ignore
+    libWrapper.register(CONSTANTS.MODULE_NAME, 'Token.prototype._onDragLeftStart', mouse._dragStartWrapper.bind(mouse), 'WRAPPER');
+
+    //@ts-ignore
+    libWrapper.register(CONSTANTS.MODULE_NAME, 'Token.prototype._onDragLeftDrop', mouse._dragDropWrapper.bind(mouse), 'WRAPPER');
+
+    //@ts-ignore
+    libWrapper.register(CONSTANTS.MODULE_NAME, 'Token.prototype._onDragLeftCancel', mouse._dragCancelWrapper.bind(mouse), 'WRAPPER');
+
+    const instance = new Overlay()
+    API.combatRangeOverlay = {
+      instance,
+      showNumericMovementCost: false,
+      showPathLines: false,
+      roundNumericMovementCost: true
+    };
+    instance.registerHooks();
+    keyboard.addHook("Alt", instance.altKeyHandler.bind(instance));
+    mouse.addHook(instance.dragHandler.bind(instance))
+  }
 };
 
 export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
