@@ -140,10 +140,10 @@ export const registerSettings = function () {
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'doorInteractionMeasurement', {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
-    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintMaximumDoorMeasurementInteraction`),
     scope: 'world',
     config: true,
-    default: 5,
+    default: 0, // 5 before
     type: Number,
     //@ts-ignore
     range: { min: 0, max: 50, step: 5 },
@@ -156,7 +156,7 @@ export const registerSettings = function () {
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintHotKeyForInteraction`),
     scope: 'world',
     config: true,
-    default: true,
+    default: false,
     type: Boolean,
   });
 
@@ -167,7 +167,7 @@ export const registerSettings = function () {
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDoubleTapInteraction`),
     scope: 'world',
     config: true,
-    default: 1, // 200
+    default: 0, // 1 before // 200 before
     type: Number,
     //@ts-ignore
     //range: { min: 0, max: 750, step: 50 },
@@ -420,11 +420,13 @@ export const registerSettings = function () {
       game.settings.register(CONSTANTS.MODULE_NAME, settingName, {
         name: `${CONSTANTS.MODULE_NAME}.${settingName}`,
         hint: `${CONSTANTS.MODULE_NAME}.${settingName}-hint`,
+        // name: `${CONSTANTS.MODULE_NAME}.quick-settings.${settingName}.name`,
+        // hint: `${CONSTANTS.MODULE_NAME}.quick-settings.${settingName}.hint`,
         scope: "client",
         config: !hiddenSettings.includes(settingName),
         type: Boolean,
         default: !defaultFalse.includes(settingName),
-        onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+        onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
       });
     }
   }
@@ -441,7 +443,7 @@ export const registerSettings = function () {
       max: 1,
       step: .05
     },
-    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'ic_visibility', {
@@ -456,7 +458,7 @@ export const registerSettings = function () {
       hotkeys: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.hotkeys`,
       never: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.never`,
     },
-    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'ooc_visibility', {
@@ -471,7 +473,7 @@ export const registerSettings = function () {
       hotkeys: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.hotkeys`,
       never: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.never`,
     },
-    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'ranges', {
@@ -481,7 +483,7 @@ export const registerSettings = function () {
     config: true,
     type: String,
     default: '5',
-    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'diagonals', {
@@ -497,7 +499,7 @@ export const registerSettings = function () {
       five: `${CONSTANTS.MODULE_NAME}.diagonals.five`,
       ten: `${CONSTANTS.MODULE_NAME}.diagonals.ten`,
     },
-    onChange: () => { globalThis.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'speed-attr-path', {
@@ -507,6 +509,17 @@ export const registerSettings = function () {
     config: true,
     type: String,
     default: ""
+  });
+
+  // ===================================================================
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'debug', {
+    name: `${CONSTANTS.MODULE_NAME}.setting.debug.name`,
+    hint: `${CONSTANTS.MODULE_NAME}.setting.debug.hint`,
+    scope: 'client',
+    config: true,
+    default: false,
+    type: Boolean,
   });
 
   // =========================================================
@@ -711,10 +724,10 @@ function otherSettings(apply = false) {
 
     doorInteractionMeasurement: {
       name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
-      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingNameMaximumDoorMeasurementInteraction`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintMaximumDoorMeasurementInteraction`),
       scope: 'world',
       config: true,
-      default: 5,
+      default: 0, // 5 before
       type: Number,
       //@ts-ignore
       range: { min: 0, max: 50, step: 5 },
@@ -727,7 +740,7 @@ function otherSettings(apply = false) {
       hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintHotKeyForInteraction`),
       scope: 'world',
       config: true,
-      default: true,
+      default: false,
       type: Boolean,
     },
 
@@ -738,7 +751,7 @@ function otherSettings(apply = false) {
       hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintDoubleTapInteraction`),
       scope: 'world',
       config: true,
-      default: 1, // 200
+      default: 0, // 1 before // 200 before
       type: Number,
       //@ts-ignore
       //range: { min: 0, max: 750, step: 50 },
@@ -936,5 +949,14 @@ function otherSettings(apply = false) {
       default: false,
       type: Boolean,
     },
+
+    debug: {
+      name: `${CONSTANTS.MODULE_NAME}.setting.debug.name`,
+      hint: `${CONSTANTS.MODULE_NAME}.setting.debug.hint`,
+      scope: 'client',
+      config: true,
+      default: false,
+      type: Boolean,
+    }
   };
 }

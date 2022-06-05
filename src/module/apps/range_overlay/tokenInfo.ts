@@ -1,3 +1,4 @@
+import API from "../../api";
 import CONSTANTS from "../../constants";
 import { debug, i18n, warn } from "../../lib/lib";
 import { canvasTokensGet, getCurrentToken } from "./utility";
@@ -175,14 +176,14 @@ function updateLocation(token, updateData) {
 Hooks.on("createCombatant", (combatant, options, someId) => {
   const token = canvasTokensGet(combatant.token.id);
   updateMeasureFrom(token, undefined);
-  globalThis.combatRangeOverlay.instance.fullRefresh();
+  API.combatRangeOverlay.instance.fullRefresh();
 });
 
 // noinspection JSUnusedLocalSymbols
 Hooks.on("deleteCombatant", (combatant, options, someId) => {
   const token = canvasTokensGet(combatant.token.id);
   updateMeasureFrom(token, undefined);
-  globalThis.combatRangeOverlay.instance.fullRefresh();
+  API.combatRangeOverlay.instance.fullRefresh();
 });
 
 
@@ -192,7 +193,7 @@ Hooks.on("updateCombat", (combat, turnInfo, diff, someId) => {
     const token = canvasTokensGet(combat.previous.tokenId);
     updateMeasureFrom(token, undefined);
   }
-  globalThis.combatRangeOverlay.instance.fullRefresh();
+  API.combatRangeOverlay.instance.fullRefresh();
 });
 
 // noinspection JSUnusedLocalSymbols
@@ -203,7 +204,7 @@ Hooks.on("updateToken", (tokenDocument, updateData, options, someId) => {
   if (!realToken.inCombat) {
     updateMeasureFrom(realToken, updateData);
   }
-  globalThis.combatRangeOverlay.instance.fullRefresh();
+  API.combatRangeOverlay.instance.fullRefresh();
 });
 
 Hooks.on("controlToken", (token, boolFlag) => {

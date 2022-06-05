@@ -7,16 +7,16 @@ export class GridTile {
   gy:number;
   distance:number;
   visited = false;
-  upstreams:any[];
-  _upstreamCache:any;
+  upstreams:GridTile[];
+  _upstreamCache:Map<string,GridTile>;
 
   constructor(gx, gy) {
     this.gx = gx;
     this.gy = gy;
     this.distance = CONSTANTS.MAX_DIST;
     this.visited = false;
-    // this.upstreams = undefined;
-    // this._upstreamCache = undefined;
+    this.upstreams = [];
+    this._upstreamCache = new Map<string,GridTile>();
   }
 
   get centerPt() {
@@ -42,9 +42,9 @@ export class GridTile {
     }
   }
 
-  get allUpstreams() {
+  get allUpstreams():Map<string,GridTile> {
     if (this._upstreamCache === undefined) {
-      this._upstreamCache = new Map();
+      this._upstreamCache = new Map<string,GridTile>();
       if (this.upstreams !== undefined) {
         for (const upstream of this.upstreams) {
           this._upstreamCache.set(upstream.key, upstream);

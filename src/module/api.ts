@@ -10,10 +10,12 @@ import { WallsReach } from './WallsReach';
 import { globalInteractionDistanceUniversal } from './ArmsReachHelper';
 import { error, warn } from './lib/lib';
 import CONSTANTS from './constants';
+import type { Overlay } from './apps/range_overlay/overlay';
+import type { combatRangeOverlay } from './ArmsReachModels';
 
 const API = {
 
-  combatRangeOverlay:<any>{},
+  combatRangeOverlay:<combatRangeOverlay>{},
 
   async isReachableArr(...inAttributes: any[]) {
     if (!Array.isArray(inAttributes)) {

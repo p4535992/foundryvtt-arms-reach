@@ -15,6 +15,8 @@ import CONSTANTS from "../../constants.js";
 import { debug, info, log, warn } from "../../lib/lib.js";
 import type EmbeddedCollection from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/embedded-collection.mjs.js";
 import type { CombatData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs.js";
+import API from "../../api.js";
+import { overlaysData } from "../../ArmsReachModels.js";
 
 const actionsToShow = 2;
 
@@ -92,13 +94,14 @@ function diagonalDistance(rawDist) {
 
 export class Overlay {
 
-  overlays:any = {};
+  overlays:overlaysData;
   hookIDs:any = {};
   newTarget = false;
   justActivated = false;
+  instan
 
   constructor() {
-    this.overlays = new Overlay();
+    this.overlays = new overlaysData();
     this.hookIDs = {};
     this.newTarget = false;
     this.justActivated = false;
@@ -174,17 +177,14 @@ export class Overlay {
           if (diagonalDistance(newDistance) > maxTiles) {
             // Do nothing
           }
-          //@ts-ignore
-          else if (Math.abs(neighbor.distance - newDistance) < FUDGE) {
-            neighbor.allUpstreams.add(current);
+          else if (Math.abs(neighbor.distance - newDistance) < CONSTANTS.FUDGE) {
+            neighbor.allUpstreams.set(current.key,current);
           }
-          //@ts-ignore
           else if (newDistance < neighbor.distance) {
             // TODO not sure if we need this
             // neighbor.allUpstreams = new Set<GridTile>();
             neighbor.allUpstreams.clear();
-            neighbor.allUpstreams.add(current);
-            //@ts-ignore
+            neighbor.allUpstreams.set(current.key,current);
             neighbor.distance = newDistance;
             toVisit.add(neighbor);
           }
@@ -503,7 +503,7 @@ export class Overlay {
 
     const tilesMovedPerAction = TokenInfo.current.speed / CONSTANTS.FEET_PER_TILE;
     this.overlays.distanceTexts = [];
-    this.overlays.pathOverlay.lineStyle(pathLineWidth, pathLineColor);
+    this.overlays.pathOverlay?.lineStyle(pathLineWidth, pathLineColor);
 
     for (const tile of movementCostMap.values()) {
       let drawTile = false;
@@ -518,24 +518,24 @@ export class Overlay {
         }
       }
       if (drawTile) {
-        if (globalThis.combatRangeOverlay.showNumericMovementCost) {
+        if (API.combatRangeOverlay.showNumericMovementCost) {
           const style = Object.assign({}, movementCostStyle);
           style.fontSize = style.fontSize * (<number>canvasGridSize() / BASE_GRID_SIZE);
 
-          const label = globalThis.combatRangeOverlay.roundNumericMovementCost ? diagonalDistance(tile.distance) : tile.distance;
+          const label = API.combatRangeOverlay.roundNumericMovementCost ? diagonalDistance(tile.distance) : tile.distance;
           const text = new PIXI.Text(label, style);
           text.position.x = tile.gx;
           text.position.y = tile.gy;
           this.overlays.distanceTexts.push(text);
         }
 
-        if (globalThis.combatRangeOverlay.showPathLines) {
+        if (API.combatRangeOverlay.showPathLines) {
           const tileCenter = tile.centerPt;
           if (tile.upstreams !== undefined) {
             for (const upstream of tile.upstreams) {
               const upstreamCenter = upstream.centerPt;
-              this.overlays.pathOverlay.moveTo(tileCenter.x, tileCenter.y);
-              this.overlays.pathOverlay.lineTo(upstreamCenter.x, upstreamCenter.y);
+              this.overlays.pathOverlay?.moveTo(tileCenter.x, tileCenter.y);
+              this.overlays.pathOverlay?.lineTo(upstreamCenter.x, upstreamCenter.y);
             }
           }
         }
@@ -545,18 +545,18 @@ export class Overlay {
         const color = colorByActions[colorIndex];
         const cornerPt = tile.pt;
         if (idealTileMap.has(tile.key)) {
-          this.overlays.distanceOverlay.lineStyle(highlightLineWidth, highlightLineColor);
+          this.overlays.distanceOverlay?.lineStyle(highlightLineWidth, highlightLineColor);
         } else {
-          this.overlays.distanceOverlay.lineStyle(0, 0);
+          this.overlays.distanceOverlay?.lineStyle(0, 0);
         }
-        this.overlays.distanceOverlay.beginFill(color, game.settings.get(CONSTANTS.MODULE_NAME,'movement-alpha'));
-        this.overlays.distanceOverlay.drawRect(cornerPt.x, cornerPt.y, canvasGridSize(), canvasGridSize());
-        this.overlays.distanceOverlay.endFill();
+        this.overlays.distanceOverlay?.beginFill(color, <number>game.settings.get(CONSTANTS.MODULE_NAME,'movement-alpha'));
+        this.overlays.distanceOverlay?.drawRect(cornerPt.x, cornerPt.y, <number>canvasGridSize(), <number>canvasGridSize());
+        this.overlays.distanceOverlay?.endFill();
       }
     }
 
-    canvas.drawings?.addChild(this.overlays.distanceOverlay);
-    canvas.drawings?.addChild(this.overlays.pathOverlay);
+    canvas.drawings?.addChild(<PIXI.Graphics>this.overlays.distanceOverlay);
+    canvas.drawings?.addChild(<PIXI.Graphics>this.overlays.pathOverlay);
 
     for (const text of this.overlays.distanceTexts) {
       canvas.drawings?.addChild(text);
@@ -564,7 +564,7 @@ export class Overlay {
   }
 
   drawWalls() {
-    this.overlays.wallsOverlay.lineStyle(wallLineWidth, wallLineColor);
+    this.overlays.wallsOverlay?.lineStyle(wallLineWidth, wallLineColor);
     for (const quadtree of <Quadtree<Wall>[]>canvas.walls?.quadtree?.nodes) {
       for (const obj of quadtree.objects) {
         const wall = obj.t;
@@ -572,11 +572,11 @@ export class Overlay {
           continue;
         }
         const c = wall.data.c;
-        this.overlays.wallsOverlay.moveTo(c[0], c[1]);
-        this.overlays.wallsOverlay.lineTo(c[2], c[3]);
+        this.overlays.wallsOverlay?.moveTo(c[0], c[1]);
+        this.overlays.wallsOverlay?.lineTo(c[2], c[3]);
       }
     }
-    canvas.drawings?.addChild(this.overlays.wallsOverlay);
+    canvas.drawings?.addChild(<PIXI.Graphics>this.overlays.wallsOverlay);
   }
 }
 

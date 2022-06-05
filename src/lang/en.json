@@ -164,6 +164,10 @@
   "foundryvtt-arms-reach.dialogs.resetsettings.confirm": "Reset Module Settings",
   "foundryvtt-arms-reach.dialogs.resetsettings.cancel": "Cancel",
 
+  "foundryvtt-arms-reach.setting.debug.name": "Enable debugging",
+  "foundryvtt-arms-reach.setting.debug.label": "Prints debug messages to the console",
+  "foundryvtt-arms-reach.setting.debug.hint": " ",
+
   "foundryvtt-arms-reach.settingNameRangeOverlayFeature": "[Experimental] Enable/Disable Range Overlay integration",
   "foundryvtt-arms-reach.settingHintRangeOverlayFeature": "",
 
@@ -189,6 +193,10 @@
   "foundryvtt-arms-reach.visibilities.always": "Always",
   "foundryvtt-arms-reach.visibilities.hotkeys": "Only with ALT or token drag",
   "foundryvtt-arms-reach.visibilities.never": "Never",
+  "foundryvtt-arms-reach.visibilities.overlayVisibility.always": "Always",
+  "foundryvtt-arms-reach.visibilities.overlayVisibility.hotkeys": "Only with ALT or token drag",
+  "foundryvtt-arms-reach.visibilities.overlayVisibility.never": "Never",
+
   "foundryvtt-arms-reach.ranges": "Available weapon ranges",
   "foundryvtt-arms-reach.ranges-hint": "Comma-separated list of ranges to choose from in the quick settings dialog",
   "foundryvtt-arms-reach.diagonals.name": "Diagonals distance",
@@ -197,11 +205,18 @@
   "foundryvtt-arms-reach.diagonals.tenFiveTen": "Ten / Five / Ten / ...",
   "foundryvtt-arms-reach.diagonals.five": "Five / Five / ...",
   "foundryvtt-arms-reach.diagonals.ten": "Ten / Ten / ...",
+  
   "foundryvtt-arms-reach.quick-settings.title": "Combat Range Overlay Quick Settings",
+  "foundryvtt-arms-reach.quick-settings.title-hint": " ",
   "foundryvtt-arms-reach.quick-settings.weapon-range-header": "Weapon Range:",
+  "foundryvtt-arms-reach.quick-settings.weapon-range-header-hint": " ",
   "foundryvtt-arms-reach.quick-settings.update-actor-checkbox": "Update actor instead of token?",
+  "foundryvtt-arms-reach.quick-settings.update-actor-checkbox-hint": " ",
   "foundryvtt-arms-reach.quick-settings.speed-override": "Force token speed to:",
+  "foundryvtt-arms-reach.quick-settings.speed-override-hint": " ",
   "foundryvtt-arms-reach.quick-settings.ignore-difficult-terrain": "Ignore difficult terrain?",
+  "foundryvtt-arms-reach.quick-settings.ignore-difficult-terrain-hint": " ",
+
   "foundryvtt-arms-reach.controls.cant-open-no-selected-token": "Can't open quick settings without a selected token",
   "foundryvtt-arms-reach.controls.cant-reset-no-token": "Can't reset token position without a selected token",
   "foundryvtt-arms-reach.activated-not-visible": "The Combat Range Overlay is now activated but is not yet visible (see Settings for details)",

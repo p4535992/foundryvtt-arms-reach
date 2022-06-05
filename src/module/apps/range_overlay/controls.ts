@@ -3,6 +3,7 @@ import {keyboard} from "./keyboard.js";
 import {TokenInfo} from "./tokenInfo.js";
 import { debug, i18n, warn } from "../../lib/lib.js";
 import CONSTANTS from "../../constants.js";
+import API from "../../api.js";
 
 export const TOGGLE_BUTTON = "combatRangeOverlayButton";
 
@@ -70,12 +71,12 @@ export async function _toggleButtonClick(toggled, controls) {
       warn(i18n(`${CONSTANTS.MODULE_NAME}.controls.cant-reset-no-token`), true);
     } else {
       TokenInfo.current.updateMeasureFrom();
-      globalThis.combatRangeOverlay.instance.fullRefresh();
+      API.combatRangeOverlay.instance.fullRefresh();
     }
   } else {
     isActive = toggled;
     if (toggled) {
-      globalThis.combatRangeOverlay.instance.justActivated = true;
+      API.combatRangeOverlay.instance.justActivated = true;
     }
   }
 
