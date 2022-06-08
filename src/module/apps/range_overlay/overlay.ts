@@ -1,22 +1,23 @@
 import {
   calculateGridDistance,
-  canvasGridSize, canvasTokensGet,
+  canvasGridSize,
+  canvasTokensGet,
   getCombatantToken,
   getCombatantTokenDisposition,
   getCurrentToken,
-  safeDestroy
-} from "./utility.js"
+  safeDestroy,
+} from './utility.js';
 
-import {GridTile} from "./gridTile.js";
-import {TokenInfo} from "./tokenInfo.js";
-import {mouse} from "./mouse.js";
-import {keyboard} from "./keyboard.js";
-import CONSTANTS from "../../constants.js";
-import { debug, info, log, warn } from "../../lib/lib.js";
-import type EmbeddedCollection from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/embedded-collection.mjs.js";
-import type { CombatData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs.js";
-import API from "../../api.js";
-import { overlaysData } from "../../ArmsReachModels.js";
+import { GridTile } from './gridTile.js';
+import { TokenInfo } from './tokenInfo.js';
+import { mouse } from './mouse.js';
+import { keyboard } from './keyboard.js';
+import CONSTANTS from '../../constants.js';
+import { debug, info, log, warn } from '../../lib/lib.js';
+import type EmbeddedCollection from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/embedded-collection.mjs.js';
+import type { CombatData } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs.js';
+import API from '../../api.js';
+import { overlaysData } from '../../ArmsReachModels.js';
 
 const actionsToShow = 2;
 
@@ -42,7 +43,7 @@ const movementCostStyle = {
   fontSize: 30,
   fill: 0x0000ff, // blue
   stroke: 0xffffff, // white
-  strokeThickness: 1
+  strokeThickness: 1,
 };
 
 const turnOrderStyle = {
@@ -50,7 +51,7 @@ const turnOrderStyle = {
   fontSize: 25,
   fill: 0xffffff, // white
   stroke: 0x000000, // black
-  strokeThickness: 5
+  strokeThickness: 5,
 };
 
 const weaponRangeStyle = {
@@ -58,21 +59,20 @@ const weaponRangeStyle = {
   fontSize: 20,
   fill: 0xffffff, // white
   stroke: 0x000000, // black
-  strokeThickness: 4
+  strokeThickness: 4,
 };
 
 function getDiagonalDelta() {
-
   const diagonalsSetting = game.settings.get(CONSTANTS.MODULE_NAME, 'diagonals');
 
   if (diagonalsSetting === CONSTANTS.diagonals.FIVE_TEN_FIVE || diagonalsSetting === CONSTANTS.diagonals.TEN_FIVE_TEN) {
-    return .5;
+    return 0.5;
   } else if (diagonalsSetting === CONSTANTS.diagonals.FIVE) {
     return 0;
   } else if (diagonalsSetting === CONSTANTS.diagonals.TEN) {
     return 1;
   } else {
-    log("Invalid diagonal method : " + diagonalsSetting);
+    log('Invalid diagonal method : ' + diagonalsSetting);
     return 0;
   }
 }
@@ -87,18 +87,17 @@ function diagonalDistance(rawDist) {
   } else if (diagonalsSetting === CONSTANTS.diagonals.FIVE || diagonalsSetting === CONSTANTS.diagonals.TEN) {
     return Math.round(rawDist);
   } else {
-    console.log("Invalid diagonal method", diagonalsSetting)
+    console.log('Invalid diagonal method', diagonalsSetting);
     return Math.round(rawDist);
   }
 }
 
 export class Overlay {
-
-  overlays:overlaysData;
-  hookIDs:any = {};
+  overlays: overlaysData;
+  hookIDs: any = {};
   newTarget = false;
   justActivated = false;
-  instan
+  instan;
 
   constructor() {
     this.overlays = new overlaysData();
@@ -120,7 +119,7 @@ export class Overlay {
     tokenTile.distance = 0;
 
     // Keep a map of grid coordinate -> GridTile
-    const tileMap = new Map<string,GridTile>();
+    const tileMap = new Map<string, GridTile>();
     tileMap.set(tokenTile.key, tokenTile);
 
     const toVisit = new Set<GridTile>();
@@ -136,13 +135,14 @@ export class Overlay {
         }
       }
       //@ts-ignore
-      if (current.distance === CONSTANTS.MAX_DIST) { // Stop if cheapest tile is unreachable
+      if (current.distance === CONSTANTS.MAX_DIST) {
+        // Stop if cheapest tile is unreachable
         break;
       }
       toVisit.delete(current);
       //@ts-ignore
       if (current.visited) {
-        log("BUG: Trying to visit a tile twice");
+        log('BUG: Trying to visit a tile twice');
         continue;
       }
       //@ts-ignore
@@ -162,7 +162,7 @@ export class Overlay {
         }
 
         const ray = new Ray(neighbor.centerPt, current.centerPt);
-        if (checkCollision(ray, {blockMovement: true, blockSenses: false, mode: 'any'})) {
+        if (checkCollision(ray, { blockMovement: true, blockSenses: false, mode: 'any' })) {
           // Blocked, do nothing
         } else {
           //@ts-ignore
@@ -170,21 +170,20 @@ export class Overlay {
 
           const diagonalDelta = getDiagonalDelta();
 
-          if (current.isDiagonal(neighbor)) { // diagonals
+          if (current.isDiagonal(neighbor)) {
+            // diagonals
             newDistance += diagonalDelta;
           }
 
           if (diagonalDistance(newDistance) > maxTiles) {
             // Do nothing
-          }
-          else if (Math.abs(neighbor.distance - newDistance) < CONSTANTS.FUDGE) {
-            neighbor.allUpstreams.set(current.key,current);
-          }
-          else if (newDistance < neighbor.distance) {
+          } else if (Math.abs(neighbor.distance - newDistance) < CONSTANTS.FUDGE) {
+            neighbor.allUpstreams.set(current.key, current);
+          } else if (newDistance < neighbor.distance) {
             // TODO not sure if we need this
             // neighbor.allUpstreams = new Set<GridTile>();
             neighbor.allUpstreams.clear();
-            neighbor.allUpstreams.set(current.key,current);
+            neighbor.allUpstreams.set(current.key, current);
             neighbor.distance = newDistance;
             toVisit.add(neighbor);
           }
@@ -192,10 +191,12 @@ export class Overlay {
       }
     }
 
-    return new Map([...tileMap].filter((kv) => {
-      //@ts-ignore
-      return kv[1].distance !== CONSTANTS.MAX_DIST
-    }));
+    return new Map(
+      [...tileMap].filter((kv) => {
+        //@ts-ignore
+        return kv[1].distance !== CONSTANTS.MAX_DIST;
+      }),
+    );
   }
 
   calculateTargetRangeMap() {
@@ -218,11 +219,14 @@ export class Overlay {
     const tilesMovedPerAction = TokenInfo.current.speed / CONSTANTS.FEET_PER_TILE;
     const weaponRangeInTiles = TokenInfo.current.weaponRange / CONSTANTS.FEET_PER_TILE;
     const myDisposition = getCombatantTokenDisposition(currentToken);
-    debug("drawPotentialTargets | Current disposition", myDisposition);
+    debug('drawPotentialTargets | Current disposition', myDisposition);
 
     for (const combatant of <EmbeddedCollection<typeof Combatant, CombatData>>game.combat?.combatants) {
       const combatantToken = <Token>getCombatantToken(combatant);
-      debug("drawPotentialTargets | Potential target disposition", getCombatantTokenDisposition(combatantToken) + " " + combatantToken.id + " " +combatantToken);
+      debug(
+        'drawPotentialTargets | Potential target disposition',
+        getCombatantTokenDisposition(combatantToken) + ' ' + combatantToken.id + ' ' + combatantToken,
+      );
 
       if (getCombatantTokenDisposition(combatantToken) !== myDisposition) {
         if (combatantToken.visible && !combatant.isDefeated) {
@@ -230,7 +234,7 @@ export class Overlay {
           let bestCost = CONSTANTS.MAX_DIST;
 
           for (const tileInRange of tilesInRange) {
-            const costTile = movementCosts.get(tileInRange.key)
+            const costTile = movementCosts.get(tileInRange.key);
             if (costTile === undefined) {
               continue;
             }
@@ -239,7 +243,10 @@ export class Overlay {
             }
           }
 
-          const colorIndex = Math.min(Math.ceil(diagonalDistance(bestCost) / tilesMovedPerAction), colorByActions.length-1);
+          const colorIndex = Math.min(
+            Math.ceil(diagonalDistance(bestCost) / tilesMovedPerAction),
+            colorByActions.length - 1,
+          );
           const color = colorByActions[colorIndex];
 
           //@ts-ignore
@@ -248,11 +255,11 @@ export class Overlay {
           const heightArea = combatantToken.hitArea.height;
 
           const tokenOverlay = new PIXI.Graphics();
-          tokenOverlay.lineStyle(potentialTargetLineWidth, color)
+          tokenOverlay.lineStyle(potentialTargetLineWidth, color);
           tokenOverlay.drawCircle(
-            widthArea/2,
-            heightArea/2,
-            Math.pow(Math.pow(widthArea/2, 2) + Math.pow(heightArea/2, 2), .5)
+            widthArea / 2,
+            heightArea / 2,
+            Math.pow(Math.pow(widthArea / 2, 2) + Math.pow(heightArea / 2, 2), 0.5),
           );
           combatantToken.addChild(tokenOverlay);
 
@@ -269,25 +276,25 @@ export class Overlay {
     this.initializePersistentVariables();
     this.drawCosts(movementCosts, targetRangeMap);
     if (game.user?.targets.size === 0) {
-      if (game.settings.get(CONSTANTS.MODULE_NAME,'show-turn-order')) {
+      if (game.settings.get(CONSTANTS.MODULE_NAME, 'show-turn-order')) {
         this.drawTurnOrder();
       }
 
-      if (game.settings.get(CONSTANTS.MODULE_NAME,'show-potential-targets')) {
+      if (game.settings.get(CONSTANTS.MODULE_NAME, 'show-potential-targets')) {
         this.drawPotentialTargets(movementCosts);
       }
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME,'show-weapon-range')) {
+    if (game.settings.get(CONSTANTS.MODULE_NAME, 'show-weapon-range')) {
       this.drawWeaponRange();
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME,'show-walls')) {
+    if (game.settings.get(CONSTANTS.MODULE_NAME, 'show-walls')) {
       this.drawWalls();
     }
 
     //@ts-ignore
-    if (game.settings.get(CONSTANTS.MODULE_NAME,'show-difficult-terrain') && canvas.terrain) {
+    if (game.settings.get(CONSTANTS.MODULE_NAME, 'show-difficult-terrain') && canvas.terrain) {
       try {
         //@ts-ignore
         canvas.terrain.visible = true;
@@ -310,7 +317,7 @@ export class Overlay {
   fullRefresh() {
     this.clearAll();
 
-    if (!game.settings.get(CONSTANTS.MODULE_NAME,'is-active')) {
+    if (!game.settings.get(CONSTANTS.MODULE_NAME, 'is-active')) {
       return;
     }
 
@@ -318,13 +325,13 @@ export class Overlay {
     const currentToken = getCurrentToken();
     if (currentToken) {
       let hotkeys = false;
-      if (keyboard.isDown("Alt") || mouse.isLeftDrag()) {
+      if (keyboard.isDown('Alt') || mouse.isLeftDrag()) {
         hotkeys = true;
       }
 
       const visibilitySetting = currentToken.inCombat
-        ? game.settings.get(CONSTANTS.MODULE_NAME,'ic_visibility')
-        : game.settings.get(CONSTANTS.MODULE_NAME,'ooc_visibility');
+        ? game.settings.get(CONSTANTS.MODULE_NAME, 'ic_visibility')
+        : game.settings.get(CONSTANTS.MODULE_NAME, 'ooc_visibility');
 
       if (visibilitySetting === CONSTANTS.overlayVisibility.ALWAYS) {
         showOverlay = true;
@@ -336,7 +343,7 @@ export class Overlay {
     if (showOverlay) {
       this.drawAll();
     } else if (this.justActivated) {
-      info(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.activated-not-visible`),true);
+      info(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.activated-not-visible`), true);
     }
     this.justActivated = false;
   }
@@ -364,25 +371,31 @@ export class Overlay {
   }
 
   registerHooks() {
-    this.hookIDs.renderApplication = Hooks.on("renderApplication", () => this.renderApplicationHook());
-    this.hookIDs.targetToken = Hooks.on("targetToken", () => this.targetTokenHook());
-    this.hookIDs.canvasInit = Hooks.on("canvasInit", () => this.canvasInitHook());
-    this.hookIDs.updateWall = Hooks.on("updateWall", () => this.updateWallHook());
+    this.hookIDs.renderApplication = Hooks.on('renderApplication', () => this.renderApplicationHook());
+    this.hookIDs.targetToken = Hooks.on('targetToken', () => this.targetTokenHook());
+    this.hookIDs.canvasInit = Hooks.on('canvasInit', () => this.canvasInitHook());
+    this.hookIDs.updateWall = Hooks.on('updateWall', () => this.updateWallHook());
   }
 
   unregisterHooks() {
-    Hooks.off("renderApplication", this.hookIDs.renderApplication);
-    Hooks.off("targetToken", this.hookIDs.targetToken);
-    Hooks.off("canvasInit", this.hookIDs.canvasInit);
+    Hooks.off('renderApplication', this.hookIDs.renderApplication);
+    Hooks.off('targetToken', this.hookIDs.targetToken);
+    Hooks.off('canvasInit', this.hookIDs.canvasInit);
     this.hookIDs.renderApplication = undefined;
     this.hookIDs.targetToken = undefined;
     this.hookIDs.sceneChange = undefined;
   }
 
   clearAll() {
-    this.overlays.distanceTexts?.forEach(t => {safeDestroy(t)});
-    this.overlays.turnOrderTexts?.forEach(t => {safeDestroy(t)});
-    this.overlays.tokenOverlays?.forEach(o => {safeDestroy(o)});
+    this.overlays.distanceTexts?.forEach((t) => {
+      safeDestroy(t);
+    });
+    this.overlays.turnOrderTexts?.forEach((t) => {
+      safeDestroy(t);
+    });
+    this.overlays.tokenOverlays?.forEach((o) => {
+      safeDestroy(o);
+    });
     safeDestroy(this.overlays.distanceOverlay);
     safeDestroy(this.overlays.pathOverlay);
     safeDestroy(this.overlays.potentialTargetOverlay);
@@ -396,7 +409,7 @@ export class Overlay {
     this.overlays.potentialTargetOverlay = undefined;
     this.overlays.wallsOverlay = undefined;
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME,'show-difficult-terrain')) {
+    if (game.settings.get(CONSTANTS.MODULE_NAME, 'show-difficult-terrain')) {
       try {
         //@ts-ignore
         canvas.terrain.visible = false;
@@ -418,7 +431,7 @@ export class Overlay {
   }
 
   drawWeaponRange() {
-    debug("drawWeaponRange");
+    debug('drawWeaponRange');
     const currentToken = <Token>getCurrentToken();
     if (!currentToken.inCombat) {
       return;
@@ -444,19 +457,19 @@ export class Overlay {
 
     const currentTokenId = <string>getCurrentToken()?.id;
     for (const combat of <CombatEncounters>game.combats) {
-      const currentCombatant = combat.combatants.find(c => c.token?.id === currentTokenId);
+      const currentCombatant = combat.combatants.find((c) => c.token?.id === currentTokenId);
       if (!currentCombatant) {
         continue;
       }
 
-      const sortedCombatants = combat.setupTurns()
+      const sortedCombatants = combat.setupTurns();
       let seenCurrent = false;
 
-      const head:Combatant[] = [];
-      const tail:Combatant[] = [];
+      const head: Combatant[] = [];
+      const tail: Combatant[] = [];
 
       for (const combatant of sortedCombatants) {
-        const combatantTokenId = <string>combatant.token?.id
+        const combatantTokenId = <string>combatant.token?.id;
         if (!seenCurrent && combatantTokenId === currentTokenId) {
           seenCurrent = true;
         }
@@ -471,7 +484,7 @@ export class Overlay {
       let turnOrder = 0;
       for (const combatant of head.concat(tail)) {
         if (!combatant.isDefeated) {
-          const combatantTokenId = <string>combatant.token?.id
+          const combatantTokenId = <string>combatant.token?.id;
           const combatantToken = <Token>canvasTokensGet(combatantTokenId);
 
           if (turnOrder > 0 && combatantToken.visible) {
@@ -483,7 +496,7 @@ export class Overlay {
             combatantToken.addChild(text);
             this.overlays.turnOrderTexts.push(text);
           }
-          turnOrder++
+          turnOrder++;
         }
       }
     }
@@ -496,7 +509,7 @@ export class Overlay {
     if (showOnlyTargetPath && idealTileMap.size === 0) {
       if (this.newTarget) {
         this.newTarget = false;
-        warn(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.no-good-tiles`),true);
+        warn(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.no-good-tiles`), true);
         showOnlyTargetPath = false;
       }
     }
@@ -522,7 +535,9 @@ export class Overlay {
           const style = Object.assign({}, movementCostStyle);
           style.fontSize = style.fontSize * (<number>canvasGridSize() / BASE_GRID_SIZE);
 
-          const label = API.combatRangeOverlay.roundNumericMovementCost ? diagonalDistance(tile.distance) : tile.distance;
+          const label = API.combatRangeOverlay.roundNumericMovementCost
+            ? diagonalDistance(tile.distance)
+            : tile.distance;
           const text = new PIXI.Text(label, style);
           text.position.x = tile.gx;
           text.position.y = tile.gy;
@@ -541,7 +556,10 @@ export class Overlay {
         }
 
         // Color tile based on number of actions to reach it
-        const colorIndex = Math.min(Math.ceil(diagonalDistance(tile.distance) / tilesMovedPerAction), colorByActions.length-1);
+        const colorIndex = Math.min(
+          Math.ceil(diagonalDistance(tile.distance) / tilesMovedPerAction),
+          colorByActions.length - 1,
+        );
         const color = colorByActions[colorIndex];
         const cornerPt = tile.pt;
         if (idealTileMap.has(tile.key)) {
@@ -549,8 +567,16 @@ export class Overlay {
         } else {
           this.overlays.distanceOverlay?.lineStyle(0, 0);
         }
-        this.overlays.distanceOverlay?.beginFill(color, <number>game.settings.get(CONSTANTS.MODULE_NAME,'movement-alpha'));
-        this.overlays.distanceOverlay?.drawRect(cornerPt.x, cornerPt.y, <number>canvasGridSize(), <number>canvasGridSize());
+        this.overlays.distanceOverlay?.beginFill(
+          color,
+          <number>game.settings.get(CONSTANTS.MODULE_NAME, 'movement-alpha'),
+        );
+        this.overlays.distanceOverlay?.drawRect(
+          cornerPt.x,
+          cornerPt.y,
+          <number>canvasGridSize(),
+          <number>canvasGridSize(),
+        );
         this.overlays.distanceOverlay?.endFill();
       }
     }
@@ -596,7 +622,8 @@ function buildRangeMap(targetMap) {
 function calculateIdealTileMap(movementTileMap, targetMap, rangeMap) {
   const idealTileMap = new Map();
   for (const tile of movementTileMap.values()) {
-    if (rangeMap.get(tile.key) === targetMap.size) { // Every target is reachable from here
+    if (rangeMap.get(tile.key) === targetMap.size) {
+      // Every target is reachable from here
       idealTileMap.set(tile.key, tile);
     }
   }
@@ -613,14 +640,15 @@ function calculateTilesInRange(rangeInTiles, targetToken) {
   const targetGridWidth = Math.floor(targetToken.hitArea.width / <number>canvasGridSize());
 
   // Loop over X and Y deltas, computing distance for only a single quadrant
-  for(let gridXDelta = 0; gridXDelta <= rangeInTiles; gridXDelta++) {
-    for(let gridYDelta = 0; gridYDelta <= rangeInTiles; gridYDelta++) {
+  for (let gridXDelta = 0; gridXDelta <= rangeInTiles; gridXDelta++) {
+    for (let gridYDelta = 0; gridYDelta <= rangeInTiles; gridYDelta++) {
       if (gridXDelta === 0 && gridYDelta === 0) {
         continue;
       }
 
-      const shotDistance = calculateGridDistance({x: 0, y: 0}, {x: gridXDelta, y: gridYDelta});
-      if (shotDistance < rangeInTiles + CONSTANTS.FUDGE) { // We're within range
+      const shotDistance = calculateGridDistance({ x: 0, y: 0 }, { x: gridXDelta, y: gridYDelta });
+      if (shotDistance < rangeInTiles + CONSTANTS.FUDGE) {
+        // We're within range
         // We need to test visibility for all 4 quadrants
         // Use sets so we don't have to explicitly test for "on the same row/column as"
         const gridXSet = new Set();
@@ -667,13 +695,26 @@ function combatantComparator(a, b) {
 
 function checkTileToTokenVisibility(tile, token) {
   const t = Math.min(token.h, token.w) / 4;
-  const offsets = t > 0 ? [[0, 0],[-t,0],[t,0],[0,-t],[0,t],[-t,-t],[-t,t],[t,t],[t,-t]] : [[0,0]];
-  const points = offsets.map(o => new PIXI.Point(token.center.x + o[0], token.center.y + o[1]));
-  const tileCenterPt = tile.centerPt
+  const offsets =
+    t > 0
+      ? [
+          [0, 0],
+          [-t, 0],
+          [t, 0],
+          [0, -t],
+          [0, t],
+          [-t, -t],
+          [-t, t],
+          [t, t],
+          [t, -t],
+        ]
+      : [[0, 0]];
+  const points = offsets.map((o) => new PIXI.Point(token.center.x + o[0], token.center.y + o[1]));
+  const tileCenterPt = tile.centerPt;
 
   for (const point of points) {
     const ray = new Ray(tileCenterPt, point);
-    if (!checkCollision(ray, {type: "sight", mode: 'any'})) {
+    if (!checkCollision(ray, { type: 'sight', mode: 'any' })) {
       return true;
     }
   }

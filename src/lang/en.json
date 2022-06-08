@@ -171,7 +171,6 @@
   "foundryvtt-arms-reach.settingNameRangeOverlayFeature": "[Experimental] Enable/Disable Range Overlay integration",
   "foundryvtt-arms-reach.settingHintRangeOverlayFeature": "",
 
-
   "foundryvtt-arms-reach.no-good-tiles": "No tiles are within movement range AND attack range",
   "foundryvtt-arms-reach.controlButton": "Toggle combat range overlay",
   "foundryvtt-arms-reach.is-active": "Active?",
@@ -205,7 +204,7 @@
   "foundryvtt-arms-reach.diagonals.tenFiveTen": "Ten / Five / Ten / ...",
   "foundryvtt-arms-reach.diagonals.five": "Five / Five / ...",
   "foundryvtt-arms-reach.diagonals.ten": "Ten / Ten / ...",
-  
+
   "foundryvtt-arms-reach.quick-settings.title": "Combat Range Overlay Quick Settings",
   "foundryvtt-arms-reach.quick-settings.title-hint": " ",
   "foundryvtt-arms-reach.quick-settings.weapon-range-header": "Weapon Range:",

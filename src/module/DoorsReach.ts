@@ -413,7 +413,7 @@ export const DoorsReach = {
       // DEPRECATED AND REMOVED
       // maxDistance = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'doorInteractionDistance');
       // if (maxDistance <= 0) {
-      if(<number>game.settings.get(CONSTANTS.MODULE_NAME, 'doorInteractionMeasurement') > 0){
+      if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'doorInteractionMeasurement') > 0) {
         maxDistance = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'doorInteractionMeasurement');
       }
       // }

@@ -1,14 +1,13 @@
-import CONSTANTS from "../../constants.js";
-import {TokenInfo} from "./tokenInfo.js"
+import CONSTANTS from '../../constants.js';
+import { TokenInfo } from './tokenInfo.js';
 
 export class GridTile {
-
-  gx:number;
-  gy:number;
-  distance:number;
+  gx: number;
+  gy: number;
+  distance: number;
   visited = false;
-  upstreams:GridTile[];
-  _upstreamCache:Map<string,GridTile>;
+  upstreams: GridTile[];
+  _upstreamCache: Map<string, GridTile>;
 
   constructor(gx, gy) {
     this.gx = gx;
@@ -16,12 +15,12 @@ export class GridTile {
     this.distance = CONSTANTS.MAX_DIST;
     this.visited = false;
     this.upstreams = [];
-    this._upstreamCache = new Map<string,GridTile>();
+    this._upstreamCache = new Map<string, GridTile>();
   }
 
   get centerPt() {
     const pixels = <PointArray>canvas.grid?.grid?.getPixelsFromGridPosition(this.gx, this.gy);
-    return { x: pixels[0] + <number>canvas.grid?.size/2, y: pixels[1] + <number>canvas.grid?.size/2 };
+    return { x: pixels[0] + <number>canvas.grid?.size / 2, y: pixels[1] + <number>canvas.grid?.size / 2 };
   }
 
   get pt() {
@@ -38,13 +37,13 @@ export class GridTile {
       return 1;
     } else {
       //@ts-ignore
-      return canvas.terrain?.cost({x: this.gy, y: this.gx}) ?? 1;
+      return canvas.terrain?.cost({ x: this.gy, y: this.gx }) ?? 1;
     }
   }
 
-  get allUpstreams():Map<string,GridTile> {
+  get allUpstreams(): Map<string, GridTile> {
     if (this._upstreamCache === undefined) {
-      this._upstreamCache = new Map<string,GridTile>();
+      this._upstreamCache = new Map<string, GridTile>();
       if (this.upstreams !== undefined) {
         for (const upstream of this.upstreams) {
           this._upstreamCache.set(upstream.key, upstream);

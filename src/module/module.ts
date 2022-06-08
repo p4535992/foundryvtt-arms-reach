@@ -25,6 +25,8 @@ import { Overlay } from './apps/range_overlay/overlay';
 import { keyboard } from './apps/range_overlay/keyboard';
 import { mouse } from './apps/range_overlay/mouse';
 import { toggleButton, TOGGLE_BUTTON, _toggleButtonClick } from './apps/range_overlay/controls';
+import { canvasTokensGet } from './apps/range_overlay/utility';
+import { TokenInfo, updateLocation, updateMeasureFrom } from './apps/range_overlay/tokenInfo';
 
 let taggerModuleActive;
 
@@ -343,19 +345,19 @@ export const readyHooks = async () => {
   }
 
   // [EXPERIMENTAL] Range Overlay Integration
-  if(game.settings.get(CONSTANTS.MODULE_NAME,'enableRangeOverlay')){
-    Hooks.on('getSceneControlButtons', (controls:SceneControl[]) => {
+  if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+    Hooks.on('getSceneControlButtons', (controls: SceneControl[]) => {
       const tokenButton = controls.find((b) => b.name == 'token');
 
       if (tokenButton) {
         tokenButton.tools.push({
           name: TOGGLE_BUTTON,
           title: `${CONSTANTS.MODULE_NAME}.controlButton`,
-          icon: "fas fa-people-arrows",
+          icon: 'fas fa-people-arrows',
           toggle: true,
-          active: <boolean>game.settings.get(CONSTANTS.MODULE_NAME,'is-active'),
+          active: <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'is-active'),
           onClick: (toggled) => _toggleButtonClick(toggled, controls),
-          visible: true,  // TODO: Figure out how to disable this from Settings
+          visible: true, // TODO: Figure out how to disable this from Settings
           // onClick: (value) => {
           //   game.settings.set(TRIGGER_HAPPY_MODULE_NAME, 'enableTriggers', value);
           //   if (game.triggers) game.triggers._parseJournals.bind(game.triggers)();
@@ -365,27 +367,90 @@ export const readyHooks = async () => {
     });
 
     //@ts-ignore
-    libWrapper.ignore_conflicts(CONSTANTS.MODULE_NAME, ['drag-ruler', 'enhanced-terrain-layer'], ['Token.prototype._onDragLeftStart', 'Token.prototype._onDragLeftDrop', 'Token.prototype._onDragLeftCancel'])
+    libWrapper.ignore_conflicts(
+      CONSTANTS.MODULE_NAME,
+      ['drag-ruler', 'enhanced-terrain-layer'],
+      ['Token.prototype._onDragLeftStart', 'Token.prototype._onDragLeftDrop', 'Token.prototype._onDragLeftCancel'],
+    );
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, 'Token.prototype._onDragLeftStart', mouse._dragStartWrapper.bind(mouse), 'WRAPPER');
+    libWrapper.register(
+      CONSTANTS.MODULE_NAME,
+      'Token.prototype._onDragLeftStart',
+      mouse._dragStartWrapper.bind(mouse),
+      'WRAPPER',
+    );
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, 'Token.prototype._onDragLeftDrop', mouse._dragDropWrapper.bind(mouse), 'WRAPPER');
+    libWrapper.register(
+      CONSTANTS.MODULE_NAME,
+      'Token.prototype._onDragLeftDrop',
+      mouse._dragDropWrapper.bind(mouse),
+      'WRAPPER',
+    );
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, 'Token.prototype._onDragLeftCancel', mouse._dragCancelWrapper.bind(mouse), 'WRAPPER');
+    libWrapper.register(
+      CONSTANTS.MODULE_NAME,
+      'Token.prototype._onDragLeftCancel',
+      mouse._dragCancelWrapper.bind(mouse),
+      'WRAPPER',
+    );
 
-    const instance = new Overlay()
+    const instance = new Overlay();
     API.combatRangeOverlay = {
       instance,
       showNumericMovementCost: false,
       showPathLines: false,
-      roundNumericMovementCost: true
+      roundNumericMovementCost: true,
     };
     instance.registerHooks();
-    keyboard.addHook("Alt", instance.altKeyHandler.bind(instance));
-    mouse.addHook(instance.dragHandler.bind(instance))
+    keyboard.addHook('Alt', instance.altKeyHandler.bind(instance));
+    mouse.addHook(instance.dragHandler.bind(instance));
+
+    // noinspection JSUnusedLocalSymbols
+    Hooks.on('createCombatant', (combatant, options, someId) => {
+      const token = canvasTokensGet(combatant.token.id);
+      updateMeasureFrom(token, undefined);
+      API.combatRangeOverlay.instance.fullRefresh();
+    });
+
+    // noinspection JSUnusedLocalSymbols
+    Hooks.on('deleteCombatant', (combatant, options, someId) => {
+      const token = canvasTokensGet(combatant.token.id);
+      updateMeasureFrom(token, undefined);
+      API.combatRangeOverlay.instance.fullRefresh();
+    });
+
+    // noinspection JSUnusedLocalSymbols
+    Hooks.on('updateCombat', (combat, turnInfo, diff, someId) => {
+      if (combat?.previous?.tokenId) {
+        const token = canvasTokensGet(combat.previous.tokenId);
+        updateMeasureFrom(token, undefined);
+      }
+      API.combatRangeOverlay.instance.fullRefresh();
+    });
+
+    // noinspection JSUnusedLocalSymbols
+    Hooks.on('updateToken', (tokenDocument, updateData, options, someId) => {
+      const tokenId = tokenDocument.id;
+      const realToken = <Token>canvasTokensGet(tokenId); // Get the real token
+      updateLocation(realToken, updateData);
+      if (!realToken.inCombat) {
+        updateMeasureFrom(realToken, updateData);
+      }
+      API.combatRangeOverlay.instance.fullRefresh();
+    });
+
+    Hooks.on('controlToken', (token, boolFlag) => {
+      if (boolFlag && TokenInfo.current.speed === 0 && TokenInfo.current.getSpeedFromAttributes() === 0) {
+        if (game.user?.isGM) {
+          warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-gm`), true);
+        } else {
+          warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-player`), true);
+        }
+      }
+    });
   }
 };
 

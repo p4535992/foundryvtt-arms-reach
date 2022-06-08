@@ -1,4 +1,4 @@
-import type { Overlay } from "./apps/range_overlay/overlay";
+import type { Overlay } from './apps/range_overlay/overlay';
 
 export class DoorData {
   /// door data of the source door (WARNING: this data may change in the future)
@@ -74,18 +74,18 @@ export class ArmsreachData {
 }
 
 export class combatRangeOverlay {
-  instance:Overlay;
+  instance: Overlay;
   showNumericMovementCost: boolean;
   showPathLines: boolean;
   roundNumericMovementCost: boolean;
-};
+}
 
 export class overlaysData {
-  distanceTexts:PIXI.Text[];
-  tokenOverlays:PIXI.Graphics[];
-  distanceOverlay:PIXI.Graphics|undefined;
-  pathOverlay:PIXI.Graphics|undefined;
-  turnOrderTexts:any[];
-  potentialTargetOverlay:PIXI.Graphics|undefined;
-  wallsOverlay:PIXI.Graphics|undefined;
+  distanceTexts: PIXI.Text[];
+  tokenOverlays: PIXI.Graphics[];
+  distanceOverlay: PIXI.Graphics | undefined;
+  pathOverlay: PIXI.Graphics | undefined;
+  turnOrderTexts: any[];
+  potentialTargetOverlay: PIXI.Graphics | undefined;
+  wallsOverlay: PIXI.Graphics | undefined;
 }

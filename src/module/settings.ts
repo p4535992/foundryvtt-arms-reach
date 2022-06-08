@@ -390,10 +390,10 @@ export const registerSettings = function () {
     MOVEMENT_ALPHA: 'movement-alpha',
     RANGES: 'ranges',
     DIAGONALS: 'diagonals',
-    SHOW_WEAPON_RANGE: "show-weapon-range",
-    SPEED_ATTR_PATH: "speed-attr-path",
-    INFO_BUTTON: "info-button",
-    IGNORE_DIFFICULT_TERRAIN: 'ignore-difficult-terrain'
+    SHOW_WEAPON_RANGE: 'show-weapon-range',
+    SPEED_ATTR_PATH: 'speed-attr-path',
+    INFO_BUTTON: 'info-button',
+    IGNORE_DIFFICULT_TERRAIN: 'ignore-difficult-terrain',
   };
   const hiddenSettings = [settingNames.IS_ACTIVE];
 
@@ -401,7 +401,7 @@ export const registerSettings = function () {
     settingNames.IS_ACTIVE,
     settingNames.SHOW_DIFFICULT_TERRAIN,
     settingNames.SHOW_WALLS,
-    settingNames.IGNORE_DIFFICULT_TERRAIN
+    settingNames.IGNORE_DIFFICULT_TERRAIN,
   ];
 
   const ignore = [
@@ -411,7 +411,7 @@ export const registerSettings = function () {
     settingNames.RANGES,
     settingNames.DIAGONALS,
     settingNames.SPEED_ATTR_PATH,
-    settingNames.INFO_BUTTON
+    settingNames.INFO_BUTTON,
   ];
 
   // noinspection JSUnusedLocalSymbols
@@ -422,11 +422,13 @@ export const registerSettings = function () {
         hint: `${CONSTANTS.MODULE_NAME}.${settingName}-hint`,
         // name: `${CONSTANTS.MODULE_NAME}.quick-settings.${settingName}.name`,
         // hint: `${CONSTANTS.MODULE_NAME}.quick-settings.${settingName}.hint`,
-        scope: "client",
+        scope: 'client',
         config: !hiddenSettings.includes(settingName),
         type: Boolean,
         default: !defaultFalse.includes(settingName),
-        onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
+        onChange: () => {
+          API.combatRangeOverlay.instance.fullRefresh();
+        },
       });
     }
   }
@@ -437,13 +439,15 @@ export const registerSettings = function () {
     scope: 'client',
     config: true,
     type: Number,
-    default: .1,
+    default: 0.1,
     range: <any>{
       min: 0,
       max: 1,
-      step: .05
+      step: 0.05,
     },
-    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => {
+      API.combatRangeOverlay.instance.fullRefresh();
+    },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'ic_visibility', {
@@ -458,7 +462,9 @@ export const registerSettings = function () {
       hotkeys: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.hotkeys`,
       never: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.never`,
     },
-    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => {
+      API.combatRangeOverlay.instance.fullRefresh();
+    },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'ooc_visibility', {
@@ -473,7 +479,9 @@ export const registerSettings = function () {
       hotkeys: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.hotkeys`,
       never: `${CONSTANTS.MODULE_NAME}.visibilities.overlayVisibility.never`,
     },
-    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => {
+      API.combatRangeOverlay.instance.fullRefresh();
+    },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'ranges', {
@@ -483,7 +491,9 @@ export const registerSettings = function () {
     config: true,
     type: String,
     default: '5',
-    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => {
+      API.combatRangeOverlay.instance.fullRefresh();
+    },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'diagonals', {
@@ -499,7 +509,9 @@ export const registerSettings = function () {
       five: `${CONSTANTS.MODULE_NAME}.diagonals.five`,
       ten: `${CONSTANTS.MODULE_NAME}.diagonals.ten`,
     },
-    onChange: () => { API.combatRangeOverlay.instance.fullRefresh()}
+    onChange: () => {
+      API.combatRangeOverlay.instance.fullRefresh();
+    },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'speed-attr-path', {
@@ -508,7 +520,7 @@ export const registerSettings = function () {
     scope: 'world',
     config: true,
     type: String,
-    default: ""
+    default: '',
   });
 
   // ===================================================================
@@ -957,6 +969,6 @@ function otherSettings(apply = false) {
       config: true,
       default: false,
       type: Boolean,
-    }
+    },
   };
 }

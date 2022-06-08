@@ -14,8 +14,7 @@ import type { Overlay } from './apps/range_overlay/overlay';
 import type { combatRangeOverlay } from './ArmsReachModels';
 
 const API = {
-
-  combatRangeOverlay:<combatRangeOverlay>{},
+  combatRangeOverlay: <combatRangeOverlay>{},
 
   async isReachableArr(...inAttributes: any[]) {
     if (!Array.isArray(inAttributes)) {

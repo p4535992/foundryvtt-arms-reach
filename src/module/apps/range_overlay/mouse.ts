@@ -1,21 +1,20 @@
-import { debug } from "../../lib/lib";
+import { debug } from '../../lib/lib';
 
 class Mouse {
-
-  _leftDrag:boolean;
-  _hooks:Function[];
+  _leftDrag: boolean;
+  _hooks: Function[];
 
   constructor() {
     this._leftDrag = false;
-    this._hooks = []
+    this._hooks = [];
   }
 
   addHook(func) {
-      this._hooks.push(func);
+    this._hooks.push(func);
   }
 
   clearHooks() {
-    this._hooks = []
+    this._hooks = [];
   }
 
   isLeftDrag() {
@@ -35,14 +34,14 @@ class Mouse {
   }
 
   _dragDropWrapper(wrapped, ...args) {
-    debug("Drag Drop");
+    debug('Drag Drop');
     this._leftDrag = false;
     this._executeHooks(false);
     return wrapped(...args);
   }
 
   _dragCancelWrapper(wrapped, ...args) {
-    debug("Drag Cancel");
+    debug('Drag Cancel');
     this._leftDrag = false;
     this._executeHooks(false);
     return wrapped(...args);

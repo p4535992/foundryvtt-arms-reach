@@ -1,4 +1,4 @@
-import CONSTANTS from "../../constants";
+import CONSTANTS from '../../constants';
 
 export function getCurrentToken() {
   const tokens = <Token[]>canvasTokensControlled();
@@ -14,10 +14,10 @@ export function getCurrentToken() {
   }
 }
 
-export function getWeaponRanges():number[] {
+export function getWeaponRanges(): number[] {
   const rangeStringsSetting = <string>game.settings.get(CONSTANTS.MODULE_NAME, 'ranges');
-  const rangeStrings = rangeStringsSetting.split(",");
-  const ranges:number[] = []
+  const rangeStrings = rangeStringsSetting.split(',');
+  const ranges: number[] = [];
   for (const rangeString of rangeStrings) {
     const range = parseInt(rangeString);
     if (!isNaN(range)) {
@@ -27,7 +27,7 @@ export function getWeaponRanges():number[] {
   if (ranges.length) {
     return ranges;
   } else {
-    return CONSTANTS.DEFAULT_WEAPON_RANGES.split(",").map(r => parseInt(r));
+    return CONSTANTS.DEFAULT_WEAPON_RANGES.split(',').map((r) => parseInt(r));
   }
 }
 
@@ -53,9 +53,9 @@ export function getCombatantTokenDisposition(combatantToken) {
 }
 
 export function calculateGridDistance(pt1, pt2) {
-  const dx = Math.abs(pt1.x - pt2.x)
+  const dx = Math.abs(pt1.x - pt2.x);
   const dy = Math.abs(pt1.y - pt2.y);
-  return Math.abs(dx - dy) + Math.floor(Math.min(dx, dy) * 3 / 2);
+  return Math.abs(dx - dy) + Math.floor((Math.min(dx, dy) * 3) / 2);
 }
 
 /*

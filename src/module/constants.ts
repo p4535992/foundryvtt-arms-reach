@@ -5,26 +5,26 @@ const CONSTANTS = {
   TAGGER_FLAG: 'armsreach',
 
   DEFAULT_WEAPON_RANGE: 5,
-  DEFAULT_WEAPON_RANGES: "5,10,30,60,120",
+  DEFAULT_WEAPON_RANGES: '5,10,30,60,120',
   FLAG_NAMES: {
-    WEAPON_RANGE: "weaponRange",
-    SPEED_OVERRIDE: "speedOverride",
-    IGNORE_DIFFICULT_TERRAIN: "ignoreDifficultTerrain"
+    WEAPON_RANGE: 'weaponRange',
+    SPEED_OVERRIDE: 'speedOverride',
+    IGNORE_DIFFICULT_TERRAIN: 'ignoreDifficultTerrain',
   },
   MAX_DIST: 999,
   FEET_PER_TILE: 5,
-  FUDGE: .1, // floating point fudge
+  FUDGE: 0.1, // floating point fudge
   overlayVisibility: {
     ALWAYS: 'always',
     HOTKEYS: 'hotkeys',
-    NEVER: 'never'
+    NEVER: 'never',
   },
   diagonals: {
-    FIVE_TEN_FIVE: "fiveTenFive",
-    TEN_FIVE_TEN: "tenFiveTen",
-    FIVE: "five",
-    TEN: "ten"
-  }
+    FIVE_TEN_FIVE: 'fiveTenFive',
+    TEN_FIVE_TEN: 'tenFiveTen',
+    FIVE: 'five',
+    TEN: 'ten',
+  },
 };
 
 CONSTANTS.PATH = `modules/${CONSTANTS.MODULE_NAME}/`;
