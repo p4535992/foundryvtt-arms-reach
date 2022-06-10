@@ -345,6 +345,7 @@ export const readyHooks = async () => {
   }
 
   // [EXPERIMENTAL] Range Overlay Integration
+  /*
   if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
     Hooks.on('getSceneControlButtons', (controls: SceneControl[]) => {
       if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
@@ -470,6 +471,7 @@ export const readyHooks = async () => {
       }
     });
   }
+  */
 };
 
 export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {

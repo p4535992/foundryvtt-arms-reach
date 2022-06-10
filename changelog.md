@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.1.28
+### 2.1.28-29
 
 - Remove module settings
 
