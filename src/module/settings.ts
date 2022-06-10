@@ -374,7 +374,7 @@ export const registerSettings = function () {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameRangeOverlayFeature`),
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintRangeOverlayFeature`),
     scope: 'world',
-    config: true,
+    config: false,
     default: false,
     type: Boolean,
   });
@@ -437,7 +437,7 @@ export const registerSettings = function () {
     name: `${CONSTANTS.MODULE_NAME}.movement-alpha`,
     hint: `${CONSTANTS.MODULE_NAME}.movement-alpha-hint`,
     scope: 'client',
-    config: true,
+    config: false,
     type: Number,
     default: 0.1,
     range: <any>{
@@ -454,7 +454,7 @@ export const registerSettings = function () {
     name: `${CONSTANTS.MODULE_NAME}.ic_visibility`,
     hint: `${CONSTANTS.MODULE_NAME}.ic_visibility-hint`,
     scope: 'client',
-    config: true,
+    config: false,
     type: String,
     default: `never`,
     choices: <any>{
@@ -471,7 +471,7 @@ export const registerSettings = function () {
     name: `${CONSTANTS.MODULE_NAME}.ooc_visibility`,
     hint: `${CONSTANTS.MODULE_NAME}.ooc_visibility-hint`,
     scope: 'client',
-    config: true,
+    config: false,
     type: String,
     default: `never`,
     choices: <any>{
@@ -488,7 +488,7 @@ export const registerSettings = function () {
     name: `${CONSTANTS.MODULE_NAME}.ranges`,
     hint: `${CONSTANTS.MODULE_NAME}.ranges-hint`,
     scope: 'client',
-    config: true,
+    config: false,
     type: String,
     default: '5',
     onChange: () => {
@@ -500,7 +500,7 @@ export const registerSettings = function () {
     name: `${CONSTANTS.MODULE_NAME}.diagonals.name`,
     hint: `${CONSTANTS.MODULE_NAME}.diagonals.hint`,
     scope: 'world',
-    config: true,
+    config: false,
     type: String,
     default: 'fiveTenFive',
     choices: <any>{
@@ -518,7 +518,7 @@ export const registerSettings = function () {
     name: `${CONSTANTS.MODULE_NAME}.speed-attr-path`,
     hint: `${CONSTANTS.MODULE_NAME}.speed-attr-path-hint`,
     scope: 'world',
-    config: true,
+    config: false,
     type: String,
     default: '',
   });

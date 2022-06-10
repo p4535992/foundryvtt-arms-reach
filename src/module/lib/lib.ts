@@ -234,9 +234,12 @@ export function getElevationPlaceableObject(placeableObject: any): number {
       ? //@ts-ignore
         _levels.getTokenLOSheight(placeableObject)
       : base.elevation ??
-        base.flags['levels']?.elevation ??
-        base.flags['levels']?.rangeBottom ??
-        base.flags['wallHeight']?.wallHeightBottom ??
+        (base.flags
+          ? base.flags['levels']?.elevation ??
+            base.flags['levels']?.rangeBottom ??
+            base.flags['wallHeight']?.wallHeightBottom ??
+            0
+          : 0) ??
         0;
   return base_elevation;
 }

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.1.27
+
+- Bug fix integration with stairway
+
 ### 2.1.26
 
 - Bug fix

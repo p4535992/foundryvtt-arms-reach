@@ -24,7 +24,7 @@ import { registerSocket } from './socket';
 import { Overlay } from './apps/range_overlay/overlay';
 import { keyboard } from './apps/range_overlay/keyboard';
 import { mouse } from './apps/range_overlay/mouse';
-import { toggleButton, TOGGLE_BUTTON, _toggleButtonClick } from './apps/range_overlay/controls';
+import { TOGGLE_BUTTON, _toggleButtonClick } from './apps/range_overlay/controls';
 import { canvasTokensGet } from './apps/range_overlay/utility';
 import { TokenInfo, updateLocation, updateMeasureFrom } from './apps/range_overlay/tokenInfo';
 
@@ -347,6 +347,9 @@ export const readyHooks = async () => {
   // [EXPERIMENTAL] Range Overlay Integration
   if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
     Hooks.on('getSceneControlButtons', (controls: SceneControl[]) => {
+      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+        return;
+      }
       const tokenButton = controls.find((b) => b.name == 'token');
 
       if (tokenButton) {
@@ -410,6 +413,9 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('createCombatant', (combatant, options, someId) => {
+      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+        return;
+      }
       const token = canvasTokensGet(combatant.token.id);
       updateMeasureFrom(token, undefined);
       API.combatRangeOverlay.instance.fullRefresh();
@@ -417,6 +423,9 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('deleteCombatant', (combatant, options, someId) => {
+      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+        return;
+      }
       const token = canvasTokensGet(combatant.token.id);
       updateMeasureFrom(token, undefined);
       API.combatRangeOverlay.instance.fullRefresh();
@@ -424,6 +433,9 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('updateCombat', (combat, turnInfo, diff, someId) => {
+      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+        return;
+      }
       if (combat?.previous?.tokenId) {
         const token = canvasTokensGet(combat.previous.tokenId);
         updateMeasureFrom(token, undefined);
@@ -433,6 +445,9 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('updateToken', (tokenDocument, updateData, options, someId) => {
+      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+        return;
+      }
       const tokenId = tokenDocument.id;
       const realToken = <Token>canvasTokensGet(tokenId); // Get the real token
       updateLocation(realToken, updateData);
@@ -443,6 +458,9 @@ export const readyHooks = async () => {
     });
 
     Hooks.on('controlToken', (token, boolFlag) => {
+      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+        return;
+      }
       if (boolFlag && TokenInfo.current.speed === 0 && TokenInfo.current.getSpeedFromAttributes() === 0) {
         if (game.user?.isGM) {
           warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-gm`), true);

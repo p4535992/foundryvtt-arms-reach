@@ -225,5 +225,7 @@
   "foundryvtt-arms-reach.speed-attr-path-hint": "Advanced: Set this only if you're using a System that can't autodetect token Speed",
   "foundryvtt-arms-reach.info-button": "Basic Information",
   "foundryvtt-arms-reach.token-speed-warning-gm": "I can't autodetect token speed; please manually set your token's speed and/or set the Speed Attribute in the module settings (and maybe open an issue to add support for your System)",
-  "foundryvtt-arms-reach.token-speed-warning-player": "Please manually set your token's speed (and maybe ask your GM to configure the Speed Attribute in the module settings)"
+  "foundryvtt-arms-reach.token-speed-warning-player": "Please manually set your token's speed (and maybe ask your GM to configure the Speed Attribute in the module settings)",
+  "foundryvtt-arms-reach.ignore-difficult-terrain": "Ignore difficult terrain?",
+  "foundryvtt-arms-reach.ignore-difficult-terrain-hint": " "
 }

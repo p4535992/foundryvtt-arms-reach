@@ -272,6 +272,10 @@ Adds a button to the Walls Menu to Shut all doors in the current scene. Also add
 
 Changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
 
+### [Experimental] Integration of [Combat Range Overlay](https://github.com/Nazrax/fvtt-combat-range-overlay)
+
+[Here the documentation](./wiki/docs/combat-range-overlay.md)
+
 # Build
 
 ## Install all packages
@@ -367,6 +371,7 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways) ty to [SWW13](https://gitlab.com/SWW13)
 - [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
 - [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo)
+- [range-overlay](https://github.com/Nazrax/fvtt-combat-range-overlay) ty to [Nazrax](https://github.com/Nazrax/)
 
 A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry by myself.
 
