@@ -369,7 +369,7 @@ export const registerSettings = function () {
   // =========================================================
   // RANGE OVERLAY
   // =========================================================
-
+  /*
   game.settings.register(CONSTANTS.MODULE_NAME, 'enableRangeOverlay', {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameRangeOverlayFeature`),
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintRangeOverlayFeature`),
@@ -522,7 +522,7 @@ export const registerSettings = function () {
     type: String,
     default: '',
   });
-
+  */
   // ===================================================================
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'debug', {

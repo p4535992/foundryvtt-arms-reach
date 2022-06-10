@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.1.28
+
+- Remove module settings
+
 ### 2.1.27
 
 - Bug fix integration with stairway
