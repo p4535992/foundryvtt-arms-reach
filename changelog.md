@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.1.30
+
+- Change step setting distance from 5 to 1
+
 ### 2.1.28-29
 
 - Remove module settings

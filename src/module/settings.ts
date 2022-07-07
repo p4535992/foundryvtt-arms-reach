@@ -57,7 +57,7 @@ export const registerSettings = function () {
     default: 5,
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 20, step: 5 },
+    range: { min: 0, max: 20, step: 1 },
   });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM', {
@@ -146,7 +146,7 @@ export const registerSettings = function () {
     default: 0, // 5 before
     type: Number,
     //@ts-ignore
-    range: { min: 0, max: 50, step: 5 },
+    range: { min: 0, max: 50, step: 1 },
   });
 
   // DEPRECATED
@@ -653,7 +653,7 @@ function otherSettings(apply = false) {
       default: 5,
       type: Number,
       //@ts-ignore
-      range: { min: 0, max: 20, step: 5 },
+      range: { min: 0, max: 20, step: 1 },
     },
 
     globalInteractionDistanceForGM: {
@@ -742,7 +742,7 @@ function otherSettings(apply = false) {
       default: 0, // 5 before
       type: Number,
       //@ts-ignore
-      range: { min: 0, max: 50, step: 5 },
+      range: { min: 0, max: 50, step: 1 },
     },
 
     // DEPRECATED
