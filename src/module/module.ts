@@ -175,7 +175,9 @@ export const readyHooks = async () => {
           let doNotReselectIfGM = false;
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
-            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+            (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnStairways')) &&
+              game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -256,7 +258,9 @@ export const readyHooks = async () => {
           let doNotReselectIfGM = false;
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
-            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+            (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnDrawings')) &&
+              game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -288,7 +292,9 @@ export const readyHooks = async () => {
           let doNotReselectIfGM = false;
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
-            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+            (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnTiles')) &&
+              game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -320,7 +326,9 @@ export const readyHooks = async () => {
           let doNotReselectIfGM = false;
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
-            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+            (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+            (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnWalls')) &&
+              game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -498,7 +506,9 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
       let doNotReselectIfGM = false;
       if (
         (!canvas.tokens?.controlled && game.user?.isGM) ||
-        (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+        (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+        (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnTokens')) &&
+          game.user?.isGM)
       ) {
         doNotReselectIfGM = true;
       }
@@ -555,7 +565,8 @@ export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args
     let doNotReselectIfGM = false;
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
-      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+      (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnNotes')) && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -589,7 +600,8 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     let doNotReselectIfGM = false;
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
-      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+      (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnDoors')) && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -651,7 +663,8 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
     let doNotReselectIfGM = false;
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
-      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+      (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnDoors')) && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -686,7 +699,9 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
     let doNotReselectIfGM = false;
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
-      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+      (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnLights')) &&
+        game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -721,7 +736,9 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
     let doNotReselectIfGM = false;
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
-      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+      (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnSounds')) &&
+        game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }

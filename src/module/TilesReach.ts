@@ -18,11 +18,15 @@ export const TilesReach = {
     // Check if no token is selected and you are the GM avoid the distance calculation
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
-      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM)
+      (<number>canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+      (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnTiles')) && game.user?.isGM)
     ) {
       return true;
     }
     if (<number>canvas.tokens?.controlled?.length > 1) {
+      if (game.user?.isGM) {
+        return true;
+      }
       interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
       return false;
     }
