@@ -130,12 +130,12 @@ const API = {
     let isInReach = false;
     if (relevantDocument instanceof TokenDocument) {
       const tokenTarget = <Token>canvas.tokens?.placeables?.find((x: Token) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = TokensReach.globalInteractionDistance(token, tokenTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof AmbientLightDocument) {
       const ambientLightTarget = <AmbientLight>canvas.lighting?.placeables?.find((x: AmbientLight) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = LightsReach.globalInteractionDistance(
         token,
@@ -146,7 +146,7 @@ const API = {
       );
     } else if (relevantDocument instanceof AmbientSoundDocument) {
       const ambientSoundTarget = <AmbientSound>canvas.sounds?.placeables?.find((x: AmbientSound) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = SoundsReach.globalInteractionDistance(
         token,
@@ -156,16 +156,16 @@ const API = {
         <string>userId,
       );
       // } else if(relevantDocument instanceof MeasuredTemplateDocument){
-      //   const measuredTarget = <MeasuredTemplate>canvas.templates?.placeables?.find((x:MeasuredTemplate) => {return x.id == <string>placeableObject.id;});
+      //   const measuredTarget = <MeasuredTemplate>canvas.templates?.placeables?.find((x:MeasuredTemplate) => {return x.id === <string>placeableObject.id;});
       //   isInReach = MeasuredsReach.globalInteractionDistance(token,ambientSoundTarget);
     } else if (relevantDocument instanceof TileDocument) {
       const tileTarget = <Tile>canvas.foreground?.placeables?.find((x: Tile) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = TilesReach.globalInteractionDistance(token, tileTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof WallDocument) {
       const doorControlTarget: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-        return x.wall.id == <string>placeableObject.id;
+        return x.wall.id === <string>placeableObject.id;
       });
       if (doorControlTarget) {
         isInReach = DoorsReach.globalInteractionDistance(
@@ -178,24 +178,24 @@ const API = {
         );
       } else {
         const wallTarget = <Wall>canvas.walls?.placeables?.find((x: Wall) => {
-          return x.id == <string>placeableObject.id;
+          return x.id === <string>placeableObject.id;
         });
         isInReach = WallsReach.globalInteractionDistance(token, wallTarget, maxDistance, useGrid, <string>userId);
       }
     } else if (relevantDocument instanceof DrawingDocument) {
       const drawingTarget = <Drawing>canvas.drawings?.placeables?.find((x: Drawing) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = DrawingsReach.globalInteractionDistance(token, drawingTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof NoteDocument) {
       const noteTarget = <Note>canvas.notes?.placeables?.find((x: Note) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = NotesReach.globalInteractionDistance(token, noteTarget, maxDistance, useGrid, <string>userId);
-    } else if (relevantDocument.name == 'Stairway') {
+    } else if (relevantDocument.name === 'Stairway') {
       //@ts-ignore
       const stairwayTarget = <Note>canvas.stairways?.placeables?.find((x: PlaceableObject) => {
-        return x.id == <string>placeableObject.id;
+        return x.id === <string>placeableObject.id;
       });
       isInReach = StairwaysReach.globalInteractionDistanceSimple(
         token,
@@ -331,43 +331,43 @@ const API = {
 
   _retrieveFromIdOrName(placeables, IdOrName): any {
     let target;
-    if (!placeables || placeables.length == 0) {
+    if (!placeables || placeables.length === 0) {
       return target;
     }
     if (!IdOrName) {
       return target;
     }
     target = placeables?.find((x) => {
-      return x && x.id?.toLowerCase() == IdOrName.toLowerCase();
+      return x && x.id?.toLowerCase() === IdOrName.toLowerCase();
     });
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.name?.toLowerCase() == IdOrName.toLowerCase();
+        return x && x.name?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.label?.toLowerCase() == IdOrName.toLowerCase();
+        return x && x.label?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.name?.toLowerCase() == IdOrName.toLowerCase();
+        return x && x.data?.name?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.text?.toLowerCase() == IdOrName.toLowerCase();
+        return x && x.data?.text?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.label?.toLowerCase() == IdOrName.toLowerCase();
+        return x && x.data?.label?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.entryId?.toLowerCase() == IdOrName.toLowerCase();
+        return x && x.data?.entryId?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     return target;

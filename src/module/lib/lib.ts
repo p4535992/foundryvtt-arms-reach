@@ -171,7 +171,7 @@ export function getFirstPlayerTokenSelected(): Token | null {
     //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
     return null;
   }
-  if (!selectedTokens || selectedTokens.length == 0) {
+  if (!selectedTokens || selectedTokens.length === 0) {
     //if(game.user.character.data.token){
     //  //@ts-ignore
     //  return game.user.character.data.token;
@@ -198,7 +198,7 @@ export function getFirstPlayerToken(): Token | null {
   // If exactly one token is selected, take that
   token = <Token>controlled[0];
   if (!token) {
-    if (!controlled.length || controlled.length == 0) {
+    if (!controlled.length || controlled.length === 0) {
       // If no token is selected use the token of the users character
       token = <Token>canvas.tokens?.placeables.find((token) => token.data._id === game.user?.character?.data?._id);
     }
@@ -258,7 +258,7 @@ export function getTokenByTokenID(id) {
 export function getTokenByTokenName(name) {
   // return await game.scenes.active.data.tokens.find( x => {return x._name === name});
   return canvas.tokens?.placeables.find((x) => {
-    return x.name == name;
+    return x.name === name;
   });
   // return canvas.tokens.placeables.find( x => { return x.id == game.user.id});
 }

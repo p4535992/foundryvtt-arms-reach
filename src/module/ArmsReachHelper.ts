@@ -1,5 +1,4 @@
 import { error, getElevationPlaceableObject, warn } from './lib/lib';
-import type { tokenToString } from 'typescript';
 import type { ArmsreachData } from './ArmsReachModels';
 import CONSTANTS from './constants';
 
@@ -109,9 +108,9 @@ export const getCenter = function (placeableObject: PlaceableObject, grid: any =
   const data = placeableObject.data ? placeableObject.data : placeableObject;
   //getCenter(type, data, grid = {}){
   let isGridSpace = false;
-  if (placeableObject.document.documentName == TileDocument.documentName) {
+  if (placeableObject.document.documentName === TileDocument.documentName) {
     isGridSpace = false;
-  } else if (placeableObject.document.documentName == DrawingDocument.documentName) {
+  } else if (placeableObject.document.documentName === DrawingDocument.documentName) {
     isGridSpace = false;
   } else {
     isGridSpace = true;
@@ -212,7 +211,7 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
     //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
     return null;
   }
-  if (!selectedTokens || selectedTokens.length == 0) {
+  if (!selectedTokens || selectedTokens.length === 0) {
     //if(game.user.character.data.token){
     //  //@ts-ignore
     //  return game.user.character.data.token;
@@ -240,7 +239,7 @@ export const getFirstPlayerToken = function (): Token | null {
   token = <Token>controlled[0];
   if (!token) {
     if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected')) {
-      if (!controlled.length || controlled.length == 0) {
+      if (!controlled.length || controlled.length === 0) {
         // If no token is selected use the token of the users character
         token = <Token>canvas.tokens?.placeables.find((token) => token.data._id === game.user?.character?.data?._id);
       }
@@ -548,18 +547,18 @@ function grids_between_token_and_placeable(token: Token, b: ArmsreachData) {
 
 function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
   let dist = Math.floor(distance_between_token_rect(token, b));
-  if (dist == 0) {
+  if (dist === 0) {
     //
   } else {
     const unitSize = <number>canvas.dimensions?.distance || 5;
     const unitGridSize = <number>canvas.grid?.size || 50;
     dist = getUnitTokenDist(token, b);
     // TODO i don't understand this for manage the door control
-    if (b.documentName != WallDocument.documentName) {
+    if (b.documentName !== WallDocument.documentName) {
       // dist = (Math.floor(dist) / unitGridSize) * unitSize;
     } else {
       const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-        return x.wall.id == <string>b.id;
+        return x.wall.id === <string>b.id;
       });
       if (!isDoor) {
         // WHY ? is a wall but i need to multiply anyway for antoher unitsize
@@ -580,7 +579,7 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
 /*
 function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
   let dist = distance_between_token_rect(token, b);
-  if (dist == 0) {
+  if (dist === 0) {
     const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
     //@ts-ignore
     const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
@@ -631,7 +630,7 @@ function grids_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachDat
 /*
 function units_between_placeable_and_placeable_work_but_not_optimal(a: ArmsreachData, b: ArmsreachData) {
   let dist = Math.floor(distance_between_placeable_rect(a, b));
-  if (dist == 0) {
+  if (dist === 0) {
     //
   } else {
     const unitSize = <number>canvas.dimensions?.distance || 5;
@@ -641,7 +640,7 @@ function units_between_placeable_and_placeable_work_but_not_optimal(a: Armsreach
       dist = (Math.floor(dist) / unitGridSize) * unitSize;
     } else {
       const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-        return x.wall.id == <string>b.id;
+        return x.wall.id === <string>b.id;
       });
       if (!isDoor) {
         // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize

@@ -59,7 +59,7 @@ export const ResetDoorsAndFog = {
         if (!scene) {
           return;
         }
-        const isCurrentScene = scene.data._id == canvas.scene?.data._id;
+        const isCurrentScene = scene.data._id === canvas.scene?.data._id;
         await ResetDoorsAndFog.resetDoorsAndFog(isCurrentScene, scene.data._id);
       },
     };

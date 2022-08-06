@@ -106,7 +106,7 @@ export async function _toggleButtonClick(toggled, controls) {
     isActive &&
     TokenInfo.current &&
     TokenInfo.current.speed === 0 &&
-    TokenInfo.current.getSpeedFromAttributes() == 0
+    TokenInfo.current.getSpeedFromAttributes() === 0
   ) {
     if (game.user?.isGM) {
       warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-gm`), true);

@@ -28,7 +28,7 @@ export const DoorsReach = {
             return;
           }
 
-          if (ArmsReachVariables.door_interaction_keydown == false) {
+          if (ArmsReachVariables.door_interaction_keydown === false) {
             ArmsReachVariables.door_interaction_lastTime = Date.now();
             ArmsReachVariables.door_interaction_keydown = true;
           } else {
@@ -206,7 +206,7 @@ export const DoorsReach = {
           const resultExplicitComputeDistance = result.status;
           let jumDefaultComputation = false;
           // undefined|null|Nan go with the standard compute distance
-          if (typeof resultExplicitComputeDistance == 'number') {
+          if (typeof resultExplicitComputeDistance === 'number') {
             // 0 : Custom compute distance fail but fallback to the standard compute distance
             if (<number>resultExplicitComputeDistance === 0) {
               isNotNearEnough = true;
@@ -295,25 +295,25 @@ export const DoorsReach = {
     let playpath = '';
     let playVolume = 0.8;
 
-    if (object.data.ds == CONST.WALL_DOOR_STATES.LOCKED) {
+    if (object.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
       // Door Unlocking
       playpath = doorData.unlockPath;
       playVolume = doorData.unlockLevel;
-    } else if (updateData.ds == CONST.WALL_DOOR_STATES.CLOSED) {
+    } else if (updateData.ds === CONST.WALL_DOOR_STATES.CLOSED) {
       //Door Close
       playpath = doorData.closePath;
       playVolume = doorData.closeLevel;
-    } else if (updateData.ds == CONST.WALL_DOOR_STATES.OPEN) {
+    } else if (updateData.ds === CONST.WALL_DOOR_STATES.OPEN) {
       //Door Open
       playpath = doorData.openPath;
       playVolume = doorData.openLevel;
-    } else if (updateData.ds == CONST.WALL_DOOR_STATES.LOCKED) {
+    } else if (updateData.ds === CONST.WALL_DOOR_STATES.LOCKED) {
       // Door Lock
       playpath = doorData.lockPath;
       playVolume = doorData.lockLevel;
     }
 
-    if (playpath != '' && playpath != null) {
+    if (playpath !== '' && playpath !== null) {
       const fixedPlayPath = playpath.replace('[data]', '').trim();
       AudioHelper.play({ src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false }, true);
     }
@@ -329,21 +329,21 @@ export const DoorsReach = {
     //   playpath = doorData.unlockPath;
     //   playVolume = doorData.unlockLevel;
     // }
-    if (updateData.ds == CONST.WALL_DOOR_STATES.CLOSED) {
+    if (updateData.ds === CONST.WALL_DOOR_STATES.CLOSED) {
       //Door Close
       playpath = doorData.closePath;
       playVolume = doorData.closeLevel;
-    } else if (updateData.ds == CONST.WALL_DOOR_STATES.OPEN) {
+    } else if (updateData.ds === CONST.WALL_DOOR_STATES.OPEN) {
       //Door Open
       playpath = doorData.openPath;
       playVolume = doorData.openLevel;
-    } else if (updateData.ds == CONST.WALL_DOOR_STATES.LOCKED) {
+    } else if (updateData.ds === CONST.WALL_DOOR_STATES.LOCKED) {
       // Door Lock
       playpath = doorData.lockPath;
       playVolume = doorData.lockLevel;
     }
 
-    if (playpath != '' && playpath != null) {
+    if (playpath !== '' && playpath !== null && playpath !== undefined) {
       const fixedPlayPath = playpath.replace('[data]', '').trim();
       AudioHelper.play({ src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false }, true);
     }
@@ -388,7 +388,7 @@ export const DoorsReach = {
     }
 
     // See if character is stuck
-    if (character.x == ArmsReachVariables.lastData.x && character.y == ArmsReachVariables.lastData.y) {
+    if (character.x === ArmsReachVariables.lastData.x && character.y === ArmsReachVariables.lastData.y) {
       DoorsReach.interactWithNearestDoor(character, offsetx, offsety);
     }
   },
@@ -433,7 +433,7 @@ export const DoorsReach = {
     game.scenes?.current?.walls.contents.forEach((wall: WallDocument) => {
       if (wall.data.door > 0) {
         const door: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-          return x.wall.id == <string>wall.id;
+          return x.wall.id === <string>wall.id;
         });
         // if (!door.visible) {
         //   continue;
