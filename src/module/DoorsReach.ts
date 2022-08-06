@@ -145,7 +145,9 @@ export const DoorsReach = {
       //let character:Token = getFirstPlayerToken();
       if (
         !game.user?.isGM ||
-        (game.user?.isGM && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM'))
+        (game.user?.isGM &&
+          // && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
+          <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnDoors'))
       ) {
         const sourceData: DoorSourceData = {
           scene: <Scene>canvas.scene,

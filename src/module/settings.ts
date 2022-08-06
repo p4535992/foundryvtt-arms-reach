@@ -60,14 +60,14 @@ export const registerSettings = function () {
     range: { min: 0, max: 20, step: 1 },
   });
 
-  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM', {
-    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
-    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
-    scope: 'world',
-    config: true,
-    default: false,
-    type: Boolean,
-  });
+  // game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM', {
+  //   name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameNotificationsFailedInteractionEvenForGM`),
+  //   hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintNotificationsFailedInteractionEvenForGM`),
+  //   scope: 'world',
+  //   config: true,
+  //   default: false,
+  //   type: Boolean,
+  // });
 
   game.settings.register(CONSTANTS.MODULE_NAME, 'forceReSelection', {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameAvoidSelectsTheControlledToken`),
@@ -122,6 +122,15 @@ export const registerSettings = function () {
     scope: 'world',
     config: true,
     default: true,
+    type: Boolean,
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnDoors', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnDoors`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnDoors`),
+    scope: 'world',
+    config: true,
+    default: false,
     type: Boolean,
   });
 
@@ -209,6 +218,15 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnStairways', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnStairways`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnStairways`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
   // ========================================================
   // JOURNAL SUPPORT
   // ========================================================
@@ -222,6 +240,15 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnNotes', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnNotes`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnNotes`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
   // ========================================================
   // TOKEN SUPPORT
   // ========================================================
@@ -229,6 +256,15 @@ export const registerSettings = function () {
   game.settings.register(CONSTANTS.MODULE_NAME, 'enableTokensIntegration', {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationFeature`),
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnTokens', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnTokens`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnTokens`),
     scope: 'world',
     config: true,
     default: false,
@@ -275,6 +311,15 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnLights', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnLights`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnLights`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
   // ========================================================
   // SOUNDS SUPPORT
   // ========================================================
@@ -282,6 +327,15 @@ export const registerSettings = function () {
   game.settings.register(CONSTANTS.MODULE_NAME, 'enableSoundsIntegration', {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameSoundsIntegrationFeature`),
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintSoundsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnSounds', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnSounds`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnSounds`),
     scope: 'world',
     config: true,
     default: false,
@@ -301,6 +355,15 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnDrawings', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnDrawings`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnDrawings`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
   // ========================================================
   // TILE SUPPORT
   // ========================================================
@@ -314,6 +377,15 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnTiles', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnTiles`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnTiles`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
   // ========================================================
   // WALL SUPPORT
   // ========================================================
@@ -321,6 +393,15 @@ export const registerSettings = function () {
   game.settings.register(CONSTANTS.MODULE_NAME, 'enableWallsIntegration', {
     name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameWallsIntegrationFeature`),
     hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintWallsIntegrationFeature`),
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnWalls', {
+    name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnWalls`),
+    hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnWalls`),
     scope: 'world',
     config: true,
     default: false,
@@ -721,6 +802,15 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
+    globalInteractionDistanceForGMOnDoors: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnDoors`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnDoors`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
     // DEPRECATED AND REMOVED
 
     doorInteractionDistance: {
@@ -805,6 +895,15 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
+    globalInteractionDistanceForGMOnStairways: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnStairways`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnStairways`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
     // ========================================================
     // JOURNAL SUPPORT
     // ========================================================
@@ -818,6 +917,15 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
+    globalInteractionDistanceForGMOnNotes: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnNotes`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnNotes`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
     // ========================================================
     // TOKEN SUPPORT
     // ========================================================
@@ -825,6 +933,15 @@ function otherSettings(apply = false) {
     enableTokensIntegration: {
       name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameTokensIntegrationFeature`),
       hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintTokensIntegrationFeature`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
+    globalInteractionDistanceForGMOnTokens: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnTokens`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnTokens`),
       scope: 'world',
       config: true,
       default: false,
@@ -871,6 +988,15 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
+    globalInteractionDistanceForGMOnLights: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnLights`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnLights`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
     // ========================================================
     // SOUNDS SUPPORT
     // ========================================================
@@ -878,6 +1004,15 @@ function otherSettings(apply = false) {
     enableSoundsIntegration: {
       name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameSoundsIntegrationFeature`),
       hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintSoundsIntegrationFeature`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
+    globalInteractionDistanceForGMOnSounds: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnSounds`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnSounds`),
       scope: 'world',
       config: true,
       default: false,
@@ -897,6 +1032,15 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
+    globalInteractionDistanceForGMOnDrawings: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnDrawings`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnDrawings`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
     // ========================================================
     // TILE SUPPORT
     // ========================================================
@@ -910,6 +1054,15 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
+    globalInteractionDistanceForGMOnTiles: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnTiles`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnTiles`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
     // ========================================================
     // WALL SUPPORT
     // ========================================================
@@ -917,6 +1070,15 @@ function otherSettings(apply = false) {
     enableWallsIntegration: {
       name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameWallsIntegrationFeature`),
       hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintWallsIntegrationFeature`),
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
+
+    globalInteractionDistanceForGMOnWalls: {
+      name: i18n(`${CONSTANTS.MODULE_NAME}.settingNameGlobalInteractionDistanceForGMOnWalls`),
+      hint: i18n(`${CONSTANTS.MODULE_NAME}.settingHintGlobalInteractionDistanceForGMOnWalls`),
       scope: 'world',
       config: true,
       default: false,

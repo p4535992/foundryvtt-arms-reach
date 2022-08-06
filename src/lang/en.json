@@ -108,6 +108,9 @@
   "foundryvtt-arms-reach.settingNameStairwaysIntegrationFeature": "Enable/Disable Stairways integration",
   "foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Max distance that a token can interact with a stairway... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnStairways": "Enable the check distance on Stairways even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnStairways": "If enabled it will apply the check of the distance on Stairways even for GM, useful if the GM want to play as a player.",
+
   "foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimental] Enable/Disable Gridless support feature",
   "foundryvtt-arms-reach.settingHintGridlessSupportFeature": "Instead of calculate the distance by square grid unit, the calculation is based on the unit meele reach of the token 'ft' or 'mt'",
 
@@ -120,14 +123,23 @@
   "foundryvtt-arms-reach.settingNameDoorsIntegrationFeature": "Enable/Disable Doors integration",
   "foundryvtt-arms-reach.settingHintDoorsIntegrationFeature": "Max distance that a token can interact with a door... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDoors": "Enable the check distance on Doors even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnDoors": "If enabled it will apply the check of the distance on Doors even for GM, useful if the GM want to play as a player.",
+
   "foundryvtt-arms-reach.settingNameJournalsIntegrationFeature": "Enable/Disable Journals integration",
   "foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Max distance that a token can interact with a journal... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnNotes": "Enable the check distance on Notes even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnNotes": "If enabled it will apply the check of the distance on Notes even for GM, useful if the GM want to play as a player.",
 
   "foundryvtt-arms-reach.settingNameNotesIntegrationFeature": "Enable/Disable Notes integration",
   "foundryvtt-arms-reach.settingHintNotesIntegrationFeature": "Max distance that a token can interact with a note... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
   "foundryvtt-arms-reach.settingNameTokensIntegrationFeature": "Enable/Disable Tokens integration",
   "foundryvtt-arms-reach.settingHintTokensIntegrationFeature": "Max distance that a token can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTokens": "Enable the check distance on Tokens even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTokens": "If enabled it will apply the check of the distance on Tokens even for GM, useful if the GM want to play as a player.",
 
   "foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Enable the distance interaction for 'Loot Sheet'",
   "foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "If true by default enable the distance integration for all the token with the 'LootSheet' sheet active",
@@ -141,20 +153,38 @@
   "foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Enable/Disable Lights integration",
   "foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Max distance that a Light can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnLights": "Enable the check distance on Lights even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnLights": "If enabled it will apply the check of the distance on Lights even for GM, useful if the GM want to play as a player.",
+
   "foundryvtt-arms-reach.settingNameSoundsIntegrationFeature": "Enable/Disable Sounds integration",
   "foundryvtt-arms-reach.settingHintSoundsIntegrationFeature": "Max distance that a Sound can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnSounds": "Enable the check distance on Sounds even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnSounds": "If enabled it will apply the check of the distance on Sounds even for GM, useful if the GM want to play as a player.",
 
   "foundryvtt-arms-reach.settingNameDrawingsIntegrationFeature": "Enable/Disable Drawings integration",
   "foundryvtt-arms-reach.settingHintDrawingsIntegrationFeature": "Max distance that a Drawing can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDrawings": "Enable the check distance on Drawings even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnDrawings": "If enabled it will apply the check of the distance on Drawings even for GM, useful if the GM want to play as a player.",
+
   "foundryvtt-arms-reach.settingNameTilesIntegrationFeature": "Enable/Disable Tiles integration",
   "foundryvtt-arms-reach.settingHintTilesIntegrationFeature": "Max distance that a Tile can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTiles": "Enable the check distance on Tiles even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTiles": "If enabled it will apply the check of the distance on Tiles even for GM, useful if the GM want to play as a player.",
 
   "foundryvtt-arms-reach.settingNameWallsIntegrationFeature": "Enable/Disable Walls integration",
   "foundryvtt-arms-reach.settingHintWallsIntegrationFeature": "Max distance that a Wall can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
 
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnWalls": "Enable the check distance on Walls even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnWalls": "If enabled it will apply the check of the distance on Walls even for GM, useful if the GM want to play as a player.",
+
   "foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Enable/Disable Templates integration",
   "foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Max distance that a Template can interact with a other token... 0 will disable the limit (needs app reload). GM's ignore this distance limitation.",
+
+  "foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTemplates": "Enable the check distance on Templates even for GM",
+  "foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTemplates": "If enabled it will apply the check of the distance on Templates even for GM, useful if the GM want to play as a player.",
 
   "foundryvtt-arms-reach.setting.reset.name": "Reset settings to default",
   "foundryvtt-arms-reach.setting.reset.label": "Reset Settings To Default",

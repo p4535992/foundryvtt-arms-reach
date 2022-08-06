@@ -53,7 +53,9 @@ export const TemplatesReach = {
       //let character:Token = getFirstPlayerToken();
       if (
         !game.user?.isGM ||
-        (game.user?.isGM && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM'))
+        (game.user?.isGM &&
+          // && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
+          <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGMOnTemplates'))
       ) {
         if (!character) {
           interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForTemplate`));

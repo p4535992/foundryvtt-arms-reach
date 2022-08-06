@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.1.31
+
+- If multiple placeable objects are selected and the user is a gm ignore the distance check by default
+- Add a module settings for enable/disable for every type of placeable object the distance check for gm 
+
 ### 2.1.30
 
 - Change step setting distance from 5 to 1
