@@ -1,4 +1,8 @@
-# CHANGELOG
+# CHANGELOG 
+
+### 2.1.32
+
+- Try to bug fix [Tile feature / Compatibility with Monk's Active Tile Triggers](https://github.com/p4535992/foundryvtt-arms-reach/issues/49)
 
 ### 2.1.31
 

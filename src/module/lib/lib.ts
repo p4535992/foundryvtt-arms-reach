@@ -210,15 +210,28 @@ export function getFirstPlayerToken(): Token | null {
   return token;
 }
 
-function getElevationToken(token: Token): number {
-  const base = token.document.data;
-  return getElevationPlaceableObject(base);
+/**
+ * Get the total LOS height for a token
+ * @param {Object} token - a token object
+ * @returns {Integer} returns token elevation plus the LOS height stored in the flags
+ **/
+function getTokenLOSheight(token) {
+  if (game.modules.get('levels')?.active) {
+    return token.losHeight;
+  } else {
+    return token.data.elevation;
+  }
 }
 
-function getElevationWall(wall: Wall): number {
-  const base = wall.document.data;
-  return getElevationPlaceableObject(base);
-}
+// function getElevationToken(token: Token): number {
+//   const base = token.document.data;
+//   return getElevationPlaceableObject(base);
+// }
+
+// function getElevationWall(wall: Wall): number {
+//   const base = wall.document.data;
+//   return getElevationPlaceableObject(base);
+// }
 
 export function getElevationPlaceableObject(placeableObject: any): number {
   let base = placeableObject;
@@ -231,17 +244,62 @@ export function getElevationPlaceableObject(placeableObject: any): number {
     //@ts-ignore
     _levels?.advancedLOS &&
     (placeableObject instanceof Token || placeableObject instanceof TokenDocument)
-      ? //@ts-ignore
-        _levels.getTokenLOSheight(placeableObject)
+      ? getTokenLOSheight(placeableObject)
       : base.elevation ??
-        (base.flags
-          ? base.flags['levels']?.elevation ??
-            base.flags['levels']?.rangeBottom ??
-            base.flags['wallHeight']?.wallHeightBottom ??
-            0
-          : 0) ??
+        base.flags['levels']?.elevation ??
+        base.flags['levels']?.rangeBottom ??
+        base.flags['wallHeight']?.wallHeightBottom ??
         0;
   return base_elevation;
+}
+
+export function checkElevation(documentOrPlaceableSource, documentOrPlaceableTarget): boolean {
+  let docSource = documentOrPlaceableSource;
+  if (documentOrPlaceableSource.document) {
+    docSource = documentOrPlaceableSource.document;
+  }
+  let docTarget = documentOrPlaceableTarget;
+  if (documentOrPlaceableTarget.document) {
+    docTarget = documentOrPlaceableTarget.document;
+  }
+  if (!docSource.object || !docTarget.object) {
+    return false;
+  }
+  const elevationSource = getElevationPlaceableObject(docSource.object);
+  const elevationTarget = getElevationPlaceableObject(docTarget.object);
+  if (game.modules.get('levels')?.active) {
+    const rangeTarget = getRangeForDocument(documentOrPlaceableTarget);
+    return inRange(documentOrPlaceableSource, elevationSource, rangeTarget.rangeBottom, rangeTarget.rangeTop);
+  } else {
+    return elevationSource >= elevationTarget;
+  }
+}
+
+export function inRange(document: any, elevation: number, rangeBottom: number, rangeTop: number): boolean {
+  const rangeBottom1 = rangeBottom ?? -Infinity;
+  const rangeTop1 = rangeTop ?? Infinity;
+  return elevation >= rangeBottom1 && elevation <= rangeTop1;
+}
+
+export function getRangeForDocument(document): { rangeBottom: number; rangeTop: number } {
+  if (document instanceof WallDocument) {
+    return {
+      //@ts-ignore
+      rangeBottom: document.flags?.['wall-height']?.bottom ?? -Infinity,
+      //@ts-ignore
+      rangeTop: document.flags?.['wall-height']?.top ?? Infinity,
+    };
+  } else if (document instanceof TokenDocument) {
+    return {
+      //@ts-ignore
+      rangeBottom: document.elevation,
+      //@ts-ignore
+      rangeTop: document.elevation,
+    };
+  }
+  const rangeBottom = document.flags?.levels?.rangeBottom ?? -Infinity;
+  const rangeTop = document.flags?.levels?.rangeTop ?? Infinity;
+  return { rangeBottom, rangeTop };
 }
 
 // =============================

@@ -1,4 +1,4 @@
-import { getCharacterName, getTokenByTokenID, i18n, i18nFormat } from './lib/lib';
+import { checkElevation, getCharacterName, getTokenByTokenID, i18n, i18nFormat, warn } from './lib/lib';
 import {
   computeDistanceBetweenCoordinates,
   getFirstPlayerToken,
@@ -65,6 +65,13 @@ export const StairwaysReach = {
           return false;
         } else {
           let isNotNearEnough = false;
+          if (game.settings.get(CONSTANTS.MODULE_NAME, 'autoCheckElevationByDefault')) {
+            const res = checkElevation(character, stairway);
+            if (!res) {
+              warn(`The token '${character.name}' is not on the elevation range of this placeable object`);
+              return false;
+            }
+          }
           // OLD SETTING
           if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance') > 0) {
             // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
@@ -178,6 +185,13 @@ export const StairwaysReach = {
           return false;
         } else {
           let isNotNearEnough = false;
+          if (game.settings.get(CONSTANTS.MODULE_NAME, 'autoCheckElevationByDefault')) {
+            const res = checkElevation(character, stairway);
+            if (!res) {
+              warn(`The token '${character.name}' is not on the elevation range of this placeable object`);
+              return false;
+            }
+          }
           // OLD SETTING
           if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
             const maxDist =

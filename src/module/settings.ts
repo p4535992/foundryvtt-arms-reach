@@ -112,6 +112,15 @@ export const registerSettings = function () {
   //     }
   //   });
 
+  game.settings.register(CONSTANTS.MODULE_NAME, 'autoCheckElevationByDefault', {
+    name: `${CONSTANTS.MODULE_NAME}.settingNameAutoCheckElevationByDefault`,
+    hint: `${CONSTANTS.MODULE_NAME}.settingHintAutoCheckElevationByDefault`,
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
   // ========================================================
   // DOOR SUPPORT
   // ========================================================
@@ -788,6 +797,15 @@ function otherSettings(apply = false) {
     //         "2" : "Chebyshev"
     //     }
     //   },
+
+    autoCheckElevationByDefault: {
+      name: `${CONSTANTS.MODULE_NAME}.settingNameAutoCheckElevationByDefault`,
+      hint: `${CONSTANTS.MODULE_NAME}.settingHintAutoCheckElevationByDefault`,
+      scope: 'world',
+      config: true,
+      default: false,
+      type: Boolean,
+    },
 
     // ========================================================
     // DOOR SUPPORT

@@ -99,6 +99,9 @@
   "foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected",
   "foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Use the owned tokens if no tokens is selected, make sense for player when usually there is only owned token",
 
+  "foundryvtt-arms-reach.settingNameAutoCheckElevationByDefault": "[Experimental] Auto check elevation by default",
+  "foundryvtt-arms-reach.settingHintAutoCheckElevationByDefault": "By default a check on the elevation between placeable objects is been done, can be useful with module like 'levels'",
+
   "foundryvtt-arms-reach.settingNameSetDistanceModeForDoorInteraction": "Set Distance Mode",
   "foundryvtt-arms-reach.settingHintSetDistanceModeForDoorInteraction": "Set Distance Mode for Door distance interaction",
 

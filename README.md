@@ -24,8 +24,8 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 ## Known issue/Limitation
 
 - I know there is some measure distance issue expecially with diagonals, here some details [Can "reach" further to the east](https://github.com/p4535992/foundryvtt-arms-reach/issues/28) and [Not working well with Doors on Diagonal walls](https://github.com/p4535992/foundryvtt-arms-reach/issues/40), **this problem is limite donly to the Dorr interaction distance calculation, the current solution for this cases is push the "Shift" button to snap out from the grid movement and move the token these 2 px the distance claculation need to validate the interaction, these cases are so few that i will not spend more time on that, anyone is welcome to ope a PR about it**
-
 - The module setting "Avoid deselects the controlled token" doesn't work well with the option "Release on left click" of foundry , if you own more than a token you will find yourself to manually reselect the token anyway
+- When you scale a placeable object the event (click, ecc.), are limited only to the original coordinates {x, y} and not the "scaled" image
 
 ## Installation
 

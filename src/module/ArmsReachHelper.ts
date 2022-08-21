@@ -1,4 +1,4 @@
-import { error, getElevationPlaceableObject, warn } from './lib/lib';
+import { checkElevation, error, getElevationPlaceableObject, warn } from './lib/lib';
 import type { ArmsreachData } from './ArmsReachModels';
 import CONSTANTS from './constants';
 
@@ -547,11 +547,18 @@ function grids_between_token_and_placeable(token: Token, b: ArmsreachData) {
 
 function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
   let dist = Math.floor(distance_between_token_rect(token, b));
+  const unitSize = <number>canvas.dimensions?.distance || 5;
+  const unitGridSize = <number>canvas.grid?.size || 50;
   if (dist === 0) {
-    //
+    // Special case for tile
+    if (b.documentName === TileDocument.documentName) {
+      dist = getUnitTokenDist(token, b) - unitSize;
+    }
+    // Special case for lights
+    if (b.documentName === AmbientLightDocument.documentName) {
+      dist = getUnitTokenDist(token, b) - unitSize;
+    }
   } else {
-    const unitSize = <number>canvas.dimensions?.distance || 5;
-    const unitGridSize = <number>canvas.grid?.size || 50;
     dist = getUnitTokenDist(token, b);
     // TODO i don't understand this for manage the door control
     if (b.documentName !== WallDocument.documentName) {

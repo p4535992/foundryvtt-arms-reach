@@ -1,4 +1,4 @@
-import { error, getCharacterName, i18n, i18nFormat } from './lib/lib';
+import { checkElevation, error, getCharacterName, i18n, i18nFormat, warn } from './lib/lib';
 import type { DoorData, DoorSourceData, DoorTargetData } from './ArmsReachModels';
 import {
   computeDistanceBetweenCoordinates,
@@ -207,6 +207,13 @@ export const DoorsReach = {
           // }
 
           let isNotNearEnough = false;
+          if (game.settings.get(CONSTANTS.MODULE_NAME, 'autoCheckElevationByDefault')) {
+            const res = checkElevation(character, doorControl.wall);
+            if (!res) {
+              warn(`The token '${character.name}' is not on the elevation range of this placeable object`);
+              return false;
+            }
+          }
           const result = { status: 0 };
           // Hooks.call('ArmsReachReplaceInteraction', doorData, result);
           const resultExplicitComputeDistance = result.status;
@@ -445,6 +452,13 @@ export const DoorsReach = {
         //   continue;
         // }
         let isNotNearEnough = false;
+        if (game.settings.get(CONSTANTS.MODULE_NAME, 'autoCheckElevationByDefault')) {
+          const res = checkElevation(token, wall);
+          if (!res) {
+            warn(`The token '${token.name}' is not on the elevation range of this placeable object`);
+            return false;
+          }
+        }
         let dist;
         // OLD SETTING
         if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance') > 0) {

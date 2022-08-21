@@ -8,7 +8,7 @@ import { TilesReach } from './TilesReach';
 import { TokensReach } from './TokensReach';
 import { WallsReach } from './WallsReach';
 import { globalInteractionDistanceUniversal } from './ArmsReachHelper';
-import { error, warn } from './lib/lib';
+import { checkElevation, error, warn } from './lib/lib';
 import CONSTANTS from './constants';
 import type { Overlay } from './apps/range_overlay/overlay';
 import type { combatRangeOverlay } from './ArmsReachModels';
@@ -287,6 +287,13 @@ const API = {
     // const userId = <string>game.users?.find((u:User) => return u.id = gameUserId)[0];
     const dist = globalInteractionDistanceUniversal(placeableObjectSource, placeableObjectTarget, <boolean>useGrid);
     let isNotNearEnough = false;
+    if (game.settings.get(CONSTANTS.MODULE_NAME, 'autoCheckElevationByDefault')) {
+      const res = checkElevation(placeableObjectSource, placeableObjectTarget);
+      if (!res) {
+        warn(`The token '${placeableObjectSource.name}' is not on the elevation range of this placeable object`);
+        return false;
+      }
+    }
     // OLD SETTING
     if (<number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistance') > 0 || useGrid) {
       const maxDist =
