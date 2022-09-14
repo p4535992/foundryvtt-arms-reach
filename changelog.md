@@ -1,5 +1,9 @@
 # CHANGELOG 
 
+### 2.2.0
+
+- First release for fvtt10
+
 ### 2.1.32
 
 - Try to bug fix [Tile feature / Compatibility with Monk's Active Tile Triggers](https://github.com/p4535992/foundryvtt-arms-reach/issues/49)
