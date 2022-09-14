@@ -92,7 +92,7 @@ If you're using an unsupported System, you'll need to set the speed attribute pa
 the module settings. Here's how to do it:
 1) Select a token
 1) Open your browser's dev tools and switch to the Javascript console
-1) Type in `canvas.tokens.controlled[0].actor.data` and press Enter
+1) Type in `canvas.tokens.controlled[0].actor.system` and press Enter
 1) Expand the result, then keep expanding children until you find the movement speed. Take note of each child
 you expand
     * For instance, with Pathfinder 2E, you expand `data`, `attributes`, `speed`, and find the speed in `total` ![](../images/object_flags.png)

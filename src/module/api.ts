@@ -164,7 +164,8 @@ const API = {
       });
       isInReach = TilesReach.globalInteractionDistance(token, tileTarget, maxDistance, useGrid, <string>userId);
     } else if (relevantDocument instanceof WallDocument) {
-      const doorControlTarget: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+      const doorControlTarget: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: PIXI.DisplayObject) => {
+        //@ts-ignore
         return x.wall.id === <string>placeableObject.id;
       });
       if (doorControlTarget) {
@@ -359,22 +360,22 @@ const API = {
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.name?.toLowerCase() === IdOrName.toLowerCase();
+        return x && x.name?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.text?.toLowerCase() === IdOrName.toLowerCase();
+        return x && x.text?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.label?.toLowerCase() === IdOrName.toLowerCase();
+        return x && x.label?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     if (!target) {
       target = placeables?.find((x) => {
-        return x && x.data?.entryId?.toLowerCase() === IdOrName.toLowerCase();
+        return x && x.entryId?.toLowerCase() === IdOrName.toLowerCase();
       });
     }
     return target;

@@ -49,7 +49,7 @@ export function getCombatantToken(combatant) {
 // Abstract this to avoid Idea's warnings
 export function getCombatantTokenDisposition(combatantToken) {
   // noinspection JSUnresolvedVariable
-  return combatantToken.data.disposition;
+  return combatantToken.document.disposition;
 }
 
 export function calculateGridDistance(pt1, pt2) {

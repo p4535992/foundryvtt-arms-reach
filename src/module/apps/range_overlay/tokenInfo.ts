@@ -132,7 +132,8 @@ export class TokenInfo {
       return this.speedOverride;
     } else if (speedAttrPathSetting) {
       // noinspection JSCheckFunctionSignatures,JSUnresolvedVariable
-      return foundry.utils.getProperty(actor.data, speedAttrPathSetting);
+      //@ts-ignore
+      return foundry.utils.getProperty(actor.system, speedAttrPathSetting);
     } else {
       return this.getSpeedFromAttributes();
     }
@@ -142,7 +143,7 @@ export class TokenInfo {
   getSpeedFromAttributes() {
     const actor = this.token.actor;
     //@ts-ignore
-    const actorAttrs = actor?.data.data.attributes;
+    const actorAttrs = actor?.system.attributes;
 
     let speed = 0;
     let otherSpeeds: number[] = [];

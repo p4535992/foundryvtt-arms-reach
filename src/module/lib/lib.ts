@@ -200,7 +200,7 @@ export function getFirstPlayerToken(): Token | null {
   if (!token) {
     if (!controlled.length || controlled.length === 0) {
       // If no token is selected use the token of the users character
-      token = <Token>canvas.tokens?.placeables.find((token) => token.data._id === game.user?.character?.data?._id);
+      token = <Token>canvas.tokens?.placeables.find((token) => token.id === game.user?.character?.data?._id);
     }
     // If no token is selected use the first owned token of the users character you found
     if (!token) {
@@ -219,7 +219,7 @@ function getTokenLOSheight(token) {
   if (game.modules.get('levels')?.active) {
     return token.losHeight;
   } else {
-    return token.data.elevation;
+    return token.document.elevation;
   }
 }
 
@@ -328,8 +328,8 @@ export const getCharacterName = function (token: Token) {
   let tokenName = '';
   if (token.name) {
     tokenName = token.name;
-  } else if (token.actor && token.actor.data && token.actor.data.name) {
-    tokenName = token.actor.data.name;
+  } else if (token.actor && token.actor.name) {
+    tokenName = token.actor.name;
   }
   return tokenName;
 };

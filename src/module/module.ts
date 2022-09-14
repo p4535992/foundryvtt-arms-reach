@@ -162,7 +162,7 @@ export const readyHooks = async () => {
 
     // Management of the Stairways module
     if (game.modules.get('stairways')?.active) {
-      Hooks.on('PreStairwayTeleport', (data) => {
+      Hooks.on('PreStairwayTeleport', (data:any) => {
         if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'enableStairwaysIntegration')) {
           const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
           let tokenSelected;
@@ -187,6 +187,8 @@ export const readyHooks = async () => {
             reselectTokenAfterInteraction(tokenSelected);
           }
           return result;
+        } else {
+          return true;
         }
       });
     }
@@ -205,7 +207,7 @@ export const readyHooks = async () => {
     });
 
     // Adds Shut All Doors button to Walls Control Layer
-    Hooks.on('getSceneControlButtons', function (controls) {
+    Hooks.on('getSceneControlButtons', (controls:any) => {
       if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'enableResetDoorsAndFog')) {
         controls[4]?.tools.splice(controls[4].tools.length - 2, 0, {
           name: 'close',
@@ -617,7 +619,8 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     }
     if (!isInReach) {
       // Bug fix not sure why i need to do this
-      if (doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+      //@ts-ignore
+      if (doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) { 
         if (game.settings.get(CONSTANTS.MODULE_NAME, 'disableDoorSound')) {
           return;
         }

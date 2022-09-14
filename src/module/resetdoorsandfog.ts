@@ -9,12 +9,27 @@ export const ResetDoorsAndFog = {
   resetDoors: async function (isCurrentScene: boolean, id: string) {
     const updates = <any[]>[];
     if (isCurrentScene) {
-      canvas.walls?.doors.filter((item) => item.data.ds === 1).forEach((item) => updates.push({ _id: item.id, ds: 0 }));
+      const wallsToUpdate =       
+        //@ts-ignore
+        <Wall[]>canvas.walls?.doors.filter((wall) => wall.document.ds === 1);
+      for (let i = 0; i < <number>wallsToUpdate.length; i++) {
+        const doorControl = <Wall>wallsToUpdate[i];
+        updates.push({ _id: doorControl.id, ds: 0 });
+      }
+      // canvas.walls?.doors.filter((wall) => wall.document.ds === 1).forEach((doorControl) => updates.push({ _id: doorControl.id, ds: 0 }));
       await canvas.scene?.updateEmbeddedDocuments('Wall', updates);
     } else {
       if (id) {
         const scene = <Scene>game.scenes?.get(id);
-        scene.data.walls.filter((item) => item.data.ds === 1).forEach((x) => updates.push({ _id: x.id, ds: 0 }));
+        const scenesToUpdate =       
+          //@ts-ignore
+          <Scene[]>scene.data.walls.filter((wall) => wall.document.ds === 1);
+        for (let i = 0; i < <number>scenesToUpdate.length; i++) {
+          const sceneToUpdate = <Scene>scenesToUpdate[i];
+          updates.push({ _id: sceneToUpdate.id, ds: 0 });
+        }
+        //@ts-ignore
+        // scene.data.walls.filter((wall) => wall.document.ds === 1).forEach((x) => updates.push({ _id: x.id, ds: 0 }));
         await scene.updateEmbeddedDocuments('Wall', updates);
       }
     }

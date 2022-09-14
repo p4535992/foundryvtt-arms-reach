@@ -158,8 +158,10 @@ export const DoorsReach = {
           name: doorControl.name,
           label: doorControl.name,
           icon: '', //doorControl.icon.texture.baseTexture., // TODO
-          disabled: doorControl.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED,
-          hidden: doorControl.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET,
+          //@ts-ignore
+          disabled: doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED,
+          //@ts-ignore
+          hidden: doorControl.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET,
           animate: false,
           x: doorControl.x,
           y: doorControl.y,
@@ -308,7 +310,7 @@ export const DoorsReach = {
     let playpath = '';
     let playVolume = 0.8;
 
-    if (object.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+    if (object.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
       // Door Unlocking
       playpath = doorData.unlockPath;
       playVolume = doorData.unlockLevel;
@@ -338,10 +340,6 @@ export const DoorsReach = {
     let playpath = '';
     let playVolume = 0.8;
 
-    // if(object.data.ds == CONST.WALL_DOOR_STATES.LOCKED) { // Door Unlocking
-    //   playpath = doorData.unlockPath;
-    //   playVolume = doorData.unlockLevel;
-    // }
     if (updateData.ds === CONST.WALL_DOOR_STATES.CLOSED) {
       //Door Close
       playpath = doorData.closePath;
@@ -443,9 +441,13 @@ export const DoorsReach = {
 
     // for (let i = 0; i < <number>canvas.controls?.doors?.children.length; i++) {
     //   const door: DoorControl = <DoorControl>canvas.controls?.doors?.getChildAt(0);
-    game.scenes?.current?.walls.contents.forEach((wall: WallDocument) => {
-      if (wall.data.door > 0) {
-        const door: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
+    // game.scenes?.current?.walls.contents.forEach((wall: WallDocument) => {
+    for (let i = 0; i < <number>game.scenes?.current?.walls.contents.length; i++) {
+      const wall = game.scenes?.current?.walls.contents[i];
+      //@ts-ignore
+      if (wall.document.door > 0) {
+        const door: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: PIXI.DisplayObject) => {
+          //@ts-ignore
           return x.wall.id === <string>wall.id;
         });
         // if (!door.visible) {
@@ -485,9 +487,10 @@ export const DoorsReach = {
         if (!isNotNearEnough) {
           closestDoor = door;
           shortestDistance = dist;
+          break;
         }
       }
-    });
+    }
 
     // Operate the door
     if (closestDoor) {
@@ -512,13 +515,12 @@ export const DoorsReach = {
         interactionFailNotification(
           i18nFormat(`${CONSTANTS.MODULE_NAME}.doorNotFoundInReachFor`, { tokenName: tokenName }),
         );
-        //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       } else {
         interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.doorNotFoundInReach`));
-        //iteractionFailNotification(`Door distance: ${clampNum(shortestDistance)} <= ${reach}`);
       }
       return;
     }
+    return;
   },
 
   /**

@@ -139,14 +139,14 @@ export const getCenter = function (placeableObject: PlaceableObject, grid: any =
  * from dragRuler module
  */
 function getTokenShape(token): any[] {
-  if (token.scene.data.gridType === CONST.GRID_TYPES.GRIDLESS) {
+  if (token.scene.grid.type === CONST.GRID_TYPES.GRIDLESS) {
     return [{ x: 0, y: 0 }];
-  } else if (token.scene.data.gridType === CONST.GRID_TYPES.SQUARE) {
-    const topOffset = -Math.floor(token.data.height / 2);
-    const leftOffset = -Math.floor(token.data.width / 2);
+  } else if (token.scene.grid.type === CONST.GRID_TYPES.SQUARE) {
+    const topOffset = -Math.floor(token.document.height / 2);
+    const leftOffset = -Math.floor(token.document.width / 2);
     const shape: any[] = [];
-    for (let y = 0; y < token.data.height; y++) {
-      for (let x = 0; x < token.data.width; x++) {
+    for (let y = 0; y < token.documentheight; y++) {
+      for (let x = 0; x < token.documentwidth; x++) {
         shape.push({ x: x + leftOffset, y: y + topOffset });
       }
     }
@@ -155,7 +155,7 @@ function getTokenShape(token): any[] {
     // Hex grids
     //@ts-ignore
     if (game.modules.get('hex-size-support')?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
-      const borderSize = token.data.flags['hex-size-support'].borderSize;
+      const borderSize = token.document.flags['hex-size-support'].borderSize;
       let shape = [{ x: 0, y: 0 }];
       if (borderSize >= 2)
         shape = shape.concat([
@@ -212,12 +212,7 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
     return null;
   }
   if (!selectedTokens || selectedTokens.length === 0) {
-    //if(game.user.character.data.token){
-    //  //@ts-ignore
-    //  return game.user.character.data.token;
-    //}else{
     return null;
-    //}
   }
   return <Token>selectedTokens[0];
 };
@@ -241,7 +236,7 @@ export const getFirstPlayerToken = function (): Token | null {
     if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'useOwnedTokenIfNoTokenIsSelected')) {
       if (!controlled.length || controlled.length === 0) {
         // If no token is selected use the token of the users character
-        token = <Token>canvas.tokens?.placeables.find((token) => token.data._id === game.user?.character?.data?._id);
+        token = <Token>canvas.tokens?.placeables.find((token) => token.document.id === game.user?.character?.id);
       }
       // If no token is selected use the first owned token of the users character you found
       if (!token) {
@@ -268,7 +263,7 @@ export const isFocusOnCanvas = function () {
   }
 };
 
-export const reselectTokenAfterInteraction = function (character: Token) {
+export const reselectTokenAfterInteraction = function (character: Token):void {
   // If settings is true do not deselect the current select token
   if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'forceReSelection')) {
     let isOwned = false;
@@ -282,9 +277,9 @@ export const reselectTokenAfterInteraction = function (character: Token) {
       }
       if (!character) {
         if (game.user?.isGM) {
-          return true;
+          return;
         } else {
-          return false;
+          // return false;
         }
       }
     }
@@ -302,69 +297,9 @@ export const reselectTokenAfterInteraction = function (character: Token) {
         }
       }
     }
+
   }
 };
-
-// function measureDistancesInternalOLD(segments, options = {}) {
-//   const opts = <any>duplicate(options);
-//   //@ts-ignore
-//   if (canvas.grid?.diagonalRule === 'EUCL') {
-//     opts.ignoreGrid = true;
-//     opts.gridSpaes = false;
-//   }
-//   if (opts.enableTerrainRuler) {
-//     opts.gridSpaces = true;
-//     const firstNewSegmentIndex = segments.findIndex((segment) => !segment.ray.dragRulerVisitedSpaces);
-//     const previousSegments = segments.slice(0, firstNewSegmentIndex);
-//     const newSegments = segments.slice(firstNewSegmentIndex);
-//     const distances = previousSegments.map(
-//       (segment) => segment.ray.dragRulerVisitedSpaces[segment.ray.dragRulerVisitedSpaces.length - 1].distance,
-//     );
-//     previousSegments.forEach(
-//       (segment) => (segment.ray.terrainRulerVisitedSpaces = duplicate(segment.ray.dragRulerVisitedSpaces)),
-//     );
-//     //opts.costFunction = (x, y, costOptions={}) => {	return getCostFromSpeedProvider(entity, getAreaFromPositionAndShape({x, y}, shape), costOptions); }
-//     if (previousSegments.length > 0) {
-//       opts.terrainRulerInitialState = previousSegments[previousSegments.length - 1].ray.dragRulerFinalState;
-//     }
-//     //@ts-ignore
-//     return distances.concat(terrainRuler.measureDistances(newSegments, opts));
-//   } else {
-//     // If another module wants to enable grid measurements but disable grid highlighting,
-//     // manually set the *duplicate* option's gridSpaces value to true for the Foundry logic to work properly
-//     if (!opts.ignoreGrid) {
-//       opts.gridSpaces = true;
-//     }
-//     return canvas.grid?.measureDistances(segments, opts);
-//     /*
-//     if (!opts.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
-
-//     // Track the total number of diagonals
-//     let nDiagonal = 0;
-//     // const rule = canvas.parent.diagonalRule;
-//     const d = <Canvas.Dimensions>canvas.dimensions;
-
-//     // Iterate over measured segments
-//     return segments.map((s) => {
-//       const r: Ray = s.ray;
-
-//       // Determine the total distance traveled
-//       const nx = Math.abs(Math.ceil(r.dx / d.size));
-//       const ny = Math.abs(Math.ceil(r.dy / d.size));
-
-//       // Determine the number of straight and diagonal moves
-//       const nd = Math.min(nx, ny);
-//       const ns = Math.abs(ny - nx);
-
-//       nDiagonal += nd;
-
-//       const nd10 = Math.floor(nDiagonal / 2) - Math.floor((nDiagonal - nd) / 2);
-//       const spaces = nd10 * 2 + (nd - nd10) + ns;
-//       return spaces * <number>canvas.dimensions?.distance;
-//     });
-//     */
-//   }
-// }
 
 export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
   //@ts-ignore
@@ -379,8 +314,8 @@ export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
 export const getMousePosition = function (canvas: Canvas, event): { x: number; y: number } {
   // const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;
   // return {
-  //   x: (event.data.global.x - transform?.tx) / <number>canvas?.stage?.scale?.x,
-  //   y: (event.data.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
+  //   x: (event.global.x - transform?.tx) / <number>canvas?.stage?.scale?.x,
+  //   y: (event.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
   // };
   // NEW METHOD SEEM MORE PRECISE
   const position = canvas.app?.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage);
@@ -424,7 +359,8 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
   const documentName = placeable?.wall.document ? placeable?.wall.document.documentName : placeable.documentName;
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
-  const placeableObjectData = placeable?.wall.document ? placeable?.wall.document.data : placeable.data;
+  // const placeableObjectData = placeable?.wall.document ? placeable?.wall.document.data : placeable.data;
+  const placeableObjectData = placeable?.wall.document ? placeable?.wall.document : placeable;
   return {
     x: x,
     y: y,
@@ -452,7 +388,8 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
   const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
-  const placeableObjectData = placeable.document ? placeable.document.data : placeable.data;
+  // const placeableObjectData = placeable.document ? placeable.document.data : placeable.data;
+  const placeableObjectData = placeable.document ? placeable.document : placeable;
   return {
     x: x,
     y: y,
@@ -467,33 +404,41 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
 };
 
 const getPlaceableWidth = function (placeable: any): number {
-  let w = placeable.w || placeable.data?.width || placeable.width;
+  // let w = placeable.w || placeable.data?.width || placeable.width;
+  let w = placeable.w || placeable.width;
   if (placeable?.object) {
-    w = placeable?.object?.w || placeable?.object?.data?.width || placeable?.object?.width || w;
+    // w = placeable?.object?.w || placeable?.object?.data?.width || placeable?.object?.width || w;
+    w = placeable?.object?.w || placeable?.object?.width || w;
   }
   return w;
 };
 
 const getPlaceableHeight = function (placeable: any): number {
-  let h = placeable.h || placeable.data?.height || placeable.height;
+  // let h = placeable.h || placeable.data?.height || placeable.height;
+  let h = placeable.h || placeable.height;
   if (placeable?.object) {
-    h = placeable?.object?.h || placeable?.object?.data?.height || placeable?.object?.height || h;
+    // h = placeable?.object?.h || placeable?.object?.data?.height || placeable?.object?.height || h;
+    h = placeable?.object?.h || placeable?.object?.height || h;
   }
   return h;
 };
 
 const getPlaceableX = function (placeable: any): number {
-  let x = placeable._validPosition?.x || placeable.x || placeable?.data?.x;
+  // let x = placeable._validPosition?.x || placeable.x || placeable?.data?.x;
+  let x = placeable._validPosition?.x || placeable.x || placeable?.x;
   if (placeable?.object) {
-    x = placeable?.object?.x || placeable?.object?.data?.x || x;
+    // x = placeable?.object?.x || placeable?.object?.data?.x || x;
+    x = placeable?.object?.x || placeable?.object?.x || x;
   }
   return x;
 };
 
 const getPlaceableY = function (placeable: any): number {
-  let y = placeable._validPosition?.y || placeable?.y || placeable?.data?.y;
+  // let y = placeable._validPosition?.y || placeable?.y || placeable?.data?.y;
+  let y = placeable._validPosition?.y || placeable?.y;
   if (placeable?.object) {
-    y = placeable?.object?.y || placeable?.object?.data?.y || placeable?.object?.y || y;
+    // y = placeable?.object?.y || placeable?.object?.data?.y || placeable?.object?.y || y;
+    y = placeable?.object?.y || placeable?.object?.y || y;
   }
   return y;
 };
@@ -564,6 +509,7 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
     if (b.documentName !== WallDocument.documentName) {
       // dist = (Math.floor(dist) / unitGridSize) * unitSize;
     } else {
+      //@ts-ignore
       const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
         return x.wall.id === <string>b.id;
       });
@@ -787,7 +733,7 @@ export function isTokenInRange(objectSource: PlaceableObject, objectTarget: Plac
     let rangeBottom = <number>objectTarget.document.getFlag('levels', 'rangeBottom');
     if (!rangeTop && rangeTop !== 0) rangeTop = Infinity;
     if (!rangeBottom && rangeBottom !== 0) rangeBottom = -Infinity;
-    const elevation = getElevationPlaceableObject(objectSource); //token.data.elevation;
+    const elevation = getElevationPlaceableObject(objectSource);
     return elevation <= rangeTop && elevation >= rangeBottom;
   } else {
     // TODO maybe some other integration

@@ -594,7 +594,8 @@ export class Overlay {
     for (const quadtree of <Quadtree<Wall>[]>canvas.walls?.quadtree?.nodes) {
       for (const obj of quadtree.objects) {
         const wall = obj.t;
-        if (wall.data.door || !wall.data.move) {
+        //@ts-ignore
+        if (wall.document.door || !wall.document.move) {
           continue;
         }
         const c = wall.data.c;
