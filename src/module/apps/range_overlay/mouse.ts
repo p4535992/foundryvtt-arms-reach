@@ -1,51 +1,51 @@
-import { debug } from '../../lib/lib';
+import { debug } from "../../lib/lib";
 
 class Mouse {
-  _leftDrag: boolean;
-  _hooks: Function[];
+	_leftDrag: boolean;
+	_hooks: Function[];
 
-  constructor() {
-    this._leftDrag = false;
-    this._hooks = [];
-  }
+	constructor() {
+		this._leftDrag = false;
+		this._hooks = [];
+	}
 
-  addHook(func) {
-    this._hooks.push(func);
-  }
+	addHook(func) {
+		this._hooks.push(func);
+	}
 
-  clearHooks() {
-    this._hooks = [];
-  }
+	clearHooks() {
+		this._hooks = [];
+	}
 
-  isLeftDrag() {
-    return this._leftDrag;
-  }
+	isLeftDrag() {
+		return this._leftDrag;
+	}
 
-  _executeHooks(dragging) {
-    for (const func of this._hooks) {
-      func(dragging);
-    }
-  }
+	_executeHooks(dragging) {
+		for (const func of this._hooks) {
+			func(dragging);
+		}
+	}
 
-  _dragStartWrapper(wrapped, ...args) {
-    this._leftDrag = true;
-    this._executeHooks(true);
-    return wrapped(...args);
-  }
+	_dragStartWrapper(wrapped, ...args) {
+		this._leftDrag = true;
+		this._executeHooks(true);
+		return wrapped(...args);
+	}
 
-  _dragDropWrapper(wrapped, ...args) {
-    debug('Drag Drop');
-    this._leftDrag = false;
-    this._executeHooks(false);
-    return wrapped(...args);
-  }
+	_dragDropWrapper(wrapped, ...args) {
+		debug("Drag Drop");
+		this._leftDrag = false;
+		this._executeHooks(false);
+		return wrapped(...args);
+	}
 
-  _dragCancelWrapper(wrapped, ...args) {
-    debug('Drag Cancel');
-    this._leftDrag = false;
-    this._executeHooks(false);
-    return wrapped(...args);
-  }
+	_dragCancelWrapper(wrapped, ...args) {
+		debug("Drag Cancel");
+		this._leftDrag = false;
+		this._executeHooks(false);
+		return wrapped(...args);
+	}
 }
 
 export const mouse = new Mouse();

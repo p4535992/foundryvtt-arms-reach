@@ -1,77 +1,77 @@
-import { debug, warn } from './lib/lib';
-import API from './api';
-import { setSocket } from '../foundryvtt-arms-reach';
+import { debug, warn } from "./lib/lib";
+import API from "./api";
+import { setSocket } from "../foundryvtt-arms-reach";
 
 export const SOCKET_HANDLERS = {
-  /**
-   * Generic sockets
-   */
-  CALL_HOOK: 'callHook',
+	/**
+	 * Generic sockets
+	 */
+	CALL_HOOK: "callHook",
 
-  /**
-   * Item pile sockets
-   */
+	/**
+	 * Item pile sockets
+	 */
 
-  /**
-   * UI sockets
-   */
+	/**
+	 * UI sockets
+	 */
 
-  /**
-   * Item & attribute sockets
-   */
+	/**
+	 * Item & attribute sockets
+	 */
 };
 
 export let armsReachSocket;
 
 export function registerSocket() {
-  debug('Registered armsReachSocket');
-  if (armsReachSocket) {
-    return armsReachSocket;
-  }
-  //@ts-ignore
-  armsReachSocket = socketlib.registerModule(CONSTANTS.MODULE_NAME);
+	debug("Registered armsReachSocket");
+	if (armsReachSocket) {
+		return armsReachSocket;
+	}
+	//@ts-ignore
+	armsReachSocket = socketlib.registerModule(CONSTANTS.MODULE_NAME);
 
-  /**
-   * Generic socket
-   */
-  armsReachSocket.register(SOCKET_HANDLERS.CALL_HOOK, (hook, ...args) => callHook(hook, ...args));
+	/**
+	 * Generic socket
+	 */
+	armsReachSocket.register(SOCKET_HANDLERS.CALL_HOOK, (hook, ...args) => callHook(hook, ...args));
 
-  /**
-   * Automated Polymorpher sockets
-   */
-  armsReachSocket.register('isReachable', (...args) => API.isReachableArr(...args));
-  armsReachSocket.register('isReachableByTag', (...args) => API.isReachableByTagArr(...args));
-  armsReachSocket.register('isReachableById', (...args) => API.isReachableByIdArr(...args));
-  armsReachSocket.register('isReachableByIdOrName', (...args) => API.isReachableByIdOrNameArr(...args));
+	/**
+	 * Automated Polymorpher sockets
+	 */
+	armsReachSocket.register("isReachable", (...args) => API.isReachableArr(...args));
+	armsReachSocket.register("isReachableByTag", (...args) => API.isReachableByTagArr(...args));
+	armsReachSocket.register("isReachableById", (...args) => API.isReachableByIdArr(...args));
+	armsReachSocket.register("isReachableByIdOrName", (...args) => API.isReachableByIdOrNameArr(...args));
 
-  /**
-   * UI sockets
-   */
+	/**
+	 * UI sockets
+	 */
 
-  /**
-   * Item & attribute sockets
-   */
+	/**
+	 * Item & attribute sockets
+	 */
 
-  /**
-   * Effects
-   */
+	/**
+	 * Effects
+	 */
 
-  // Basic
+	// Basic
 
-  setSocket(armsReachSocket);
-  return armsReachSocket;
+	setSocket(armsReachSocket);
+	return armsReachSocket;
 }
 
 async function callHook(inHookName, ...args) {
-  const newArgs: any[] = [];
-  for (let arg of args) {
-    if (typeof arg === 'string') {
-      const testArg = await fromUuid(arg);
-      if (testArg) {
-        arg = testArg;
-      }
-    }
-    newArgs.push(arg);
-  }
-  return Hooks.callAll(inHookName, ...newArgs);
+	const newArgs: any[] = [];
+	for (let arg of args) {
+		if (typeof arg === "string") {
+			const testArg = await fromUuid(arg);
+			if (testArg) {
+				arg = testArg;
+			}
+		}
+		newArgs.push(arg);
+	}
+	return Hooks.callAll(inHookName, ...newArgs);
 }
