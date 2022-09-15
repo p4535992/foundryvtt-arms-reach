@@ -172,9 +172,9 @@ export function getFirstPlayerTokenSelected(): Token | null {
 		return null;
 	}
 	if (!selectedTokens || selectedTokens.length === 0) {
-		//if(game.user.character.data.token){
+		//if(game.user.charactera.token){
 		//  //@ts-ignore
-		//  return game.user.character.data.token;
+		//  return game.user.character.token;
 		//}else{
 		return null;
 		//}
@@ -200,7 +200,7 @@ export function getFirstPlayerToken(): Token | null {
 	if (!token) {
 		if (!controlled.length || controlled.length === 0) {
 			// If no token is selected use the token of the users character
-			token = <Token>canvas.tokens?.placeables.find((token) => token.id === game.user?.character?.data?._id);
+			token = <Token>canvas.tokens?.placeables.find((token) => token.id === game.user?.character?.id);
 		}
 		// If no token is selected use the first owned token of the users character you found
 		if (!token) {
@@ -223,20 +223,10 @@ function getTokenLOSheight(token) {
 	}
 }
 
-// function getElevationToken(token: Token): number {
-//   const base = token.document.data;
-//   return getElevationPlaceableObject(base);
-// }
-
-// function getElevationWall(wall: Wall): number {
-//   const base = wall.document.data;
-//   return getElevationPlaceableObject(base);
-// }
-
 export function getElevationPlaceableObject(placeableObject: any): number {
 	let base = placeableObject;
 	if (base.document) {
-		base = base.document.data;
+		base = base.document;
 	}
 	const base_elevation =
 		//@ts-ignore
@@ -245,11 +235,12 @@ export function getElevationPlaceableObject(placeableObject: any): number {
 		_levels?.advancedLOS &&
 		(placeableObject instanceof Token || placeableObject instanceof TokenDocument)
 			? getTokenLOSheight(placeableObject)
-			: base.elevation ??
-			  base.flags["levels"]?.elevation ??
+			: base.elevation ?? base.flags
+			? base.flags["levels"]?.elevation ??
 			  base.flags["levels"]?.rangeBottom ??
 			  base.flags["wallHeight"]?.wallHeightBottom ??
-			  0;
+			  0
+			: 0;
 	return base_elevation;
 }
 
@@ -307,14 +298,14 @@ export function getRangeForDocument(document): { rangeBottom: number; rangeTop: 
 // =============================
 
 export function getTokenByTokenID(id) {
-	// return await game.scenes.active.data.tokens.find( x => {return x.id === id});
+	// return await game.scenes.active.tokens.find( x => {return x.id === id});
 	return canvas.tokens?.placeables.find((x) => {
 		return x.id === id;
 	});
 }
 
 export function getTokenByTokenName(name) {
-	// return await game.scenes.active.data.tokens.find( x => {return x._name === name});
+	// return await game.scenes.active.tokens.find( x => {return x._name === name});
 	return canvas.tokens?.placeables.find((x) => {
 		return x.name === name;
 	});

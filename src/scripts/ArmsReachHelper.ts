@@ -2,42 +2,6 @@ import { checkElevation, error, getElevationPlaceableObject, warn } from "./lib/
 import type { ArmsreachData } from "./ArmsReachModels";
 import CONSTANTS from "./constants";
 
-// /**
-//  * Function for calcuate the distance in grid units
-//  * @deprecated to remove
-//  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
-//  * @param doorControl or placeable
-//  * @param charCenter
-//  * @returns
-//  */
-// export const computeDistanceBetweenCoordinatesOLD = function (placeable: any, character: Token): number {
-//   const charCenter = getTokenCenter(character);
-//   //@ts-ignore
-//   const xMinA = character._validPosition?.x ? character._validPosition?.x : charCenter.x;
-//   //@ts-ignore
-//   const yMinA = character._validPosition?.y ? character._validPosition?.y : charCenter.y;
-//   //@ts-ignore
-//   const xMaxA = xMinA + (character.hitArea?.width ? character.hitArea?.width : 0);
-//   //@ts-ignore
-//   const yMaxA = yMinA + (character.hitArea?.height ? character.hitArea?.height : 0);
-
-//   const xMinB = placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
-//   const yMinB = placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
-//   const xMaxB = xMinB + (placeable.hitArea?.width ? placeable.hitArea?.width : 0);
-//   const yMaxB = yMinB + (placeable.hitArea?.height ? placeable.hitArea?.height : 0);
-
-//   const delta = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance || 20;
-//   const deltaBeneath = (xMinB - xMaxA) / delta;
-//   const deltaLeft = (xMinA - xMaxB) / delta;
-//   const deltaAbove = (yMinB - yMaxA) / delta;
-//   const deltaRight = (yMinA - yMaxB) / delta;
-//   //@ts-ignore
-//   const unitSize = <number>canvas.dimensions?.distance || 5;
-//   let dist = Math.max(deltaBeneath, deltaLeft, deltaAbove, deltaRight);
-//   dist = dist / unitSize;
-//   return dist;
-// };
-
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
  * @param doorControl or placeable
@@ -106,11 +70,15 @@ export const getTokenCenter = function (token) {
  */
 export const getCenter = function (placeableObject: PlaceableObject, grid: any = {}): { x: number; y: number } {
 	const data = placeableObject.data ? placeableObject.data : placeableObject;
+	const placeableObjectDocument =
+		placeableObject.document && placeableObject.document.documentName ? placeableObject.document : placeableObject;
 	//getCenter(type, data, grid = {}){
 	let isGridSpace = false;
-	if (placeableObject.document.documentName === TileDocument.documentName) {
+	//@ts-ignore
+	if (placeableObjectDocument.documentName === TileDocument.documentName) {
 		isGridSpace = false;
-	} else if (placeableObject.document.documentName === DrawingDocument.documentName) {
+		//@ts-ignore
+	} else if (placeableObjectDocument.documentName === DrawingDocument.documentName) {
 		isGridSpace = false;
 	} else {
 		isGridSpace = true;
@@ -145,8 +113,8 @@ function getTokenShape(token): any[] {
 		const topOffset = -Math.floor(token.document.height / 2);
 		const leftOffset = -Math.floor(token.document.width / 2);
 		const shape: any[] = [];
-		for (let y = 0; y < token.documentheight; y++) {
-			for (let x = 0; x < token.documentwidth; x++) {
+		for (let y = 0; y < token.document.height; y++) {
+			for (let x = 0; x < token.document.width; x++) {
 				shape.push({ x: x + leftOffset, y: y + topOffset });
 			}
 		}
@@ -363,7 +331,6 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
 	const documentName = placeable?.wall.document ? placeable?.wall.document.documentName : placeable.documentName;
 	const centerX = placeable.center ? placeable.center.x : x;
 	const centerY = placeable.center ? placeable.center.y : y;
-	// const placeableObjectData = placeable?.wall.document ? placeable?.wall.document.data : placeable.data;
 	const placeableObjectData = placeable?.wall.document ? placeable?.wall.document : placeable;
 	return {
 		x: x,
@@ -535,32 +502,6 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
 	// return Math.floor(distance_between_rect(token, b));
 }
 
-/*
-function units_between_token_and_placeableOLD(token: Token, b: ArmsreachData) {
-  let dist = distance_between_token_rect(token, b);
-  if (dist === 0) {
-    const segmentsRight = [{ ray: new Ray({ x: b.x, y: b.y }, { x: token.x, y: token.y }) }];
-    //@ts-ignore
-    const distancesRight = measureDistancesInternal(segmentsRight); // , character, shape
-    // Sum up the distances
-    const distRight = distancesRight.reduce((acc, val) => acc + val, 0);
-
-    const segmentsLeft = [{ ray: new Ray({ x: token.x, y: token.y }, { x: b.x, y: b.y }) }];
-    //@ts-ignore
-    const distancesLeft = measureDistancesInternal(segmentsLeft); // , character, shape
-    // Sum up the distances
-    const distLeft = distancesLeft.reduce((acc, val) => acc + val, 0);
-
-    dist = Math.max(distRight, distLeft);
-  } else {
-    const unitSize = <number>canvas.dimensions?.distance || 5;
-    const unitGridSize = <number>canvas.grid?.size || 50;
-    dist = (Math.floor(dist) / unitGridSize) * unitSize;
-  }
-  return dist;
-}
-*/
-
 // ================================================
 
 export const globalInteractionDistanceUniversal = function (
@@ -586,37 +527,6 @@ function grids_between_placeable_and_placeable(a: ArmsreachData, b: ArmsreachDat
 	return Math.floor(distance_between_placeable_rect(a, b) / <number>canvas.grid?.size) + 1;
 }
 
-/*
-function units_between_placeable_and_placeable_work_but_not_optimal(a: ArmsreachData, b: ArmsreachData) {
-  let dist = Math.floor(distance_between_placeable_rect(a, b));
-  if (dist === 0) {
-    //
-  } else {
-    const unitSize = <number>canvas.dimensions?.distance || 5;
-    const unitGridSize = <number>canvas.grid?.size || 50;
-    // TODO i don't understand this for manage the door control
-    if (b.documentName != WallDocument.documentName) {
-      dist = (Math.floor(dist) / unitGridSize) * unitSize;
-    } else {
-      const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
-        return x.wall.id === <string>b.id;
-      });
-      if (!isDoor) {
-        // TODO WHY ? is a wall but i need to multiply anyway for antoher unitsize
-        dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
-      } else {
-        const globalInteraction = <number>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionMeasurement');
-        if (globalInteraction > 5) {
-          // TODO WHY ? is a door but i need to multiply anyway for antoher unitsize
-          dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
-        }
-      }
-    }
-  }
-  return dist;
-  // return Math.floor(distance_between_rect(token, b));
-}
-*/
 function distance_between_placeable_rect(p1: ArmsreachData, p2: ArmsreachData) {
 	const x1 = p1.x;
 	const y1 = p1.y;
@@ -682,38 +592,6 @@ function getUnitTokenDistUniversal(a: ArmsreachData, b: ArmsreachData) {
 }
 
 // ================================================
-
-/*
-function units_between_token_and_placeable_not_work(sourceToken: Token, placeableObject: ArmsreachData) {
-  // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
-  // if (range === 0) return false;
-  // if (range === Infinity) return true;
-  const tokensSizeAdjust = (Math.min(<number>placeableObject.w, <number>placeableObject.h) || 0) / Math.SQRT2;
-  let dist =
-    (getUnitTokenDist(sourceToken, placeableObject) * <number>canvas.dimensions?.size) /
-      <number>canvas.dimensions?.distance -
-    tokensSizeAdjust;
-  // return dist <= range;
-  const unitSize = <number>canvas.dimensions?.distance || 5;
-  const unitGridSize = <number>canvas.grid?.size || 50;
-  dist = (Math.floor(dist) / unitGridSize) * unitSize;
-  return dist;
-}
-*/
-
-/*
-function getUnitTokenDist(token1: Token, placeableObject: ArmsreachData) {
-  const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
-  const x1 = token1.center.x;
-  const y1 = token1.center.y;
-  const z1 = getElevationPlaceableObject(token1) * unitsToPixel;
-  const x2 = placeableObject.centerX;
-  const y2 = placeableObject.centerY;
-  const z2 = getElevationPlaceableObject(placeableObject.placeableObjectData) * unitsToPixel;
-  const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
-  return d;
-}
-*/
 
 function getUnitTokenDist(token: Token, placeableObjectTarget: ArmsreachData) {
 	const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;

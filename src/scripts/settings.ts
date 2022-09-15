@@ -689,14 +689,6 @@ async function applyDefaultSettings() {
 
 function otherSettings(apply = false) {
 	return {
-		// senses: {
-		//   scope: 'world',
-		//   config: false,
-		//   //@ts-ignore
-		//   default: apply && SYSTEMS.DATA ? SYSTEMS.DATA.SENSES : [],
-		//   type: Array,
-		// },
-
 		// ========================================================
 		// Arms Reach
 		// ========================================================

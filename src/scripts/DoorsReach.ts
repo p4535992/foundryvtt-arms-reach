@@ -58,9 +58,9 @@ export const DoorsReach = {
 				if (evt.key === "e") {
 					ArmsReachVariables.door_interaction_keydown = false;
 
-					if (ArmsReachVariables.door_interaction_cameraCentered) {
-						return;
-					}
+					// if (ArmsReachVariables.door_interaction_cameraCentered) {
+					// 	return;
+					// }
 
 					if (!isFocusOnCanvas()) {
 						return;
@@ -162,9 +162,9 @@ export const DoorsReach = {
 					label: doorControl.name,
 					icon: "", //doorControl.icon.texture.baseTexture., // TODO
 					//@ts-ignore
-					disabled: doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED,
+					disabled: doorControl.wall.ds === CONST.WALL_DOOR_STATES.LOCKED,
 					//@ts-ignore
-					hidden: doorControl.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET,
+					hidden: doorControl.wall.door === CONST.WALL_DOOR_TYPES.SECRET,
 					animate: false,
 					x: doorControl.x,
 					y: doorControl.y,
@@ -453,7 +453,7 @@ export const DoorsReach = {
 		for (let i = 0; i < <number>game.scenes?.current?.walls.contents.length; i++) {
 			const wall = game.scenes?.current?.walls.contents[i];
 			//@ts-ignore
-			if (wall.document.door > 0) {
+			if (wall.door > 0) {
 				const door: DoorControl = <DoorControl>canvas.controls?.doors?.children.find(
 					(x: PIXI.DisplayObject) => {
 						//@ts-ignore

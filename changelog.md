@@ -1,5 +1,11 @@
 # CHANGELOG 
 
+### 2.2.1
+
+- [[BUG] Reset fog function not working with V10](https://github.com/p4535992/foundryvtt-arms-reach/issues/54)
+- [[BUG] Missing "." in ArmsReachHelper](https://github.com/p4535992/foundryvtt-arms-reach/issues/55)
+- [[BUG] Stairway-Support broken](https://github.com/p4535992/foundryvtt-arms-reach/issues/56)
+
 ### 2.2.0
 
 - First release for fvtt10

@@ -632,7 +632,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 		if (!isInReach) {
 			// Bug fix not sure why i need to do this
 			//@ts-ignore
-			if (doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+			if (doorControl.wall.ds === CONST.WALL_DOOR_STATES.LOCKED) {
 				if (game.settings.get(CONSTANTS.MODULE_NAME, "disableDoorSound")) {
 					return;
 				}

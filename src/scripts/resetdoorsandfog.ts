@@ -11,25 +11,22 @@ export const ResetDoorsAndFog = {
 		if (isCurrentScene) {
 			const wallsToUpdate =
 				//@ts-ignore
-				<Wall[]>canvas.walls?.doors.filter((wall) => wall.document.ds === 1);
+				<Wall[]>canvas.walls?.doors.filter((wall) => wall.ds === 1);
 			for (let i = 0; i < <number>wallsToUpdate.length; i++) {
 				const doorControl = <Wall>wallsToUpdate[i];
 				updates.push({ _id: doorControl.id, ds: 0 });
 			}
-			// canvas.walls?.doors.filter((wall) => wall.document.ds === 1).forEach((doorControl) => updates.push({ _id: doorControl.id, ds: 0 }));
 			await canvas.scene?.updateEmbeddedDocuments("Wall", updates);
 		} else {
 			if (id) {
 				const scene = <Scene>game.scenes?.get(id);
 				const scenesToUpdate =
 					//@ts-ignore
-					<Scene[]>scene.data.walls.filter((wall) => wall.document.ds === 1);
+					<Scene[]>scene.data.walls.filter((wall) => wall.ds === 1);
 				for (let i = 0; i < <number>scenesToUpdate.length; i++) {
 					const sceneToUpdate = <Scene>scenesToUpdate[i];
 					updates.push({ _id: sceneToUpdate.id, ds: 0 });
 				}
-				//@ts-ignore
-				// scene.data.walls.filter((wall) => wall.document.ds === 1).forEach((x) => updates.push({ _id: x.id, ds: 0 }));
 				await scene.updateEmbeddedDocuments("Wall", updates);
 			}
 		}
@@ -38,7 +35,9 @@ export const ResetDoorsAndFog = {
 
 	resetFog: async function (isCurrentScene: boolean, id: string) {
 		if (isCurrentScene) {
-			canvas.sight?.resetFog();
+			// canvas.sight?.resetFog();
+			//@ts-ignore
+			canvas.fog.reset();
 		} else {
 			if (id) {
 				await SocketInterface.dispatch("modifyDocument", {
