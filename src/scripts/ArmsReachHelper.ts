@@ -10,7 +10,7 @@ import CONSTANTS from "./constants";
  */
 export const computeDistanceBetweenCoordinates = function (
 	placeable: ArmsreachData,
-	character: Token,
+	selectedToken: Token,
 	documentName: string,
 	useGrids: boolean
 ): number {
@@ -26,10 +26,10 @@ export const computeDistanceBetweenCoordinates = function (
 
 	if (useGrids) {
 		// const dist = computeDistanceBetweenCoordinatesOLD(placeable, character);
-		const dist = grids_between_token_and_placeable(character, placeable);
+		const dist = grids_between_token_and_placeable(selectedToken, placeable);
 		return dist;
 	} else {
-		const dist = units_between_token_and_placeable(character, {
+		const dist = units_between_token_and_placeable(selectedToken, {
 			x: xPlaceable,
 			y: yPlaceable,
 			w: wPlaceable,
@@ -188,8 +188,20 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
 		return null;
 		//}
 	}
-	return <Token>selectedTokens[0];
-}
+	if (
+		selectedTokens[0] &&
+		<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")
+	) {
+		const isPlayerOwned = selectedTokens[0]?.document.isOwner;
+		if (!isPlayerOwned) {
+			return null;
+		} else {
+			return <Token>selectedTokens[0];
+		}
+	} else {
+		return <Token>selectedTokens[0];
+	}
+};
 
 /**
  * Returns a list of selected (or owned, if no token is selected)
@@ -220,8 +232,17 @@ export const getFirstPlayerToken = function (): Token | null {
 			}
 		}
 	}
-	return token;
-}
+	if (token && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")) {
+		const isPlayerOwned = token.document.isOwner;
+		if (!isPlayerOwned) {
+			return null;
+		} else {
+			return token;
+		}
+	} else {
+		return token;
+	}
+};
 
 /**
  * Check if active document is the canvas

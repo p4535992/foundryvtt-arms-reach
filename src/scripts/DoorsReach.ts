@@ -100,7 +100,7 @@ export const DoorsReach = {
 	},
 
 	globalInteractionDistance: function (
-		character: Token,
+		selectedToken: Token,
 		doorControl: DoorControl,
 		isRightHanler: boolean,
 		maxDistance?: number,
@@ -124,13 +124,13 @@ export const DoorsReach = {
 			return false;
 		}
 		// let isOwned = false;
-		if (!character) {
-			character = <Token>getFirstPlayerToken();
+		if (!selectedToken) {
+			selectedToken = <Token>getFirstPlayerToken();
 			// if (character) {
 			// 	isOwned = true;
 			// }
 		}
-		if (!character) {
+		if (!selectedToken) {
 			if (game.user?.isGM) {
 				return true;
 			} else {
@@ -168,12 +168,12 @@ export const DoorsReach = {
 					y: doorControl.y,
 				};
 
-				const tokenCenter = getTokenCenter(character);
+				const tokenCenter = getTokenCenter(selectedToken);
 
 				const targetData: DoorTargetData = {
 					scene: <Scene>canvas.scene,
-					name: character.name,
-					label: character.name,
+					name: selectedToken.name,
+					label: selectedToken.name,
 					icon: "", //doorControl.icon.texture.baseTexture., // TODO
 					disabled: false,
 					hidden: false,
@@ -187,12 +187,12 @@ export const DoorsReach = {
 				//const targetSceneId = targetScene ? targetScene.id : null
 				const doorData: DoorData = {
 					sourceData: sourceData,
-					selectedOrOwnedTokenId: character.id,
+					selectedOrOwnedTokenId: selectedToken.id,
 					targetData: targetData,
 					userId: <string>game.userId,
 				};
 
-				if (!character) {
+				if (!selectedToken) {
 					interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelected`));
 					return false;
 				} else {
@@ -211,10 +211,10 @@ export const DoorsReach = {
 
 					let isNotNearEnough = false;
 					if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
-						const res = checkElevation(character, doorControl.wall);
+						const res = checkElevation(selectedToken, doorControl.wall);
 						if (!res) {
 							warn(
-								`The token '${character.name}' is not on the elevation range of this placeable object`
+								`The token '${selectedToken.name}' is not on the elevation range of this placeable object`
 							);
 							return false;
 						}
@@ -263,7 +263,7 @@ export const DoorsReach = {
 							// );
 							const dist = computeDistanceBetweenCoordinates(
 								DoorsReach.getDoorCenter(doorControl),
-								character,
+								selectedToken,
 								WallDocument.documentName,
 								true
 							);
@@ -275,7 +275,7 @@ export const DoorsReach = {
 									: <number>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
 							const dist = computeDistanceBetweenCoordinates(
 								DoorsReach.getDoorCenter(doorControl),
-								character,
+								selectedToken,
 								WallDocument.documentName,
 								false
 							);
@@ -286,7 +286,7 @@ export const DoorsReach = {
 						isNotNearEnough = false;
 					}
 					if (isNotNearEnough) {
-						const tokenName = getCharacterName(character);
+						const tokenName = getCharacterName(selectedToken);
 						if (tokenName) {
 							interactionFailNotification(
 								i18nFormat(`${CONSTANTS.MODULE_NAME}.doorNotInReachFor`, { tokenName: tokenName })

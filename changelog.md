@@ -1,5 +1,9 @@
 # CHANGELOG 
 
+### 2.2.5
+
+- [Support for user rather than token owner](https://github.com/p4535992/foundryvtt-arms-reach/issues/50)
+
 ### 2.2.1-2-3-4
 
 - [[BUG] Reset fog function not working with V10](https://github.com/p4535992/foundryvtt-arms-reach/issues/54)

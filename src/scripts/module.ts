@@ -659,13 +659,11 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, ...args) {
 	if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableDoorsIntegration")) {
 		const doorControl = this as DoorControl; //evt.currentTarget;
-		let tokenSelected: Token = <Token>getFirstPlayerTokenSelected();
-		// let isOwned = false;
+		let tokenSelected;
+
+		tokenSelected = <Token>getFirstPlayerTokenSelected();
 		if (!tokenSelected) {
 			tokenSelected = <Token>getFirstPlayerToken();
-			// if (tokenSelected) {
-			// 	isOwned = true;
-			// }
 		}
 		if (!tokenSelected) {
 			if (game.user?.isGM) {

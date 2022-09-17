@@ -9,7 +9,7 @@ import CONSTANTS from "./constants";
 
 export const TilesReach = {
 	globalInteractionDistance: function (
-		character: Token,
+		selectedToken: Token,
 		tile: Tile,
 		maxDistance?: number,
 		useGrid?: boolean,
@@ -32,13 +32,13 @@ export const TilesReach = {
 			return false;
 		}
 		// let isOwned = false;
-		if (!character) {
-			character = <Token>getFirstPlayerToken();
+		if (!selectedToken) {
+			selectedToken = <Token>getFirstPlayerToken();
 			// if (character) {
 			// 	isOwned = true;
 			// }
 		}
-		if (!character) {
+		if (!selectedToken) {
 			if (game.user?.isGM) {
 				return true;
 			} else {
@@ -62,16 +62,16 @@ export const TilesReach = {
 					// && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
 					<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTiles"))
 			) {
-				if (!character) {
+				if (!selectedToken) {
 					interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForTile`));
 					return false;
 				} else {
 					let isNotNearEnough = false;
 					if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
-						const res = checkElevation(character, tile);
+						const res = checkElevation(selectedToken, tile);
 						if (!res) {
 							warn(
-								`The token '${character.name}' is not on the elevation range of this placeable object`
+								`The token '${selectedToken.name}' is not on the elevation range of this placeable object`
 							);
 							return false;
 						}
@@ -85,7 +85,7 @@ export const TilesReach = {
 						// const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
 						const dist = computeDistanceBetweenCoordinates(
 							TilesReach.getTilesCenter(tile),
-							character,
+							selectedToken,
 							TileDocument.documentName,
 							true
 						);
@@ -97,14 +97,14 @@ export const TilesReach = {
 								: <number>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
 						const dist = computeDistanceBetweenCoordinates(
 							TilesReach.getTilesCenter(tile),
-							character,
+							selectedToken,
 							TileDocument.documentName,
 							false
 						);
 						isNotNearEnough = dist > maxDist;
 					}
 					if (isNotNearEnough) {
-						const tokenName = getCharacterName(character);
+						const tokenName = getCharacterName(selectedToken);
 						if (tokenName) {
 							interactionFailNotification(
 								i18nFormat(`${CONSTANTS.MODULE_NAME}.tilesNotInReachFor`, { tokenName: tokenName })

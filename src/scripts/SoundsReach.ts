@@ -9,7 +9,7 @@ import CONSTANTS from "./constants";
 
 export const SoundsReach = {
 	globalInteractionDistance: function (
-		character: Token,
+		selectedToken: Token,
 		sound: AmbientSound,
 		maxDistance?: number,
 		useGrid?: boolean,
@@ -32,13 +32,13 @@ export const SoundsReach = {
 			return false;
 		}
 		// let isOwned = false;
-		if (!character) {
-			character = <Token>getFirstPlayerToken();
+		if (!selectedToken) {
+			selectedToken = <Token>getFirstPlayerToken();
 			// if (character) {
 			// 	isOwned = true;
 			// }
 		}
-		if (!character) {
+		if (!selectedToken) {
 			if (game.user?.isGM) {
 				return true;
 			} else {
@@ -62,16 +62,16 @@ export const SoundsReach = {
 					// && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
 					<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnSounds"))
 			) {
-				if (!character) {
+				if (!selectedToken) {
 					interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForSound`));
 					return false;
 				} else {
 					let isNotNearEnough = false;
 					if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
-						const res = checkElevation(character, sound);
+						const res = checkElevation(selectedToken, sound);
 						if (!res) {
 							warn(
-								`The token '${character.name}' is not on the elevation range of this placeable object`
+								`The token '${selectedToken.name}' is not on the elevation range of this placeable object`
 							);
 							return false;
 						}
@@ -85,7 +85,7 @@ export const SoundsReach = {
 						// const dist = computeDistanceBetweenCoordinatesOLD(SoundsReach.getSoundsCenter(sound), character);
 						const dist = computeDistanceBetweenCoordinates(
 							SoundsReach.getSoundsCenter(sound),
-							character,
+							selectedToken,
 							AmbientSoundDocument.documentName,
 							true
 						);
@@ -97,14 +97,14 @@ export const SoundsReach = {
 								: <number>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
 						const dist = computeDistanceBetweenCoordinates(
 							SoundsReach.getSoundsCenter(sound),
-							character,
+							selectedToken,
 							AmbientSoundDocument.documentName,
 							false
 						);
 						isNotNearEnough = dist > maxDist;
 					}
 					if (isNotNearEnough) {
-						const tokenName = getCharacterName(character);
+						const tokenName = getCharacterName(selectedToken);
 						if (tokenName) {
 							interactionFailNotification(
 								i18nFormat(`${CONSTANTS.MODULE_NAME}.soundsNotInReachFor`, { tokenName: tokenName })

@@ -131,7 +131,7 @@ export const StairwaysReach = {
 	},
 
 	globalInteractionDistanceSimple: function (
-		character: Token,
+		selectedToken: Token,
 		stairway: { x: number; y: number },
 		maxDistance?: number,
 		useGrid?: boolean,
@@ -154,13 +154,13 @@ export const StairwaysReach = {
 			return false;
 		}
 		// let isOwned = false;
-		if (!character) {
-			character = <Token>getFirstPlayerToken();
+		if (!selectedToken) {
+			selectedToken = <Token>getFirstPlayerToken();
 			// if (character) {
 			// 	isOwned = true;
 			// }
 		}
-		if (!character) {
+		if (!selectedToken) {
 			if (game.user?.isGM) {
 				return true;
 			} else {
@@ -184,16 +184,16 @@ export const StairwaysReach = {
 					// && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
 					<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways"))
 			) {
-				if (!character) {
+				if (!selectedToken) {
 					interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
 					return false;
 				} else {
 					let isNotNearEnough = false;
 					if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
-						const res = checkElevation(character, stairway);
+						const res = checkElevation(selectedToken, stairway);
 						if (!res) {
 							warn(
-								`The token '${character.name}' is not on the elevation range of this placeable object`
+								`The token '${selectedToken.name}' is not on the elevation range of this placeable object`
 							);
 							return false;
 						}
@@ -207,7 +207,7 @@ export const StairwaysReach = {
 						// const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
 						const dist = computeDistanceBetweenCoordinates(
 							StairwaysReach.getStairwaysCenter(stairway),
-							character,
+							selectedToken,
 							"Stairway",
 							true
 						);
@@ -219,14 +219,14 @@ export const StairwaysReach = {
 								: <number>game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
 						const dist = computeDistanceBetweenCoordinates(
 							StairwaysReach.getStairwaysCenter(stairway),
-							character,
+							selectedToken,
 							"Stairway",
 							false
 						);
 						isNotNearEnough = dist > maxDist;
 					}
 					if (isNotNearEnough) {
-						const tokenName = getCharacterName(character);
+						const tokenName = getCharacterName(selectedToken);
 						if (tokenName) {
 							interactionFailNotification(
 								i18nFormat(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReachFor`, { tokenName: tokenName })
