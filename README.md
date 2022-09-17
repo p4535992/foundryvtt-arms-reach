@@ -12,7 +12,7 @@
 
 ![GitHub all releases](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/total?style=for-the-badge)
 
-[![Translation status](https://weblate.foundryvtt-hub.com/engage/foundryvtt-arms-reach/-/287x66-black.png)](https://weblate.foundryvtt-hub.com/engage/foundryvtt-arms-reach/)
+[![Translation status](https://weblate.foundryvtt-hub.com/widgets/foundryvtt-arms-reach/-/287x66-black.png)](https://weblate.foundryvtt-hub.com/engage/foundryvtt-arms-reach/)
 
 Little Utilities, Arms Reach for door, journal, stairways, token, ecc.
 
