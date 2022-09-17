@@ -69,7 +69,7 @@ export const getTokenCenter = function (token) {
  * from tokenAttacher module
  */
 export const getCenter = function (placeableObject: PlaceableObject, grid: any = {}): { x: number; y: number } {
-	const data = placeableObject.data ? placeableObject.data : placeableObject;
+	const data = placeableObject.document ? placeableObject.document : placeableObject;
 	const placeableObjectDocument =
 		placeableObject.document && placeableObject.document.documentName ? placeableObject.document : placeableObject;
 	//getCenter(type, data, grid = {}){
@@ -84,6 +84,7 @@ export const getCenter = function (placeableObject: PlaceableObject, grid: any =
 		isGridSpace = true;
 	}
 	grid = mergeObject({ w: canvas.grid?.w, h: canvas.grid?.h }, grid);
+	//@ts-ignore
 	const [x, y] = [data.x, data.y];
 	let center = { x: x, y: y };
 	//Tokens, Tiles
@@ -359,7 +360,6 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
 	const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
 	const centerX = placeable.center ? placeable.center.x : x;
 	const centerY = placeable.center ? placeable.center.y : y;
-	// const placeableObjectData = placeable.document ? placeable.document.data : placeable.data;
 	const placeableObjectData = placeable.document ? placeable.document : placeable;
 	return {
 		x: x,
@@ -375,40 +375,32 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
 };
 
 const getPlaceableWidth = function (placeable: any): number {
-	// let w = placeable.w || placeable.data?.width || placeable.width;
 	let w = placeable.w || placeable.width;
 	if (placeable?.object) {
-		// w = placeable?.object?.w || placeable?.object?.data?.width || placeable?.object?.width || w;
 		w = placeable?.object?.w || placeable?.object?.width || w;
 	}
 	return w;
 };
 
 const getPlaceableHeight = function (placeable: any): number {
-	// let h = placeable.h || placeable.data?.height || placeable.height;
 	let h = placeable.h || placeable.height;
 	if (placeable?.object) {
-		// h = placeable?.object?.h || placeable?.object?.data?.height || placeable?.object?.height || h;
 		h = placeable?.object?.h || placeable?.object?.height || h;
 	}
 	return h;
 };
 
 const getPlaceableX = function (placeable: any): number {
-	// let x = placeable._validPosition?.x || placeable.x || placeable?.data?.x;
 	let x = placeable._validPosition?.x || placeable.x || placeable?.x;
 	if (placeable?.object) {
-		// x = placeable?.object?.x || placeable?.object?.data?.x || x;
 		x = placeable?.object?.x || placeable?.object?.x || x;
 	}
 	return x;
 };
 
 const getPlaceableY = function (placeable: any): number {
-	// let y = placeable._validPosition?.y || placeable?.y || placeable?.data?.y;
 	let y = placeable._validPosition?.y || placeable?.y;
 	if (placeable?.object) {
-		// y = placeable?.object?.y || placeable?.object?.data?.y || placeable?.object?.y || y;
 		y = placeable?.object?.y || placeable?.object?.y || y;
 	}
 	return y;

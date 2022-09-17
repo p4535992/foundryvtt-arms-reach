@@ -162,9 +162,9 @@ export const DoorsReach = {
 					label: doorControl.name,
 					icon: "", //doorControl.icon.texture.baseTexture., // TODO
 					//@ts-ignore
-					disabled: doorControl.wall.ds === CONST.WALL_DOOR_STATES.LOCKED,
+					disabled: doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED,
 					//@ts-ignore
-					hidden: doorControl.wall.door === CONST.WALL_DOOR_TYPES.SECRET,
+					hidden: doorControl.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET,
 					animate: false,
 					x: doorControl.x,
 					y: doorControl.y,

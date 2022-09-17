@@ -601,7 +601,8 @@ export class Overlay {
 				if (wall.door || !wall.move) {
 					continue;
 				}
-				const c = wall.data.c;
+				//@ts-ignore
+				const c = wall.c;
 				this.overlays.wallsOverlay?.moveTo(c[0], c[1]);
 				this.overlays.wallsOverlay?.lineTo(c[2], c[3]);
 			}
