@@ -165,14 +165,14 @@ export function mergeByProperty(target: any[], source: any[], prop: any) {
  * Returns the first selected token
  */
 export function getFirstPlayerTokenSelected(): Token | null {
-	// Get first token ownted by the player
+	// Get first token owned by the player
 	const selectedTokens = <Token[]>canvas.tokens?.controlled;
 	if (selectedTokens.length > 1) {
 		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
 		return null;
 	}
 	if (!selectedTokens || selectedTokens.length === 0) {
-		//if(game.user.charactera.token){
+		//if(game.user.character.token){
 		//  //@ts-ignore
 		//  return game.user.character.token;
 		//}else{

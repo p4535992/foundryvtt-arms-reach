@@ -1,6 +1,6 @@
 # CHANGELOG 
 
-### 2.2.1-2-3
+### 2.2.1-2-3-4
 
 - [[BUG] Reset fog function not working with V10](https://github.com/p4535992/foundryvtt-arms-reach/issues/54)
 - [[BUG] Missing "." in ArmsReachHelper](https://github.com/p4535992/foundryvtt-arms-reach/issues/55)
