@@ -189,6 +189,9 @@
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTemplates": "Enable the check distance on Templates even for GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTemplates": "If enabled it will apply the check of the distance on Templates even for GM, useful if the GM want to play as a player.",
 
+	"foundryvtt-arms-reach.settingNameEnableInteractionForTokenOwnedByUser": "Enable interaction for user owner rather than token owner",
+	"foundryvtt-arms-reach.settingHintEnableInteractionForTokenOwnedByUser": "An option to check if the currently selected token is owned by said User rather than a specific token? This way you can log the players in as user and whichever owned token is selected will be able to walk up to a door and hit \"e\" or double tap the arrow to get the door to open.",
+
 	"foundryvtt-arms-reach.setting.reset.name": "Reset settings to default",
 	"foundryvtt-arms-reach.setting.reset.label": "Reset Settings To Default",
 	"foundryvtt-arms-reach.setting.reset.hint": "This will reset all of the settings of back to the active game system's default.",

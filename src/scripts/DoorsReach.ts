@@ -3,8 +3,6 @@ import type { DoorData, DoorSourceData, DoorTargetData } from "./ArmsReachModels
 import {
 	computeDistanceBetweenCoordinates,
 	getFirstPlayerToken,
-	getFirstPlayerTokenSelected,
-	getPlaceableCenter,
 	getPlaceableDoorCenter,
 	getTokenCenter,
 	isFocusOnCanvas,
@@ -125,12 +123,12 @@ export const DoorsReach = {
 			interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
 			return false;
 		}
-		let isOwned = false;
+		// let isOwned = false;
 		if (!character) {
 			character = <Token>getFirstPlayerToken();
-			if (character) {
-				isOwned = true;
-			}
+			// if (character) {
+			// 	isOwned = true;
+			// }
 		}
 		if (!character) {
 			if (game.user?.isGM) {

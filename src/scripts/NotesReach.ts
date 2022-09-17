@@ -31,12 +31,12 @@ export const NotesReach = {
 			interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
 			return false;
 		}
-		let isOwned = false;
+		// let isOwned = false;
 		if (!character) {
 			character = <Token>getFirstPlayerToken();
-			if (character) {
-				isOwned = true;
-			}
+			// if (character) {
+			// 	isOwned = true;
+			// }
 		}
 		if (!character) {
 			if (game.user?.isGM) {

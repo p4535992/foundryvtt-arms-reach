@@ -121,6 +121,15 @@ export const registerSettings = function () {
 		type: Boolean,
 	});
 
+	game.settings.register(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser", {
+		name: `${CONSTANTS.MODULE_NAME}.settingNameEnableInteractionForTokenOwnedByUser`,
+		hint: `${CONSTANTS.MODULE_NAME}.settingHintEnableInteractionForTokenOwnedByUser`,
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean,
+	});
+
 	// ========================================================
 	// DOOR SUPPORT
 	// ========================================================
@@ -793,6 +802,15 @@ function otherSettings(apply = false) {
 		autoCheckElevationByDefault: {
 			name: `${CONSTANTS.MODULE_NAME}.settingNameAutoCheckElevationByDefault`,
 			hint: `${CONSTANTS.MODULE_NAME}.settingHintAutoCheckElevationByDefault`,
+			scope: "world",
+			config: true,
+			default: false,
+			type: Boolean,
+		},
+
+		enableInteractionForTokenOwnedByUser: {
+			name: `${CONSTANTS.MODULE_NAME}.settingNameEnableInteractionForTokenOwnedByUser`,
+			hint: `${CONSTANTS.MODULE_NAME}.settingHintEnableInteractionForTokenOwnedByUser`,
 			scope: "world",
 			config: true,
 			default: false,

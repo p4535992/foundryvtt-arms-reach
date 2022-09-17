@@ -161,54 +161,54 @@ export function mergeByProperty(target: any[], source: any[], prop: any) {
 	return target;
 }
 
-/**
- * Returns the first selected token
- */
-export function getFirstPlayerTokenSelected(): Token | null {
-	// Get first token owned by the player
-	const selectedTokens = <Token[]>canvas.tokens?.controlled;
-	if (selectedTokens.length > 1) {
-		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
-		return null;
-	}
-	if (!selectedTokens || selectedTokens.length === 0) {
-		//if(game.user.character.token){
-		//  //@ts-ignore
-		//  return game.user.character.token;
-		//}else{
-		return null;
-		//}
-	}
-	return <Token>selectedTokens[0];
-}
+// /**
+//  * Returns the first selected token
+//  */
+// export function getFirstPlayerTokenSelected(): Token | null {
+// 	// Get first token owned by the player
+// 	const selectedTokens = <Token[]>canvas.tokens?.controlled;
+// 	if (selectedTokens.length > 1) {
+// 		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+// 		return null;
+// 	}
+// 	if (!selectedTokens || selectedTokens.length === 0) {
+// 		//if(game.user.character.token){
+// 		//  //@ts-ignore
+// 		//  return game.user.character.token;
+// 		//}else{
+// 		return null;
+// 		//}
+// 	}
+// 	return <Token>selectedTokens[0];
+// }
 
-/**
- * Returns a list of selected (or owned, if no token is selected)
- * note: ex getSelectedOrOwnedToken
- */
-export function getFirstPlayerToken(): Token | null {
-	// Get controlled token
-	let token: Token;
-	const controlled: Token[] = <Token[]>canvas.tokens?.controlled;
-	// Do nothing if multiple tokens are selected
-	if (controlled.length && controlled.length > 1) {
-		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
-		return null;
-	}
-	// If exactly one token is selected, take that
-	token = <Token>controlled[0];
-	if (!token) {
-		if (!controlled.length || controlled.length === 0) {
-			// If no token is selected use the token of the users character
-			token = <Token>canvas.tokens?.placeables.find((token) => token.id === game.user?.character?.id);
-		}
-		// If no token is selected use the first owned token of the users character you found
-		if (!token) {
-			token = <Token>canvas.tokens?.ownedTokens[0];
-		}
-	}
-	return token;
-}
+// /**
+//  * Returns a list of selected (or owned, if no token is selected)
+//  * note: ex getSelectedOrOwnedToken
+//  */
+// export function getFirstPlayerToken(): Token | null {
+// 	// Get controlled token
+// 	let token: Token;
+// 	const controlled: Token[] = <Token[]>canvas.tokens?.controlled;
+// 	// Do nothing if multiple tokens are selected
+// 	if (controlled.length && controlled.length > 1) {
+// 		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+// 		return null;
+// 	}
+// 	// If exactly one token is selected, take that
+// 	token = <Token>controlled[0];
+// 	if (!token) {
+// 		if (!controlled.length || controlled.length === 0) {
+// 			// If no token is selected use the token of the users character
+// 			token = <Token>canvas.tokens?.placeables.find((token) => token.id === game.user?.character?.id);
+// 		}
+// 		// If no token is selected use the first owned token of the users character you found
+// 		if (!token) {
+// 			token = <Token>canvas.tokens?.ownedTokens[0];
+// 		}
+// 	}
+// 	return token;
+// }
 
 /**
  * Get the total LOS height for a token

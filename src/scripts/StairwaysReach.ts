@@ -26,7 +26,7 @@ export const StairwaysReach = {
 			interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
 			return false;
 		}
-		let isOwned = false;
+		// let isOwned = false;
 		let character: Token = <Token>getFirstPlayerTokenSelected();
 		if (selectedTokenIds) {
 			if (selectedTokenIds.length > 1) {
@@ -38,9 +38,9 @@ export const StairwaysReach = {
 		} else {
 			if (!character) {
 				character = <Token>getFirstPlayerToken();
-				if (character) {
-					isOwned = true;
-				}
+				// if (character) {
+				// 	isOwned = true;
+				// }
 			}
 		}
 
@@ -153,12 +153,12 @@ export const StairwaysReach = {
 			interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
 			return false;
 		}
-		let isOwned = false;
+		// let isOwned = false;
 		if (!character) {
 			character = <Token>getFirstPlayerToken();
-			if (character) {
-				isOwned = true;
-			}
+			// if (character) {
+			// 	isOwned = true;
+			// }
 		}
 		if (!character) {
 			if (game.user?.isGM) {

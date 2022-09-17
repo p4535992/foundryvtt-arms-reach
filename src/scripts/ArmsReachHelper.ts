@@ -181,10 +181,15 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
 		return null;
 	}
 	if (!selectedTokens || selectedTokens.length === 0) {
+		//if(game.user.character.token){
+		//  //@ts-ignore
+		//  return game.user.character.token;
+		//}else{
 		return null;
+		//}
 	}
 	return <Token>selectedTokens[0];
-};
+}
 
 /**
  * Returns a list of selected (or owned, if no token is selected)
@@ -216,7 +221,7 @@ export const getFirstPlayerToken = function (): Token | null {
 		}
 	}
 	return token;
-};
+}
 
 /**
  * Check if active document is the canvas
