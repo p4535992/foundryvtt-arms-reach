@@ -1,9 +1,9 @@
 {
-	"foundryvtt-arms-reach.noCharacterSelected": "Kein Charakter für Interaktion ausgew&auml;hlt",
-	"foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "Kein Charakter für Kamerazentrierung ausgew&auml;hlt",
-	"foundryvtt-arms-reach.noCharacterSelectedForStairway": "Kein Charakter für Interaktion mit Treppe ausgew&auml;hlt.",
+	"foundryvtt-arms-reach.noCharacterSelected": "Kein Charakter f&uuml;r Interaktion ausgew&auml;hlt",
+	"foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "Kein Charakter f&uuml;r Kamerazentrierung ausgew&auml;hlt",
+	"foundryvtt-arms-reach.noCharacterSelectedForStairway": "Kein Charakter f&uuml;r Interaktion mit Treppe ausgew&auml;hlt.",
 
-	"foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "T&uuml;r in Reichweite gefunden sie ist aber für ${tokenName} verschlossen.",
+	"foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "T&uuml;r in Reichweite gefunden sie ist aber f&uuml;r ${tokenName} verschlossen.",
 	"foundryvtt-arms-reach.doorIsInReachButIsLocked": "T&uuml;r ist in Reichweite aber verschlossen.",
 	"foundryvtt-arms-reach.doorNotFoundInReach": "Es wurde keine T&uuml;r in Reichweite gefunden oder sie ist verschlossen.",
 	"foundryvtt-arms-reach.doorNotFoundInReachFor": "Es wurde keine T&uuml;r in Reichweite von {tokenName} gefunden oder sie ist verschlossen",
@@ -67,7 +67,7 @@
 	"foundryvtt-arms-reach.settingHintNotificationsFailedInteraction": "Gibt Nachrichten aus wenn ein die Interaktion eines Spielers mit einer Tür fehlschlägt. Praktisch für die Fehlersuche.",
 
 	"foundryvtt-arms-reach.settingNameGlobalMaximumInteractionDistance": "[Nicht empfohlen] Globaler maximaler Interaktionsabstand in Gitterfeldern",
-	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Ich empfehle, diese Funktion nicht zu verwenden, sondern stattdessen 'Globale maximale Interaktionsdistanzmessung' diese hat mehr 'Entfernungmesser'-Perspektive], 0 wird diese Einstellung Grenze deaktivieren (muss App neu laden), wenn ein Wert > 0 verwendet wird, wird der Wert der Einstellung 'Globale maximale Interaktionsdistanzmessung' ignoriert. Maximale Entfernung (in Kacheln), die ein Token mit einer (Tür, Zeitschrift, ...) interagieren kann. GMs ignorieren diese Abstandsbegrenzung.",
+	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionDistance": "[Ich empfehle, diese Funktion nicht zu verwenden, sondern stattdessen 'Globale maximale Interaktionsdistanzmessung' diese hat mehr 'Entfernungmesser'-Perspektive], 0 wird diese Einstellung Grenze deaktivieren (muss App neu laden), wenn ein Wert > 0 verwendet wird, wird der Wert der Einstellung 'Globale maximale Interaktionsdistanzmessung' ignoriert. Maximale Entfernung (in Kacheln), die ein Token mit einer (Tür, Notiz, ...) interagieren kann. GMs ignorieren diese Abstandsbegrenzung.",
 
 	"foundryvtt-arms-reach.settingNameGlobalMaximumInteractionMeasurement": "Globale maximale Interaktionsdistanzmessung (ft, m, ...),  Unterstützung von Hex-Gitter, Gitterlos und die Messung von schwierigem Terrain",
 	"foundryvtt-arms-reach.settingHintGlobalMaximumInteractionMeasurement": "Maximale Entfernung (in Fuss, Meter oder der Standard-Systemeinheit, die du verwendest), die ein Token mit einem platzierbaren Objekt (Tür, Notiz, ...) interagieren kann; 0 deaktiviert die Begrenzung (App muss neu geladen werden). GMs ignorieren diese Entfernungsbegrenzung.",
@@ -180,7 +180,7 @@
 	"foundryvtt-arms-reach.settingNameWallsIntegrationFeature": "Aktiviere/Deaktiviere Wand-Integration",
 	"foundryvtt-arms-reach.settingHintWallsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Wände... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnWalls": "Aktiviert die Prüfung der Distanz für Wäncde auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnWalls": "Aktiviert die Prüfung der Distanz für Wände auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnWalls": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Wände auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Aktiviere/Deaktiviere Templates-Integration",

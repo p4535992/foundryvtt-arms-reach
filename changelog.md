@@ -1,6 +1,6 @@
 # CHANGELOG 
 
-### 2.2.6
+### 2.2.6-7
 
 - https://github.com/p4535992/foundryvtt-arms-reach/issues/59
 - https://github.com/p4535992/foundryvtt-arms-reach/issues/60
