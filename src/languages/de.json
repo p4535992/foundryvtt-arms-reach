@@ -10,10 +10,10 @@
 	"foundryvtt-arms-reach.doorNotInReach": "T&uuml;r nicht in Reichweite",
 	"foundryvtt-arms-reach.doorNotInReachFor": "T&uuml;r nicht in {tokenName}s Reichweite oder verschlossen",
 
-	"foundryvtt-arms-reach.stairwaysNotFoundInReach": "Es wurde keine Treppe in Reichweite gefunden, oder sie ist blockiert!",
-	"foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "Es wurde keine Treppe in {tokenName}s Reichweite gefunden, oder sie ist blockiert!",
-	"foundryvtt-arms-reach.stairwaysNotInReach": "Treppe nicht in Reichweite oder blockiert!",
-	"foundryvtt-arms-reach.stairwaysNotInReachFor": "Treppe nicht in {tokenName}s Reichweite oder blockiert!",
+	"foundryvtt-arms-reach.stairwaysNotFoundInReach": "Es wurde keine Treppe oder kein Schalter in Reichweite gefunden, oder sie sind blockiert!",
+	"foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "Es wurde keine Treppe oder kein Schalter in {tokenName}s Reichweite gefunden, oder sie sind blockiert!",
+	"foundryvtt-arms-reach.stairwaysNotInReach": "Treppe oder Schalter nicht in Reichweite oder blockiert!",
+	"foundryvtt-arms-reach.stairwaysNotInReachFor": "Treppe oder Schalter nicht in {tokenName}s Reichweite oder blockiert!",
 
 	"foundryvtt-arms-reach.notesNotFoundInReach": "Es wurde keine Notiz in Reichweite gefunden, oder sie ist gesperrt!",
 	"foundryvtt-arms-reach.notesNotFoundInReachFor": "Es wurde keine Notiz in {tokenName}s Reichweite gefunden, oder sie ist gesperrt!",
@@ -79,7 +79,7 @@
 	"foundryvtt-arms-reach.settingHintDoubleTapInteraction": "[Ich empfehle diese Funktion nicht, da sie mit anderen Modulen zur Prüfung von Bewegungen inkompatibel ist, aber ansonsten funktioniert sie] Durch doppeltes Tippen auf eine Bewegungstaste in Richtung einer Tür wird mit ihr interagiert. Diese Option stellt die Verzögerung zwischen den erforderlichen Tastendrücken ein (je niedriger, desto schneller muss man tippen). Wenn Sie diese Option auf Null setzen, wird die Interaktion mit dem Doppeltippen deaktiviert.",
 
 	"foundryvtt-arms-reach.settingNameMaximumDoorDistanceInteraction": "[Veraltet] Maximaler Abstand für die Interaktion mit Türen in Gitterfeldern",
-	"foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Verwenden Sie stattdessen 'Maximale Türinteraktionsdistanzmessung'], 0 deaktiviert diese Einstellungsgrenze (App muss neu geladen werden).",
+	"foundryvtt-arms-reach.settingHintMaximumDoorDistanceInteraction": "[Verwende stattdessen 'Maximale Türinteraktionsdistanzmessung'], 0 deaktiviert diese Einstellungsgrenze (App muss neu geladen werden).",
 
 	"foundryvtt-arms-reach.settingNameMaximumDoorMeasurementInteraction": "[Nicht empfohlen] Maximale Tür Interaktionsdistanzmessung (ft, m, ...), Unterstützung Hex Gitter, Gitterlos und die Messung von schwierigem Terrain",
 	"foundryvtt-arms-reach.settingHintMaximumDoorMeasurementInteraction": "[Ich empfehle diese Funktion wegen einiger Inkompatibilitäten mit anderen Bewegungsüberprüfungsmodulen nicht, aber ansonsten funktioniert sie] Die Entfernungsberechnung wird nur für die Moduleinstellung 'Interaktion Tür mit Hotkey 'e'' verwendet und ist völlig unabhängig von der ähnlichen Moduleinstellung 'Globale maximale Interaktionsdistanzmessung'. Maximale Interaktionsentfernung der Tür (in Fuss, Meter oder der von Ihnen verwendeten Standard-Systemeinheit)",
@@ -93,11 +93,11 @@
 	"foundryvtt-arms-reach.settingNameNotificationsFailedInteractionEvenForGM": "Benachrichtigung über fehlerhafte Interaktionen auch für den GM",
 	"foundryvtt-arms-reach.settingHintNotificationsFailedInteractionEvenForGM": "Emit notifications for fails the distance interaction auch für den GM. Good for debugging. If no token is selected and you are a GM this feature is not activated",
 
-	"foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Vermeiden Sie die Abwahl des kontrollierten Tokens beim öffnen/schliessen der Tür",
-	"foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Vermeiden Sie, dass das kontrollierte Token abgewählt wird, wenn die Tür mit einem Mausklick geöffnet wird und 'Linksklick um Objekte abzuwählen' in den Kern-Einstellungen aktiviert ist",
+	"foundryvtt-arms-reach.settingNameAvoidSelectsTheControlledToken": "Vermeide die Abwahl des kontrollierten Tokens beim öffnen/schliessen der Tür",
+	"foundryvtt-arms-reach.settingHintAvoidSelectsTheControlledToken": "Vermeide, dass das kontrollierte Token abgewählt wird, wenn die Tür mit einem Mausklick geöffnet wird und 'Linksklick um Objekte abzuwählen' in den Kern-Einstellungen aktiviert ist",
 
-	"foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Verwenden Sie die eigenen Token, wenn keine Token ausgewählt sind.",
-	"foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Verwenden Sie die eigenen Token, wenn keine Token ausgewählt sind, was für Spieler sinnvoll ist, wenn es normalerweise nur eigene Token gibt.",
+	"foundryvtt-arms-reach.settingNameUseOwnedTokenIfNoTokenIsSelected": "Verwende die eigenen Token, wenn keine Token ausgewählt sind.",
+	"foundryvtt-arms-reach.settingHintUseOwnedTokenIfNoTokenIsSelected": "Verwende die eigenen Token, wenn keine Token ausgewählt sind, was für Spieler sinnvoll ist, wenn es normalerweise nur eigene Token gibt.",
 
 	"foundryvtt-arms-reach.settingNameAutoCheckElevationByDefault": "[Experimentell] Automatische Prüfung der Höhe als Standard",
 	"foundryvtt-arms-reach.settingHintAutoCheckElevationByDefault": "Standardmässig wird eine überprüfung der Höhe zwischen platzierbaren Objekten durchgeführt, kann mit Modulen wie 'levels' nützlich sein",
@@ -111,7 +111,7 @@
 	"foundryvtt-arms-reach.settingNameStairwaysIntegrationFeature": "Aktiviere/Deaktiviere Stairways-Modul-Integration",
 	"foundryvtt-arms-reach.settingHintStairwaysIntegrationFeature": "Aktiviert die Reichweitenprüfung für Treppen interagieren kann... GMs ignorieren die Rechweitenlimits",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnStairways": "Aktivieren die Prüfung der Distanz für Stairways-Modul auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnStairways": "Aktiviert die Prüfung der Distanz für Stairways-Modul auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnStairways": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Treppen auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameGridlessSupportFeature": "[Experimentell] Aktiviere/Deaktiviere Gitterlose Unterstützung",
@@ -126,13 +126,13 @@
 	"foundryvtt-arms-reach.settingNameDoorsIntegrationFeature": "Aktiviere/Deaktiviere Tür-Integration",
 	"foundryvtt-arms-reach.settingHintDoorsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Türen... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDoors": "Aktivieren die Prüfung der Distanz für Türen auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDoors": "Aktiviert die Prüfung der Distanz für Türen auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnDoors": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Türen auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameJournalsIntegrationFeature": "Aktiviere/Deaktiviere Journal-Integration",
 	"foundryvtt-arms-reach.settingHintJournalsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Journale... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnNotes": "Aktivieren die Prüfung der Distanz für Notizen auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnNotes": "Aktiviert die Prüfung der Distanz für Notizen auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnNotes": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Notizen auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameNotesIntegrationFeature": "Aktiviere/Deaktiviere Notiz-Integration",
@@ -141,53 +141,56 @@
 	"foundryvtt-arms-reach.settingNameTokensIntegrationFeature": "Aktiviere/Deaktiviere Token-Integration",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationFeature": "Aktiviert die Reichweitenprüfung für andere Token... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTokens": "Aktivieren die Prüfung der Distanz für Token auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTokens": "Aktiviert die Prüfung der Distanz für Token auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTokens": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Token auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
-	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Aktivieren Sie die Entfernungsinteraktion für 'Loot Sheet'.",
+	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Aktiviert die Entfernungsinteraktion für 'Loot Sheet'.",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "Wenn aktiviert, dann wird standardmässig die Entfernungsintegration für alle Token aktiviert, bei denen das Blatt 'LootSheet' aktiv ist",
 
 	"foundryvtt-arms-reach.settingNameTokensIntegrationByPrefix": "Aktivieren der Abstandsinteraktion für Ziel-Token mit einem bestimmten Namenspräfix",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "Bei Aktivierung wird standardmässig die Abstandsintegration für alle Ziel-Token aktiviert, wobei das Präfix auf den Namen des Tokens (nicht den Zeichennamen) gesetzt wird.",
 
-	"foundryvtt-arms-reach.settingNameTokensIntegrationExplicitName": "Legen Sie den Namen des Quell-Tokens fest, den Sie für die Interaktion verwenden wollen",
+	"foundryvtt-arms-reach.settingNameTokensIntegrationExplicitName": "Lege den Namen des Quell-Tokens fest, den Du für die Interaktion verwenden willst",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationExplicitName": "Der hier eingestellte Name des Quell-Tokens ist derjenige, der für die Distanzinteraktion mit dem Ziel-Token verwendet wird (nicht der Charaktername). Standardmässig ist der Charaktername mit dem Benutzer verknüpft",
 
 	"foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Aktiviere/Deaktiviere Lichter-Integration",
 	"foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Lichter... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnLights": "Aktivieren die Prüfung der Distanz für Lichter auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnLights": "Aktiviert die Prüfung der Distanz für Lichter auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnLights": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Lichter auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameSoundsIntegrationFeature": "Aktiviere/Deaktiviere Sound-Iintegration",
 	"foundryvtt-arms-reach.settingHintSoundsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Sounds... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnSounds": "Aktivieren die Prüfung der Distanz für Sounds auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnSounds": "Aktiviert die Prüfung der Distanz für Sounds auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnSounds": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Sounds auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameDrawingsIntegrationFeature": "Aktiviere/Deaktiviere Zeichenelement-Integration",
 	"foundryvtt-arms-reach.settingHintDrawingsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Zeichenelemente... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDrawings": "Aktivieren die Prüfung der Distanz für Zeichenelemente auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDrawings": "Aktiviert die Prüfung der Distanz für Zeichenelemente auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnDrawings": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Zecihenelemente auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameTilesIntegrationFeature": "Aktiviere/Deaktiviere Kachel-Integration",
 	"foundryvtt-arms-reach.settingHintTilesIntegrationFeature": "Aktiviert die Reichweitenprüfung für Kacheln... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTiles": "Aktivieren die Prüfung der Distanz für Kacheln auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTiles": "Aktiviert die Prüfung der Distanz für Kacheln auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTiles": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Kacheln auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameWallsIntegrationFeature": "Aktiviere/Deaktiviere Wand-Integration",
 	"foundryvtt-arms-reach.settingHintWallsIntegrationFeature": "Aktiviert die Reichweitenprüfung für Wände... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnWalls": "Aktivieren die Prüfung der Distanz für Wäncde auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnWalls": "Aktiviert die Prüfung der Distanz für Wäncde auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnWalls": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Wände auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
 	"foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Aktiviere/Deaktiviere Templates-Integration",
 	"foundryvtt-arms-reach.settingHintTemplatesIntegrationFeature": "Aktiviert die Reichweitenprüfung für Templates... GMs ignorieren die Rechweitenlimits.",
 
-	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTemplates": "Aktivieren die Prüfung der Distanz für Templates auch für den GM",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTemplates": "Aktiviert die Prüfung der Distanz für Templates auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTemplates": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Templates auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
+
+	"foundryvtt-arms-reach.settingNameEnableInteractionForTokenOwnedByUser": "Aktiviere die Interaktion für den Benutzer und nicht für den Besitzer des Tokens",
+	"foundryvtt-arms-reach.settingHintEnableInteractionForTokenOwnedByUser": "Eine Option, mit der überprüft werden kann, ob der aktuell ausgewählte Token dem genannten Benutzer gehört, anstatt einen bestimmten Token zu wählen? Auf diese Weise kann man die Spieler als Benutzer anmelden, und derjenige, dem der Token gehört, kann zu einer Tür gehen und 'e' drücken oder den Pfeil doppelt antippen, um die Tür zu öffnen.",
 
 	"foundryvtt-arms-reach.setting.reset.name": "Einstellungen auf Standard zurücksetzen",
 	"foundryvtt-arms-reach.setting.reset.label": "Einstellungen auf Standard zurücksetzen",

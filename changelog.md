@@ -1,5 +1,10 @@
 # CHANGELOG 
 
+### 2.2.6
+
+- https://github.com/p4535992/foundryvtt-arms-reach/issues/59
+- https://github.com/p4535992/foundryvtt-arms-reach/issues/60
+
 ### 2.2.5
 
 - [Support for user rather than token owner](https://github.com/p4535992/foundryvtt-arms-reach/issues/50)
