@@ -57,13 +57,22 @@
 			"lang": "de",
 			"name": "Deutsch",
 			"path": "languages/de.json"
+		},
+		{
+			"lang": "fr",
+			"name": "Français",
+			"path": "languages/fr.json"
 		}
 	],
 	"packs": [],
 	"systems": [],
 	"scripts": [],
-	"esmodules": ["foundryvtt-arms-reach.js"],
-	"styles": ["styles/foundryvtt-arms-reach.css"],
+	"esmodules": [
+		"foundryvtt-arms-reach.js"
+	],
+	"styles": [
+		"styles/foundryvtt-arms-reach.css"
+	],
 	"compatibility": {
 		"minimum": 10,
 		"verified": 10,
