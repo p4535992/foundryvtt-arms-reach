@@ -1,5 +1,5 @@
 # CHANGELOG 
-### 2.2.8
+### 2.2.8-9
 
 - Added french language
 
