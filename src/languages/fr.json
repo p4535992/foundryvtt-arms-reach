@@ -117,7 +117,7 @@
 	"foundryvtt-arms-reach.settingHintTilesIntegrationFeature": "Distance maximale à laquelle une tuile peut interagir avec un autre jeton... 0 désactivera la limite (nécessite le rechargement de l'appli). Le MJ ignore la limitation de distance.",
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTiles": "Activer le distance de test sur les tuiles même pour le MJ",
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnWalls": "Activer le distance de test sur les murs même pour le MJ",
-	"foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Activer/désactiver l'intégration des modèles",
+	"foundryvtt-arms-reach.settingNameTemplatesIntegrationFeature": "Activer/désactiver l'intégration des gabarits",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTemplates": "Si activé, il appliquera le test de distance sur les modèles même pour le MJ ; utile si le MJ veut jouer comme un joueur.",
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTemplates": "Activer la distance de test sur les modèles, même pour le MJ",
 	"foundryvtt-arms-reach.setting.reset.name": "Remettre les réglages par défaut",
