@@ -1,10 +1,12 @@
-import { warn, error, debug, i18n, i18nFormat } from "./lib/lib";
+import { warn, error, debug, i18n, i18nFormat, getCharacterName } from "./lib/lib";
 import { StairwaysReach } from "./StairwaysReach";
 import { ResetDoorsAndFog } from "./resetdoorsandfog";
 import {
 	checkTaggerForAmrsreach,
 	getFirstPlayerToken,
+	getFirstPlayerTokenNo,
 	getFirstPlayerTokenSelected,
+	getFirstPlayerTokenSelectedNo,
 	getMousePosition,
 	getPlaceablesAt,
 	reselectTokenAfterInteraction,
@@ -77,18 +79,18 @@ export const initHooks = () => {
 		}
 
 		if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTokensIntegration")) {
-			// //@ts-ignore
-			// libWrapper.register(
-			//   CONSTANTS.MODULE_NAME,
-			//   'Token.prototype._onClickLeft',
-			//   TokenPrototypeOnClickLeftHandler,
-			//   'MIXED'
-			// );
+			//@ts-ignore
+			libWrapper.register(
+				CONSTANTS.MODULE_NAME,
+				"Token.prototype._onClickLeft",
+				TokenPrototypeOnClickLeftHandler,
+				"MIXED"
+			);
 			//@ts-ignore
 			libWrapper.register(
 				CONSTANTS.MODULE_NAME,
 				"Token.prototype._onClickLeft2",
-				TokenPrototypeOnClickLeftHandler,
+				TokenPrototypeOnClickLeft2Handler,
 				"MIXED"
 			);
 		}
@@ -492,28 +494,65 @@ export const readyHooks = async () => {
   */
 };
 
+export let currentTokenForToken: Token | undefined;
+
 export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
 	if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTokensIntegration")) {
 		const [target] = args;
 		const token = this as Token;
+		// let tokenSelected;
+
+		// tokenSelected = <Token>getFirstPlayerTokenSelected();
+		// if (!tokenSelected) {
+		// 	tokenSelected = <Token>getFirstPlayerToken();
+		// }
+		if (!currentTokenForToken) {
+			currentTokenForToken = token;
+		}
+		// else {
+		// 	currentTokenForToken = undefined;
+		// }
+	}
+	return wrapped(...args);
+};
+
+export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...args) {
+	if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTokensIntegration")) {
+		const [target] = args;
+		const token = this as Token;
 		const prefixToCheck = <string>game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationByPrefix");
-		const isTokenNameChecked = token.name?.startsWith(prefixToCheck);
+		const isTokenNameChecked = getCharacterName(token)?.startsWith(prefixToCheck);
 		// lootsheetnpc5e/template/npc-sheet.html
 		const isNPCLootSheet = token.document.actor?.sheet?.template.includes("lootsheetnpc5e/template/npc-sheet.html");
 		const enableNPCLootSheet = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationWithLootSheet");
-		if (isTokenNameChecked || (isNPCLootSheet && enableNPCLootSheet)) {
+		if (
+			isTokenNameChecked ||
+			(isNPCLootSheet && enableNPCLootSheet) ||
+			(taggerModuleActive && checkTaggerForAmrsreach(token))
+		) {
 			const nameSourceToken = <string>game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationExplicitName");
 			let tokenSelected;
+
 			if (nameSourceToken) {
 				tokenSelected = <Token>(
-					canvas.tokens?.placeables.find((tokenTmp: Token) => tokenTmp.name === nameSourceToken)
+					canvas.tokens?.placeables.find(
+						(tokenTmp: Token) =>
+							tokenTmp.name === nameSourceToken || tokenTmp.document.name === nameSourceToken
+					)
 				);
 			} else {
-				tokenSelected = <Token>getFirstPlayerTokenSelected();
+				if (currentTokenForToken?.id !== token.id) {
+					tokenSelected = currentTokenForToken;
+					reselectTokenAfterInteraction(tokenSelected);
+				}
 				if (!tokenSelected) {
-					tokenSelected = <Token>getFirstPlayerToken();
+					tokenSelected = <Token>getFirstPlayerTokenSelectedNo(<Token>currentTokenForToken);
+					if (!tokenSelected) {
+						tokenSelected = <Token>getFirstPlayerTokenNo(<Token>currentTokenForToken);
+					}
 				}
 			}
+
 			// Check if no token is selected and you are the GM avoid the distance calculation
 			let doNotReselectIfGM = false;
 			if (
@@ -528,6 +567,7 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
 				if (!doNotReselectIfGM) {
 					reselectTokenAfterInteraction(tokenSelected);
 				}
+				currentTokenForToken = undefined;
 				return wrapped(...args);
 			}
 			const isInReach = await TokensReach.globalInteractionDistance(tokenSelected, token);
@@ -535,14 +575,21 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
 				reselectTokenAfterInteraction(tokenSelected);
 			}
 			if (!isInReach) {
+				currentTokenForToken = undefined;
 				return;
+			} else {
+				currentTokenForToken = undefined;
 			}
+		} else {
+			currentTokenForToken = undefined;
 		}
+	} else {
+		currentTokenForToken = undefined;
 	}
 	return wrapped(...args);
 };
 
-let currentTokenForNote: Token;
+let currentTokenForNote: Token | undefined;
 
 export const NotePrototypeOnClickLeft1Handler = async function (wrapped, ...args) {
 	if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableJournalsIntegration")) {
@@ -587,6 +634,7 @@ export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args
 			if (!doNotReselectIfGM) {
 				reselectTokenAfterInteraction(tokenSelected);
 			}
+			currentTokenForNote = undefined;
 			return wrapped(...args);
 		}
 		const isInReach = await NotesReach.globalInteractionDistance(tokenSelected, note);
@@ -594,8 +642,12 @@ export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args
 			reselectTokenAfterInteraction(tokenSelected);
 		}
 		if (!isInReach) {
+			currentTokenForNote = undefined;
 			return;
 		}
+		currentTokenForNote = undefined;
+	} else {
+		currentTokenForNote = undefined;
 	}
 	return wrapped(...args);
 };

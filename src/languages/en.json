@@ -144,8 +144,8 @@
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTokens": "Enable the check distance on Tokens even for GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTokens": "If enabled it will apply the check of the distance on Tokens even for GM, useful if the GM want to play as a player.",
 
-	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Enable the distance interaction for 'Loot Sheet'",
-	"foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "If true by default enable the distance integration for all the token with the 'LootSheet' sheet active",
+	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Enable the distance interaction for 'Loot Sheet NPC 5E'",
+	"foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "If true by default enable the distance integration for all the token with the 'LootSheet' sheet active (https://foundryvtt.com/packages/lootsheetnpc5e)",
 
 	"foundryvtt-arms-reach.settingNameTokensIntegrationByPrefix": "Enable the distance interaction on target token with a specific name prefix",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "If true by default enable the distance integration for all the target token with the prefix setted on the name of the token (not the character name)",

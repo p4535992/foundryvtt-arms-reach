@@ -101,7 +101,7 @@
 	"foundryvtt-arms-reach.settingNameTokensIntegrationFeature": "Activer/Désactiver l'intégration des jetons",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationFeature": "Distance maximale à laquelle un jeton peut interagir avec un autre jeton... 0 désactivera la limite (nécessite le rechargement de l'appli). Le MJ ignore la limitation de distance.",
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTokens": "Activer la distance du test sur les jetons même pour le MJ",
-	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Activer l'interaction de la distance pour 'Loot Sheet'",
+	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Activer l'interaction de la distance pour 'Loot Sheet NPC 5E' (https://foundryvtt.com/packages/lootsheetnpc5e)",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "Si coché par défaut, active l'intégration de la distance pour tous les jetons avec la feuille 'LootSheet' active",
 	"foundryvtt-arms-reach.settingNameTokensIntegrationByPrefix": "Activer l'interaction de la distance sur le jeton cible avec un préfixe de nom spécifique",
 	"foundryvtt-arms-reach.settingNameTokensIntegrationExplicitName": "Définir le nom du jeton source que vous voulez utiliser pour l'interaction",

@@ -144,8 +144,8 @@
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnTokens": "Aktiviert die Prüfung der Distanz für Token auch für den GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnTokens": "Wenn diese Option aktiviert ist, gilt die Prüfung des Abstands für Token auch für den GM, nützlich wenn der GM als Spieler agieren möchte.",
 
-	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Aktiviert die Entfernungsinteraktion für 'Loot Sheet'.",
-	"foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "Wenn aktiviert, dann wird standardmässig die Entfernungsintegration für alle Token aktiviert, bei denen das Blatt 'LootSheet' aktiv ist",
+	"foundryvtt-arms-reach.settingNameTokensIntegrationWithLootSheet": "Aktiviert die Entfernungsinteraktion für 'Loot Sheet NPC 5E'.",
+	"foundryvtt-arms-reach.settingHintTokensIntegrationWithLootSheet": "Wenn aktiviert, dann wird standardmässig die Entfernungsintegration für alle Token aktiviert, bei denen das Blatt 'LootSheet' aktiv ist (https://foundryvtt.com/packages/lootsheetnpc5e)",
 
 	"foundryvtt-arms-reach.settingNameTokensIntegrationByPrefix": "Aktivieren der Abstandsinteraktion für Ziel-Token mit einem bestimmten Namenspräfix",
 	"foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "Bei Aktivierung wird standardmässig die Abstandsintegration für alle Ziel-Token aktiviert, wobei das Präfix auf den Namen des Tokens (nicht den Zeichennamen) gesetzt wird.",

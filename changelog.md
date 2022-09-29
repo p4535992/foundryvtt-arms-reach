@@ -1,4 +1,8 @@
 # CHANGELOG 
+### 2.2.10 
+
+- Bug fix : [[BUG] PF2e LootSheet Characters still able to be interacted with from distance ](https://github.com/p4535992/foundryvtt-arms-reach/issues/65)
+
 ### 2.2.8-9
 
 - Added french language

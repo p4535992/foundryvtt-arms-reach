@@ -317,10 +317,15 @@ export function getTokenByTokenName(name) {
  */
 export const getCharacterName = function (token: Token) {
 	let tokenName = "";
-	if (token.name) {
-		tokenName = token.name;
-	} else if (token.actor && token.actor.name) {
+	if (token.actor && token.actor.name) {
 		tokenName = token.actor.name;
+	} else if (token.name) {
+		tokenName = token.name;
+	}
+	//@ts-ignore
+	else if (token.document.actorId) {
+		//@ts-ignore
+		tokenName = game.actors?.get(token.document.actorId).name;
 	}
 	return tokenName;
 };

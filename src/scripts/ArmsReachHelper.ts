@@ -204,6 +204,39 @@ export const getFirstPlayerTokenSelected = function (): Token | null {
 };
 
 /**
+ * Returns the first selected token
+ */
+export const getFirstPlayerTokenSelectedNo = function (noToken: Token): Token | null {
+	// Get first token ownted by the player
+	const selectedTokens = <Token[]>canvas.tokens?.controlled;
+	if (selectedTokens.length > 1) {
+		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+		return null;
+	}
+	if (!selectedTokens || selectedTokens.length === 0) {
+		//if(game.user.character.token){
+		//  //@ts-ignore
+		//  return game.user.character.token;
+		//}else{
+		return null;
+		//}
+	}
+	if (
+		selectedTokens[0] &&
+		<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")
+	) {
+		const isPlayerOwned = selectedTokens[0]?.document.isOwner;
+		if (!isPlayerOwned) {
+			return null;
+		} else {
+			return <string>selectedTokens[0]?.id !== <string>noToken?.id ? <Token>selectedTokens[0] : null;
+		}
+	} else {
+		return <string>selectedTokens[0]?.id !== <string>noToken?.id ? <Token>selectedTokens[0] : null;
+	}
+};
+
+/**
  * Returns a list of selected (or owned, if no token is selected)
  * note: ex getSelectedOrOwnedToken
  */
@@ -222,12 +255,62 @@ export const getFirstPlayerToken = function (): Token | null {
 		if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
 			if (!controlled.length || controlled.length === 0) {
 				// If no token is selected use the token of the users character
-				token = <Token>//@ts-ignore
-				canvas.tokens?.placeables.find((token) => token.document.actorId === game.user?.character?.id);
+				token = <
+					Token //@ts-ignore
+				>canvas.tokens?.placeables.find((token) => token.document.actorId === game.user?.character?.id);
 			}
 			// If no token is selected use the first owned token of the users character you found
 			if (!token) {
 				token = <Token>canvas.tokens?.ownedTokens[0];
+			}
+		}
+	}
+	if (token && <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")) {
+		const isPlayerOwned = token.document.isOwner;
+		if (!isPlayerOwned) {
+			return null;
+		} else {
+			return token;
+		}
+	} else {
+		return token;
+	}
+};
+
+/**
+ * Returns a list of selected (or owned, if no token is selected)
+ * note: ex getSelectedOrOwnedToken
+ */
+export const getFirstPlayerTokenNo = function (noToken: Token): Token | null {
+	// Get controlled token
+	let token: Token;
+	const controlled: Token[] = <Token[]>canvas.tokens?.controlled;
+	// Do nothing if multiple tokens are selected
+	if (controlled.length && controlled.length > 1) {
+		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+		return null;
+	}
+	// If exactly one token is selected, take that
+	token = <Token>controlled[0];
+	if (!token) {
+		if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+			if (!controlled.length || controlled.length === 0) {
+				// If no token is selected use the token of the users character
+				token = <Token>canvas.tokens?.placeables.find(
+					(token) =>
+						//@ts-ignore
+						token.document.actorId === game.user?.character?.id && token.id !== noToken.id
+				);
+			}
+			// If no token is selected use the first owned token of the users character you found
+			if (!token) {
+				for (const tok of <Token[]>canvas.tokens?.ownedTokens) {
+					if (tok.id !== noToken.id) {
+						token = tok;
+						break;
+					}
+				}
+				// token = <Token>canvas.tokens?.ownedTokens[0];
 			}
 		}
 	}
@@ -434,15 +517,19 @@ const getPlaceableY = function (placeable: any): number {
 // ============================================================================================
 
 function distance_between_token_rect(p1: Token, p2: ArmsreachData) {
-	const x1 = p1.x;
-	const y1 = p1.y;
-	const x1b = p1.x + <number>p1.w;
-	const y1b = p1.y + <number>p1.h;
+	//@ts-ignore
+	const x1 = p1.x ? p1.x : p1.document.x;
+	//@ts-ignore
+	const y1 = p1.y ? p1.y : p1.document.y;
+	const x1b = x1 + <number>p1.w;
+	const y1b = y1 + <number>p1.h;
 
-	const x2 = p2.x;
-	const y2 = p2.y;
-	const x2b = p2.x + <number>p2.w;
-	const y2b = p2.y + <number>p2.h;
+	//@ts-ignore
+	const x2 = p2.x ? p2.x : p2.document.x;
+	//@ts-ignore
+	const y2 = p2.y ? p2.y : p2.document.y;
+	const x2b = x2 + <number>p2.w;
+	const y2b = y2 + <number>p2.h;
 
 	const left = x2b < x1;
 	const right = x1b < x2;
@@ -496,6 +583,14 @@ function units_between_token_and_placeable(token: Token, b: ArmsreachData) {
 		// TODO i don't understand this for manage the door control
 		if (b.documentName !== WallDocument.documentName) {
 			// dist = (Math.floor(dist) / unitGridSize) * unitSize;
+			// if (b.documentName === TokenDocument.documentName) {
+			// 	// const tokensSizeAdjust = (Math.min(<number>b.w, <number>b.h) || 0) / Math.SQRT2;
+			// 	// const tokenScaleAdjust = tokensSizeAdjust / <number>canvas.dimensions?.size;
+			// 	// // dist = (dist * <number>canvas.dimensions?.size) / <number>canvas.dimensions?.distance - tokensSizeAdjust;
+			// 	// dist = dist / <number>canvas.dimensions?.distance;
+			// 	const grids = grids_between_tokens(token, b);
+			// 	dist = grids / (<number>canvas.dimensions?.size / <number>canvas.grid?.size);
+			// }
 		} else {
 			//@ts-ignore
 			const isDoor: DoorControl = <DoorControl>canvas.controls?.doors?.children.find((x: DoorControl) => {
@@ -621,6 +716,19 @@ function getUnitTokenDist(token: Token, placeableObjectTarget: ArmsreachData) {
 	const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
 	return d;
 }
+
+// function getUnitTokenDistOriginalLevels(token1, token2) {
+// 	const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
+// 	const x1 = token1.center.x;
+// 	const y1 = token1.center.y;
+// 	const z1 = token1.losHeight * unitsToPixel;
+// 	const x2 = token2.center.x;
+// 	const y2 = token2.center.y;
+// 	const z2 = token2.losHeight * unitsToPixel;
+
+// 	const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
+// 	return d;
+// }
 
 /**
  * Find out if a token is in the range of a particular object

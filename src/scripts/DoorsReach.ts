@@ -465,7 +465,11 @@ export const DoorsReach = {
 				if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
 					const res = checkElevation(token, wall);
 					if (!res) {
-						warn(`The token '${token.name}' is not on the elevation range of this placeable object`);
+						warn(
+							`The token '${getCharacterName(
+								token
+							)}' is not on the elevation range of this placeable object`
+						);
 						return false;
 					}
 				}
