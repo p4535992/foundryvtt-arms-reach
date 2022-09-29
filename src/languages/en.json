@@ -120,6 +120,30 @@
 	"foundryvtt-arms-reach.settingNameTaggerIntegrationFeature": "Enable/Disable Tagger Module integration",
 	"foundryvtt-arms-reach.settingHintTaggerIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
 
+	"foundryvtt-arms-reach.settingNameTaggerStairwayIntegrationFeature": "Enable/Disable Tagger Stairway Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerStairwayIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerTokenIntegrationFeature": "Enable/Disable Tagger Token Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerTokenIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerNoteIntegrationFeature": "Enable/Disable Tagger Note Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerNoteIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerLightIntegrationFeature": "Enable/Disable Tagger Light Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerLightIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerSoundIntegrationFeature": "Enable/Disable Tagger Sound Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerSoundIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerDrawingIntegrationFeature": "Enable/Disable Tagger Drawing Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerDrawingIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerTileIntegrationFeature": "Enable/Disable Tagger Tile Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerTileIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
+	"foundryvtt-arms-reach.settingNameTaggerWallIntegrationFeature": "Enable/Disable Tagger Wall Module integration",
+	"foundryvtt-arms-reach.settingHintTaggerWallIntegrationFeature": "All the distance calculation are limited now to placeable object with the 'armsreach' tag on it. Remember you need to activate the tagger module for this",
+
 	"foundryvtt-arms-reach.settingNameResetDoorsAndFogFeature": "Reset Doors And Fog Feature",
 	"foundryvtt-arms-reach.settingHintResetDoorsAndFogFeature": "Add a voice on context menu for close all the doors and reset the fog on a scene",
 

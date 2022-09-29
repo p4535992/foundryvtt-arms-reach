@@ -1,5 +1,5 @@
 # CHANGELOG 
-### 2.2.10 
+### 2.2.10-11
 
 - Bug fix : [[BUG] PF2e LootSheet Characters still able to be interacted with from distance ](https://github.com/p4535992/foundryvtt-arms-reach/issues/65)
 

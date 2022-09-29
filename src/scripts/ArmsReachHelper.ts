@@ -379,7 +379,10 @@ export const reselectTokenAfterInteraction = function (character: Token): void {
 	}
 };
 
-export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
+export const checkTaggerForAmrsreachForStairway = function (placeable: PlaceableObject) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerStairwayIntegration"))) {
+		return true;
+	}
 	//@ts-ignore
 	const tags = <string[]>Tagger?.getTags(placeable) || [];
 	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
@@ -388,6 +391,107 @@ export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
 		return false;
 	}
 };
+
+export const checkTaggerForAmrsreachForToken = function (placeable: Token) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerTokenIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const checkTaggerForAmrsreachForNote = function (placeable: Note) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerNoteIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const checkTaggerForAmrsreachForLight = function (placeable: AmbientLight) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerLightIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const checkTaggerForAmrsreachForSound = function (placeable: AmbientSound) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerSoundIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const checkTaggerForAmrsreachForDrawing = function (placeable: Drawing) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerDrawingIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const checkTaggerForAmrsreachForTile = function (placeable: Tile) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerTileIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const checkTaggerForAmrsreachForWall = function (placeable: Wall) {
+	if (!(<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerWallIntegration"))) {
+		return true;
+	}
+	//@ts-ignore
+	const tags = <string[]>Tagger?.getTags(placeable) || [];
+	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+// export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
+// 	//@ts-ignore
+// 	const tags = <string[]>Tagger?.getTags(placeable) || [];
+// 	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
+// 		return true;
+// 	} else {
+// 		return false;
+// 	}
+// };
 
 export const getMousePosition = function (canvas: Canvas, event): { x: number; y: number } {
 	// const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;

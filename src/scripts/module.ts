@@ -2,7 +2,13 @@ import { warn, error, debug, i18n, i18nFormat, getCharacterName } from "./lib/li
 import { StairwaysReach } from "./StairwaysReach";
 import { ResetDoorsAndFog } from "./resetdoorsandfog";
 import {
-	checkTaggerForAmrsreach,
+	checkTaggerForAmrsreachForDrawing,
+	checkTaggerForAmrsreachForLight,
+	checkTaggerForAmrsreachForNote,
+	checkTaggerForAmrsreachForSound,
+	checkTaggerForAmrsreachForTile,
+	checkTaggerForAmrsreachForToken,
+	checkTaggerForAmrsreachForWall,
 	getFirstPlayerToken,
 	getFirstPlayerTokenNo,
 	getFirstPlayerTokenSelected,
@@ -36,9 +42,8 @@ export const initHooks = () => {
 	warn("Init Hooks processing");
 	Hooks.once("socketlib.ready", registerSocket);
 
-	taggerModuleActive =
-		<boolean>game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active &&
-		<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerIntegration");
+	taggerModuleActive = <boolean>game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active;
+	// <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerIntegration");
 
 	if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableArmsReach")) {
 		if (<boolean>game.settings.get(CONSTANTS.MODULE_NAME, "enableDoorsIntegration")) {
@@ -272,7 +277,7 @@ export const readyHooks = async () => {
 					) {
 						doNotReselectIfGM = true;
 					}
-					if (taggerModuleActive && !checkTaggerForAmrsreach(drawing)) {
+					if (taggerModuleActive && !checkTaggerForAmrsreachForDrawing(drawing)) {
 						if (!doNotReselectIfGM) {
 							reselectTokenAfterInteraction(tokenSelected);
 						}
@@ -308,7 +313,7 @@ export const readyHooks = async () => {
 					) {
 						doNotReselectIfGM = true;
 					}
-					if (taggerModuleActive && !checkTaggerForAmrsreach(tile)) {
+					if (taggerModuleActive && !checkTaggerForAmrsreachForTile(tile)) {
 						if (!doNotReselectIfGM) {
 							reselectTokenAfterInteraction(tokenSelected);
 						}
@@ -344,7 +349,7 @@ export const readyHooks = async () => {
 					) {
 						doNotReselectIfGM = true;
 					}
-					if (taggerModuleActive && !checkTaggerForAmrsreach(wall)) {
+					if (taggerModuleActive && !checkTaggerForAmrsreachForWall(wall)) {
 						if (!doNotReselectIfGM) {
 							reselectTokenAfterInteraction(tokenSelected);
 						}
@@ -528,7 +533,7 @@ export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...arg
 		if (
 			isTokenNameChecked ||
 			(isNPCLootSheet && enableNPCLootSheet) ||
-			(taggerModuleActive && checkTaggerForAmrsreach(token))
+			(taggerModuleActive && checkTaggerForAmrsreachForToken(token))
 		) {
 			const nameSourceToken = <string>game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationExplicitName");
 			let tokenSelected;
@@ -563,7 +568,7 @@ export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...arg
 			) {
 				doNotReselectIfGM = true;
 			}
-			if (taggerModuleActive && !checkTaggerForAmrsreach(token)) {
+			if (taggerModuleActive && !checkTaggerForAmrsreachForToken(token)) {
 				if (!doNotReselectIfGM) {
 					reselectTokenAfterInteraction(tokenSelected);
 				}
@@ -630,7 +635,7 @@ export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args
 		) {
 			doNotReselectIfGM = true;
 		}
-		if (taggerModuleActive && !checkTaggerForAmrsreach(note)) {
+		if (taggerModuleActive && !checkTaggerForAmrsreachForNote(note)) {
 			if (!doNotReselectIfGM) {
 				reselectTokenAfterInteraction(tokenSelected);
 			}
@@ -671,7 +676,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 		) {
 			doNotReselectIfGM = true;
 		}
-		if (taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)) {
+		if (taggerModuleActive && !checkTaggerForAmrsreachForWall(doorControl.wall)) {
 			if (!doNotReselectIfGM) {
 				reselectTokenAfterInteraction(tokenSelected);
 			}
@@ -734,7 +739,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
 		) {
 			doNotReselectIfGM = true;
 		}
-		if (taggerModuleActive && !checkTaggerForAmrsreach(doorControl.wall)) {
+		if (taggerModuleActive && !checkTaggerForAmrsreachForWall(doorControl.wall)) {
 			if (!doNotReselectIfGM) {
 				reselectTokenAfterInteraction(tokenSelected);
 			}
@@ -771,7 +776,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
 		) {
 			doNotReselectIfGM = true;
 		}
-		if (taggerModuleActive && !checkTaggerForAmrsreach(light)) {
+		if (taggerModuleActive && !checkTaggerForAmrsreachForLight(light)) {
 			if (!doNotReselectIfGM) {
 				reselectTokenAfterInteraction(tokenSelected);
 			}
@@ -808,7 +813,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 		) {
 			doNotReselectIfGM = true;
 		}
-		if (taggerModuleActive && !checkTaggerForAmrsreach(sound)) {
+		if (taggerModuleActive && !checkTaggerForAmrsreachForSound(sound)) {
 			if (!doNotReselectIfGM) {
 				reselectTokenAfterInteraction(tokenSelected);
 			}
