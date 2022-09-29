@@ -1,0 +1,23 @@
+{
+	"foundryvtt-arms-reach.tokensNotInReach": "O token não está ao alcance ou está trancado",
+	"foundryvtt-arms-reach.noCharacterSelected": "Nenhum personagem está selecionado para interagir com uma porta.",
+	"foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "Nenhum personagem está selecionado para centralizar a câmera.",
+	"foundryvtt-arms-reach.doorNotFoundInReachFor": "Nenhuma porta foi encontrada ao alcance de {tokenName} ou está trancada",
+	"foundryvtt-arms-reach.stairwaysNotFoundInReachFor": "Nenhuma escada foi encontrada ao alcance de {tokenName} ou está trancada",
+	"foundryvtt-arms-reach.notesNotInReachFor": "A nota não está ao alcance de {tokenName} ou está trancada",
+	"foundryvtt-arms-reach.tokensNotFoundInReachFor": "Nenhum token foi encontrado ao alcance de {tokenName} ou está trancado",
+	"foundryvtt-arms-reach.tokensNotInReachFor": "O token não está ao alcance de {tokenName} ou está trancado",
+	"foundryvtt-arms-reach.noCharacterSelectedForStairway": "Nenhum personagem está selecionado para interagir com uma escada.",
+	"foundryvtt-arms-reach.doorIsInReachButIsLocked": "A porta está ao alcance, mas está trancada.",
+	"foundryvtt-arms-reach.doorNotFoundInReach": "Nenhuma porta foi encontrada ao alcance ou está trancada.",
+	"foundryvtt-arms-reach.doorNotInReach": "Porta fora de alcance",
+	"foundryvtt-arms-reach.doorNotInReachFor": "A porta não está ao alcance de {tokenName} ou está trancada",
+	"foundryvtt-arms-reach.stairwaysNotFoundInReach": "Nenhuma escada foi encontrada ao alcance ou está trancada.",
+	"foundryvtt-arms-reach.doorIsInReachButIsLockedFor": "A porta está ao alcance, mas está trancada para ${tokenName}",
+	"foundryvtt-arms-reach.stairwaysNotInReach": "A escada não está ao alcance ou está trancada",
+	"foundryvtt-arms-reach.stairwaysNotInReachFor": "A escada não está ao alcance de {tokenName} ou está trancada",
+	"foundryvtt-arms-reach.notesNotFoundInReach": "Nenhuma nota foi encontrada ao alcance ou está trancada.",
+	"foundryvtt-arms-reach.notesNotFoundInReachFor": "Nenhuma nota foi encontrada ao alcance de {tokenName} ou está trancada",
+	"foundryvtt-arms-reach.notesNotInReach": "A nota não está ao alcance ou está trancada",
+	"foundryvtt-arms-reach.tokensNotFoundInReach": "Nenhum token foi encontrado ao alcance ou está trancado."
+}
