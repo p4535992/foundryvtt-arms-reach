@@ -139,7 +139,7 @@
 	"foundryvtt-arms-reach.setting.reset.label": "Einstellungen auf Standard zurücksetzen",
 	"foundryvtt-arms-reach.setting.reset.hint": "Dadurch werden alle Einstellungen auf die Standardeinstellungen des aktiven Spielsystems zurückgesetzt..",
 	"foundryvtt-arms-reach.dialogs.resetsettings.title": "Modul-Einstellungen zurücksetzen",
-	"foundryvtt-arms-reach.dialogs.resetsettings.content": "Sind Sie sicher, dass Sie alle Moduleinstellungen auf die Standardwerte des aktuellen Systems zurücksetzen wollen? <strong>DIES KANN NICHT RÜCKGAENGIG GEMACHT WERDEN!</strong>",
+	"foundryvtt-arms-reach.dialogs.resetsettings.content": "Sind Sie sicher, dass Sie alle Moduleinstellungen auf die Standardwerte des aktuellen Systems zurücksetzen wollen? <strong>DIES KANN NICHT RÜCKGÄNGIG GEMACHT WERDEN!</strong>",
 	"foundryvtt-arms-reach.dialogs.resetsettings.confirm": "Modul-Einstellungen zurücksetzen",
 	"foundryvtt-arms-reach.dialogs.resetsettings.cancel": "Abbruch",
 	"foundryvtt-arms-reach.setting.debug.name": "Debugging einschalten",
