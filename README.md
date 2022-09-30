@@ -227,13 +227,14 @@ To interact with a door, journal, ecc., the player need to have a token selected
 * Add distance calculation for note and journal on the canvas
 * Automatically flag journal notes to show on the map without having to have your players turn it on themselves.
 
-### Token Feature (Beta need feedback)
+### Token Feature
 
 * Add distance calculation for owned source token and generic target token on the canvas for open the sheet and emulate a loot chest
-* GM can't use this feature because they owned every token so you must set the explicit the source token on module setting
-* This feature work with only one owned source token on the canvas at the time
-* You must set the name of your source token (not the character name) on the module setting 
-* If no source token is setted on the module setting the module take the first owned token of the player
+* GM can use this feature but beware there is probably some glitch in some use case because they owned every token
+* ~~This feature work with only one owned source token on the canvas at the time~~
+* [OPTIONAL] You can set the name of your _explicit source token_ (not the character name) on the specific module setting 
+* If no _explicit source token_ is setted on the module setting the module take the first selected token of the player, if no selected token ias present it will try to get the first owwned token of the player
+* It's advisable for this feature to use the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) instead the name and sheet checker is more dinamic.
 
 ### Light Feature (Beta need feedback)
 
@@ -263,7 +264,9 @@ To interact with a door, journal, ecc., the player need to have a token selected
 ### Tagger Feature
 
 * Add integration with [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger), you decide specifically for which placeable objects on the canvas the distance calculation should be triggered
-* IMPORTANT: the tagger you must used for any placeable object is the string 'armsreach'
+* **IMPORTANT:** the tagger you must used for any placeable object is the string 'armsreach'
+* From 2.2.11 this feature is been splitted for each category of placeable object (Wall, Token, Note, ecc.) for a better customization
+
 
 ### Reset Doors and Fog feature Feature
 
