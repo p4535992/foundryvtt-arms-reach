@@ -199,5 +199,6 @@
 	"foundryvtt-arms-reach.movement-alpha-hint": "Les valeurs inférieures sont plus transparentes",
 	"foundryvtt-arms-reach.ic_visibility-hint": "Quand la surcouche doit elle être visible durant le combat ?",
 	"foundryvtt-arms-reach.visibilities.overlayVisibility.hotkeys": "Seulement avec ALT ou en glissant le jeton",
-	"foundryvtt-arms-reach.ranges-hint": "Liste des portées, séparées par des virgules, à choisir dans le dialogue des réglages rapides"
+	"foundryvtt-arms-reach.ranges-hint": "Liste des portées, séparées par des virgules, à choisir dans le dialogue des réglages rapides",
+	"foundryvtt-arms-reach.settingNameTaggerStairwayIntegrationFeature": "Activer/Désactiver l'intégration du module Tagger stairway"
 }
