@@ -171,7 +171,7 @@ const API = {
 			//   const measuredTarget = <MeasuredTemplate>canvas.templates?.placeables?.find((x:MeasuredTemplate) => {return x.id === <string>placeableObject.id;});
 			//   isInReach = MeasuredsReach.globalInteractionDistance(token,ambientSoundTarget);
 		} else if (relevantDocument instanceof TileDocument) {
-			const tileTarget = <Tile>canvas.foreground?.placeables?.find((x: Tile) => {
+			const tileTarget = <Tile>canvas.tiles?.placeables?.find((x: Tile) => {
 				return x.id === <string>placeableObject.id;
 			});
 			isInReach = TilesReach.globalInteractionDistance(token, tileTarget, maxDistance, useGrid, <string>userId);
