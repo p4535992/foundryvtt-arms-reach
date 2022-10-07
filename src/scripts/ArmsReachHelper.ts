@@ -70,8 +70,7 @@ export const getTokenCenter = function (token) {
  */
 export const getCenter = function (placeableObject: PlaceableObject, grid: any = {}): { x: number; y: number } {
 	const data = placeableObject.document ? placeableObject.document : placeableObject;
-	const placeableObjectDocument =
-		placeableObject.document && placeableObject.document.documentName ? placeableObject.document : placeableObject;
+	const placeableObjectDocument = placeableObject.document?.documentName ? placeableObject.document : placeableObject;
 	//getCenter(type, data, grid = {}){
 	let isGridSpace = false;
 	//@ts-ignore

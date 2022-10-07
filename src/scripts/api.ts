@@ -133,12 +133,12 @@ const API = {
 		userId?: string
 	): boolean {
 		// const userId = <string>game.users?.find((u:User) => return u.id = gameUserId)[0];
-		let relevantDocument;
-		if (placeableObject instanceof PlaceableObject) {
-			relevantDocument = placeableObject?.document;
-		} else {
-			relevantDocument = placeableObject;
-		}
+		let relevantDocument = placeableObject?.document ? placeableObject?.document : placeableObject;
+		// if (placeableObject instanceof PlaceableObject) {
+		// 	relevantDocument = placeableObject?.document;
+		// } else {
+		// 	relevantDocument = placeableObject;
+		// }
 		let isInReach = false;
 		if (relevantDocument instanceof TokenDocument) {
 			const tokenTarget = <Token>canvas.tokens?.placeables?.find((x: Token) => {
@@ -171,7 +171,8 @@ const API = {
 			//   const measuredTarget = <MeasuredTemplate>canvas.templates?.placeables?.find((x:MeasuredTemplate) => {return x.id === <string>placeableObject.id;});
 			//   isInReach = MeasuredsReach.globalInteractionDistance(token,ambientSoundTarget);
 		} else if (relevantDocument instanceof TileDocument) {
-			const tileTarget = <Tile>canvas.foreground?.placeables?.find((x: Tile) => {
+			//@ts-ignore
+			const tileTarget = <Tile>canvas.tiles?.placeables?.find((x: Tile) => {
 				return x.id === <string>placeableObject.id;
 			});
 			isInReach = TilesReach.globalInteractionDistance(token, tileTarget, maxDistance, useGrid, <string>userId);
@@ -219,7 +220,9 @@ const API = {
 				return x.id === <string>placeableObject.id;
 			});
 			isInReach = NotesReach.globalInteractionDistance(token, noteTarget, maxDistance, useGrid, <string>userId);
-		} else if (relevantDocument.name === "Stairway") {
+		}
+		//@ts-ignore
+		else if (relevantDocument?.name === "Stairway" || relevantDocument?.documentName === "Stairway") {
 			//@ts-ignore
 			const stairwayTarget = <Note>canvas.stairways?.placeables?.find((x: PlaceableObject) => {
 				return x.id === <string>placeableObject.id;
