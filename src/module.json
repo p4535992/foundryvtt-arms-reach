@@ -67,13 +67,22 @@
 			"lang": "pt-BR",
 			"name": "Português (Brasil)",
 			"path": "languages/pt_BR.json"
+		},
+		{
+			"lang": "es",
+			"name": "Español",
+			"path": "languages/es.json"
 		}
 	],
 	"packs": [],
 	"systems": [],
 	"scripts": [],
-	"esmodules": ["foundryvtt-arms-reach.js"],
-	"styles": ["styles/foundryvtt-arms-reach.css"],
+	"esmodules": [
+		"foundryvtt-arms-reach.js"
+	],
+	"styles": [
+		"styles/foundryvtt-arms-reach.css"
+	],
 	"compatibility": {
 		"minimum": 10,
 		"verified": 10,
