@@ -1,1 +1,4 @@
-{}
+{
+	"foundryvtt-arms-reach.noCharacterSelected": "No hay ningún personaje seleccionado para interactuar con la puerta.",
+	"foundryvtt-arms-reach.noCharacterSelectedToCenterCamera": "No hay ningún personaje seleccionado para centrar la cámara sobre él."
+}
