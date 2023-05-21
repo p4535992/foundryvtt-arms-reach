@@ -105,5 +105,6 @@
 	"foundryvtt-arms-reach.settingHintTaggerStairwayIntegrationFeature": "Todo o cálculo de distância está limitado agora ao objeto posicionável com a tag 'armsreach' nele. Lembre-se que você precisa ativar o módulo tagger para isso",
 	"foundryvtt-arms-reach.settingHintTaggerNoteIntegrationFeature": "Todo o cálculo de distância está limitado agora ao objeto posicionável com a tag 'armsreach' nele. Lembre-se que você precisa ativar o módulo tagger para isso",
 	"foundryvtt-arms-reach.settingHintTaggerSoundIntegrationFeature": "Todo o cálculo de distância está limitado agora ao objeto posicionável com a tag 'armsreach' nele. Lembre-se que você precisa ativar o módulo tagger para isso",
-	"foundryvtt-arms-reach.settingHintTaggerWallIntegrationFeature": "Todo o cálculo de distância está limitado agora ao objeto posicionável com a tag 'armsreach' nele. Lembre-se que você precisa ativar o módulo tagger para isso"
+	"foundryvtt-arms-reach.settingHintTaggerWallIntegrationFeature": "Todo o cálculo de distância está limitado agora ao objeto posicionável com a tag 'armsreach' nele. Lembre-se que você precisa ativar o módulo tagger para isso",
+	"foundryvtt-arms-reach.settingHintDoorsIntegrationFeature": "Distância máxima que um token pode interagir com uma porta... 0 desabilitará o limite (precisa recarregar o aplicativo). GMs ignoram esta limitação de distância."
 }
