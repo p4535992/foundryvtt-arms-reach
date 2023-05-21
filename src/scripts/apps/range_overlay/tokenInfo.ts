@@ -30,14 +30,14 @@ export class TokenInfo {
 	updateLocation(updateData) {
 		this.location = {
 			x: updateData?.x ?? this.token.x,
-			y: updateData?.y ?? this.token.y,
+			y: updateData?.y ?? this.token.y
 		};
 	}
 
 	updateMeasureFrom(updateData) {
 		this.measureFrom = {
 			x: updateData?.x ?? this.token.x,
-			y: updateData?.y ?? this.token.y,
+			y: updateData?.y ?? this.token.y
 		};
 	}
 

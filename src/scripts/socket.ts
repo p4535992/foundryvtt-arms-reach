@@ -6,7 +6,7 @@ export const SOCKET_HANDLERS = {
 	/**
 	 * Generic sockets
 	 */
-	CALL_HOOK: "callHook",
+	CALL_HOOK: "callHook"
 
 	/**
 	 * Item pile sockets

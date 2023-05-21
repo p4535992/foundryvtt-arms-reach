@@ -15,7 +15,7 @@ import {
 	getFirstPlayerTokenSelectedNo,
 	getMousePosition,
 	getPlaceablesAt,
-	reselectTokenAfterInteraction,
+	reselectTokenAfterInteraction
 } from "./ArmsReachHelper";
 import { ArmsReachVariables, DoorsReach } from "./DoorsReach";
 import { NotesReach } from "./NotesReach";
@@ -225,7 +225,7 @@ export const readyHooks = async () => {
 					onClick: () => {
 						ResetDoorsAndFog.resetDoors(true, <string>game.scenes?.current?.id);
 					},
-					button: true,
+					button: true
 				});
 				return controls;
 			}

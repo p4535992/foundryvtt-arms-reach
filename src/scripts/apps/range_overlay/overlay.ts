@@ -5,7 +5,7 @@ import {
 	getCombatantToken,
 	getCombatantTokenDisposition,
 	getCurrentToken,
-	safeDestroy,
+	safeDestroy
 } from "./utility.js";
 
 import { GridTile } from "./gridTile.js";
@@ -43,7 +43,7 @@ const movementCostStyle = {
 	fontSize: 30,
 	fill: 0x0000ff, // blue
 	stroke: 0xffffff, // white
-	strokeThickness: 1,
+	strokeThickness: 1
 };
 
 const turnOrderStyle = {
@@ -51,7 +51,7 @@ const turnOrderStyle = {
 	fontSize: 25,
 	fill: 0xffffff, // white
 	stroke: 0x000000, // black
-	strokeThickness: 5,
+	strokeThickness: 5
 };
 
 const weaponRangeStyle = {
@@ -59,7 +59,7 @@ const weaponRangeStyle = {
 	fontSize: 20,
 	fill: 0xffffff, // white
 	stroke: 0x000000, // black
-	strokeThickness: 4,
+	strokeThickness: 4
 };
 
 function getDiagonalDelta() {
@@ -711,7 +711,7 @@ function checkTileToTokenVisibility(tile, token) {
 					[-t, -t],
 					[-t, t],
 					[t, t],
-					[t, -t],
+					[t, -t]
 			  ]
 			: [[0, 0]];
 	const points = offsets.map((o) => new PIXI.Point(token.center.x + o[0], token.center.y + o[1]));

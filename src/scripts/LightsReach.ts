@@ -3,7 +3,7 @@ import {
 	computeDistanceBetweenCoordinates,
 	getFirstPlayerToken,
 	getPlaceableCenter,
-	interactionFailNotification,
+	interactionFailNotification
 } from "./ArmsReachHelper";
 import CONSTANTS from "./constants";
 
@@ -130,5 +130,5 @@ export const LightsReach = {
 		//const lightCenter = { x: light.x, y: light.y };
 		//return lightCenter;
 		return getPlaceableCenter(light);
-	},
+	}
 };

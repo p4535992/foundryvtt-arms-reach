@@ -3,7 +3,7 @@ import {
 	computeDistanceBetweenCoordinates,
 	getFirstPlayerToken,
 	getPlaceableCenter,
-	interactionFailNotification,
+	interactionFailNotification
 } from "./ArmsReachHelper";
 import CONSTANTS from "./constants";
 
@@ -129,5 +129,5 @@ export const WallsReach = {
 	getWallsCenter: function (wall: Wall) {
 		const wallCenter = getPlaceableCenter(wall);
 		return wallCenter;
-	},
+	}
 };

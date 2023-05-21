@@ -38,7 +38,7 @@ export const computeDistanceBetweenCoordinates = function (
 			id: placeable.id,
 			centerX: centerX,
 			centerY: centerY,
-			placeableObjectData: placeableObjectData,
+			placeableObjectData: placeableObjectData
 		});
 		return dist;
 		// }
@@ -128,14 +128,14 @@ function getTokenShape(token): any[] {
 			if (borderSize >= 2)
 				shape = shape.concat([
 					{ x: 0, y: -1 },
-					{ x: -1, y: -1 },
+					{ x: -1, y: -1 }
 				]);
 			if (borderSize >= 3)
 				shape = shape.concat([
 					{ x: 0, y: 1 },
 					{ x: -1, y: 1 },
 					{ x: -1, y: 0 },
-					{ x: 1, y: 0 },
+					{ x: 1, y: 0 }
 				]);
 			if (borderSize >= 4)
 				shape = shape.concat([
@@ -143,7 +143,7 @@ function getTokenShape(token): any[] {
 					{ x: 1, y: -1 },
 					{ x: -1, y: -2 },
 					{ x: 0, y: -2 },
-					{ x: 1, y: -2 },
+					{ x: 1, y: -2 }
 				]);
 			//@ts-ignore
 			if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== canvas.grid?.grid?.options.columns)
@@ -502,7 +502,7 @@ export const getMousePosition = function (canvas: Canvas, event): { x: number; y
 	const position = canvas.app?.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage);
 	return {
 		x: position.x,
-		y: position.y,
+		y: position.y
 	};
 };
 
@@ -553,7 +553,7 @@ export const getPlaceableDoorCenter = function (placeable: any): ArmsreachData {
 		id: id,
 		centerX: centerX,
 		centerY: centerY,
-		placeableObjectData: placeableObjectData,
+		placeableObjectData: placeableObjectData
 	};
 };
 
@@ -581,7 +581,7 @@ export const getPlaceableCenter = function (placeable: any): ArmsreachData {
 		id: id,
 		centerX: centerX,
 		centerY: centerY,
-		placeableObjectData: placeableObjectData,
+		placeableObjectData: placeableObjectData
 	};
 };
 

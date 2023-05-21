@@ -9,7 +9,7 @@ const CONSTANTS = {
 	FLAG_NAMES: {
 		WEAPON_RANGE: "weaponRange",
 		SPEED_OVERRIDE: "speedOverride",
-		IGNORE_DIFFICULT_TERRAIN: "ignoreDifficultTerrain",
+		IGNORE_DIFFICULT_TERRAIN: "ignoreDifficultTerrain"
 	},
 	MAX_DIST: 999,
 	FEET_PER_TILE: 5,
@@ -17,14 +17,14 @@ const CONSTANTS = {
 	overlayVisibility: {
 		ALWAYS: "always",
 		HOTKEYS: "hotkeys",
-		NEVER: "never",
+		NEVER: "never"
 	},
 	diagonals: {
 		FIVE_TEN_FIVE: "fiveTenFive",
 		TEN_FIVE_TEN: "tenFiveTen",
 		FIVE: "five",
-		TEN: "ten",
-	},
+		TEN: "ten"
+	}
 };
 
 CONSTANTS.PATH = `modules/${CONSTANTS.MODULE_NAME}/`;

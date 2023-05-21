@@ -6,7 +6,7 @@ import {
 	getPlaceableDoorCenter,
 	getTokenCenter,
 	isFocusOnCanvas,
-	interactionFailNotification,
+	interactionFailNotification
 } from "./ArmsReachHelper";
 import CONSTANTS from "./constants";
 
@@ -165,7 +165,7 @@ export const DoorsReach = {
 					hidden: doorControl.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET,
 					animate: false,
 					x: doorControl.x,
-					y: doorControl.y,
+					y: doorControl.y
 				};
 
 				const tokenCenter = getTokenCenter(selectedToken);
@@ -179,7 +179,7 @@ export const DoorsReach = {
 					hidden: false,
 					animate: false,
 					x: tokenCenter.x,
-					y: tokenCenter.y,
+					y: tokenCenter.y
 				};
 
 				//const sourceSceneId = canvas.scene.id;
@@ -189,7 +189,7 @@ export const DoorsReach = {
 					sourceData: sourceData,
 					selectedOrOwnedTokenId: selectedToken.id,
 					targetData: targetData,
-					userId: <string>game.userId,
+					userId: <string>game.userId
 				};
 
 				if (!selectedToken) {
@@ -378,7 +378,7 @@ export const DoorsReach = {
 			unlockPath: `modules/${CONSTANTS.MODULE_NAME}/assets/defaultSounds/DoorUnlockSound.wav`,
 			unlockLevel: 0.8,
 			lockJinglePath: `modules/${CONSTANTS.MODULE_NAME}/assets/defaultSounds/DoorLockPicking.wav`,
-			lockJingleLevel: 0.8,
+			lockJingleLevel: 0.8
 		};
 	},
 
@@ -515,9 +515,9 @@ export const DoorsReach = {
 				},
 				data: {
 					originalEvent: {
-						button: 0,
-					},
-				},
+						button: 0
+					}
+				}
 				//currentTarget: closestDoor
 			};
 			//@ts-ignore
@@ -543,7 +543,7 @@ export const DoorsReach = {
 	getDoorCenter: function (doorCoontrol: DoorControl) {
 		//const doorCenter = { x: doorCoontrol.x, y: doorCoontrol.y };
 		return getPlaceableDoorCenter(doorCoontrol);
-	},
+	}
 };
 
 export class ArmsReachVariables {
@@ -563,6 +563,6 @@ export class ArmsReachVariables {
 		up: 0,
 		down: 0,
 		left: 0,
-		right: 0,
+		right: 0
 	};
 }

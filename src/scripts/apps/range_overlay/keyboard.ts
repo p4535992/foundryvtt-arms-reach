@@ -1,6 +1,6 @@
 export const states = {
 	DOWN: "down",
-	UP: "up",
+	UP: "up"
 };
 
 class Keyboard {

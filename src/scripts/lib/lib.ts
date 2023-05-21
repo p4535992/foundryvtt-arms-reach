@@ -278,14 +278,14 @@ export function getRangeForDocument(document): { rangeBottom: number; rangeTop: 
 			//@ts-ignore
 			rangeBottom: document.flags?.["wall-height"]?.bottom ?? -Infinity,
 			//@ts-ignore
-			rangeTop: document.flags?.["wall-height"]?.top ?? Infinity,
+			rangeTop: document.flags?.["wall-height"]?.top ?? Infinity
 		};
 	} else if (document instanceof TokenDocument) {
 		return {
 			//@ts-ignore
 			rangeBottom: document.elevation,
 			//@ts-ignore
-			rangeTop: document.elevation,
+			rangeTop: document.elevation
 		};
 	}
 	const rangeBottom = document.flags?.levels?.rangeBottom ?? -Infinity;

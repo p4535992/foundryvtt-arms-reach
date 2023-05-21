@@ -25,8 +25,8 @@ function _showRangeDialog() {
 			{
 				icon: "",
 				label: String(i),
-				callback: (html) => _submitDialog(i, html),
-			},
+				callback: (html) => _submitDialog(i, html)
+			}
 		])
 	);
 	const defaultValue = String(getWeaponRanges()[0]);
@@ -58,7 +58,7 @@ function _showRangeDialog() {
 			title: i18n(`${CONSTANTS.MODULE_NAME}.quick-settings.title`),
 			content: content.join("\n"),
 			buttons: buttons,
-			default: defaultValue,
+			default: defaultValue
 		},
 		{ id: "croQuickSettingsDialog" }
 	);

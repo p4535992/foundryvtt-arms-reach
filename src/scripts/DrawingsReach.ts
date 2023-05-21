@@ -3,7 +3,7 @@ import {
 	computeDistanceBetweenCoordinates,
 	getFirstPlayerToken,
 	getPlaceableCenter,
-	interactionFailNotification,
+	interactionFailNotification
 } from "./ArmsReachHelper";
 import CONSTANTS from "./constants";
 
@@ -135,5 +135,5 @@ export const DrawingsReach = {
 		// };
 		// return drawCenter;
 		return getPlaceableCenter(drawing);
-	},
+	}
 };

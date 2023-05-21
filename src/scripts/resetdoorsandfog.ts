@@ -46,7 +46,7 @@ export const ResetDoorsAndFog = {
 					data: { scene: id },
 					options: { reset: true },
 					parentId: "",
-					parentType: "",
+					parentType: ""
 				});
 				info(`Fog of War exploration progress was reset.`, true);
 			}
@@ -75,7 +75,7 @@ export const ResetDoorsAndFog = {
 				}
 				const isCurrentScene = scene.id === canvas.scene?.id;
 				await ResetDoorsAndFog.resetDoorsAndFog(isCurrentScene, scene.id);
-			},
+			}
 		};
-	},
+	}
 };

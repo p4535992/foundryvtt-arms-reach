@@ -362,7 +362,7 @@ const API = {
 			...Array.from(scene.walls),
 			...Array.from(scene.drawings),
 			//@ts-ignore
-			...Array.from(scene.stairways), // Add module stairways...
+			...Array.from(scene.stairways) // Add module stairways...
 		]
 			.deepFlatten()
 			.filter(Boolean);
@@ -410,7 +410,7 @@ const API = {
 			});
 		}
 		return target;
-	},
+	}
 };
 
 export default API;

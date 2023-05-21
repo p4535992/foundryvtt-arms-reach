@@ -3,7 +3,7 @@ import {
 	computeDistanceBetweenCoordinates,
 	getFirstPlayerToken,
 	getPlaceableCenter,
-	interactionFailNotification,
+	interactionFailNotification
 } from "./ArmsReachHelper";
 import CONSTANTS from "./constants";
 
@@ -130,5 +130,5 @@ export const SoundsReach = {
 		// const soundCenter = { x: sound.x, y: sound.y };
 		// return soundCenter;
 		return getPlaceableCenter(sound);
-	},
+	}
 };

@@ -8,7 +8,7 @@ export const registerSettings = function () {
 		hint: `${CONSTANTS.MODULE_NAME}.setting.reset.hint`,
 		icon: "fas fa-coins",
 		type: ResetSettingsDialog,
-		restricted: true,
+		restricted: true
 	});
 
 	// ========================================================
@@ -24,7 +24,7 @@ export const registerSettings = function () {
 		type: Boolean,
 		onChange: (data) => {
 			// manageSettingsArmsReachFeature(data);
-		},
+		}
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "notificationsInteractionFail", {
@@ -33,7 +33,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: true,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// DEPRECATED
@@ -46,7 +46,7 @@ export const registerSettings = function () {
 		default: 0, // instead of 1
 		type: Number,
 		//@ts-ignore
-		range: { min: 0, max: 5, step: 1 },
+		range: { min: 0, max: 5, step: 1 }
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement", {
@@ -57,7 +57,7 @@ export const registerSettings = function () {
 		default: 5,
 		type: Number,
 		//@ts-ignore
-		range: { min: 0, max: 20, step: 1 },
+		range: { min: 0, max: 20, step: 1 }
 	});
 
 	// game.settings.register(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM', {
@@ -75,7 +75,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected", {
@@ -84,7 +84,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: true,
-		type: Boolean,
+		type: Boolean
 	});
 
 	//@ts-ignore
@@ -118,7 +118,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser", {
@@ -127,7 +127,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -140,7 +140,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: true,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnDoors", {
@@ -149,7 +149,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// DEPRECATED AND REMOVED
@@ -162,7 +162,7 @@ export const registerSettings = function () {
 		default: 0, // instead of 1
 		type: Number,
 		//@ts-ignore
-		range: { min: 0, max: 10, step: 0.5 },
+		range: { min: 0, max: 10, step: 0.5 }
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "doorInteractionMeasurement", {
@@ -173,7 +173,7 @@ export const registerSettings = function () {
 		default: 0, // 5 before
 		type: Number,
 		//@ts-ignore
-		range: { min: 0, max: 50, step: 1 },
+		range: { min: 0, max: 50, step: 1 }
 	});
 
 	// DEPRECATED
@@ -184,7 +184,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// DEPRECATED (double tap)
@@ -198,7 +198,7 @@ export const registerSettings = function () {
 		type: Number,
 		//@ts-ignore
 		//range: { min: 0, max: 750, step: 50 },
-		range: { min: 0, max: 5, step: 0.5 },
+		range: { min: 0, max: 5, step: 0.5 }
 	});
 
 	// DEPRECATED
@@ -209,7 +209,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "disableDoorSound", {
@@ -218,7 +218,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: true,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -233,7 +233,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways", {
@@ -242,7 +242,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerStairwayIntegration", {
@@ -251,7 +251,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -264,7 +264,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnNotes", {
@@ -273,7 +273,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerNoteIntegration", {
@@ -282,7 +282,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -295,7 +295,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTokens", {
@@ -304,7 +304,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "tokensIntegrationWithLootSheet", {
@@ -313,7 +313,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "tokensIntegrationByPrefix", {
@@ -322,7 +322,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: "ART_",
-		type: String,
+		type: String
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "tokensIntegrationExplicitName", {
@@ -331,7 +331,7 @@ export const registerSettings = function () {
 		scope: "client",
 		config: true,
 		default: game.user?.character?.name ?? "",
-		type: String,
+		type: String
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerTokenIntegration", {
@@ -340,7 +340,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -353,7 +353,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnLights", {
@@ -362,7 +362,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerLightIntegration", {
@@ -371,7 +371,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -384,7 +384,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnSounds", {
@@ -393,7 +393,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerSoundIntegration", {
@@ -402,7 +402,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -415,7 +415,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnDrawings", {
@@ -424,7 +424,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerDrawingIntegration", {
@@ -433,7 +433,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -446,7 +446,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTiles", {
@@ -455,7 +455,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerTileIntegration", {
@@ -464,7 +464,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -477,7 +477,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnWalls", {
@@ -486,7 +486,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "enableTaggerWallIntegration", {
@@ -495,7 +495,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// ========================================================
@@ -534,7 +534,7 @@ export const registerSettings = function () {
 		scope: "world",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// =========================================================
@@ -702,7 +702,7 @@ export const registerSettings = function () {
 		scope: "client",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	// =========================================================
@@ -735,14 +735,14 @@ class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object
 					callback: async () => {
 						await applyDefaultSettings();
 						window.location.reload();
-					},
+					}
 				},
 				cancel: {
 					icon: '<i class="fas fa-times"></i>',
-					label: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.cancel`),
-				},
+					label: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.cancel`)
+				}
 			},
-			default: "cancel",
+			default: "cancel"
 		});
 	}
 
@@ -783,7 +783,7 @@ function otherSettings(apply = false) {
 			type: Boolean,
 			onChange: (data) => {
 				// manageSettingsArmsReachFeature(data);
-			},
+			}
 		},
 
 		notificationsInteractionFail: {
@@ -792,7 +792,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: true,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// DEPRECATED
@@ -805,7 +805,7 @@ function otherSettings(apply = false) {
 			default: 0, // instead of 1
 			type: Number,
 			//@ts-ignore
-			range: { min: 0, max: 5, step: 1 },
+			range: { min: 0, max: 5, step: 1 }
 		},
 
 		globalInteractionMeasurement: {
@@ -816,7 +816,7 @@ function otherSettings(apply = false) {
 			default: 5,
 			type: Number,
 			//@ts-ignore
-			range: { min: 0, max: 20, step: 1 },
+			range: { min: 0, max: 20, step: 1 }
 		},
 
 		globalInteractionDistanceForGM: {
@@ -825,7 +825,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		forceReSelection: {
@@ -834,7 +834,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		useOwnedTokenIfNoTokenIsSelected: {
@@ -843,7 +843,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: true,
-			type: Boolean,
+			type: Boolean
 		},
 
 		//@ts-ignore
@@ -877,7 +877,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableInteractionForTokenOwnedByUser: {
@@ -886,7 +886,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -899,7 +899,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: true,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnDoors: {
@@ -908,7 +908,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// DEPRECATED AND REMOVED
@@ -921,7 +921,7 @@ function otherSettings(apply = false) {
 			default: 0, // instead of 1
 			type: Number,
 			//@ts-ignore
-			range: { min: 0, max: 10, step: 0.5 },
+			range: { min: 0, max: 10, step: 0.5 }
 		},
 
 		doorInteractionMeasurement: {
@@ -932,7 +932,7 @@ function otherSettings(apply = false) {
 			default: 0, // 5 before
 			type: Number,
 			//@ts-ignore
-			range: { min: 0, max: 50, step: 1 },
+			range: { min: 0, max: 50, step: 1 }
 		},
 
 		// DEPRECATED
@@ -943,7 +943,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// DEPRECATED (double tap)
@@ -957,7 +957,7 @@ function otherSettings(apply = false) {
 			type: Number,
 			//@ts-ignore
 			//range: { min: 0, max: 750, step: 50 },
-			range: { min: 0, max: 5, step: 0.5 },
+			range: { min: 0, max: 5, step: 0.5 }
 		},
 
 		// DEPRECATED
@@ -968,7 +968,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		disableDoorSound: {
@@ -977,7 +977,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: true,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -992,7 +992,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnStairways: {
@@ -1001,7 +1001,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerStairwayIntegration: {
@@ -1010,7 +1010,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1023,7 +1023,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnNotes: {
@@ -1032,7 +1032,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerNoteIntegration: {
@@ -1041,7 +1041,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1054,7 +1054,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnTokens: {
@@ -1063,7 +1063,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		tokensIntegrationWithLootSheet: {
@@ -1072,7 +1072,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		tokensIntegrationByPrefix: {
@@ -1081,7 +1081,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: "ART_",
-			type: String,
+			type: String
 		},
 
 		tokensIntegrationExplicitName: {
@@ -1090,7 +1090,7 @@ function otherSettings(apply = false) {
 			scope: "client",
 			config: true,
 			default: game.user?.character?.name ?? "",
-			type: String,
+			type: String
 		},
 
 		enableTaggerTokenIntegration: {
@@ -1099,7 +1099,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1112,7 +1112,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnLights: {
@@ -1121,7 +1121,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerLightIntegration: {
@@ -1130,7 +1130,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1143,7 +1143,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnSounds: {
@@ -1152,7 +1152,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerSoundIntegration: {
@@ -1161,7 +1161,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1174,7 +1174,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnDrawings: {
@@ -1183,7 +1183,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerDrawingIntegration: {
@@ -1192,7 +1192,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1205,7 +1205,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnTiles: {
@@ -1214,7 +1214,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerTileIntegration: {
@@ -1223,7 +1223,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1236,7 +1236,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		globalInteractionDistanceForGMOnWalls: {
@@ -1245,7 +1245,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		enableTaggerWallIntegration: {
@@ -1254,7 +1254,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		// ========================================================
@@ -1293,7 +1293,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			config: true,
 			default: false,
-			type: Boolean,
+			type: Boolean
 		},
 
 		debug: {
@@ -1302,7 +1302,7 @@ function otherSettings(apply = false) {
 			scope: "client",
 			config: true,
 			default: false,
-			type: Boolean,
-		},
+			type: Boolean
+		}
 	};
 }

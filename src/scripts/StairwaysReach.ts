@@ -4,7 +4,7 @@ import {
 	getFirstPlayerToken,
 	getFirstPlayerTokenSelected,
 	getPlaceableCenter,
-	interactionFailNotification,
+	interactionFailNotification
 } from "./ArmsReachHelper";
 import CONSTANTS from "./constants";
 
@@ -247,7 +247,7 @@ export const StairwaysReach = {
 		}
 
 		return false;
-	},
+	}
 };
 
 export class Data {

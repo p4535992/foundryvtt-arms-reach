@@ -1,5 +1,9 @@
 # CHANGELOG 
 
+### 2.2.13 
+
+- Update some labels
+
 ### 2.2.12
 
 - Some bug fix and update on languages
