@@ -29,12 +29,12 @@ import CONSTANTS from "./constants";
 import API from "./api";
 import { setApi } from "../foundryvtt-arms-reach";
 import { registerSocket } from "./socket";
-import { Overlay } from "./apps/range_overlay/overlay";
-import { keyboard } from "./apps/range_overlay/keyboard";
-import { mouse } from "./apps/range_overlay/mouse";
-import { TOGGLE_BUTTON, _toggleButtonClick } from "./apps/range_overlay/controls";
-import { canvasTokensGet } from "./apps/range_overlay/utility";
-import { TokenInfo, updateLocation, updateMeasureFrom } from "./apps/range_overlay/tokenInfo";
+// import { Overlay } from "./apps/range_overlay/overlay";
+// import { keyboard } from "./apps/range_overlay/keyboard";
+// import { mouse } from "./apps/range_overlay/mouse";
+// import { TOGGLE_BUTTON, _toggleButtonClick } from "./apps/range_overlay/controls";
+// import { canvasTokensGet } from "./apps/range_overlay/utility";
+// import { TokenInfo, updateLocation, updateMeasureFrom } from "./apps/range_overlay/tokenInfo";
 
 let taggerModuleActive;
 
