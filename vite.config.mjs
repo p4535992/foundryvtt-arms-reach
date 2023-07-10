@@ -21,7 +21,7 @@ import { run } from 'vite-plugin-run'
 
 // For convenience, you just need to modify the package ID below as it is used to fill in default proxy settings for
 // the dev server.
-const s_MODULE_ID = "token-factions";
+const s_MODULE_ID = "arms-reach";
 const s_PACKAGE_ID = "modules/"+s_MODULE_ID;
 const s_ENTRY_JAVASCRIPT = "main.mjs";
 
@@ -60,7 +60,7 @@ export default () => {
     },
 
     css: {
-      
+
       // Creates a standard configuration for PostCSS with autoprefixer & postcss-preset-env.
       postcss: postcssConfig({ compress: s_COMPRESS, sourceMap: s_SOURCEMAPS }),
     },
@@ -168,13 +168,13 @@ export default () => {
           if (warning.message.includes(`<a> element should have an href attribute`)) {
             return;
           }
-          
+
           // Let Rollup handle all other warnings normally.
           handler(warning);
         },
       }),
-      resolve(s_RESOLVE_CONFIG), // Necessary when bundling npm-linked packages.     
-      
+      resolve(s_RESOLVE_CONFIG), // Necessary when bundling npm-linked packages.
+
       // When s_TYPHONJS_MODULE_LIB is true transpile against the Foundry module version of TRL.
       s_TYPHONJS_MODULE_LIB && typhonjsRuntime(),
 

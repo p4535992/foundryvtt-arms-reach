@@ -20,7 +20,7 @@ export class GridTile {
 
 	get centerPt() {
 		const pixels = <PointArray>canvas.grid?.grid?.getPixelsFromGridPosition(this.gx, this.gy);
-		return { x: pixels[0] + <number>canvas.grid?.size / 2, y: pixels[1] + <number>canvas.grid?.size / 2 };
+		return { x: pixels[0] + canvas.grid?.size / 2, y: pixels[1] + canvas.grid?.size / 2 };
 	}
 
 	get pt() {

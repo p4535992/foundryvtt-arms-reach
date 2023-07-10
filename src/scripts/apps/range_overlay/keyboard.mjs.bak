@@ -14,7 +14,7 @@ class Keyboard {
 	}
 
 	addHook(key: string, func: Function) {
-		const hookList = <any[]>(this._hooks.has(key) ? this._hooks.get(key) : []);
+		const hookList = (this._hooks.has(key) ? this._hooks.get(key) : []);
 		hookList.push(func);
 		this._hooks.set(key, hookList);
 	}

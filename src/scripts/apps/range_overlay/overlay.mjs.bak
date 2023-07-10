@@ -115,7 +115,7 @@ export class Overlay {
 		const tilesPerAction = TokenInfo.current.speed / CONSTANTS.FEET_PER_TILE;
 		const maxTiles = tilesPerAction * actionsToShow;
 
-		const currentToken = <Token>getCurrentToken();
+		const currentToken = getCurrentToken();
 		const currentTokenInfo = TokenInfo.getById(currentToken.id);
 		const tokenTile = GridTile.fromPixels(currentTokenInfo.measureFrom.x, currentTokenInfo.measureFrom.y);
 		//@ts-ignore
@@ -213,7 +213,7 @@ export class Overlay {
 	}
 
 	drawPotentialTargets(movementCosts) {
-		const currentToken = <Token>getCurrentToken();
+		const currentToken = getCurrentToken();
 
 		if (!currentToken.inCombat) {
 			return;
@@ -225,7 +225,7 @@ export class Overlay {
 		debug("drawPotentialTargets | Current disposition", myDisposition);
 
 		for (const combatant of <EmbeddedCollection<typeof Combatant, CombatData>>game.combat?.combatants) {
-			const combatantToken = <Token>getCombatantToken(combatant);
+			const combatantToken = getCombatantToken(combatant);
 			debug(
 				"drawPotentialTargets | Potential target disposition",
 				getCombatantTokenDisposition(combatantToken) + " " + combatantToken.id + " " + combatantToken
@@ -435,7 +435,7 @@ export class Overlay {
 
 	drawWeaponRange() {
 		debug("drawWeaponRange");
-		const currentToken = <Token>getCurrentToken();
+		const currentToken = getCurrentToken();
 		if (!currentToken.inCombat) {
 			return;
 		}
@@ -443,7 +443,7 @@ export class Overlay {
 		const range = TokenInfo.current.weaponRange;
 
 		const style = Object.assign({}, weaponRangeStyle);
-		style.fontSize = style.fontSize * (<number>canvasGridSize() / BASE_GRID_SIZE);
+		style.fontSize = style.fontSize * (canvasGridSize() / BASE_GRID_SIZE);
 
 		const text = new PIXI.Text(`» ${range}`, style);
 		//@ts-ignore
@@ -456,9 +456,9 @@ export class Overlay {
 
 	drawTurnOrder() {
 		const style = Object.assign({}, turnOrderStyle);
-		style.fontSize = style.fontSize * (<number>canvasGridSize() / BASE_GRID_SIZE);
+		style.fontSize = style.fontSize * (canvasGridSize() / BASE_GRID_SIZE);
 
-		const currentTokenId = <string>getCurrentToken()?.id;
+		const currentTokenId = getCurrentToken()?.id;
 		for (const combat of <CombatEncounters>game.combats) {
 			const currentCombatant = combat.combatants.find((c) => c.token?.id === currentTokenId);
 			if (!currentCombatant) {
@@ -472,7 +472,7 @@ export class Overlay {
 			const tail: Combatant[] = [];
 
 			for (const combatant of sortedCombatants) {
-				const combatantTokenId = <string>combatant.token?.id;
+				const combatantTokenId = combatant.token?.id;
 				if (!seenCurrent && combatantTokenId === currentTokenId) {
 					seenCurrent = true;
 				}
@@ -487,8 +487,8 @@ export class Overlay {
 			let turnOrder = 0;
 			for (const combatant of head.concat(tail)) {
 				if (!combatant.isDefeated) {
-					const combatantTokenId = <string>combatant.token?.id;
-					const combatantToken = <Token>canvasTokensGet(combatantTokenId);
+					const combatantTokenId = combatant.token?.id;
+					const combatantToken = canvasTokensGet(combatantTokenId);
 
 					if (turnOrder > 0 && combatantToken.visible) {
 						const text = new PIXI.Text(String(turnOrder), style);
@@ -536,7 +536,7 @@ export class Overlay {
 			if (drawTile) {
 				if (API.combatRangeOverlay.showNumericMovementCost) {
 					const style = Object.assign({}, movementCostStyle);
-					style.fontSize = style.fontSize * (<number>canvasGridSize() / BASE_GRID_SIZE);
+					style.fontSize = style.fontSize * (canvasGridSize() / BASE_GRID_SIZE);
 
 					const label = API.combatRangeOverlay.roundNumericMovementCost
 						? diagonalDistance(tile.distance)
@@ -572,13 +572,13 @@ export class Overlay {
 				}
 				this.overlays.distanceOverlay?.beginFill(
 					color,
-					<number>game.settings.get(CONSTANTS.MODULE_NAME, "movement-alpha")
+					game.settings.get(CONSTANTS.MODULE_NAME, "movement-alpha")
 				);
 				this.overlays.distanceOverlay?.drawRect(
 					cornerPt.x,
 					cornerPt.y,
-					<number>canvasGridSize(),
-					<number>canvasGridSize()
+					canvasGridSize(),
+					canvasGridSize()
 				);
 				this.overlays.distanceOverlay?.endFill();
 			}
@@ -594,7 +594,7 @@ export class Overlay {
 
 	drawWalls() {
 		this.overlays.wallsOverlay?.lineStyle(wallLineWidth, wallLineColor);
-		for (const quadtree of <Quadtree<Wall>[]>canvas.walls?.quadtree?.nodes) {
+		for (const quadtree of <Quadtree[]>canvas.walls?.quadtree?.nodes) {
 			for (const obj of quadtree.objects) {
 				const wall = obj.t;
 				//@ts-ignore
@@ -641,8 +641,8 @@ function calculateTilesInRange(rangeInTiles, targetToken) {
 	const tileSet = new Set<GridTile>();
 	const targetGridX = targetTile.gx;
 	const targetGridY = targetTile.gy;
-	const targetGridHeight = Math.floor(targetToken.hitArea.height / <number>canvasGridSize());
-	const targetGridWidth = Math.floor(targetToken.hitArea.width / <number>canvasGridSize());
+	const targetGridHeight = Math.floor(targetToken.hitArea.height / canvasGridSize());
+	const targetGridWidth = Math.floor(targetToken.hitArea.width / canvasGridSize());
 
 	// Loop over X and Y deltas, computing distance for only a single quadrant
 	for (let gridXDelta = 0; gridXDelta <= rangeInTiles; gridXDelta++) {

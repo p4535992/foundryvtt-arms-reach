@@ -361,7 +361,7 @@ declare abstract class HasAnimations<T> {
       duration: number;
       from?: number;
       to?: number;
-      values?: Array<number>;
+      values?: Array;
       loops?: number;
       pingPong?: boolean;
       delay?: number;
@@ -940,17 +940,17 @@ declare abstract class TokenFactionsDatabase {
   /**
    *  Gets all files under a database path
    */
-  getAllFileEntries(inDBPath): Array<string> | boolean;
+  getAllFileEntries(inDBPath): Array | boolean;
 
   /**
    *  Get all valid entries under a certain path
    */
-  getPathsUnder(inPath): Array<string>;
+  getPathsUnder(inPath): Array;
 
   /**
    *  Get all valid entries under a certain path
    */
-  searchFor(inPath: string): Array<string> | boolean;
+  searchFor(inPath: string): Array | boolean;
 }
 
 declare abstract class TokenFactionsPreloader {
@@ -958,7 +958,7 @@ declare abstract class TokenFactionsPreloader {
    * Causes each connected client (including the caller) to fetch and cache the provided file(s) locally, vastly improving loading speed of those files.
    */
   preload(
-    inSrc: string | Array<string>,
+    inSrc: string | Array,
     showProgressBar?: boolean
   ): Promise<void>;
 
@@ -966,7 +966,7 @@ declare abstract class TokenFactionsPreloader {
    * Caches provided file(s) locally, vastly improving loading speed of those files.
    */
   preloadForClients(
-    inSrc: string | Array<string>,
+    inSrc: string | Array,
     showProgressBar?: boolean
   ): Promise<void>;
 }
@@ -1000,13 +1000,13 @@ declare abstract class TokenFactionsHelpers {
   /**
    * Returns a shuffled copy of the original array.
    */
-  shuffle_array(inArray: Array<any>): Array<any>;
+  shuffle_array(inArray: Array): Array;
 
   /**
    * Returns a random element in the given array
    */
   random_array_element(
-    inArray: Array<any>,
+    inArray: Array,
     inOptions?: { recurse?: boolean }
   ): any;
 
@@ -1021,7 +1021,7 @@ declare abstract class TokenFactionsHelpers {
   /**
    *  Turns an array containing multiples of the same string, objects, etc, and removes duplications, and returns a fresh array
    */
-  make_array_unique(inArray: Array<any>): Array<any>;
+  make_array_unique(inArray: Array): Array;
 }
 
 declare class Class {}
@@ -1061,7 +1061,7 @@ declare abstract class TokenFactionsEffectManager {
   /**
    * Returns all of the currently running effects on the canvas
    */
-  get effects(): Array<any>;
+  get effects(): Array;
 
   /**
    * Get effects that are playing on the canvas based on a set of filters
@@ -1070,7 +1070,7 @@ declare abstract class TokenFactionsEffectManager {
     object?: string | VisibleFoundryTypes;
     name?: string;
     sceneId?: string;
-  }): Array<any>;
+  }): Array;
 
   /**
    * Updates effects based on a set of filters
@@ -1079,8 +1079,8 @@ declare abstract class TokenFactionsEffectManager {
     object?: string | VisibleFoundryTypes;
     name?: string;
     sceneId?: string;
-    effects: string | CanvasEffect | Array<string> | Array<CanvasEffect>;
-  }): Promise<Array<any>>;
+    effects: string | CanvasEffect | Array | Array<CanvasEffect>;
+  }): Promise<Array>;
 
   /**
    * End effects that are playing on the canvas based on a set of filters
@@ -1089,7 +1089,7 @@ declare abstract class TokenFactionsEffectManager {
     object?: string | VisibleFoundryTypes;
     name?: string;
     sceneId?: string;
-    effects: string | CanvasEffect | Array<string> | Array<CanvasEffect>;
+    effects: string | CanvasEffect | Array | Array<CanvasEffect>;
   }): Promise<void>;
 
   /**

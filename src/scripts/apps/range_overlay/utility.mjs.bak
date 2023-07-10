@@ -15,7 +15,7 @@ export function getCurrentToken() {
 }
 
 export function getWeaponRanges(): number[] {
-	const rangeStringsSetting = <string>game.settings.get(CONSTANTS.MODULE_NAME, "ranges");
+	const rangeStringsSetting = game.settings.get(CONSTANTS.MODULE_NAME, "ranges");
 	const rangeStrings = rangeStringsSetting.split(",");
 	const ranges: number[] = [];
 	for (const rangeString of rangeStrings) {

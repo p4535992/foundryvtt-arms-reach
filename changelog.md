@@ -1,6 +1,9 @@
-# CHANGELOG 
+# CHANGELOG
+### 2.3.0
 
-### 2.2.13-14 
+- Release for v11
+
+### 2.2.13-14
 
 - Update some labels
 
@@ -42,7 +45,7 @@
 ### 2.1.31
 
 - If multiple placeable objects are selected and the user is a gm ignore the distance check by default
-- Add a module settings for enable/disable for every type of placeable object the distance check for gm 
+- Add a module settings for enable/disable for every type of placeable object the distance check for gm
 
 ### 2.1.30
 
@@ -227,7 +230,7 @@
 
 ### 2.0.4
 
-- Bug fix module json 
+- Bug fix module json
 
 ### 2.0.3
 
@@ -322,7 +325,7 @@
 
 - Compatibility for foundryvtt 0.8.6
 - Removed desinger doors implementation use instead [Designer Doors](https://github.com/Exitalterego/designerdoors) ty to [Exitalterego](https://github.com/Exitalterego)
-- 
+-
 
 ### 1.0.14
 
@@ -370,7 +373,7 @@
 
 - Hot fix Add new settings for use the owned tokens if no tokens is selected, if no token is selected i will try to get a owned token, you can disable this feature on the module settings if you like the old behaviour.
 
-### 1.0.5 
+### 1.0.5
 
 - Bug fixing for 'e' keyboard event
 - Add Internationalization

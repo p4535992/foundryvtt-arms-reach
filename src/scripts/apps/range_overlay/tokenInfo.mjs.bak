@@ -11,7 +11,7 @@ export class TokenInfo {
 
 	constructor(tokenId) {
 		this.tokenId = tokenId;
-		this.token = <Token>canvasTokensGet(this.tokenId);
+		this.token = canvasTokensGet(this.tokenId);
 		// this.measureFrom = undefined;
 		// this.location = undefined;
 
@@ -60,7 +60,7 @@ export class TokenInfo {
 
 	getFlag(flagName, dflt = undefined) {
 		// Somehow unlinked tokens get their own copies of actors (they even share IDs) but which have their own flags
-		const baseActor = <Actor>game.actors?.get(<string>this.token?.actor?.id);
+		const baseActor = <Actor>game.actors?.get(this.token?.actor?.id);
 
 		// Idea is being stupid - this isn't actually deprecated
 		// noinspection JSDeprecatedSymbols
@@ -73,7 +73,7 @@ export class TokenInfo {
 
 	get weaponRange() {
 		return (
-			<number>this.token.document.getFlag(CONSTANTS.MODULE_NAME, CONSTANTS.FLAG_NAMES.WEAPON_RANGE) ||
+			this.token.document.getFlag(CONSTANTS.MODULE_NAME, CONSTANTS.FLAG_NAMES.WEAPON_RANGE) ||
 			CONSTANTS.DEFAULT_WEAPON_RANGE
 		);
 	}
@@ -90,7 +90,7 @@ export class TokenInfo {
 		debug("setFlag" + " " + flagName + " " + newValue + " " + updateActor);
 
 		// Somehow unlinked tokens get their own copies of actors (they even share IDs) but which have their own flags
-		const baseActor = <Actor>game.actors?.get(<string>this.token?.actor?.id);
+		const baseActor = <Actor>game.actors?.get(this.token?.actor?.id);
 
 		// Idea is being stupid - it's looking up the deprecated versions of the methods
 		if (updateActor) {
@@ -126,7 +126,7 @@ export class TokenInfo {
 			throw "Tried to call getSpeed with an undefined actor";
 		}
 
-		const speedAttrPathSetting = <string>game.settings.get(CONSTANTS.MODULE_NAME, "speed-attr-path");
+		const speedAttrPathSetting = game.settings.get(CONSTANTS.MODULE_NAME, "speed-attr-path");
 
 		if (this.speedOverride) {
 			return this.speedOverride;
@@ -209,7 +209,7 @@ export function updateLocation(token, updateData) {
 // // noinspection JSUnusedLocalSymbols
 // Hooks.on("updateToken", (tokenDocument, updateData, options, someId) => {
 //   const tokenId = tokenDocument.id;
-//   const realToken = <Token>canvasTokensGet(tokenId); // Get the real token
+//   const realToken = canvasTokensGet(tokenId); // Get the real token
 //   updateLocation(realToken, updateData);
 //   if (!realToken.inCombat) {
 //     updateMeasureFrom(realToken, updateData);

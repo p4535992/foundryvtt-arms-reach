@@ -1,8 +1,8 @@
-#  FoundryVTT Arms Reach 
+#  FoundryVTT Arms Reach
 
-![Latest Release Download Count](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/latest/module.zip?color=2b82fc&label=DOWNLOADS&style=for-the-badge) 
+![Latest Release Download Count](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/latest/module.zip?color=2b82fc&label=DOWNLOADS&style=for-the-badge)
 
-[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundryvtt-arms-reach&colorB=006400&style=for-the-badge)](https://forge-vtt.com/bazaar#package=foundryvtt-arms-reach) 
+[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundryvtt-arms-reach&colorB=006400&style=for-the-badge)](https://forge-vtt.com/bazaar#package=foundryvtt-arms-reach)
 
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fp4535992%2Ffoundryvtt-arms-reach%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibility.verified&colorB=orange&style=for-the-badge)
 
@@ -55,12 +55,12 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 
 A little api to use in macro cc. for check if the placeable object reachable with variant based on the string id or the string tag from the module `tagger`.
 
-The api is reachable from the variable `game.modules.get('foundryvtt-arms-reach').api` or from the socket libary `socketLib` on the variable `game.modules.get('foundryvtt-arms-reach').socket` if present and active.
+The api is reachable from the variable `game.modules.get('armsreach').api` or from the socket libary `socketLib` on the variable `game.modules.get('armsreach').socket` if present and active.
 
 #### isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the target placeable objet
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -71,12 +71,12 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+`game.modules.get('armsreach').api.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
 
 #### isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the first target placeable objet with a specific tag, the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work.
-**Returns**: <code>boolean</code> - The boolean value for tell if the first target with the specific tag is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the first target with the specific tag is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -87,12 +87,12 @@ Calculate the distance between the source token and the first target placeable o
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
+`game.modules.get('armsreach').api.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the target placeable objet
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -103,12 +103,12 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('armsreach').api.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the target placeable objet
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -119,12 +119,12 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('armsreach').api.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the target placeable objet
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -135,12 +135,12 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+`game.modules.get('armsreach').api.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
 
 #### isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the first target placeable objet with a specific tag, the method 'isReachableByTag' need the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) installed and active for work.
-**Returns**: <code>boolean</code> - The boolean value for tell if the first target with the specific tag is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the first target with the specific tag is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -151,12 +151,12 @@ Calculate the distance between the source token and the first target placeable o
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean` 
+`game.modules.get('armsreach').api.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the target placeable objet
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -167,12 +167,12 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('armsreach').api.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
 Calculate the distance between the source token and the target placeable objet
-**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token 
+**Returns**: <code>boolean</code> - The boolean value for tell if the target is near enough to the source token
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -183,24 +183,24 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('foundryvtt-arms-reach').api.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('armsreach').api.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 
 ### Integration with Socketlib module
 
 You can use the socketLib for call the same functions:
 
-`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise<boolean>`
+`await game.modules.get('armsreach').socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise`
 
-`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
+`await game.modules.get('armsreach').socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
 
-`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
+`await game.modules.get('armsreach').socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
 
-`await game.modules.get('foundryvtt-arms-reach').socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise<boolean>`
+`await game.modules.get('armsreach').socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
 
 **NOTE: for now the optional parameter 'userId' is not used from the api, i hope to add in the future some filter so a specific actor for a specific user has some limitation.**
 
-## Features 
+## Features
 
 The interaction distance is measure by the distance between a token and a placeable object like door, journal, stairways, ecc.
 
@@ -232,7 +232,7 @@ To interact with a door, journal, ecc., the player need to have a token selected
 * Add distance calculation for owned source token and generic target token on the canvas for open the sheet and emulate a loot chest
 * GM can use this feature but beware there is probably some glitch in some use case because they owned every token
 * ~~This feature work with only one owned source token on the canvas at the time~~
-* [OPTIONAL] You can set the name of your _explicit source token_ (not the character name) on the specific module setting 
+* [OPTIONAL] You can set the name of your _explicit source token_ (not the character name) on the specific module setting
 * If no _explicit source token_ is setted on the module setting the module take the first selected token of the player, if no selected token ias present it will try to get the first owwned token of the player
 * It's advisable for this feature to use the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) instead the name and sheet checker is more dinamic.
 
