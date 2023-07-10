@@ -1,4 +1,4 @@
-import { info } from "./lib/lib";
+import { info } from "./lib/lib.mjs";
 
 export const ResetDoorsAndFog = {
   resetDoorsAndFog: async function (isCurrentScene, id) {

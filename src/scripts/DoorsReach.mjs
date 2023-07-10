@@ -1,5 +1,5 @@
-import { checkElevation, error, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib";
-import { DoorData, DoorSourceData, DoorTargetData } from "./ArmsReachModels";
+import { checkElevation, error, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.mjs";
+import { DoorData, DoorSourceData, DoorTargetData } from "./ArmsReachModels.mjs";
 import {
   computeDistanceBetweenCoordinates,
   getFirstPlayerToken,
@@ -7,8 +7,8 @@ import {
   getTokenCenter,
   isFocusOnCanvas,
   interactionFailNotification,
-} from "./ArmsReachHelper";
-import CONSTANTS from "./constants";
+} from "./ArmsReachHelper.mjs";
+import CONSTANTS from "./constants.mjs";
 
 export const DoorsReach = {
   init: function () {

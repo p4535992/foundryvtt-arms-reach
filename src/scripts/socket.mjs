@@ -1,5 +1,5 @@
-import { debug, warn } from "./lib/lib";
-import API from "./api";
+import { debug, warn } from "./lib/lib.mjs";
+import API from "./api.mjs";
 import { setSocket } from "../main.mjs";
 
 export const SOCKET_HANDLERS = {

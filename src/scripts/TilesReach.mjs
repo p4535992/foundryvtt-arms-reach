@@ -1,11 +1,11 @@
-import { checkElevation, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib";
+import { checkElevation, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.mjs";
 import {
   computeDistanceBetweenCoordinates,
   getFirstPlayerToken,
   getPlaceableCenter,
   interactionFailNotification,
-} from "./ArmsReachHelper";
-import CONSTANTS from "./constants";
+} from "./ArmsReachHelper.mjs";
+import CONSTANTS from "./constants.mjs";
 
 export const TilesReach = {
   globalInteractionDistance: function (selectedToken, tile, maxDistance = 0, useGrid = false, userId = undefined) {

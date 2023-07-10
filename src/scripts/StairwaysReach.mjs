@@ -1,12 +1,12 @@
-import { checkElevation, getCharacterName, getTokenByTokenID, i18n, i18nFormat, warn } from "./lib/lib";
+import { checkElevation, getCharacterName, getTokenByTokenID, i18n, i18nFormat, warn } from "./lib/lib.mjs";
 import {
   computeDistanceBetweenCoordinates,
   getFirstPlayerToken,
   getFirstPlayerTokenSelected,
   getPlaceableCenter,
   interactionFailNotification,
-} from "./ArmsReachHelper";
-import CONSTANTS from "./constants";
+} from "./ArmsReachHelper.mjs";
+import CONSTANTS from "./constants.mjs";
 
 export const StairwaysReach = {
   globalInteractionDistance: function (stairway, selectedTokenIds, userId = undefined) {

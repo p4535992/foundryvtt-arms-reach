@@ -1,6 +1,6 @@
-import { warn, error, debug, i18n, i18nFormat, getCharacterName } from "./lib/lib";
-import { StairwaysReach } from "./StairwaysReach";
-import { ResetDoorsAndFog } from "./resetdoorsandfog";
+import { warn, error, debug, i18n, i18nFormat, getCharacterName } from "./lib/lib.mjs";
+import { StairwaysReach } from "./StairwaysReach.mjs";
+import { ResetDoorsAndFog } from "./resetdoorsandfog.mjs";
 import {
   checkTaggerForAmrsreachForDrawing,
   checkTaggerForAmrsreachForLight,

@@ -1,15 +1,15 @@
-import { DoorsReach } from "./DoorsReach";
-import { DrawingsReach } from "./DrawingsReach";
-import { LightsReach } from "./LightsReach";
-import { NotesReach } from "./NotesReach";
+import { DoorsReach } from "./DoorsReach.mjs";
+import { DrawingsReach } from "./DrawingsReach.mjs";
+import { LightsReach } from "./LightsReach.mjs";
+import { NotesReach } from "./NotesReach.mjs";
 import { SoundsReach } from "./SoundsReach";
-import { StairwaysReach } from "./StairwaysReach";
-import { TilesReach } from "./TilesReach";
-import { TokensReach } from "./TokensReach";
-import { WallsReach } from "./WallsReach";
-import { globalInteractionDistanceUniversal } from "./ArmsReachHelper";
-import { checkElevation, error, warn } from "./lib/lib";
-import CONSTANTS from "./constants";
+import { StairwaysReach } from "./StairwaysReach.mjs";
+import { TilesReach } from "./TilesReach.mjs";
+import { TokensReach } from "./TokensReach.mjs";
+import { WallsReach } from "./WallsReach.mjs";
+import { globalInteractionDistanceUniversal } from "./ArmsReachHelper.mjs";
+import { checkElevation, error, warn } from "./lib/lib.mjs";
+import CONSTANTS from "./constants.mjs";
 // import type { Overlay } from "./apps/range_overlay/overlay";
 // import type { combatRangeOverlay } from "./ArmsReachModels";
 

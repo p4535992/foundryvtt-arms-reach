@@ -1,6 +1,6 @@
-import { checkElevation, error, getElevationPlaceableObject, warn } from "./lib/lib";
-import { ArmsreachData } from "./ArmsReachModels";
-import CONSTANTS from "./constants";
+import { checkElevation, error, getElevationPlaceableObject, warn } from "./lib/lib.mjs";
+import { ArmsreachData } from "./ArmsReachModels.mjs";
+import CONSTANTS from "./constants.mjs";
 
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
