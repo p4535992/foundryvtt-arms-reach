@@ -15,7 +15,7 @@
 import { registerSettings } from "./scripts/settings";
 import { preloadTemplates } from "./scripts/preloadTemplates";
 import { initHooks, readyHooks, setupHooks } from "./scripts/module";
-import type API from "./scripts/api";
+import API from "./scripts/api";
 import CONSTANTS from "./scripts/constants";
 
 /* ------------------------------------ */
@@ -70,17 +70,12 @@ Hooks.once("ready", () => {
 
 // Add any additional hooks if necessary
 
-export interface ArmsReachModuleData {
-	api: typeof API;
-	socket: any;
-}
-
 /**
  * Initialization helper, to set API.
  * @param api to set to game module.
  */
-export function setApi(api: typeof API): void {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+export function setApi(api) {
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	data.api = api;
 }
 
@@ -88,8 +83,8 @@ export function setApi(api: typeof API): void {
  * Returns the set API.
  * @returns Api from games module.
  */
-export function getApi(): typeof API {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+export function getApi() {
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	return data.api;
 }
 
@@ -97,8 +92,8 @@ export function getApi(): typeof API {
  * Initialization helper, to set Socket.
  * @param socket to set to game module.
  */
-export function setSocket(socket: any): void {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+export function setSocket(socket){
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	data.socket = socket;
 }
 
@@ -107,17 +102,6 @@ export function setSocket(socket: any): void {
  * @returns Socket from games module.
  */
 export function getSocket() {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as ArmsReachModuleData;
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	return data.socket;
 }
-
-Hooks.once("libChangelogsReady", function () {
-	//@ts-ignore
-	libChangelogs.register(
-		CONSTANTS.MODULE_NAME,
-		`
-    - Update typescript
-    `,
-		"minor"
-	);
-});

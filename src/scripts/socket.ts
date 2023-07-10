@@ -1,6 +1,6 @@
 import { debug, warn } from "./lib/lib";
 import API from "./api";
-import { setSocket } from "../foundryvtt-arms-reach";
+import { setSocket } from "../main.mjs";
 
 export const SOCKET_HANDLERS = {
 	/**

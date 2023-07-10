@@ -27,7 +27,7 @@ import { SoundsReach } from "./SoundsReach";
 import { WallsReach } from "./WallsReach";
 import CONSTANTS from "./constants";
 import API from "./api";
-import { setApi } from "../foundryvtt-arms-reach";
+import { setApi } from "../main.mjs";
 import { registerSocket } from "./socket";
 // import { Overlay } from "./apps/range_overlay/overlay";
 // import { keyboard } from "./apps/range_overlay/keyboard";
