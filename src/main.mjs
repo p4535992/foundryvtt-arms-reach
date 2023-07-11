@@ -15,7 +15,7 @@
 import { registerSettings } from "./scripts/settings.mjs";
 import { preloadTemplates } from "./scripts/preloadTemplates.mjs";
 import { initHooks, readyHooks, setupHooks } from "./scripts/module.mjs";
-import API from "./scripts/api";
+import API from "./scripts/api.mjs";
 import CONSTANTS from "./scripts/constants.mjs";
 import { log } from "./scripts/lib/lib.mjs";
 
@@ -76,7 +76,7 @@ Hooks.once("ready", () => {
  * @param api to set to game module.
  */
 export function setApi(api) {
-  setApiOld(api)
+  setApiOld(api);
   const data = game.modules.get(CONSTANTS.MODULE_NAME);
   data.api = api;
 }
@@ -108,7 +108,6 @@ export function getSocket() {
   const data = game.modules.get(CONSTANTS.MODULE_NAME);
   return data.socket;
 }
-
 
 /**
  * Initialization helper, to set API.
