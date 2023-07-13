@@ -122,5 +122,16 @@
 	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnDoors": "Habilite a distância de verificação nas portas, mesmo para GM",
 	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnDoors": "Se habilitado aplicará a verificação da distância nas Portas até mesmo para o GM, útil se o GM quiser jogar como jogador.",
 	"foundryvtt-arms-reach.settingHintNotesIntegrationFeature": "Distância máxima que um token pode interagir com uma nota... 0 desativará o limite (precisa recarregar o aplicativo). Os GMs ignoram essa limitação de distância.",
-	"foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "Se verdadeiro, por padrão, habilite a integração de distância para todos os tokens de destino com o prefixo definido no nome do token (não no nome do personagem)"
+	"foundryvtt-arms-reach.settingHintTokensIntegrationByPrefix": "Se verdadeiro, por padrão, habilite a integração de distância para todos os tokens de destino com o prefixo definido no nome do token (não no nome do personagem)",
+	"foundryvtt-arms-reach.settingNameTokensIntegrationExplicitName": "Defina o nome do token de origem que você deseja usar para a interação",
+	"foundryvtt-arms-reach.settingHintTokensIntegrationExplicitName": "O nome do token de origem definido aqui é o usado para a interação de distância com o token de destino (não o nome do personagem). Por padrão, é o nome do personagem vinculado ao usuário",
+	"foundryvtt-arms-reach.settingHintLightsIntegrationFeature": "Distância máxima em que uma Luz pode interagir com outro token... 0 irá desativar o limite (requer recarregamento do aplicativo). Os mestres ignoram essa limitação de distância.",
+	"foundryvtt-arms-reach.settingHintSoundsIntegrationFeature": "Distância máxima em que um Som pode interagir com outro token... 0 irá desativar o limite (requer recarregamento do aplicativo). Os mestres ignoram essa limitação de distância.",
+	"foundryvtt-arms-reach.settingNameLightsIntegrationFeature": "Ativar/Desativar integração de Iluminação",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnLights": "Ativar a verificação de distância em Luzes, mesmo para o Mestre",
+	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnLights": "Se ativado, aplicará a verificação de distância em Luzes mesmo para o Mestre, útil se o Mestre quiser jogar como um jogador.",
+	"foundryvtt-arms-reach.settingNameSoundsIntegrationFeature": "Ativar/Desativar integração de Sons",
+	"foundryvtt-arms-reach.settingNameGlobalInteractionDistanceForGMOnSounds": "Ativar a verificação de distância em Sons, mesmo para o Mestre",
+	"foundryvtt-arms-reach.settingHintGlobalInteractionDistanceForGMOnSounds": "Se ativado, aplicará a verificação de distância em Sons mesmo para o Mestre, útil se o Mestre quiser jogar como um jogador.",
+	"foundryvtt-arms-reach.settingNameDrawingsIntegrationFeature": "Ativar/Desativar integração de Desenhos"
 }
