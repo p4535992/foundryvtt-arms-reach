@@ -499,7 +499,7 @@ export const getMousePosition = function (canvas: Canvas, event): { x: number; y
 	//   y: (event.global.y - transform?.ty) / <number>canvas?.stage?.scale?.y,
 	// };
 	// NEW METHOD SEEM MORE PRECISE
-	const position = canvas.app?.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage);
+	const position = canvas.app?.renderer.plugins.interaction.pointer.getLocalPosition(canvas.app.stage);
 	return {
 		x: position.x,
 		y: position.y
