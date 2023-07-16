@@ -1,7 +1,7 @@
 # CHANGELOG
-### 2.3.0
+### 2.3.0 [BREAKING CHANGES]
 
-- Release for v11
+- Beta Release for v11
 
 ### 2.2.13-14
 
