@@ -2,17 +2,17 @@
 
 ![Latest Release Download Count](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/latest/module.zip?color=2b82fc&label=DOWNLOADS&style=for-the-badge)
 
-[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundryvtt-arms-reach&colorB=006400&style=for-the-badge)](https://forge-vtt.com/bazaar#package=foundryvtt-arms-reach)
+[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Farms-reach&colorB=006400&style=for-the-badge)](https://forge-vtt.com/bazaar#package=arms-reach)
 
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fp4535992%2Ffoundryvtt-arms-reach%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibility.verified&colorB=orange&style=for-the-badge)
 
 ![Latest Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fp4535992%2Ffoundryvtt-arms-reach%2Fmaster%2Fsrc%2Fmodule.json&label=Latest%20Release&prefix=v&query=$.version&colorB=red&style=for-the-badge)
 
-[![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Ffoundryvtt-arms-reach%2Fshield%2Fendorsements&style=for-the-badge)](https://www.foundryvtt-hub.com/package/foundryvtt-arms-reach/)
+[![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Farms-reach%2Fshield%2Fendorsements&style=for-the-badge)](https://www.foundryvtt-hub.com/package/arms-reach/)
 
 ![GitHub all releases](https://img.shields.io/github/downloads/p4535992/foundryvtt-arms-reach/total?style=for-the-badge)
 
-[![Translation status](https://weblate.foundryvtt-hub.com/widgets/foundryvtt-arms-reach/-/287x66-black.png)](https://weblate.foundryvtt-hub.com/engage/foundryvtt-arms-reach/)
+[![Translation status](https://weblate.foundryvtt-hub.com/widgets/arms-reach/-/287x66-black.png)](https://weblate.foundryvtt-hub.com/engage/arms-reach/)
 
 Little Utilities, Arms Reach for door, journal, stairways, token, ecc.
 
@@ -55,7 +55,7 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 
 A little api to use in macro cc. for check if the placeable object reachable with variant based on the string id or the string tag from the module `tagger`.
 
-The api is reachable from the variable `game.modules.get('armsreach').api` or from the socket libary `socketLib` on the variable `game.modules.get('armsreach').socket` if present and active.
+The api is reachable from the variable `game.modules.get('arms-reach').api` or from the socket libary `socketLib` on the variable `game.modules.get('arms-reach').socket` if present and active.
 
 #### isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -71,7 +71,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+`game.modules.get('arms-reach').api.isReachable(token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
 
 #### isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -87,7 +87,7 @@ Calculate the distance between the source token and the first target placeable o
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('arms-reach').api.isReachableByTag(token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -103,7 +103,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('arms-reach').api.isReachableById(token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -119,7 +119,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('arms-reach').api.isReachableByIdOrName(token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -135,7 +135,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
+`game.modules.get('arms-reach').api.isReachableUniversal(placeableObject: PlaceableObject, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):boolean`
 
 #### isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -151,7 +151,7 @@ Calculate the distance between the source token and the first target placeable o
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('arms-reach').api.isReachableByTagUniversal(placeableObject: PlaceableObject, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -167,7 +167,7 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('arms-reach').api.isReachableByIdUniversal(placeableObject: PlaceableObject, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 #### isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string):boolean ⇒ <code>boolean</code>
 
@@ -183,20 +183,20 @@ Calculate the distance between the source token and the target placeable objet
 | userID | <code>string</code> | OPTIONAL: user id for the distance checking |
 
 **Example**:
-`game.modules.get('armsreach').api.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
+`game.modules.get('arms-reach').api.isReachableByIdOrNameUniversal(placeableObject: PlaceableObject, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): boolean`
 
 
 ### Integration with Socketlib module
 
 You can use the socketLib for call the same functions:
 
-`await game.modules.get('armsreach').socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise`
+`await game.modules.get('arms-reach').socket.executeAsGM('isReachable', token: Token, placeableObject: PlaceableObject, maxDistance?: number, useGrid?: boolean, userId?: string):Promise`
 
-`await game.modules.get('armsreach').socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
+`await game.modules.get('arms-reach').socket.executeAsGM('isReachableByTag', token: Token, tag: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
 
-`await game.modules.get('armsreach').socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
+`await game.modules.get('arms-reach').socket.executeAsGM('isReachableById', token: Token, placeableObjectId: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
 
-`await game.modules.get('armsreach').socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
+`await game.modules.get('arms-reach').socket.executeAsGM('isReachableByIdOrName', token: Token, placeableObjectIdOrName: string, maxDistance?: number, useGrid?: boolean, userId?: string): Promise`
 
 **NOTE: for now the optional parameter 'userId' is not used from the api, i hope to add in the future some filter so a specific actor for a specific user has some limitation.**
 
@@ -268,17 +268,17 @@ To interact with a door, journal, ecc., the player need to have a token selected
 * From 2.2.11 this feature is been splitted for each category of placeable object (Wall, Token, Note, ecc.) for a better customization
 
 
-### Reset Doors and Fog feature Feature
+### Reset Doors and Fog feature Feature (deprecated and removed on v11)
 
-**NOTE:** This feature remain for history, it will been updated, but is been "officially" transferred here [Sidebar Context](https://github.com/kandashi/sidebar-context) because make more sense on that module than this.
+**NOTE:** This feature remain for history, it will been updated, but is been "officially" transferred here [Sidebar Context](https://github.com/kandashi/sidebar-context) because make more sense on that module than this, also is been on the core of foundryvtt v11...
 
-Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.
+~~Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.~~
 
-Changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.
+~~Changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.~~
 
-### [Experimental] Integration of [Combat Range Overlay](https://github.com/Nazrax/fvtt-combat-range-overlay)
+~~### [Experimental] Integration of [Combat Range Overlay](https://github.com/Nazrax/fvtt-combat-range-overlay)~~
 
-[Here the documentation](./wiki/docs/combat-range-overlay.md)
+~~[Here the documentation](./wiki/docs/combat-range-overlay.md)~~
 
 # Build
 
@@ -287,43 +287,31 @@ Changes the functionality from closing ALL doors to closing ONLY opened doors. D
 ```bash
 npm install
 ```
+
+### dev
+
+`dev` will let you develop you own code with hot reloading on the browser
+
+```bash
+npm run dev
+```
+
 ## npm build scripts
 
 ### build
 
-will build the code and copy all necessary assets into the dist folder and make a symlink to install the result into your foundry data; create a
-`foundryconfig.json` file with your Foundry Data path.
-
-```json
-{
-  "dataPath": "~/.local/share/FoundryVTT/"
-}
-```
-
 `build` will build and set up a symlink between `dist` and your `dataPath`.
 
 ```bash
-npm run-script build
+npm run build
 ```
 
-### NOTE:
+### build-watch
 
-You don't need to build the `foundryconfig.json` file you can just copy the content of the `dist` folder on the module folder under `modules` of Foundry
-
-### build:watch
-
-`build:watch` will build and watch for changes, rebuilding automatically.
+`build-watch` will build and watch for changes, rebuilding automatically.
 
 ```bash
-npm run-script build:watch
-```
-
-### clean
-
-`clean` will remove all contents in the dist folder (but keeps the link from build:install).
-
-```bash
-npm run-script clean
+npm run build-watch
 ```
 
 ### prettier-format
@@ -332,14 +320,6 @@ npm run-script clean
 
 ```bash
 npm run-script prettier-format
-```
-
-### package
-
-`package` generates a zip file containing the contents of the dist folder generated previously with the `build` command. Useful for those who want to manually load the module or want to create their own release
-
-```bash
-npm run-script package
 ```
 
 ## [Changelog](./changelog.md)

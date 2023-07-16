@@ -1,6 +1,6 @@
 import { debug, warn } from "./lib/lib.mjs";
 import API from "./api.mjs";
-import { setSocket } from "../main.mjs";
+import { setSocket } from "../module.js";
 
 export const SOCKET_HANDLERS = {
   /**
@@ -29,7 +29,7 @@ export function registerSocket() {
     return armsReachSocket;
   }
   //@ts-ignore
-  armsReachSocket = socketlib.registerModule(CONSTANTS.MODULE_NAME);
+  armsReachSocket = socketlib.registerModule(CONSTANTS.MODULE_ID);
 
   /**
    * Generic socket

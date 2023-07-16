@@ -63,7 +63,7 @@ const weaponRangeStyle = {
 };
 
 function getDiagonalDelta() {
-	const diagonalsSetting = game.settings.get(CONSTANTS.MODULE_NAME, "diagonals");
+	const diagonalsSetting = game.settings.get(CONSTANTS.MODULE_ID, "diagonals");
 
 	if (
 		diagonalsSetting === CONSTANTS.diagonals.FIVE_TEN_FIVE ||
@@ -81,7 +81,7 @@ function getDiagonalDelta() {
 }
 
 function diagonalDistance(rawDist) {
-	const diagonalsSetting = game.settings.get(CONSTANTS.MODULE_NAME, "diagonals");
+	const diagonalsSetting = game.settings.get(CONSTANTS.MODULE_ID, "diagonals");
 
 	if (diagonalsSetting === CONSTANTS.diagonals.FIVE_TEN_FIVE) {
 		return Math.floor(rawDist + CONSTANTS.FUDGE);
@@ -279,25 +279,25 @@ export class Overlay {
 		this.initializePersistentVariables();
 		this.drawCosts(movementCosts, targetRangeMap);
 		if (game.user?.targets.size === 0) {
-			if (game.settings.get(CONSTANTS.MODULE_NAME, "show-turn-order")) {
+			if (game.settings.get(CONSTANTS.MODULE_ID, "show-turn-order")) {
 				this.drawTurnOrder();
 			}
 
-			if (game.settings.get(CONSTANTS.MODULE_NAME, "show-potential-targets")) {
+			if (game.settings.get(CONSTANTS.MODULE_ID, "show-potential-targets")) {
 				this.drawPotentialTargets(movementCosts);
 			}
 		}
 
-		if (game.settings.get(CONSTANTS.MODULE_NAME, "show-weapon-range")) {
+		if (game.settings.get(CONSTANTS.MODULE_ID, "show-weapon-range")) {
 			this.drawWeaponRange();
 		}
 
-		if (game.settings.get(CONSTANTS.MODULE_NAME, "show-walls")) {
+		if (game.settings.get(CONSTANTS.MODULE_ID, "show-walls")) {
 			this.drawWalls();
 		}
 
 		//@ts-ignore
-		if (game.settings.get(CONSTANTS.MODULE_NAME, "show-difficult-terrain") && canvas.terrain) {
+		if (game.settings.get(CONSTANTS.MODULE_ID, "show-difficult-terrain") && canvas.terrain) {
 			try {
 				//@ts-ignore
 				canvas.terrain.visible = true;
@@ -320,7 +320,7 @@ export class Overlay {
 	fullRefresh() {
 		this.clearAll();
 
-		if (!game.settings.get(CONSTANTS.MODULE_NAME, "is-active")) {
+		if (!game.settings.get(CONSTANTS.MODULE_ID, "is-active")) {
 			return;
 		}
 
@@ -333,8 +333,8 @@ export class Overlay {
 			}
 
 			const visibilitySetting = currentToken.inCombat
-				? game.settings.get(CONSTANTS.MODULE_NAME, "ic_visibility")
-				: game.settings.get(CONSTANTS.MODULE_NAME, "ooc_visibility");
+				? game.settings.get(CONSTANTS.MODULE_ID, "ic_visibility")
+				: game.settings.get(CONSTANTS.MODULE_ID, "ooc_visibility");
 
 			if (visibilitySetting === CONSTANTS.overlayVisibility.ALWAYS) {
 				showOverlay = true;
@@ -346,7 +346,7 @@ export class Overlay {
 		if (showOverlay) {
 			this.drawAll();
 		} else if (this.justActivated) {
-			info(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.activated-not-visible`), true);
+			info(game.i18n.localize(`${CONSTANTS.MODULE_ID}.activated-not-visible`), true);
 		}
 		this.justActivated = false;
 	}
@@ -412,7 +412,7 @@ export class Overlay {
 		this.overlays.potentialTargetOverlay = undefined;
 		this.overlays.wallsOverlay = undefined;
 
-		if (game.settings.get(CONSTANTS.MODULE_NAME, "show-difficult-terrain")) {
+		if (game.settings.get(CONSTANTS.MODULE_ID, "show-difficult-terrain")) {
 			try {
 				//@ts-ignore
 				canvas.terrain.visible = false;
@@ -512,7 +512,7 @@ export class Overlay {
 		if (showOnlyTargetPath && idealTileMap.size === 0) {
 			if (this.newTarget) {
 				this.newTarget = false;
-				warn(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.no-good-tiles`), true);
+				warn(game.i18n.localize(`${CONSTANTS.MODULE_ID}.no-good-tiles`), true);
 				showOnlyTargetPath = false;
 			}
 		}
@@ -572,7 +572,7 @@ export class Overlay {
 				}
 				this.overlays.distanceOverlay?.beginFill(
 					color,
-					game.settings.get(CONSTANTS.MODULE_NAME, "movement-alpha")
+					game.settings.get(CONSTANTS.MODULE_ID, "movement-alpha")
 				);
 				this.overlays.distanceOverlay?.drawRect(
 					cornerPt.x,

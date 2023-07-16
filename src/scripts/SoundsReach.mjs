@@ -13,7 +13,7 @@ export const SoundsReach = {
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnSounds") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnSounds") && game.user?.isGM)
     ) {
       return true;
     }
@@ -21,7 +21,7 @@ export const SoundsReach = {
       if (game.user?.isGM) {
         return true;
       }
-      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     // let isOwned = false;
@@ -41,9 +41,9 @@ export const SoundsReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+    let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
     if (globalInteraction <= 0) {
-      globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+      globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
@@ -52,15 +52,15 @@ export const SoundsReach = {
       if (
         !game.user?.isGM ||
         (game.user?.isGM &&
-          // && game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
-          game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnSounds"))
+          // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
+          game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnSounds"))
       ) {
         if (!selectedToken) {
-          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForSound`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForSound`));
           return false;
         } else {
           let isNotNearEnough = false;
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(selectedToken, sound);
             if (!res) {
               warn(`The token '${selectedToken.name}' is not on the elevation range of this placeable object`);
@@ -68,11 +68,11 @@ export const SoundsReach = {
             }
           }
           // OLD SETTING
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance") > 0 || useGrid) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
             // const dist = computeDistanceBetweenCoordinatesOLD(SoundsReach.getSoundsCenter(sound), character);
             const dist = computeDistanceBetweenCoordinates(
               SoundsReach.getSoundsCenter(sound),
@@ -85,7 +85,7 @@ export const SoundsReach = {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
             const dist = computeDistanceBetweenCoordinates(
               SoundsReach.getSoundsCenter(sound),
               selectedToken,
@@ -98,10 +98,10 @@ export const SoundsReach = {
             const tokenName = getCharacterName(selectedToken);
             if (tokenName) {
               interactionFailNotification(
-                i18nFormat(`${CONSTANTS.MODULE_NAME}.soundsNotInReachFor`, { tokenName: tokenName })
+                i18nFormat(`${CONSTANTS.MODULE_ID}.soundsNotInReachFor`, { tokenName: tokenName })
               );
             } else {
-              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.soundsNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.soundsNotInReach`));
             }
             return false;
           } else {

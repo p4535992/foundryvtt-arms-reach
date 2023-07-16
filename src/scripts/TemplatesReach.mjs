@@ -13,7 +13,7 @@ export const TemplatesReach = {
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTemplates") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTemplates") && game.user?.isGM)
     ) {
       return true;
     }
@@ -21,7 +21,7 @@ export const TemplatesReach = {
       if (game.user?.isGM) {
         return true;
       }
-      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     // let isOwned = false;
@@ -41,9 +41,9 @@ export const TemplatesReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+    let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
     if (globalInteraction <= 0) {
-      globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+      globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
@@ -52,15 +52,15 @@ export const TemplatesReach = {
       if (
         !game.user?.isGM ||
         (game.user?.isGM &&
-          // && game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
-          game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTemplates"))
+          // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
+          game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTemplates"))
       ) {
         if (!selectedToken) {
-          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForTemplate`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForTemplate`));
           return false;
         } else {
           let isNotNearEnough = false;
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(selectedToken, template);
             if (!res) {
               warn(`The token '${selectedToken.name}' is not on the elevation range of this placeable object`);
@@ -68,11 +68,11 @@ export const TemplatesReach = {
             }
           }
           // OLD SETTING
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance") > 0 || useGrid) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
             // const dist = computeDistanceBetweenCoordinatesOLD(TemplatesReach.getTemplatesCenter(template), character);
             const dist = computeDistanceBetweenCoordinates(
               TemplatesReach.getTemplatesCenter(template),
@@ -85,7 +85,7 @@ export const TemplatesReach = {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
             const dist = computeDistanceBetweenCoordinates(
               TemplatesReach.getTemplatesCenter(template),
               selectedToken,
@@ -98,10 +98,10 @@ export const TemplatesReach = {
             const tokenName = getCharacterName(selectedToken);
             if (tokenName) {
               interactionFailNotification(
-                i18nFormat(`${CONSTANTS.MODULE_NAME}.templatesNotInReachFor`, { tokenName: tokenName })
+                i18nFormat(`${CONSTANTS.MODULE_ID}.templatesNotInReachFor`, { tokenName: tokenName })
               );
             } else {
-              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.templatesNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.templatesNotInReach`));
             }
             return false;
           } else {

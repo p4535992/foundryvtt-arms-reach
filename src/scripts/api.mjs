@@ -238,7 +238,7 @@ const API = {
     // const userId = game.users?.find((u:User) => return u.id = gameUserId)[0];
     const dist = globalInteractionDistanceUniversal(placeableObjectSource, placeableObjectTarget, useGrid);
     let isNotNearEnough = false;
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
       const res = checkElevation(placeableObjectSource, placeableObjectTarget);
       if (!res) {
         warn(`The token '${placeableObjectSource.name}' is not on the elevation range of this placeable object`);
@@ -246,17 +246,17 @@ const API = {
       }
     }
     // OLD SETTING
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance") > 0 || useGrid) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
       const maxDist =
         maxDistance && maxDistance > 0
           ? maxDistance
-          : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+          : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
       isNotNearEnough = dist > maxDist;
     } else {
       const maxDist =
         maxDistance && maxDistance > 0
           ? maxDistance
-          : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+          : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
       isNotNearEnough = dist > maxDist;
     }
     if (isNotNearEnough) {

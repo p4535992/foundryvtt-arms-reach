@@ -37,25 +37,25 @@ function _showRangeDialog() {
 	if (game.user?.isGM) {
 		content.push(
 			`<p>${i18n(
-				`${CONSTANTS.MODULE_NAME}.quick-settings.update-actor-checkbox`
+				`${CONSTANTS.MODULE_ID}.quick-settings.update-actor-checkbox`
 			)} <input name="update-actor" type="checkbox"/></p>`
 		);
 	}
 	content.push(
 		`<p>${i18n(
-			`${CONSTANTS.MODULE_NAME}.quick-settings.ignore-difficult-terrain`
+			`${CONSTANTS.MODULE_ID}.quick-settings.ignore-difficult-terrain`
 		)} <input name="ignore-difficult-terrain" type="checkbox" ${ignoreDifficultTerrainChecked}/></p>`
 	);
 	content.push(
 		`<p>${i18n(
-			`${CONSTANTS.MODULE_NAME}.quick-settings.speed-override`
+			`${CONSTANTS.MODULE_ID}.quick-settings.speed-override`
 		)} <input name="speed-override" type="text" value="${speedOverride}" size="3" style="width: 40px" maxlength="3"/>`
 	);
-	content.push(`<p>${i18n(`${CONSTANTS.MODULE_NAME}.quick-settings.weapon-range-header`)}</p>`);
+	content.push(`<p>${i18n(`${CONSTANTS.MODULE_ID}.quick-settings.weapon-range-header`)}</p>`);
 
 	const d = new Dialog(
 		{
-			title: i18n(`${CONSTANTS.MODULE_NAME}.quick-settings.title`),
+			title: i18n(`${CONSTANTS.MODULE_ID}.quick-settings.title`),
 			content: content.join("\n"),
 			buttons: buttons,
 			default: defaultValue
@@ -66,14 +66,14 @@ function _showRangeDialog() {
 }
 
 export async function _toggleButtonClick(toggled, controls) {
-	let isActive = game.settings.get(CONSTANTS.MODULE_NAME, "is-active");
-	const wasActive = game.settings.get(CONSTANTS.MODULE_NAME, "is-active");
+	let isActive = game.settings.get(CONSTANTS.MODULE_ID, "is-active");
+	const wasActive = game.settings.get(CONSTANTS.MODULE_ID, "is-active");
 
 	if (keyboard.isDown("Shift")) {
 		// Pop quick settings
 		const token = getCurrentToken();
 		if (!token) {
-			warn(i18n(`${CONSTANTS.MODULE_NAME}.controls.cant-open-no-selected-token`), true);
+			warn(i18n(`${CONSTANTS.MODULE_ID}.controls.cant-open-no-selected-token`), true);
 		} else {
 			// Assume we want to activate if the user is opening the dialog
 			isActive = true;
@@ -84,7 +84,7 @@ export async function _toggleButtonClick(toggled, controls) {
 		// Reset measureFrom
 		const token = getCurrentToken();
 		if (!token) {
-			warn(i18n(`${CONSTANTS.MODULE_NAME}.controls.cant-reset-no-token`), true);
+			warn(i18n(`${CONSTANTS.MODULE_ID}.controls.cant-reset-no-token`), true);
 		} else {
 			TokenInfo.current.updateMeasureFrom();
 			API.combatRangeOverlay.instance.fullRefresh();
@@ -99,7 +99,7 @@ export async function _toggleButtonClick(toggled, controls) {
 	// Ensure button matches active state
 	// We _must_ set .active _before_ using await or the button will be drawn and we'll be too late
 	controls.find((group) => group.name === "token").tools.find((t) => t.name === TOGGLE_BUTTON).active = isActive;
-	await game.settings.set(CONSTANTS.MODULE_NAME, "is-active", isActive);
+	await game.settings.set(CONSTANTS.MODULE_ID, "is-active", isActive);
 
 	if (
 		!wasActive &&
@@ -109,9 +109,9 @@ export async function _toggleButtonClick(toggled, controls) {
 		TokenInfo.current.getSpeedFromAttributes() === 0
 	) {
 		if (game.user?.isGM) {
-			warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-gm`), true);
+			warn(i18n(`${CONSTANTS.MODULE_ID}.token-speed-warning-gm`), true);
 		} else {
-			warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-player`), true);
+			warn(i18n(`${CONSTANTS.MODULE_ID}.token-speed-warning-player`), true);
 			_showRangeDialog();
 		}
 	}
@@ -122,10 +122,10 @@ export let toggleButton;
 //   if (!toggleButton) {
 //     toggleButton = {
 //       name: TOGGLE_BUTTON,
-//       title: `${CONSTANTS.MODULE_NAME}.controlButton`,
+//       title: `${CONSTANTS.MODULE_ID}.controlButton`,
 //       icon: "fas fa-people-arrows",
 //       toggle: true,
-//       active: game.settings.get(CONSTANTS.MODULE_NAME,'is-active'),
+//       active: game.settings.get(CONSTANTS.MODULE_ID,'is-active'),
 //       onClick: (toggled) => _toggleButtonClick(toggled, controls),
 //       visible: true,  // TODO: Figure out how to disable this from Settings
 //     }

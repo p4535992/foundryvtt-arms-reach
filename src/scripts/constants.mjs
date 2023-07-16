@@ -1,6 +1,7 @@
 const CONSTANTS = {
   MODULE_NAME: "arms-reach",
   MODULE_ID_OLD: "foundryvtt-arms-reach",
+  MODULE_ID_OLD_2: "armsreach",
   PATH: `modules/arms-reach/`,
   TAGGER_MODULE_NAME: "tagger",
   TAGGER_FLAG: "armsreach",
@@ -28,6 +29,6 @@ const CONSTANTS = {
   //   },
 };
 
-CONSTANTS.PATH = `modules/${CONSTANTS.MODULE_NAME}/`;
+CONSTANTS.PATH = `modules/${CONSTANTS.MODULE_ID}/`;
 
 export default CONSTANTS;

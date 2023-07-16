@@ -158,7 +158,7 @@ function getTokenShape(token) {
  * Interation fail messages
  */
 export const interactionFailNotification = function (message) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "notificationsInteractionFail")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "notificationsInteractionFail")) {
     return;
   }
   warn(message, true);
@@ -171,7 +171,7 @@ export const getFirstPlayerTokenSelected = function () {
   // Get first token ownted by the player
   const selectedTokens = canvas.tokens?.controlled;
   if (selectedTokens.length > 1) {
-    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
     return null;
   }
   if (!selectedTokens || selectedTokens.length === 0) {
@@ -182,7 +182,7 @@ export const getFirstPlayerTokenSelected = function () {
     return null;
     //}
   }
-  if (selectedTokens[0] && game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")) {
+  if (selectedTokens[0] && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
     const isPlayerOwned = selectedTokens[0]?.document.isOwner;
     if (!isPlayerOwned) {
       return null;
@@ -201,7 +201,7 @@ export const getFirstPlayerTokenSelectedNo = function (noToken) {
   // Get first token ownted by the player
   const selectedTokens = canvas.tokens?.controlled;
   if (selectedTokens.length > 1) {
-    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
     return null;
   }
   if (!selectedTokens || selectedTokens.length === 0) {
@@ -212,7 +212,7 @@ export const getFirstPlayerTokenSelectedNo = function (noToken) {
     return null;
     //}
   }
-  if (selectedTokens[0] && game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")) {
+  if (selectedTokens[0] && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
     const isPlayerOwned = selectedTokens[0]?.document.isOwner;
     if (!isPlayerOwned) {
       return null;
@@ -234,13 +234,13 @@ export const getFirstPlayerToken = function () {
   const controlledArray = canvas.tokens?.controlled;
   // Do nothing if multiple tokens are selected
   if (controlledArray.length && controlledArray.length > 1) {
-    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
     return null;
   }
   // If exactly one token is selected, take that
   token = controlledArray[0];
   if (!token) {
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "useOwnedTokenIfNoTokenIsSelected")) {
       if (!controlledArray.length || controlledArray.length === 0) {
         // If no token is selected use the token of the users character
         token = canvas.tokens?.placeables.find((token) => token.document.actorId === game.user?.character?.id);
@@ -251,7 +251,7 @@ export const getFirstPlayerToken = function () {
       }
     }
   }
-  if (token && game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")) {
+  if (token && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
     const isPlayerOwned = token.document.isOwner;
     if (!isPlayerOwned) {
       return null;
@@ -273,13 +273,13 @@ export const getFirstPlayerTokenNo = function (noToken) {
   const controlledArray = canvas.tokens?.controlled;
   // Do nothing if multiple tokens are selected
   if (controlledArray.length && controlledArray.length > 1) {
-    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+    //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
     return null;
   }
   // If exactly one token is selected, take that
   token = controlledArray[0];
   if (!token) {
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "useOwnedTokenIfNoTokenIsSelected")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "useOwnedTokenIfNoTokenIsSelected")) {
       if (!controlledArray.length || controlledArray.length === 0) {
         // If no token is selected use the token of the users character
         token = canvas.tokens?.placeables.find(
@@ -298,7 +298,7 @@ export const getFirstPlayerTokenNo = function (noToken) {
       }
     }
   }
-  if (token && game.settings.get(CONSTANTS.MODULE_NAME, "enableInteractionForTokenOwnedByUser")) {
+  if (token && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
     const isPlayerOwned = token.document.isOwner;
     if (!isPlayerOwned) {
       return null;
@@ -328,7 +328,7 @@ export const isFocusOnCanvas = function () {
 
 export const reselectTokenAfterInteraction = function (character) {
   // If settings is true do not deselect the current select token
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "forceReSelection")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "forceReSelection")) {
     let isOwned = false;
     if (!character) {
       character = getFirstPlayerTokenSelected();
@@ -364,7 +364,7 @@ export const reselectTokenAfterInteraction = function (character) {
 };
 
 export const checkTaggerForAmrsreachForStairway = function (placeable) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerStairwayIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerStairwayIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -377,7 +377,7 @@ export const checkTaggerForAmrsreachForStairway = function (placeable) {
 };
 
 export const checkTaggerForAmrsreachForToken = function (placeableToken) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerTokenIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerTokenIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -390,7 +390,7 @@ export const checkTaggerForAmrsreachForToken = function (placeableToken) {
 };
 
 export const checkTaggerForAmrsreachForNote = function (placeableNote) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerNoteIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerNoteIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -403,7 +403,7 @@ export const checkTaggerForAmrsreachForNote = function (placeableNote) {
 };
 
 export const checkTaggerForAmrsreachForLight = function (placeableAmbientLight) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerLightIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerLightIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -416,7 +416,7 @@ export const checkTaggerForAmrsreachForLight = function (placeableAmbientLight) 
 };
 
 export const checkTaggerForAmrsreachForSound = function (placeableAmbientSound) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerSoundIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerSoundIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -429,7 +429,7 @@ export const checkTaggerForAmrsreachForSound = function (placeableAmbientSound) 
 };
 
 export const checkTaggerForAmrsreachForDrawing = function (placeableDrawing) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerDrawingIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerDrawingIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -442,7 +442,7 @@ export const checkTaggerForAmrsreachForDrawing = function (placeableDrawing) {
 };
 
 export const checkTaggerForAmrsreachForTile = function (placeableTile) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerTileIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerTileIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -455,7 +455,7 @@ export const checkTaggerForAmrsreachForTile = function (placeableTile) {
 };
 
 export const checkTaggerForAmrsreachForWall = function (placeableWall) {
-  if (!game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerWallIntegration")) {
+  if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerWallIntegration")) {
     return true;
   }
   //@ts-ignore
@@ -484,7 +484,7 @@ export const getMousePosition = function (canvas, event) {
   //   y: (event.global.y - transform?.ty) / canvas?.stage?.scale?.y,
   // };
   // NEW METHOD SEEM MORE PRECISE
-  const position = canvas.app?.renderer.plugins.interaction.mouse.getLocalPosition(canvas.app.stage);
+  const position = canvas.app?.renderer.plugins.interaction.pointer.getLocalPosition(canvas.app.stage);
   return {
     x: position.x,
     y: position.y,
@@ -688,7 +688,7 @@ function units_between_token_and_placeable(token, armsReachData) {
         // WHY ? is a wall but i need to multiply anyway for antoher unitsize
         // dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
       } else {
-        const globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+        const globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
         if (globalInteraction > 5) {
           // WHY ? is a door but i need to multiply anyway for antoher unitsize
           // dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;

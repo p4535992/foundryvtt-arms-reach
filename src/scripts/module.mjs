@@ -27,7 +27,7 @@ import { SoundsReach } from "./SoundsReach";
 import { WallsReach } from "./WallsReach";
 import CONSTANTS from "./constants";
 import API from "./api";
-import { setApi } from "../main.mjs";
+import { setApi } from "../module.js";
 import { registerSocket } from "./socket";
 // import { Overlay } from "./apps/range_overlay/overlay";
 // import { keyboard } from "./apps/range_overlay/keyboard";
@@ -43,32 +43,32 @@ export const initHooks = () => {
   Hooks.once("socketlib.ready", registerSocket);
 
   taggerModuleActive = game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active;
-  // game.settings.get(CONSTANTS.MODULE_NAME, "enableTaggerIntegration");
+  // game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerIntegration");
 
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableArmsReach")) {
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "enableDoorsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
       DoorsReach.init();
 
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "DoorControl.prototype._onMouseDown",
         DoorControlPrototypeOnMouseDownHandler,
         "MIXED"
       );
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "DoorControl.prototype._onRightDown",
         DoorControlPrototypeOnRightDownHandler,
         "MIXED"
       );
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "enableJournalsIntegration")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "Note.prototype._onClickLeft",
         NotePrototypeOnClickLeft1Handler,
         "MIXED"
@@ -76,54 +76,54 @@ export const initHooks = () => {
 
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "Note.prototype._onClickLeft2",
         NotePrototypeOnClickLeft2Handler,
         "MIXED"
       );
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "enableTokensIntegration")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableTokensIntegration")) {
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "Token.prototype._onClickLeft",
         TokenPrototypeOnClickLeftHandler,
         "MIXED"
       );
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "Token.prototype._onClickLeft2",
         TokenPrototypeOnClickLeft2Handler,
         "MIXED"
       );
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "enableLightsIntegration")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableLightsIntegration")) {
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "AmbientLight.prototype._onClickRight",
         AmbientLightPrototypeOnClickRightHandler,
         "MIXED"
       );
     }
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "enableSoundsIntegration")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableSoundsIntegration")) {
       //@ts-ignore
       libWrapper.register(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         "AmbientSound.prototype._onClickRight",
         AmbientSoundPrototypeOnClickRightHandler,
         "MIXED"
       );
     }
 
-    // if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableDrawingsIntegration')) {
+    // if (game.settings.get(CONSTANTS.MODULE_ID, 'enableDrawingsIntegration')) {
     //   //@ts-ignore
     //   libWrapper.register(
-    //     CONSTANTS.MODULE_NAME,
+    //     CONSTANTS.MODULE_ID,
     //     'Drawing.prototype._onHandleMouseDown',
     //     // 'Drawing.prototype._onClickLeft',
     //     DrawingPrototypeOnClickLeftHandler,
@@ -131,10 +131,10 @@ export const initHooks = () => {
     //   );
     // }
 
-    // if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableTilesIntegration')) {
+    // if (game.settings.get(CONSTANTS.MODULE_ID, 'enableTilesIntegration')) {
     //   //@ts-ignore
     //   libWrapper.register(
-    //     CONSTANTS.MODULE_NAME,
+    //     CONSTANTS.MODULE_ID,
     //     // 'Tile.prototype._onClickLeft',
     //     'Tile.prototype._onHandleMouseDown',
     //     TilePrototypeOnClickLeftHandler,
@@ -145,8 +145,8 @@ export const initHooks = () => {
 };
 
 export const setupHooks = () => {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableArmsReach")) {
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "enableJournalsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
       game.settings.set("core", "notesDisplayToggle", true);
     }
   }
@@ -156,10 +156,10 @@ export const setupHooks = () => {
 
 export const readyHooks = async () => {
   // setup all the hooks
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableArmsReach")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
     Hooks.on("preUpdateWall", async (object, updateData, diff, userID) => {
       // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableDoorsIntegration")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
         // if ambient door is present and active dont' do this
         if (!game.modules.get("ambientdoors")?.active) {
           DoorsReach.preUpdateWallBugFixSoundHandler(object, updateData, diff, userID);
@@ -170,7 +170,7 @@ export const readyHooks = async () => {
     // Management of the Stairways module
     if (game.modules.get("stairways")?.active) {
       Hooks.on("PreStairwayTeleport", (data) => {
-        if (game.settings.get(CONSTANTS.MODULE_NAME, "enableStairwaysIntegration")) {
+        if (game.settings.get(CONSTANTS.MODULE_ID, "enableStairwaysIntegration")) {
           const { sourceSceneId, sourceData, selectedTokenIds, targetSceneId, targetData, userId } = data;
           let tokenSelected;
 
@@ -183,7 +183,7 @@ export const readyHooks = async () => {
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
             (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-            (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -201,20 +201,20 @@ export const readyHooks = async () => {
 
     // Adds menu option to Scene Nav and Directory
     Hooks.on("getSceneNavigationContext", (html, contextOptions) => {
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableResetDoorsAndFog")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
         contextOptions.push(ResetDoorsAndFog.getContextOption("sceneId"));
       }
     });
 
     Hooks.on("getSceneDirectoryEntryContext", (html, contextOptions) => {
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableResetDoorsAndFog")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
         contextOptions.push(ResetDoorsAndFog.getContextOption(undefined));
       }
     });
 
     // Adds Shut All Doors button to Walls Control Layer
     Hooks.on("getSceneControlButtons", (controls) => {
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableResetDoorsAndFog")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
         controls[4]?.tools.splice(controls[4].tools.length - 2, 0, {
           name: "close",
           title: "Close Open Doors",
@@ -253,7 +253,7 @@ export const readyHooks = async () => {
       if (downTriggers.length === 0) {
         return;
       }
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableDrawingsIntegration")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableDrawingsIntegration")) {
         if (clickDrawings.length > 0) {
           const drawing = clickDrawings[0];
           let tokenSelected;
@@ -267,7 +267,7 @@ export const readyHooks = async () => {
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
             (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-            (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnDrawings") && game.user?.isGM)
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDrawings") && game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -286,7 +286,7 @@ export const readyHooks = async () => {
           }
         }
       }
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableTilesIntegration")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableTilesIntegration")) {
         if (clickTiles.length > 0) {
           const tile = clickTiles[0];
           let tokenSelected;
@@ -300,7 +300,7 @@ export const readyHooks = async () => {
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
             (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-            (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTiles") && game.user?.isGM)
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTiles") && game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -319,7 +319,7 @@ export const readyHooks = async () => {
           }
         }
       }
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "enableWallsIntegration")) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "enableWallsIntegration")) {
         if (clickWalls.length > 0) {
           const wall = clickWalls[0];
           let tokenSelected;
@@ -333,7 +333,7 @@ export const readyHooks = async () => {
           if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
             (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-            (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnWalls") && game.user?.isGM)
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnWalls") && game.user?.isGM)
           ) {
             doNotReselectIfGM = true;
           }
@@ -359,9 +359,9 @@ export const readyHooks = async () => {
 
   // [EXPERIMENTAL] Range Overlay Integration
   /*
-  if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
     Hooks.on('getSceneControlButtons', (controls: SceneControl[]) => {
-      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
         return;
       }
       const tokenButton = controls.find((b) => b.name == 'token');
@@ -369,10 +369,10 @@ export const readyHooks = async () => {
       if (tokenButton) {
         tokenButton.tools.push({
           name: TOGGLE_BUTTON,
-          title: `${CONSTANTS.MODULE_NAME}.controlButton`,
+          title: `${CONSTANTS.MODULE_ID}.controlButton`,
           icon: 'fas fa-people-arrows',
           toggle: true,
-          active: game.settings.get(CONSTANTS.MODULE_NAME, 'is-active'),
+          active: game.settings.get(CONSTANTS.MODULE_ID, 'is-active'),
           onClick: (toggled) => _toggleButtonClick(toggled, controls),
           visible: true, // TODO: Figure out how to disable this from Settings
           // onClick: (value) => {
@@ -385,14 +385,14 @@ export const readyHooks = async () => {
 
     //@ts-ignore
     libWrapper.ignore_conflicts(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       ['drag-ruler', 'enhanced-terrain-layer'],
       ['Token.prototype._onDragLeftStart', 'Token.prototype._onDragLeftDrop', 'Token.prototype._onDragLeftCancel'],
     );
 
     //@ts-ignore
     libWrapper.register(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       'Token.prototype._onDragLeftStart',
       mouse._dragStartWrapper.bind(mouse),
       'WRAPPER',
@@ -400,7 +400,7 @@ export const readyHooks = async () => {
 
     //@ts-ignore
     libWrapper.register(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       'Token.prototype._onDragLeftDrop',
       mouse._dragDropWrapper.bind(mouse),
       'WRAPPER',
@@ -408,7 +408,7 @@ export const readyHooks = async () => {
 
     //@ts-ignore
     libWrapper.register(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       'Token.prototype._onDragLeftCancel',
       mouse._dragCancelWrapper.bind(mouse),
       'WRAPPER',
@@ -427,7 +427,7 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('createCombatant', (combatant, options, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
         return;
       }
       const token = canvasTokensGet(combatant.token.id);
@@ -437,7 +437,7 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('deleteCombatant', (combatant, options, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
         return;
       }
       const token = canvasTokensGet(combatant.token.id);
@@ -447,7 +447,7 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('updateCombat', (combat, turnInfo, diff, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
         return;
       }
       if (combat?.previous?.tokenId) {
@@ -459,7 +459,7 @@ export const readyHooks = async () => {
 
     // noinspection JSUnusedLocalSymbols
     Hooks.on('updateToken', (tokenDocument, updateData, options, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
         return;
       }
       const tokenId = tokenDocument.id;
@@ -472,14 +472,14 @@ export const readyHooks = async () => {
     });
 
     Hooks.on('controlToken', (token, boolFlag) => {
-      if (!game.settings.get(CONSTANTS.MODULE_NAME, 'enableRangeOverlay')) {
+      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
         return;
       }
       if (boolFlag && TokenInfo.current.speed === 0 && TokenInfo.current.getSpeedFromAttributes() === 0) {
         if (game.user?.isGM) {
-          warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-gm`), true);
+          warn(i18n(`${CONSTANTS.MODULE_ID}.token-speed-warning-gm`), true);
         } else {
-          warn(i18n(`${CONSTANTS.MODULE_NAME}.token-speed-warning-player`), true);
+          warn(i18n(`${CONSTANTS.MODULE_ID}.token-speed-warning-player`), true);
         }
       }
     });
@@ -490,7 +490,7 @@ export const readyHooks = async () => {
 export let currentTokenForToken = undefined;
 
 export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableTokensIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableTokensIntegration")) {
     const [target] = args;
     const token = this;
     // let tokenSelected;
@@ -510,20 +510,20 @@ export const TokenPrototypeOnClickLeftHandler = async function (wrapped, ...args
 };
 
 export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableTokensIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableTokensIntegration")) {
     const [target] = args;
     const token = this;
-    const prefixToCheck = game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationByPrefix");
+    const prefixToCheck = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix");
     const isTokenNameChecked = getCharacterName(token)?.startsWith(prefixToCheck);
     // lootsheetnpc5e/template/npc-sheet.html
     const isNPCLootSheet = token.document.actor?.sheet?.template.includes("lootsheetnpc5e/template/npc-sheet.html");
-    const enableNPCLootSheet = game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationWithLootSheet");
+    const enableNPCLootSheet = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet");
     if (
       isTokenNameChecked ||
       (isNPCLootSheet && enableNPCLootSheet) ||
       (taggerModuleActive && checkTaggerForAmrsreachForToken(token))
     ) {
-      const nameSourceToken = game.settings.get(CONSTANTS.MODULE_NAME, "tokensIntegrationExplicitName");
+      const nameSourceToken = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName");
       let tokenSelected;
 
       if (nameSourceToken) {
@@ -548,7 +548,7 @@ export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...arg
       if (
         (!canvas.tokens?.controlled && game.user?.isGM) ||
         (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-        (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTokens") && game.user?.isGM)
+        (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTokens") && game.user?.isGM)
       ) {
         doNotReselectIfGM = true;
       }
@@ -581,7 +581,7 @@ export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...arg
 let currentTokenForNote = undefined;
 
 export const NotePrototypeOnClickLeft1Handler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableJournalsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
     const [target] = args;
     const note = this;
     let tokenSelected;
@@ -596,7 +596,7 @@ export const NotePrototypeOnClickLeft1Handler = async function (wrapped, ...args
 };
 
 export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableJournalsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
     const [target] = args;
     const note = this;
     let tokenSelected;
@@ -614,7 +614,7 @@ export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnNotes") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnNotes") && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -641,7 +641,7 @@ export const NotePrototypeOnClickLeft2Handler = async function (wrapped, ...args
 };
 
 export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableDoorsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
     const doorControl = this;
     let tokenSelected;
 
@@ -654,7 +654,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnDoors") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors") && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -672,7 +672,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
       // Bug fix not sure why i need to do this
       //@ts-ignore
       if (doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
-        if (game.settings.get(CONSTANTS.MODULE_NAME, "disableDoorSound")) {
+        if (game.settings.get(CONSTANTS.MODULE_ID, "disableDoorSound")) {
           return;
         }
         // Door Lock
@@ -696,7 +696,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
 };
 
 export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableDoorsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
     const doorControl = this; //evt.currentTarget;
     let tokenSelected;
 
@@ -716,7 +716,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnDoors") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors") && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -738,7 +738,7 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
 };
 
 export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableJournalsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
     const [target] = args;
     const light = this;
     let tokenSelected;
@@ -752,7 +752,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnLights") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnLights") && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -774,7 +774,7 @@ export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped,
 };
 
 export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped, ...args) {
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "enableSoundsIntegration")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "enableSoundsIntegration")) {
     const [target] = args;
     const sound = this;
     let tokenSelected;
@@ -788,7 +788,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnSounds") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnSounds") && game.user?.isGM)
     ) {
       doNotReselectIfGM = true;
     }
@@ -810,7 +810,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 };
 
 // export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-//   if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableDrawingsIntegration')) {
+//   if (game.settings.get(CONSTANTS.MODULE_ID, 'enableDrawingsIntegration')) {
 //     const [target] = args;
 //     const drawing = this;
 //     let tokenSelected;
@@ -838,7 +838,7 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
 // };
 
 // export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-//   if (game.settings.get(CONSTANTS.MODULE_NAME, 'enableTilesIntegration')) {
+//   if (game.settings.get(CONSTANTS.MODULE_ID, 'enableTilesIntegration')) {
 //     const [target] = args;
 //     const tile = this;
 //     let tokenSelected;

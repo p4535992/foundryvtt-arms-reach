@@ -13,7 +13,7 @@ export const TokensReach = {
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTokens") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTokens") && game.user?.isGM)
     ) {
       return true;
     }
@@ -21,7 +21,7 @@ export const TokensReach = {
       if (game.user?.isGM) {
         return true;
       }
-      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     // let isOwned = false;
@@ -41,9 +41,9 @@ export const TokensReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+    let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
     if (globalInteraction <= 0) {
-      globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+      globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
@@ -52,15 +52,15 @@ export const TokensReach = {
       if (
         !game.user?.isGM ||
         (game.user?.isGM &&
-          // && game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
-          game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnTokens"))
+          // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
+          game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTokens"))
       ) {
         if (!selectedToken) {
-          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForJournal`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForJournal`));
           return false;
         } else {
           let isNotNearEnough = false;
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(selectedToken, token);
             if (!res) {
               warn(`The token '${selectedToken.name}' is not on the elevation range of this placeable object`);
@@ -68,11 +68,11 @@ export const TokensReach = {
             }
           }
           // OLD SETTING
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance") > 0 || useGrid) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
             // const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
             const dist = computeDistanceBetweenCoordinates(
               TokensReach.getTokensCenter(token),
@@ -85,7 +85,7 @@ export const TokensReach = {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
             const dist = computeDistanceBetweenCoordinates(
               TokensReach.getTokensCenter(token),
               selectedToken,
@@ -98,10 +98,10 @@ export const TokensReach = {
             const tokenName = getCharacterName(selectedToken);
             if (tokenName) {
               interactionFailNotification(
-                i18nFormat(`${CONSTANTS.MODULE_NAME}.tokensNotInReachFor`, { tokenName: tokenName })
+                i18nFormat(`${CONSTANTS.MODULE_ID}.tokensNotInReachFor`, { tokenName: tokenName })
               );
             } else {
-              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.tokensNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.tokensNotInReach`));
             }
             return false;
           } else {

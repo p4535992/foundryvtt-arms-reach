@@ -14,7 +14,7 @@ export const StairwaysReach = {
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
     ) {
       return true;
     }
@@ -22,14 +22,14 @@ export const StairwaysReach = {
       if (game.user?.isGM) {
         return true;
       }
-      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     // let isOwned = false;
     let characterToken = getFirstPlayerTokenSelected();
     if (selectedTokenIds) {
       if (selectedTokenIds.length > 1) {
-        //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+        //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return false;
       } else {
         characterToken = getTokenByTokenID(selectedTokenIds[0]);
@@ -45,9 +45,9 @@ export const StairwaysReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+    let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
     if (globalInteraction <= 0) {
-      globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+      globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
@@ -56,15 +56,15 @@ export const StairwaysReach = {
       if (
         !game.user?.isGM ||
         (game.user?.isGM &&
-          // && game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
-          game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways"))
+          // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
+          game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways"))
       ) {
         if (!characterToken) {
-          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
           return false;
         } else {
           let isNotNearEnough = false;
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(characterToken, stairway);
             if (!res) {
               warn(`The token '${characterToken.name}' is not on the elevation range of this placeable object`);
@@ -72,7 +72,7 @@ export const StairwaysReach = {
             }
           }
           // OLD SETTING
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance") > 0) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0) {
             // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
             const dist = computeDistanceBetweenCoordinates(
               StairwaysReach.getStairwaysCenter(stairway),
@@ -80,7 +80,7 @@ export const StairwaysReach = {
               "Stairway",
               true
             );
-            isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+            isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
           } else {
             const dist = computeDistanceBetweenCoordinates(
               StairwaysReach.getStairwaysCenter(stairway),
@@ -88,16 +88,16 @@ export const StairwaysReach = {
               "Stairway",
               false
             );
-            isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+            isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
           }
           if (isNotNearEnough) {
             const tokenName = getCharacterName(characterToken);
             if (tokenName) {
               interactionFailNotification(
-                i18nFormat(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReachFor`, { tokenName: tokenName })
+                i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, { tokenName: tokenName })
               );
             } else {
-              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
             }
             return false;
           } else {
@@ -136,7 +136,7 @@ export const StairwaysReach = {
     if (
       (!canvas.tokens?.controlled && game.user?.isGM) ||
       (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-      (!game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
+      (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
     ) {
       return true;
     }
@@ -144,7 +144,7 @@ export const StairwaysReach = {
       if (game.user?.isGM) {
         return true;
       }
-      interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.warningNoSelectMoreThanOneToken`));
+      interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
       return false;
     }
     // let isOwned = false;
@@ -164,9 +164,9 @@ export const StairwaysReach = {
 
     // Sets the global maximum interaction distance
     // OLD SETTING
-    let globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+    let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
     if (globalInteraction <= 0) {
-      globalInteraction = game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+      globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
     }
     // Global interaction distance control. Replaces prototype function of Stairways. Danger...
     if (globalInteraction > 0) {
@@ -175,15 +175,15 @@ export const StairwaysReach = {
       if (
         !game.user?.isGM ||
         (game.user?.isGM &&
-          // && game.settings.get(CONSTANTS.MODULE_NAME, 'globalInteractionDistanceForGM')
-          game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistanceForGMOnStairways"))
+          // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
+          game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways"))
       ) {
         if (!selectedToken) {
-          interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.noCharacterSelectedForStairway`));
+          interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
           return false;
         } else {
           let isNotNearEnough = false;
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "autoCheckElevationByDefault")) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(selectedToken, stairway);
             if (!res) {
               warn(`The token '${selectedToken.name}' is not on the elevation range of this placeable object`);
@@ -191,11 +191,11 @@ export const StairwaysReach = {
             }
           }
           // OLD SETTING
-          if (game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance") > 0 || useGrid) {
+          if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionDistance");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
             // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
             const dist = computeDistanceBetweenCoordinates(
               StairwaysReach.getStairwaysCenter(stairway),
@@ -208,7 +208,7 @@ export const StairwaysReach = {
             const maxDist =
               maxDistance && maxDistance > 0
                 ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_NAME, "globalInteractionMeasurement");
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
             const dist = computeDistanceBetweenCoordinates(
               StairwaysReach.getStairwaysCenter(stairway),
               selectedToken,
@@ -221,10 +221,10 @@ export const StairwaysReach = {
             const tokenName = getCharacterName(selectedToken);
             if (tokenName) {
               interactionFailNotification(
-                i18nFormat(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReachFor`, { tokenName: tokenName })
+                i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, { tokenName: tokenName })
               );
             } else {
-              interactionFailNotification(i18n(`${CONSTANTS.MODULE_NAME}.stairwaysNotInReach`));
+              interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
             }
             return false;
           } else {
