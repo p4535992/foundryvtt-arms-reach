@@ -42,7 +42,7 @@ export const initHooks = () => {
   warn("Init Hooks processing");
   Hooks.once("socketlib.ready", registerSocket);
 
-  taggerModuleActive = game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active;
+  taggerModuleActive = game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active;
   // game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerIntegration");
 
   if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
@@ -376,7 +376,7 @@ export const readyHooks = async () => {
           onClick: (toggled) => _toggleButtonClick(toggled, controls),
           visible: true, // TODO: Figure out how to disable this from Settings
           // onClick: (value) => {
-          //   game.settings.set(TRIGGER_HAPPY_MODULE_NAME, 'enableTriggers', value);
+          //   game.settings.set(TRIGGER_HAPPY_MODULE_ID, 'enableTriggers', value);
           //   if (game.triggers) game.triggers._parseJournals.bind(game.triggers)();
           // },
         });
@@ -687,7 +687,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
   }
 
   // YOU NEED THIS ANYWAY FOR A STRANGE BUG WITH OVERRIDE AND SOUND OF DOOR
-  //if(game.settings.get(MODULE_NAME, "enableAmbientDoor")) {
+  //if(game.settings.get(MODULE_ID, "enableAmbientDoor")) {
   //  AmbientDoors.onDoorMouseDownCheck(doorControl);
   //}
   // Call original method

@@ -54,8 +54,8 @@ const API = {
 
   isReachableByTag(token, tag, maxDistance = 0, useGrid = false, userId = undefined) {
     //@ts-ignore
-    if (!game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active) {
-      warn(`The module '${CONSTANTS.TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTag'`, true);
+    if (!game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active) {
+      warn(`The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTag'`, true);
       return false;
     } else {
       const placeableObjects = Tagger?.getByTag(tag, { caseInsensitive: true }) || undefined;
@@ -171,9 +171,9 @@ const API = {
 
   isReachableByTagUniversal(placeableObjectSource, tag, maxDistance = 0, useGrid = false, userId = undefined) {
     //@ts-ignore
-    if (!game.modules.get(CONSTANTS.TAGGER_MODULE_NAME)?.active) {
+    if (!game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active) {
       warn(
-        `The module '${CONSTANTS.TAGGER_MODULE_NAME}' is not active can't use the API 'isReachableByTagUniversal'`,
+        `The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTagUniversal'`,
         true
       );
       return false;

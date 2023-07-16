@@ -15,7 +15,6 @@ export const DoorsReach = {
     if (game.settings.get(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionCenter")) {
       // Door interaction
       document.addEventListener("keydown", (evt) => {
-        //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
         if (evt.key === "e") {
           if (ArmsReachVariables.door_interaction_cameraCentered) {
             ArmsReachVariables.door_interaction_cameraCentered = false;
@@ -50,7 +49,6 @@ export const DoorsReach = {
 
     if (game.settings.get(CONSTANTS.MODULE_ID, "hotkeyDoorInteraction")) {
       document.addEventListener("keyup", (evt) => {
-        //if (KeybindLib.isBoundTo(evt, MODULE_NAME, "bindNamesetCustomKeyBindForDoorInteraction")) {
         if (evt.key === "e") {
           ArmsReachVariables.door_interaction_keydown = false;
 
@@ -183,9 +181,9 @@ export const DoorsReach = {
         //const selectedOrOwnedTokenId = canvas.tokens.controlled.map((token) => token.id)
         //const targetSceneId = targetScene ? targetScene.id : null
         const doorData = {
-          doorSourceData: sourceData,
+          doorSourceData: doorSourceData,
           selectedOrOwnedTokenId: selectedToken.id,
-          targetData: targetData,
+          targetData: doorTargetData,
           userId: game.userId,
         };
 

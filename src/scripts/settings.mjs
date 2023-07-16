@@ -88,7 +88,7 @@ export const registerSettings = function () {
   });
 
   //@ts-ignore
-  // KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction", {
+  // KeybindLib.register(MODULE_ID, "setCustomKeyBindForDoorInteraction", {
   // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`),
   // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`),
   // 	config: true,
@@ -847,7 +847,7 @@ function otherSettings(apply = false) {
     },
 
     //@ts-ignore
-    // KeybindLib.register(MODULE_NAME, "setCustomKeyBindForDoorInteraction: {
+    // KeybindLib.register(MODULE_ID, "setCustomKeyBindForDoorInteraction: {
     // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`),
     // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`),
     // 	config: true,

@@ -30,7 +30,7 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
       w: wPlaceable,
       h: hPlaceable,
       documentName: documentName,
-      id: placeable.id,
+      id: armsreachData.id,
       centerX: centerX,
       centerY: centerY,
       placeableObjectData: placeableObjectData,
@@ -671,18 +671,18 @@ function units_between_token_and_placeable(token, armsReachData) {
     // TODO i don't understand this for manage the door control
     if (armsReachData.documentName !== WallDocument.documentName) {
       // dist = (Math.floor(dist) / unitGridSize) * unitSize;
-      // if (b.documentName === TokenDocument.documentName) {
-      // 	// const tokensSizeAdjust = (Math.min(b.w, b.h) || 0) / Math.SQRT2;
+      // if (armsReachData.documentName === TokenDocument.documentName) {
+      // 	// const tokensSizeAdjust = (Math.min(armsReachData.w, armsReachData.h) || 0) / Math.SQRT2;
       // 	// const tokenScaleAdjust = tokensSizeAdjust / canvas.dimensions?.size;
       // 	// // dist = (dist * canvas.dimensions?.size) / canvas.dimensions?.distance - tokensSizeAdjust;
       // 	// dist = dist / canvas.dimensions?.distance;
-      // 	const grids = grids_between_tokens(token, b);
+      // 	const grids = grids_between_tokens(token, armsReachData);
       // 	dist = grids / (canvas.dimensions?.size / canvas.grid?.size);
       // }
     } else {
       //@ts-ignore
       const isDoor = canvas.controls?.doors?.children.find((x) => {
-        return x.wall.id === b.id;
+        return x.wall.id === armsReachData.id;
       });
       if (!isDoor) {
         // WHY ? is a wall but i need to multiply anyway for antoher unitsize

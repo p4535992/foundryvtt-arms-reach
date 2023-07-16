@@ -1,9 +1,9 @@
 const CONSTANTS = {
-  MODULE_NAME: "arms-reach",
-  MODULE_ID_OLD: "foundryvtt-arms-reach",
-  MODULE_ID_OLD_2: "armsreach",
+  MODULE_ID: "arms-reach",
+  // MODULE_ID_OLD: "foundryvtt-arms-reach",
+  // MODULE_ID_OLD_2: "armsreach",
   PATH: `modules/arms-reach/`,
-  TAGGER_MODULE_NAME: "tagger",
+  TAGGER_MODULE_ID: "tagger",
   TAGGER_FLAG: "armsreach",
 
   //   DEFAULT_WEAPON_RANGE: 5,
