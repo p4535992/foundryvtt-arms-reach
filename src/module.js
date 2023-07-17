@@ -58,7 +58,7 @@ Hooks.once("ready", () => {
     error(`The '${CONSTANTS.MODULE_ID}' module requires to install and activate the 'libWrapper' module.`, true);
     return;
   }
-  if (!game.modules.get("foundryvtt-arms-reach")?.active && game.user?.isGM) {
+  if (game.modules.get("foundryvtt-arms-reach")?.active && game.user?.isGM) {
     error(
       `Attention in version 11 the module id of "foundryvtt-arms-reach" has become "arms-reach". If present uninstall the "foundryvtt-arms-reach" version.`,
       true
