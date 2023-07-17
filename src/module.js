@@ -17,7 +17,7 @@ import { preloadTemplates } from "./scripts/preloadTemplates.mjs";
 import { initHooks, readyHooks, setupHooks } from "./scripts/module.mjs";
 import API from "./scripts/api.mjs";
 import CONSTANTS from "./scripts/constants.mjs";
-import { log } from "./scripts/lib/lib.mjs";
+import { error, log } from "./scripts/lib/lib.mjs";
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -55,17 +55,15 @@ Hooks.once("setup", function () {
 Hooks.once("ready", () => {
   // Do anything once the module is ready
   if (!game.modules.get("lib-wrapper")?.active && game.user?.isGM) {
-    ui.notifications?.error(
-      `The '${CONSTANTS.MODULE_ID}' module requires to install and activate the 'libWrapper' module.`
-    );
+    error(`The '${CONSTANTS.MODULE_ID}' module requires to install and activate the 'libWrapper' module.`, true);
     return;
   }
-  // if (!game.modules.get('drag-ruler')?.active && game.user?.isGM) {
-  //   error(
-  //     `The '${CONSTANTS.MODULE_ID}' module requires to install and activate the 'drag-ruler' module.`,
-  //   );
-  //   return;
-  //}
+  if (!game.modules.get("foundryvtt-arms-reach")?.active && game.user?.isGM) {
+    error(
+      `Attention in version 11 the module id of "foundryvtt-arms-reach" has become "arms-reach". If present uninstall the "foundryvtt-arms-reach" version.`,
+      true
+    );
+  }
   readyHooks();
 });
 
