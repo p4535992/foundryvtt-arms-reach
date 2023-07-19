@@ -40,24 +40,7 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
   }
 };
 
-/**
- * Get token center
- */
-export const getTokenCenter = function (token) {
-  /*
-    let tokenCenter = {x: token.x , y: token.y };
-    tokenCenter.x += -20 + ( token.w * 0.50 );
-    tokenCenter.y += -20 + ( token.h * 0.50 );
-    */
-  const shapes = getTokenShape(token);
-  if (shapes && shapes.length > 0) {
-    const shape0 = shapes[0];
-    return { x: shape0.x, y: shape0.y };
-  }
-  // const tokenCenter = { x: token.x + token.w / 2, y: token.y + token.h / 2 };
-  const tokenCenter = getCenter(token);
-  return tokenCenter;
-};
+
 
 /**
  * Get center
@@ -66,7 +49,7 @@ export const getTokenCenter = function (token) {
 export const getCenter = function (placeableObject, grid = {}) {
   const data = placeableObject.document ? placeableObject.document : placeableObject;
   const placeableObjectDocument = placeableObject.document?.documentName ? placeableObject.document : placeableObject;
-  //getCenter(type, data, grid = {}){
+
   let isGridSpace = false;
   //@ts-ignore
   if (placeableObjectDocument.documentName === TileDocument.documentName) {
@@ -95,6 +78,21 @@ export const getCenter = function (placeableObject, grid = {}) {
     center = { x: (data.c[0] + data.c[2]) / 2, y: (data.c[1] + data.c[3]) / 2 };
   }
   return center;
+};
+
+/**
+ * Get token center
+ */
+export const getTokenCenter = function (token) {
+  // const tokenCenter = { x: token.x + token.w / 2, y: token.y + token.h / 2 };
+  const shapes = getTokenShape(token);
+  if (shapes && shapes.length > 0) {
+    const shape0 = shapes[0];
+    return { x: shape0.x, y: shape0.y };
+  }
+
+  const tokenCenter = getCenter(token);
+  return tokenCenter;
 };
 
 /**
@@ -347,7 +345,7 @@ export const reselectTokenAfterInteraction = function (character) {
       }
     }
 
-    // Make sense only if use owned is false beacuse there is no way to check what
+    // Make sense only if use owned is false because there is no way to check what
     // owned token is get from the array
     if (!isOwned) {
       //let character:Token = getFirstPlayerToken();
@@ -467,23 +465,7 @@ export const checkTaggerForAmrsreachForWall = function (placeableWall) {
   }
 };
 
-// export const checkTaggerForAmrsreach = function (placeable: PlaceableObject) {
-// 	//@ts-ignore
-// 	const tags = Tagger?.getTags(placeable) || [];
-// 	if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
-// 		return true;
-// 	} else {
-// 		return false;
-// 	}
-// };
-
 export const getMousePosition = function (canvas, event) {
-  // const transform = <PIXI.Matrix>canvas?.tokens?.worldTransform;
-  // return {
-  //   x: (event.global.x - transform?.tx) / canvas?.stage?.scale?.x,
-  //   y: (event.global.y - transform?.ty) / canvas?.stage?.scale?.y,
-  // };
-  // NEW METHOD SEEM MORE PRECISE
   const position = canvas.app?.renderer.plugins.interaction.pointer.getLocalPosition(canvas.app.stage);
   return {
     x: position.x,
@@ -501,8 +483,6 @@ export const getPlaceablesAt = function (placeables, position) {
 };
 
 function placeableContains(placeable, position) {
-  // const x = getPlaceableX(placeable);
-  // const y = getPlaceableY(placeable);
 
   const center = getCenter(placeable);
   const x = center.x;
@@ -516,12 +496,6 @@ function placeableContains(placeable, position) {
 export const getPlaceableDoorCenter = function (placeable) {
   const x = getPlaceableX(placeable);
   const y = getPlaceableY(placeable);
-
-  // const center = getCenter(placeable);
-  // const x = center.x;
-  // const y = center.y;
-  // const w = getPlaceableWidth(placeable) || 0;
-  // const h = getPlaceableHeight(placeable) || 0;
   const w = getPlaceableWidth(placeable) || 0;
   const h = getPlaceableHeight(placeable) || 0;
   const id = placeable?.wall.document ? placeable?.wall.document.id : placeable.id;
@@ -573,7 +547,7 @@ export const getPlaceableCenter = function (placeable) {
 const getPlaceableWidth = function (placeable) {
   let w = placeable.w || placeable.width;
   if (placeable?.object) {
-    w = armsreachData?.object?.w || armsreachData?.object?.width || w;
+    w = placeable?.object?.w || placeable?.object?.width || w;
   }
   return w;
 };
@@ -581,7 +555,7 @@ const getPlaceableWidth = function (placeable) {
 const getPlaceableHeight = function (placeable) {
   let h = placeable.h || placeable.height;
   if (placeable?.object) {
-    h = armsreachData?.object?.h || armsreachData?.object?.height || h;
+    h = placeable?.object?.h || placeable?.object?.height || h;
   }
   return h;
 };
@@ -589,7 +563,7 @@ const getPlaceableHeight = function (placeable) {
 const getPlaceableX = function (placeable) {
   let x = placeable._validPosition?.x || placeable.x || placeable?.x;
   if (placeable?.object) {
-    x = armsreachData?.object?.x || armsreachData?.object?.x || x;
+    x = placeable?.object?.x || placeable?.object?.x || x;
   }
   return x;
 };
@@ -597,7 +571,7 @@ const getPlaceableX = function (placeable) {
 const getPlaceableY = function (placeable) {
   let y = placeable._validPosition?.y || placeable?.y;
   if (placeable?.object) {
-    y = armsreachData?.object?.y || armsreachData?.object?.y || y;
+    y = placeable?.object?.y || placeable?.object?.y || y;
   }
   return y;
 };

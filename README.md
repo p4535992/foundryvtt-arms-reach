@@ -338,13 +338,15 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 
 - Foundry VTT discord community for always helping me out.
 
-- [Arms Reach](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny)
+- [Arms Reach Original](https://github.com/psyny/FoundryVTT/tree/master/ArmsReach) ty to [psyny](https://github.com/psyny)
 - [foundryvtt-stairways](https://gitlab.com/SWW13/foundryvtt-stairways) ty to [SWW13](https://gitlab.com/SWW13)
 - [foundryvtt-rangefinder](https://github.com/manuelVo/foundryvtt-rangefinder/tree/master) ty to [manuelVo](https://github.com/manuelVo)
 - [drag-ruler](https://github.com/manuelVo/foundryvtt-drag-ruler) ty to [manuelVo](https://github.com/manuelVo)
 - [range-overlay](https://github.com/Nazrax/fvtt-combat-range-overlay) ty to [Nazrax](https://github.com/Nazrax/)
+- [Rideable](https://github.com/Saibot393/Rideable) TY TO [Saibot393](https://github.com/Saibot393/)
 
 A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry by myself.
+A very big thanks to [Saibot393](https://github.com/Saibot393/), and his GeometricUtils class for token distance calculation.
 
 
 ## Acknowledgements
