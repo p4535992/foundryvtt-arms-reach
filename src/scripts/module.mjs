@@ -1,6 +1,6 @@
 import { warn, error, debug, i18n, i18nFormat, getCharacterName } from "./lib/lib.mjs";
 import { StairwaysReach } from "./StairwaysReach.mjs";
-import { ResetDoorsAndFog } from "./resetdoorsandfog.mjs";
+// import { ResetDoorsAndFog } from "./resetdoorsandfog.mjs";
 import {
   checkTaggerForAmrsreachForDrawing,
   checkTaggerForAmrsreachForLight,
@@ -147,7 +147,9 @@ export const initHooks = () => {
 export const setupHooks = () => {
   if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
-      game.settings.set("core", "notesDisplayToggle", true);
+        if(!game.settings.get("core", "notesDisplayToggle")) {
+            game.settings.set("core", "notesDisplayToggle", true);
+        }
     }
   }
 
@@ -199,6 +201,7 @@ export const readyHooks = async () => {
       });
     }
 
+    /* REMOVED ON V11 IS IN CORE
     // Adds menu option to Scene Nav and Directory
     Hooks.on("getSceneNavigationContext", (html, contextOptions) => {
       if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
@@ -227,6 +230,7 @@ export const readyHooks = async () => {
         return controls;
       }
     });
+    */
 
     // Hooks.on('canvasReady',function (canvas: Canvas) {
     // const [target] = args;

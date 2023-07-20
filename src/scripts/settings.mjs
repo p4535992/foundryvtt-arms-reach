@@ -527,7 +527,7 @@ export const registerSettings = function () {
   // ========================================================
   // Reset Doors and Fog
   // ========================================================
-
+  /* REMOVED ON V11 IS IN CORE
   game.settings.register(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog", {
     name: i18n(`${CONSTANTS.MODULE_ID}.settingNameResetDoorsAndFogFeature`),
     hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintResetDoorsAndFogFeature`),
@@ -536,7 +536,7 @@ export const registerSettings = function () {
     default: false,
     type: Boolean,
   });
-
+  */
   // =========================================================
   // RANGE OVERLAY
   // =========================================================

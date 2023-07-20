@@ -1,6 +1,7 @@
 import { checkElevation, error, getElevationPlaceableObject, warn } from "./lib/lib.mjs";
 import { ArmsreachData } from "./ArmsReachModels.mjs";
 import CONSTANTS from "./constants.mjs";
+import { GeometricUtils } from "./lib/GeometricTokenUtils.mjs";
 
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
@@ -24,6 +25,8 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
     const dist = grids_between_token_and_placeable(selectedToken, placeable);
     return dist;
   } else {
+    // TODO TO TEST
+    /*
     const dist = units_between_token_and_placeable(selectedToken, {
       x: xPlaceable,
       y: yPlaceable,
@@ -35,8 +38,15 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
       centerY: centerY,
       placeableObjectData: placeableObjectData,
     });
+    */
+   let dist = 0;
+    if(documentName === TokenDocument.documentName) {
+        dist = GeometricUtils.TokenDistance(selectedToken, armsreachData);
+    } else {
+        dist = GeometricUtils.Distance(armsreachData, selectedToken);
+    }
     return dist;
-    // }
+
   }
 };
 

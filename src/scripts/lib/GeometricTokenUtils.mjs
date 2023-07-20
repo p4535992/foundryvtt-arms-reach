@@ -291,4 +291,4 @@ class GeometricUtils {
 	}
 }
 
-export { GeometricUtils as GeometricTokenUtils}
+export { GeometricUtils}
