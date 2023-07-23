@@ -147,9 +147,9 @@ export const initHooks = () => {
 export const setupHooks = () => {
   if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
-        if(!game.settings.get("core", "notesDisplayToggle")) {
-            game.settings.set("core", "notesDisplayToggle", true);
-        }
+      if (!game.settings.get("core", "notesDisplayToggle")) {
+        game.settings.set("core", "notesDisplayToggle", true);
+      }
     }
   }
 

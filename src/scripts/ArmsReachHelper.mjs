@@ -25,8 +25,6 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
     const dist = grids_between_token_and_placeable(selectedToken, placeable);
     return dist;
   } else {
-    // TODO TO TEST
-    /*
     const dist = units_between_token_and_placeable(selectedToken, {
       x: xPlaceable,
       y: yPlaceable,
@@ -38,19 +36,18 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
       centerY: centerY,
       placeableObjectData: placeableObjectData,
     });
-    */
-   let dist = 0;
+    // TODO TO TEST
+    /*
+    let dist = 0;
     if(documentName === TokenDocument.documentName) {
         dist = GeometricUtils.TokenDistance(selectedToken, armsreachData);
     } else {
         dist = GeometricUtils.Distance(armsreachData, selectedToken);
     }
+    */
     return dist;
-
   }
 };
-
-
 
 /**
  * Get center
@@ -493,7 +490,6 @@ export const getPlaceablesAt = function (placeables, position) {
 };
 
 function placeableContains(placeable, position) {
-
   const center = getCenter(placeable);
   const x = center.x;
   const y = center.y;
