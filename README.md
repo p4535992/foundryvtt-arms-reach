@@ -20,8 +20,6 @@ This project is born like a upgrade of the project [Arms Reach](https://github.c
 
  I'll try to make this module system indipendent , but if anyone has some rule distance computation for a specific system i can put some more settings for manage that.
 
-## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder
-
 ## Known issue/Limitation
 
 - I know there is some measure distance issue expecially with diagonals, here some details [Can "reach" further to the east](https://github.com/p4535992/foundryvtt-arms-reach/issues/28) and [Not working well with Doors on Diagonal walls](https://github.com/p4535992/foundryvtt-arms-reach/issues/40), **this problem is limited only to the _Door interaction distance calculation_, the current solution for this cases is push the "Shift" button to snap out from the grid movement and move the token these 2 px the distance calculation need to validate the interaction, these cases are so few that i will not spend more time on that, anyone is welcome to ope a PR about it**
