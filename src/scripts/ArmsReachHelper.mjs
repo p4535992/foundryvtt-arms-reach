@@ -10,8 +10,8 @@ import { GeometricUtils } from "./lib/GeometricTokenUtils.mjs";
  * @returns
  */
 export const computeDistanceBetweenCoordinates = function (armsreachData, selectedToken, documentName, useGrids) {
-  const xPlaceable = armsreachData.x; //placeable._validPosition?.x ? placeable._validPosition?.x : placeable.x;
-  const yPlaceable = armsreachData.y; //placeable._validPosition?.y ? placeable._validPosition?.y : placeable.y;
+  const xPlaceable = armsreachData.x; //armsreachData._validPosition?.x ? armsreachData._validPosition?.x : armsreachData.x;
+  const yPlaceable = armsreachData.y; //armsreachData._validPosition?.y ? armsreachData._validPosition?.y : armsreachData.y;
   const wPlaceable = armsreachData.w;
   const hPlaceable = armsreachData.h;
   const centerX = armsreachData.centerX;
@@ -21,8 +21,8 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
   const unitSize = canvas.dimensions.distance; //canvas.grid?.grid?.options.dimensions.distance;
 
   if (useGrids) {
-    // const dist = computeDistanceBetweenCoordinatesOLD(placeable, character);
-    const dist = grids_between_token_and_placeable(selectedToken, placeable);
+    // const dist = computeDistanceBetweenCoordinatesOLD(armsreachData, character);
+    const dist = grids_between_token_and_placeable(selectedToken, armsreachData);
     return dist;
   } else {
     const dist = units_between_token_and_placeable(selectedToken, {

@@ -1,4 +1,8 @@
 # CHANGELOG
+
+## 2.3.3
+
+- Stupid rename for fix https://github.com/p4535992/foundryvtt-arms-reach/issues/80
 ### 2.3.0-1-2 [BREAKING CHANGES]
 
 - Beta Release for v11
