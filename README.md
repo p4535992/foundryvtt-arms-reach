@@ -44,10 +44,12 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 
 ## Module compatibility
 
-- [Ambient Door](https://github.com/EndlesNights/ambientdoors)
-- [Designer Door](https://github.com/Exitalterego/designerdoors)
-- [Smart Door](https://github.com/manuelVo/foundryvtt-smart-doors)
-- [Door Color](https://github.com/jessev14/door-colors)
+- [Ambient Door](https://github.com/EndlesNights/ambientdoors) (verified on v10 not v11)
+- [Designer Door](https://github.com/Exitalterego/designerdoors) (verified on v10 not v11)
+- [Smart Door](https://github.com/manuelVo/foundryvtt-smart-doors) (verified on v10 not v11)
+- [Door Color](https://github.com/jessev14/door-colors) (verified on v10 not v11)
+- [Rideable](https://github.com/Saibot393/Rideable) (verified on v11)
+- [Lock and Key](https://github.com/Saibot393/LocknKey) (verified on v11)
 
 ## API
 
