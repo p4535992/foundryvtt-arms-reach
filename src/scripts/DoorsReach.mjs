@@ -299,7 +299,7 @@ export const DoorsReach = {
       return false;
     }
   },
-
+  /* REMOVED WITH v11
   preUpdateWallBugFixSoundHandler: async function (object, updateData, diff, userID) {
     const doorData = DoorsReach.defaultDoorData();
 
@@ -371,7 +371,7 @@ export const DoorsReach = {
       lockJingleLevel: 0.8,
     };
   },
-
+  */
   ifStuckInteract: function (key, offsetx, offsety) {
     if (!isFocusOnCanvas()) {
       return;

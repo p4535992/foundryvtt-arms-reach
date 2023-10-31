@@ -159,6 +159,7 @@ export const setupHooks = () => {
 export const readyHooks = async () => {
   // setup all the hooks
   if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
+    /* REMOVED WITH v11
     Hooks.on("preUpdateWall", async (object, updateData, diff, userID) => {
       // THIS IS ONLY A BUG FIXING FOR THE SOUND DISABLE FOR THE lib-wrapper override
       if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
@@ -168,7 +169,7 @@ export const readyHooks = async () => {
         }
       }
     });
-
+    */
     // Management of the Stairways module
     if (game.modules.get("stairways")?.active) {
       Hooks.on("PreStairwayTeleport", (data) => {
@@ -679,12 +680,15 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
         if (game.settings.get(CONSTANTS.MODULE_ID, "disableDoorSound")) {
           return;
         }
+        // TODO ADD INTEGRATION FOR V11 DISABLE SOUND FOR LOCKED DOOR
         // Door Lock
+        /* REMOVED WITH v11
         const doorData = DoorsReach.defaultDoorData();
         const playpath = doorData.lockPath;
         const playVolume = doorData.lockLevel;
         const fixedPlayPath = playpath.replace("[data]", "").trim();
         AudioHelper.play({ src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false }, true);
+        */
       }
       return;
     }
