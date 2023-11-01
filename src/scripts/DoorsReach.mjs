@@ -306,7 +306,7 @@ export const DoorsReach = {
     let playpath = "";
     let playVolume = 0.8;
 
-    if (object.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+    if (updateData.ds === CONST.WALL_DOOR_STATES.LOCKED) {
       // Door Unlocking
       playpath = doorData.unlockPath;
       playVolume = doorData.unlockLevel;
