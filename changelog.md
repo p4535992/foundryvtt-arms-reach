@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## 2.3.3
+### 2.3.4
+
+- Add fix to sound(door lock) sound, ty to @Saibot393 
+
+### 2.3.3
 
 - Stupid rename for fix https://github.com/p4535992/foundryvtt-arms-reach/issues/80
 ### 2.3.0-1-2 [BREAKING CHANGES]

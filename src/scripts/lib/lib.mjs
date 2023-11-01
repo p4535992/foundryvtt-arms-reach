@@ -19,43 +19,77 @@ export function wait(ms) {
 // export let debugEnabled = 0;
 // 0 = none, warnings = 1, debug = 2, all = 3
 
-export function debug(msg, args = "") {
-  if (game.settings.get(CONSTANTS.MODULE_ID, "debug")) {
-    console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, args);
+export function debug(msg, ...args) {
+  try {
+    if (
+      game.settings.get(CONSTANTS.MODULE_ID, "debug") ||
+      game.modules.get("_dev-mode")?.api?.getPackageDebugValue(CONSTANTS.MODULE_ID, "boolean")
+    ) {
+      console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, ...args);
+    }
+  } catch (e) {
+    console.error(e.message);
   }
   return msg;
 }
 
-export function log(message) {
-  message = `${CONSTANTS.MODULE_ID} | ${message}`;
-  console.log(message.replace("<br>", "\n"));
+export function log(message, ...args) {
+  try {
+    message = `${CONSTANTS.MODULE_ID} | ${message}`;
+    console.log(message.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
   return message;
 }
 
-export function notify(message) {
-  message = `${CONSTANTS.MODULE_ID} | ${message}`;
-  ui.notifications?.notify(message);
-  console.log(message.replace("<br>", "\n"));
+export function notify(message, ...args) {
+  try {
+    message = `${CONSTANTS.MODULE_ID} | ${message}`;
+    ui.notifications?.notify(message);
+    console.log(message.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
   return message;
 }
 
-export function info(info, notify = false) {
-  info = `${CONSTANTS.MODULE_ID} | ${info}`;
-  if (notify) ui.notifications?.info(info);
-  console.log(info.replace("<br>", "\n"));
+export function info(info, notify = false, ...args) {
+  try {
+    info = `${CONSTANTS.MODULE_ID} | ${info}`;
+    if (notify) {
+      ui.notifications?.info(info);
+    }
+    console.log(info.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
   return info;
 }
 
-export function warn(warning, notify = false) {
-  warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
-  if (notify) ui.notifications?.warn(warning);
-  console.warn(warning.replace("<br>", "\n"));
+export function warn(warning, notify = false, ...args) {
+  try {
+    warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
+    if (notify) {
+      ui.notifications?.warn(warning);
+    }
+    console.warn(warning.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
   return warning;
 }
 
-export function error(error, notify = true) {
-  error = `${CONSTANTS.MODULE_ID} | ${error}`;
-  if (notify) ui.notifications?.error(error);
+export function error(error, notify = true, ...args) {
+  try {
+    error = `${CONSTANTS.MODULE_ID} | ${error}`;
+    if (notify) {
+      ui.notifications?.error(error);
+    }
+    console.error(error.replace("<br>", "\n"), ...args);
+  } catch (e) {
+    console.error(e.message);
+  }
   return new Error(error.replace("<br>", "\n"));
 }
 
@@ -71,7 +105,7 @@ export const i18nFormat = (key, data = {}) => {
   return game.i18n.format(key, data)?.trim();
 };
 
-// export const setDebugLevel = (debugText) => {
+// export const setDebugLevel = (debugText): void => {
 //   debugEnabled = { none: 0, warn: 1, debug: 2, all: 3 }[debugText] || 0;
 //   // 0 = none, warnings = 1, debug = 2, all = 3
 //   if (debugEnabled >= 3) CONFIG.debug.hooks = true;

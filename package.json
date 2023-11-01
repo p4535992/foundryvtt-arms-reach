@@ -2,7 +2,7 @@
 	"name": "arms-reach",
 	"title": "FoundryVTT Arms Reach",
 	"description": "Allows the GM to limit the distance that a player can interacted with a placeable object like door, journal, stairway, token, ecc..",
-	"version": "2.3.3",
+	"version": "2.3.4",
 	"main": "module.js",
 	"license": "SEE LICENSE IN LICENSE",
 	"private": true,
@@ -17,6 +17,7 @@
 		"@fortawesome/fontawesome-svg-core": "^6.4.0",
 		"@fortawesome/free-solid-svg-icons": "^6.4.0",
 		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@rollup/plugin-node-resolve": "^15.2.1",
 		"@typhonjs-fvtt/runtime": "^0.1.0",
 		"@typhonjs-fvtt/svelte-standard": "^0.1.0",
 		"svelte": "^4.0.0",
@@ -27,6 +28,7 @@
 		"eslint": "^8",
 		"husky": "^8.0.3",
 		"jquery": "^3.6.4",
+		"jsdoc": "^4.0.2",
 		"lint-staged": "^13.2.1",
 		"prettier": "^2.8.7",
 		"sass": "^1.63.6",
@@ -46,7 +48,7 @@
 		"dev": "vite",
 		"eslint": "eslint .",
 		"prepare": "husky install",
-		"prettier-format": "prettier --config .prettierrc --write \"./src/**/*.{ts,js,mjs,json,scss,css}\""
+		"prettier-format": "prettier --config .prettierrc --write \"./src/**/*.{js,mjs,json,scss,css}\""
 	},
 	"lint-staged": {
 		"*.{js,css}": "prettier --write"
