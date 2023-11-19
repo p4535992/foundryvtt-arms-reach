@@ -360,7 +360,7 @@ export const reselectTokenAfterInteraction = function (character) {
         // DO NOTHING
       } else {
         const observable = canvas.tokens?.placeables.filter((t) => t.id === character.id);
-        if (observable !== undefined) {
+        if (observable.length) {
           observable[0].control();
         }
       }
