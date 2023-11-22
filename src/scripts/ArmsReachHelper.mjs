@@ -22,10 +22,10 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
 
   if (useGrids) {
     // const dist = computeDistanceBetweenCoordinatesOLD(armsreachData, character);
-    const dist = grids_between_token_and_placeable(selectedToken, armsreachData);
-    return dist;
+    const dist = _grids_between_token_and_placeable(selectedToken, armsreachData);
+    return Math.floor(dist);
   } else {
-    const dist = units_between_token_and_placeable(selectedToken, {
+    const dist = _units_between_token_and_placeable(selectedToken, {
       x: xPlaceable,
       y: yPlaceable,
       w: wPlaceable,
@@ -34,10 +34,10 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
       id: armsreachData.id,
       centerX: centerX,
       centerY: centerY,
-      centerZ: centerZ,
+      centerZ: centerZ ?? 0,
       placeableObjectData: placeableObjectData,
     });
-    return dist;
+    return Math.round(dist * 10) / 10; // Round to two decimal...
   }
 };
 
@@ -100,60 +100,78 @@ export const getTokenCenter = function (token) {
 };
 
 /**
- * Get token shape center
- * from dragRuler module
+ * Get token shape center from dragRuler module
  */
 function getTokenShape(token) {
-  if (token.scene.grid.type === CONST.GRID_TYPES.GRIDLESS) {
+  let scene = canvas.scene;
+  if (scene.grid.type === CONST.GRID_TYPES.GRIDLESS) {
     return [{ x: 0, y: 0 }];
-  } else if (token.scene.grid.type === CONST.GRID_TYPES.SQUARE) {
+  } else if (scene.grid.type === CONST.GRID_TYPES.SQUARE) {
     const topOffset = -Math.floor(token.document.height / 2);
     const leftOffset = -Math.floor(token.document.width / 2);
-    const shapeArray = [];
+    const shape = [];
     for (let y = 0; y < token.document.height; y++) {
       for (let x = 0; x < token.document.width; x++) {
-        shapeArray.push({ x: x + leftOffset, y: y + topOffset });
+        shape.push({ x: x + leftOffset, y: y + topOffset });
       }
     }
-    return shapeArray;
+    return shape;
   } else {
     // Hex grids
+    const size = _getHexTokenSize(token);
+    let shape = [{ x: 0, y: 0 }];
+    if (size >= 2)
+      shape = shape.concat([
+        { x: 0, y: -1 },
+        { x: -1, y: -1 },
+      ]);
+    if (size >= 3)
+      shape = shape.concat([
+        { x: 0, y: 1 },
+        { x: -1, y: 1 },
+        { x: -1, y: 0 },
+        { x: 1, y: 0 },
+      ]);
+    if (size >= 4)
+      shape = shape.concat([
+        { x: -2, y: -1 },
+        { x: 1, y: -1 },
+        { x: -1, y: -2 },
+        { x: 0, y: -2 },
+        { x: 1, y: -2 },
+      ]);
 
-    if (game.modules.get("hex-size-support")?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
-      const borderSize = token.document.flags["hex-size-support"].borderSize;
-      let shape = [{ x: 0, y: 0 }];
-      if (borderSize >= 2)
-        shape = shape.concat([
-          { x: 0, y: -1 },
-          { x: -1, y: -1 },
-        ]);
-      if (borderSize >= 3)
-        shape = shape.concat([
-          { x: 0, y: 1 },
-          { x: -1, y: 1 },
-          { x: -1, y: 0 },
-          { x: 1, y: 0 },
-        ]);
-      if (borderSize >= 4)
-        shape = shape.concat([
-          { x: -2, y: -1 },
-          { x: 1, y: -1 },
-          { x: -1, y: -2 },
-          { x: 0, y: -2 },
-          { x: 1, y: -2 },
-        ]);
-
-      if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== canvas.grid?.grid?.options.columns)
-        shape.forEach((space) => (space.y *= -1));
-      if (canvas.grid?.grid?.options.columns)
-        shape = shape.map((space) => {
-          return { x: space.y, y: space.x };
-        });
-      return shape;
-    } else {
-      return [{ x: 0, y: 0 }];
+    if (_getAltOrientationFlagForToken(token, size)) {
+      shape.forEach((space) => (space.y *= -1));
     }
+    if (canvas.grid.grid.columnar)
+      shape = shape.map((space) => {
+        return { x: space.y, y: space.x };
+      });
+    return shape;
   }
+}
+/**
+ * Get token shape center from dragRuler module
+ */
+function _getHexTokenSize(token) {
+  const size = token.document.width;
+  if (token.document.height !== size) {
+    return 1;
+  }
+  return size;
+}
+/**
+ * Get token shape center from dragRuler module
+ */
+function _getAltOrientationFlagForToken(token, size) {
+  const hexSizeSupport = game.modules.get("hex-size-support")?.api;
+  if (hexSizeSupport) {
+    return hexSizeSupport.isAltOrientation(token);
+  }
+  // In native foundry, tokens of size 2 are oriented like the "alt orientation" from hex-size-support
+  // Tokens of size 4 are oriented like alt orientation wasn't set
+  return size === 2;
 }
 
 /**
@@ -516,7 +534,7 @@ export const getPlaceableDoorCenter = function (placeable) {
     id: id,
     centerX: centerX,
     centerY: centerY,
-    centerZ: centerZ,
+    centerZ: centerZ ?? 0,
     placeableObjectData: placeableObjectData,
   };
 };
@@ -546,7 +564,7 @@ export const getPlaceableCenter = function (placeable) {
     id: id,
     centerX: centerX,
     centerY: centerY,
-    centerZ: centerZ,
+    centerZ: centerZ ?? 0,
     placeableObjectData: placeableObjectData,
   };
 };
@@ -603,26 +621,26 @@ function distance_between(a, b) {
   return distance;
 }
 
-function grids_between_token_and_placeable(token, armsReachData) {
-  //   return Math.floor(distance_between_token_rect(token, armsReachData) / canvas.grid?.size) + 1;
-  return distance_between_token_rect(token, armsReachData);
+function _grids_between_token_and_placeable(token, armsReachData) {
+  //   return Math.floor(_distance_between_token_rect(token, armsReachData) / canvas.grid?.size) + 1;
+  return _distance_between_token_rect(token, armsReachData);
 }
 
-function units_between_token_and_placeable(token, armsReachData) {
-  let dist = Math.floor(distance_between_token_rect(token, armsReachData));
+function _units_between_token_and_placeable(token, armsReachData) {
+  let dist = _distance_between_token_rect(token, armsReachData);
   const unitSize = canvas.dimensions?.distance || 5;
   const unitGridSize = canvas.grid?.size || 50;
   if (dist === 0) {
     // Special case for tile
     if (armsReachData.documentName === TileDocument.documentName) {
-      dist = getUnitTokenDist(token, armsReachData) - unitSize;
+      dist = _getUnitTokenDist(token, armsReachData) - unitSize;
     }
     // Special case for lights
     if (armsReachData.documentName === AmbientLightDocument.documentName) {
-      dist = getUnitTokenDist(token, armsReachData) - unitSize;
+      dist = _getUnitTokenDist(token, armsReachData) - unitSize;
     }
   } else {
-    dist = getUnitTokenDist(token, armsReachData);
+    dist = _getUnitTokenDist(token, armsReachData);
     // TODO i don't understand this for manage the door control
     if (armsReachData.documentName !== WallDocument.documentName) {
       // dist = (Math.floor(dist) / unitGridSize) * unitSize;
@@ -651,7 +669,6 @@ function units_between_token_and_placeable(token, armsReachData) {
     }
   }
   return dist;
-  // return Math.floor(distance_between_rect(token, b));
 }
 
 // ================================================
@@ -663,25 +680,25 @@ export const globalInteractionDistanceUniversal = function (placeableObjectSourc
   placeableTargetArmsReachData.documentName = placeableObjectTarget.document.documentName;
 
   if (useGrids) {
-    const dist = grids_between_placeable_and_placeable(placeableSourceArmsReachData, placeableTargetArmsReachData);
+    const dist = _grids_between_placeable_and_placeable(placeableSourceArmsReachData, placeableTargetArmsReachData);
     return dist;
   } else {
-    const dist = units_between_placeable_and_placeable(placeableSourceArmsReachData, placeableTargetArmsReachData);
+    const dist = _units_between_placeable_and_placeable(placeableSourceArmsReachData, placeableTargetArmsReachData);
     return dist;
   }
 };
 
-function grids_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
+function _grids_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
   // TODO not sure about this....
-  return Math.floor(distance_between_placeable_rect(aArmsReachData, bArmsReachData) / canvas.grid?.size) + 1;
+  return Math.floor(_distance_between_placeable_rect(aArmsReachData, bArmsReachData) / canvas.grid?.size) + 1;
 }
 
-function distance_between_token_rect(token, armsReachData) {
+function _distance_between_token_rect(token, armsReachData) {
   const armsReachDataBaseFromToken = getPlaceableCenter(token);
-  return distance_between_placeable_rect(armsReachDataBaseFromToken, armsReachData);
+  return _distance_between_placeable_rect(armsReachDataBaseFromToken, armsReachData);
 }
 
-function distance_between_placeable_rect(p1ArmsReachData, p2ArmsReachData) {
+function _distance_between_placeable_rect(p1ArmsReachData, p2ArmsReachData) {
   const x1 = p1ArmsReachData.x;
   const y1 = p1ArmsReachData.y;
   const z1 = p1ArmsReachData.centerZ;
@@ -720,14 +737,14 @@ function distance_between_placeable_rect(p1ArmsReachData, p2ArmsReachData) {
   return 0;
 }
 
-function units_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
+function _units_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
   // const range = sourceToken.vision.radius;
   // if (range === 0) return false;
   // if (range === Infinity) return true;
   const tokensSizeAdjust =
     bArmsReachData instanceof Token ? (Math.min(bArmsReachData.w, bArmsReachData.h) || 0) / Math.SQRT2 : 0;
   const dist =
-    (getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) * canvas.dimensions.size) / canvas.dimensions.distance -
+    (_getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) * canvas.dimensions.size) / canvas.dimensions.distance -
     tokensSizeAdjust;
   // return dist <= range;
   // const unitSize = canvas.dimensions?.distance || 5;
@@ -736,12 +753,12 @@ function units_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
   return dist;
 }
 
-function getUnitTokenDist(token, placeableObjectTargetArmsReachData) {
+function _getUnitTokenDist(token, placeableObjectTargetArmsReachData) {
   const armsReachDataBaseFromToken = getPlaceableCenter(token);
-  return getUnitTokenDistUniversal(armsReachDataBaseFromToken, placeableObjectTargetArmsReachData);
+  return _getUnitTokenDistUniversal(armsReachDataBaseFromToken, placeableObjectTargetArmsReachData);
 }
 
-function getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) {
+function _getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) {
   const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
   const x1 = aArmsReachData.centerX;
   const y1 = aArmsReachData.centerY;
