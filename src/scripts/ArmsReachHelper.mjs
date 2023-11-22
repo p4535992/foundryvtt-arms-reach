@@ -37,25 +37,15 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
       centerZ: centerZ,
       placeableObjectData: placeableObjectData,
     });
-    // TODO TO TEST
-    /*
-    let dist = 0;
-    if(documentName === TokenDocument.documentName) {
-        dist = GeometricUtils.TokenDistance(selectedToken, armsreachData);
-    } else {
-        dist = GeometricUtils.Distance(armsreachData, selectedToken);
-    }
-    */
     return dist;
   }
 };
 
 /**
- * Get center
- * from tokenAttacher module
+ * Get center from the tokenAttacher module
  */
 export const getCenter = function (placeableObject, grid = {}) {
-  const data = placeableObject.document ? placeableObject.document : placeableObject;
+  const objData = placeableObject.document ? placeableObject.document : placeableObject;
   const placeableObjectDocument = placeableObject.document?.documentName ? placeableObject.document : placeableObject;
 
   let isGridSpace = false;
@@ -67,21 +57,29 @@ export const getCenter = function (placeableObject, grid = {}) {
   } else {
     isGridSpace = true;
   }
-  grid = mergeObject({ w: canvas.grid?.w, h: canvas.grid?.h }, grid);
 
-  const [x, y] = [data.x, data.y];
+  grid = mergeObject({ w: canvas.grid.w, h: canvas.grid.h }, grid);
+  const [x, y] = [objData.x, objData.y];
   let center = { x: x, y: y };
   //Tokens, Tiles
-  if ("width" in data && "height" in data) {
-    let [width, height] = [data.width, data.height];
+  if (objData.width && objData.height && objData.width != null) {
+    let [width, height] = [objData.width, objData.height];
+    if (isGridSpace) {
+      [width, height] = [width * grid.w, height * grid.h];
+    }
+    center = { x: x + Math.abs(width) / 2, y: y + Math.abs(height) / 2 };
+  }
+  //Drawings
+  if (objData.shape?.width && objData.shape?.height && objData.shape?.width != null) {
+    let [width, height] = [objData.shape.width, objData.shape.height];
     if (isGridSpace) {
       [width, height] = [width * grid.w, height * grid.h];
     }
     center = { x: x + Math.abs(width) / 2, y: y + Math.abs(height) / 2 };
   }
   //Walls
-  if ("c" in data) {
-    center = { x: (data.c[0] + data.c[2]) / 2, y: (data.c[1] + data.c[3]) / 2 };
+  if ("c" in objData) {
+    center = { x: (objData.c[0] + objData.c[2]) / 2, y: (objData.c[1] + objData.c[3]) / 2 };
   }
   return center;
 };
@@ -489,7 +487,7 @@ export const getPlaceablesAt = function (placeables, position) {
 };
 
 function placeableContains(placeable, position) {
-  const center = getCenter(placeable);
+  const center = placeable instanceof Token ? getTokenCenter(placeable) : getCenter(placeable);
   const x = center.x;
   const y = center.y;
 
@@ -527,7 +525,7 @@ export const getPlaceableCenter = function (placeable) {
   // const x = getPlaceableX(placeable);
   // const y = getPlaceableY(placeable);
 
-  const center = getCenter(placeable);
+  const center = placeable instanceof Token ? getTokenCenter(placeable) : getCenter(placeable);
   const x = center.x;
   const y = center.y;
 
@@ -587,51 +585,27 @@ const getPlaceableY = function (placeable) {
 
 // ============================================================================================
 
-function distance_between_token_rect(p1, armsReachData) {
-  const x1 = p1.x ? p1.x : p1.document.x;
-
-  const y1 = p1.y ? p1.y : p1.document.y;
-  const x1b = x1 + p1.w;
-  const y1b = y1 + p1.h;
-
-  const x2 = armsReachData.x ? armsReachData.x : armsReachData.document.x;
-
-  const y2 = armsReachData.y ? armsReachData.y : armsReachData.document.y;
-  const x2b = x2 + armsReachData.w;
-  const y2b = y2 + armsReachData.h;
-
-  const left = x2b < x1;
-  const right = x1b < x2;
-  const bottom = y2b < y1;
-  const top = y1b < y2;
-
-  if (top && left) {
-    return distance_between({ x: x1, y: y1b }, { x: x2b, y: y2 });
-  } else if (left && bottom) {
-    return distance_between({ x: x1, y: y1 }, { x: x2b, y: y2b });
-  } else if (bottom && right) {
-    return distance_between({ x: x1b, y: y1 }, { x: x2, y: y2b });
-  } else if (right && top) {
-    return distance_between({ x: x1b, y: y1b }, { x: x2, y: y2 });
-  } else if (left) {
-    return x1 - x2b;
-  } else if (right) {
-    return x2 - x1b;
-  } else if (bottom) {
-    return y1 - y2b;
-  } else if (top) {
-    return y2 - y1b;
-  }
-
-  return 0;
-}
-
 function distance_between(a, b) {
-  return Math.max(new Ray(a, b).distance, new Ray(b, a).distance);
+  //return Math.max(new Ray(a, b).distance, new Ray(b, a).distance);
+  // Is this better ?
+  function _euclideanCalculation(p1, p2) {
+    const unitsToPixel = canvas.dimensions.size / canvas.dimensions.distance;
+    const d = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2) + Math.pow(p2.z - p1.z, 2)) / unitsToPixel;
+    return d;
+  }
+  const ray = new Ray({ x: a.x, y: a.z }, { x: b.x, y: b.z });
+  const useEuclidean = Math.abs(a.y - b.y) > canvas.scene.dimensions.size / 2;
+  const distance = useEuclidean
+    ? _euclideanCalculation(a, b)
+    : canvas.grid.measureDistances([{ ray }], {
+        gridSpaces: true,
+      });
+  return distance;
 }
 
 function grids_between_token_and_placeable(token, armsReachData) {
-  return Math.floor(distance_between_token_rect(token, armsReachData) / canvas.grid?.size) + 1;
+  //   return Math.floor(distance_between_token_rect(token, armsReachData) / canvas.grid?.size) + 1;
+  return distance_between_token_rect(token, armsReachData);
 }
 
 function units_between_token_and_placeable(token, armsReachData) {
@@ -702,14 +676,21 @@ function grids_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
   return Math.floor(distance_between_placeable_rect(aArmsReachData, bArmsReachData) / canvas.grid?.size) + 1;
 }
 
+function distance_between_token_rect(token, armsReachData) {
+  const armsReachDataBaseFromToken = getPlaceableCenter(token);
+  return distance_between_placeable_rect(armsReachDataBaseFromToken, armsReachData);
+}
+
 function distance_between_placeable_rect(p1ArmsReachData, p2ArmsReachData) {
   const x1 = p1ArmsReachData.x;
   const y1 = p1ArmsReachData.y;
+  const z1 = p1ArmsReachData.centerZ;
   const x1b = p1ArmsReachData.x + p1ArmsReachData.w;
   const y1b = p1ArmsReachData.y + p1ArmsReachData.h;
 
   const x2 = p2ArmsReachData.x;
   const y2 = p2ArmsReachData.y;
+  const z2 = p2ArmsReachData.centerZ;
   const x2b = p2ArmsReachData.x + p2ArmsReachData.w;
   const y2b = p2ArmsReachData.y + p2ArmsReachData.h;
 
@@ -719,13 +700,13 @@ function distance_between_placeable_rect(p1ArmsReachData, p2ArmsReachData) {
   const top = y1b < y2;
 
   if (top && left) {
-    return distance_between({ x: x1, y: y1b }, { x: x2b, y: y2 });
+    return distance_between({ x: x1, y: y1b, z: z1 }, { x: x2b, y: y2, z: z2 });
   } else if (left && bottom) {
-    return distance_between({ x: x1, y: y1 }, { x: x2b, y: y2b });
+    return distance_between({ x: x1, y: y1, z: z1 }, { x: x2b, y: y2b, z: z2 });
   } else if (bottom && right) {
-    return distance_between({ x: x1b, y: y1 }, { x: x2, y: y2b });
+    return distance_between({ x: x1b, y: y1, z: z1 }, { x: x2, y: y2b, z: z2 });
   } else if (right && top) {
-    return distance_between({ x: x1b, y: y1b }, { x: x2, y: y2 });
+    return distance_between({ x: x1b, y: y1b, z: z1 }, { x: x2, y: y2, z: z2 });
   } else if (left) {
     return x1 - x2b;
   } else if (right) {
@@ -755,6 +736,11 @@ function units_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
   return dist;
 }
 
+function getUnitTokenDist(token, placeableObjectTargetArmsReachData) {
+  const armsReachDataBaseFromToken = getPlaceableCenter(token);
+  return getUnitTokenDistUniversal(armsReachDataBaseFromToken, placeableObjectTargetArmsReachData);
+}
+
 function getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) {
   const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
   const x1 = aArmsReachData.centerX;
@@ -763,42 +749,6 @@ function getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) {
   const x2 = bArmsReachData.centerX;
   const y2 = bArmsReachData.centerY;
   const z2 = bArmsReachData.centerZ;
-  // Add support for 3D Preview Model
-  if (game.Levels3DPreview?._active) {
-    const placeable1Vector = {
-      x: x1,
-      y: y1,
-      z: z1 * unitsToPixel,
-    };
-
-    const placeable2Vector = {
-      x: x2,
-      y: y2,
-      z: z2 * unitsToPixel,
-    };
-    const d = Math.hypot(
-      placeable1Vector.x - placeable2Vector.x,
-      placeable1Vector.y - placeable2Vector.y,
-      placeable1Vector.z - placeable2Vector.z
-    );
-    return d;
-  } else {
-    const d =
-      Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow((z2 - z1) * unitsToPixel, 2)) / unitsToPixel;
-    return d;
-  }
-}
-
-// ================================================
-
-function getUnitTokenDist(token, placeableObjectTargetArmsReachData) {
-  const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
-  const x1 = token.vision.x;
-  const y1 = token.vision.y;
-  const z1 = getTokenHeightPatched(token);
-  const x2 = placeableObjectTargetArmsReachData.centerX;
-  const y2 = placeableObjectTargetArmsReachData.centerY;
-  const z2 = placeableObjectTargetArmsReachData.centerZ;
   // Add support for 3D Preview Model
   if (game.Levels3DPreview?._active) {
     const placeable1Vector = {

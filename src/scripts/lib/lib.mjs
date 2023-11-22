@@ -171,8 +171,11 @@ export function checkElevation(documentOrPlaceableSource, documentOrPlaceableTar
 }
 
 export function getTokenHeightPatched(token) {
-    // Why i need to this with the levels module ???
-    return ((token.losHeight ?? (token.document.elevation+0.00001))-token.document.elevation)/canvas.scene.dimensions.distance
+  // Why i need to this with the levels module ???
+  return (
+    ((token.losHeight ?? token.document.elevation + 0.00001) - token.document.elevation) /
+    canvas.scene.dimensions.distance
+  );
 }
 
 // =============================
