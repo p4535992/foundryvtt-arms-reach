@@ -1,4 +1,9 @@
-# CHANGELOG
+# CHANGELOG 
+
+### 2.3.6 [BREAKING CHANGES]
+
+- Big clean and first refactoring for the new behaviour
+
 ### 2.3.5 
 
 - Fixed bug in reselectTokenAfterInteraction functio, ty to @Saibot393 
