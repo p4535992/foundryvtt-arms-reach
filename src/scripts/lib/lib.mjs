@@ -121,204 +121,58 @@ export function dialogWarning(message, icon = "fas fa-exclamation-triangle") {
 
 // =========================================================================================
 
-export function cleanUpString(stringToCleanUp) {
-  // regex expression to match all non-alphanumeric characters in string
-  const regex = /[^A-Za-z0-9]/g;
-  if (stringToCleanUp) {
-    return i18n(stringToCleanUp).replace(regex, "").toLowerCase();
+export function _getElevationRangePlaceableObject(placeableObject) {
+  let base = placeableObject;
+  base = base.document ?? base;
+  // Integration with levels and wall height module
+  let rangeElevation = { rangeBottom: -Infinity, rangeTop: Infinity };
+  if (base instanceof WallDocument) {
+    rangeElevation = {
+      rangeBottom: base.flags?.["wall-height"]?.bottom ?? -Infinity,
+      rangeTop: base.flags?.["wall-height"]?.top ?? Infinity,
+    };
+  } else if (base instanceof TokenDocument) {
+    rangeElevation = {
+      rangeBottom: base.elevation,
+      rangeTop: base.elevation,
+    };
   } else {
-    return stringToCleanUp;
+    const rangeBottom = base.flags?.levels?.rangeBottom ?? -Infinity;
+    const rangeTop = base.flags?.levels?.rangeTop ?? Infinity;
+    rangeElevation = { rangeBottom, rangeTop };
   }
-}
-
-export function isStringEquals(stringToCheck1, stringToCheck2, startsWith = false) {
-  if (stringToCheck1 && stringToCheck2) {
-    const s1 = cleanUpString(stringToCheck1) ?? "";
-    const s2 = cleanUpString(stringToCheck2) ?? "";
-    if (startsWith) {
-      return s1.startsWith(s2) || s2.startsWith(s1);
-    } else {
-      return s1 === s2;
-    }
-  } else {
-    return stringToCheck1 === stringToCheck2;
-  }
-}
-
-/**
- * The duplicate function of foundry keep converting my stirng value to "0"
- * i don't know why this methos is a brute force solution for avoid that problem
- */
-export function duplicateExtended(obj) {
-  try {
-    if (structuredClone) {
-      return structuredClone(obj);
-    } else {
-      // Shallow copy
-      // const newObject = jQuery.extend({}, oldObject);
-      // Deep copy
-      // const newObject = jQuery.extend(true, {}, oldObject);
-      return jQuery.extend(true, {}, obj);
-    }
-  } catch (e) {
-    return duplicate(obj);
-  }
-}
-
-// =========================================================================================
-
-/**
- *
- * @param obj Little helper for loop enum element on typescript
- * @href https://www.petermorlion.com/iterating-a-typescript-enum/
- * @returns
- */
-export function enumKeys(obj) {
-  return Object.keys(obj).filter((k) => Number.isNaN(+k));
-}
-
-/**
- * @href https://stackoverflow.com/questions/7146217/merge-2-arrays-of-objects
- * @param targetArray
- * @param sourceArray
- * @param prop
- */
-export function mergeByProperty(targetArray, sourceArray, prop) {
-  for (const sourceElement of sourceArray) {
-    const targetElement = targetArray.find((targetElement) => {
-      return sourceElement[prop] === targetElement[prop];
-    });
-    targetElement ? Object.assign(targetElement, sourceElement) : targetArray.push(sourceElement);
-  }
-  return targetArray;
-}
-
-// /**
-//  * Returns the first selected token
-//  */
-// export function getFirstPlayerTokenSelected(): Token | null {
-// 	// Get first token owned by the player
-// 	const selectedTokens = <Token[]>canvas.tokens?.controlled;
-// 	if (selectedTokens.length > 1) {
-// 		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
-// 		return null;
-// 	}
-// 	if (!selectedTokens || selectedTokens.length === 0) {
-// 		//if(game.user.character.token){
-// 		//
-// 		//  return game.user.character.token;
-// 		//}else{
-// 		return null;
-// 		//}
-// 	}
-// 	return selectedTokens[0];
-// }
-
-// /**
-//  * Returns a list of selected (or owned, if no token is selected)
-//  * note: ex getSelectedOrOwnedToken
-//  */
-// export function getFirstPlayerToken(): Token | null {
-// 	// Get controlled token
-// 	let token: Token;
-// 	const controlled: Token[] = <Token[]>canvas.tokens?.controlled;
-// 	// Do nothing if multiple tokens are selected
-// 	if (controlled.length && controlled.length > 1) {
-// 		//iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
-// 		return null;
-// 	}
-// 	// If exactly one token is selected, take that
-// 	token = controlled[0];
-// 	if (!token) {
-// 		if (!controlled.length || controlled.length === 0) {
-// 			// If no token is selected use the token of the users character
-// 			token = canvas.tokens?.placeables.find((token) => token.document.actorId === game.user?.character?.id);
-// 		}
-// 		// If no token is selected use the first owned token of the users character you found
-// 		if (!token) {
-// 			token = canvas.tokens?.ownedTokens[0];
-// 		}
-// 	}
-// 	return token;
-// }
-
-/**
- * Get the total LOS height for a token
- * @param {Object} token - a token object
- * @returns {Integer} returns token elevation plus the LOS height stored in the flags
- **/
-function getTokenLOSheight(token) {
-  if (game.modules.get("levels")?.active) {
-    return token.losHeight;
-  } else {
-    return token.document.elevation;
-  }
+  return rangeElevation;
 }
 
 export function getElevationPlaceableObject(placeableObject) {
-  let base = placeableObject;
-  if (base.document) {
-    base = base.document;
-  }
-  const base_elevation =
-    typeof _levels !== "undefined" &&
-    _levels?.advancedLOS &&
-    (placeableObject instanceof Token || placeableObject instanceof TokenDocument)
-      ? getTokenLOSheight(placeableObject)
-      : base.elevation ?? base.flags
-      ? base.flags["levels"]?.elevation ??
-        base.flags["levels"]?.rangeBottom ??
-        base.flags["wallHeight"]?.wallHeightBottom ??
-        0
-      : 0;
-  return base_elevation;
+  let rangeElevation = _getElevationRangePlaceableObject(placeableObject);
+  return rangeElevation.rangeBottom;
 }
 
 export function checkElevation(documentOrPlaceableSource, documentOrPlaceableTarget) {
-  let docSource = documentOrPlaceableSource;
-  if (documentOrPlaceableSource.document) {
-    docSource = documentOrPlaceableSource.document;
-  }
-  let docTarget = documentOrPlaceableTarget;
-  if (documentOrPlaceableTarget.document) {
-    docTarget = documentOrPlaceableTarget.document;
-  }
+  let docSource = documentOrPlaceableSource?.document ?? documentOrPlaceableSource;
+  let docTarget = documentOrPlaceableTarget?.document ?? documentOrPlaceableTarget;
+  // TODO we really need this ?
   if (!docSource.object || !docTarget.object) {
     return false;
   }
-  const elevationSource = getElevationPlaceableObject(docSource.object);
-  const elevationTarget = getElevationPlaceableObject(docTarget.object);
+  // TODO why i was using object before instead document ??
+  const elevationSource = getElevationPlaceableObject(docSource);
+  const elevationTarget = getElevationPlaceableObject(docTarget);
+  // Levels module support
   if (game.modules.get("levels")?.active) {
-    const rangeTarget = getRangeForDocument(documentOrPlaceableTarget);
-    return inRange(documentOrPlaceableSource, elevationSource, rangeTarget.rangeBottom, rangeTarget.rangeTop);
+    const elevationRangeTarget = _getElevationRangePlaceableObject(docTarget);
+    const rangeBottom = elevationRangeTarget.rangeBottom ?? -Infinity;
+    const rangeTop = elevationRangeTarget.rangeTop ?? Infinity;
+    return elevationSource >= rangeBottom && elevationSource <= rangeTop;
   } else {
     return elevationSource >= elevationTarget;
   }
 }
 
-export function inRange(document, elevation, rangeBottom, rangeTop) {
-  const rangeBottom1 = rangeBottom ?? -Infinity;
-  const rangeTop1 = rangeTop ?? Infinity;
-  return elevation >= rangeBottom1 && elevation <= rangeTop1;
-}
-
-export function getRangeForDocument(document) {
-  if (document instanceof WallDocument) {
-    return {
-      rangeBottom: document.flags?.["wall-height"]?.bottom ?? -Infinity,
-
-      rangeTop: document.flags?.["wall-height"]?.top ?? Infinity,
-    };
-  } else if (document instanceof TokenDocument) {
-    return {
-      rangeBottom: document.elevation,
-
-      rangeTop: document.elevation,
-    };
-  }
-  const rangeBottom = document.flags?.levels?.rangeBottom ?? -Infinity;
-  const rangeTop = document.flags?.levels?.rangeTop ?? Infinity;
-  return { rangeBottom, rangeTop };
+export function getTokenHeightPatched(token) {
+    // Why i need to this with the levels module ???
+    return ((token.losHeight ?? (token.document.elevation+0.00001))-token.document.elevation)/canvas.scene.dimensions.distance
 }
 
 // =============================

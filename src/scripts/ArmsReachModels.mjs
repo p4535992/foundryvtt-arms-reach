@@ -70,6 +70,8 @@ export class ArmsreachData {
   centerX = 0;
   // number:
   centerY = 0;
+  // number
+  centerZ = 0;
   // any:
   placeableObjectData = {};
 }

@@ -1,7 +1,6 @@
-import { checkElevation, error, getElevationPlaceableObject, warn } from "./lib/lib.mjs";
+import { checkElevation, error, getElevationPlaceableObject, getTokenHeightPatched, warn } from "./lib/lib.mjs";
 import { ArmsreachData } from "./ArmsReachModels.mjs";
 import CONSTANTS from "./constants.mjs";
-import { GeometricUtils } from "./lib/GeometricTokenUtils.mjs";
 
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
@@ -16,6 +15,7 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
   const hPlaceable = armsreachData.h;
   const centerX = armsreachData.centerX;
   const centerY = armsreachData.centerY;
+  const centerZ = armsreachData.centerZ;
   const placeableObjectData = armsreachData.placeableObjectData;
 
   const unitSize = canvas.dimensions.distance; //canvas.grid?.grid?.options.dimensions.distance;
@@ -34,6 +34,7 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
       id: armsreachData.id,
       centerX: centerX,
       centerY: centerY,
+      centerZ: centerZ,
       placeableObjectData: placeableObjectData,
     });
     // TODO TO TEST
@@ -506,6 +507,7 @@ export const getPlaceableDoorCenter = function (placeable) {
   const documentName = placeable?.wall.document ? placeable?.wall.document.documentName : placeable.documentName;
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
+  const centerZ = placeable instanceof Token ? getTokenHeightPatched(placeable) : placeable.z;
   const placeableObjectData = placeable?.wall.document ? placeable?.wall.document : placeable;
   return {
     x: x,
@@ -516,6 +518,7 @@ export const getPlaceableDoorCenter = function (placeable) {
     id: id,
     centerX: centerX,
     centerY: centerY,
+    centerZ: centerZ,
     placeableObjectData: placeableObjectData,
   };
 };
@@ -534,6 +537,7 @@ export const getPlaceableCenter = function (placeable) {
   const documentName = placeable?.document ? placeable?.document.documentName : placeable.documentName;
   const centerX = placeable.center ? placeable.center.x : x;
   const centerY = placeable.center ? placeable.center.y : y;
+  const centerZ = placeable instanceof Token ? getTokenHeightPatched(placeable) : placeable.z;
   const placeableObjectData = placeable.document ? placeable.document : placeable;
   return {
     x: x,
@@ -544,6 +548,7 @@ export const getPlaceableCenter = function (placeable) {
     id: id,
     centerX: centerX,
     centerY: centerY,
+    centerZ: centerZ,
     placeableObjectData: placeableObjectData,
   };
 };
@@ -693,6 +698,7 @@ export const globalInteractionDistanceUniversal = function (placeableObjectSourc
 };
 
 function grids_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
+  // TODO not sure about this....
   return Math.floor(distance_between_placeable_rect(aArmsReachData, bArmsReachData) / canvas.grid?.size) + 1;
 }
 
@@ -734,18 +740,18 @@ function distance_between_placeable_rect(p1ArmsReachData, p2ArmsReachData) {
 }
 
 function units_between_placeable_and_placeable(aArmsReachData, bArmsReachData) {
-  // const range = canvas.lighting?.globalLight ? Infinity : sourceToken.vision.radius;
+  // const range = sourceToken.vision.radius;
   // if (range === 0) return false;
   // if (range === Infinity) return true;
-  const tokensSizeAdjust = (Math.min(bArmsReachData.w, bArmsReachData.h) || 0) / Math.SQRT2;
-  let dist =
-    (getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) * canvas.dimensions?.size) /
-      canvas.dimensions?.distance -
+  const tokensSizeAdjust =
+    bArmsReachData instanceof Token ? (Math.min(bArmsReachData.w, bArmsReachData.h) || 0) / Math.SQRT2 : 0;
+  const dist =
+    (getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) * canvas.dimensions.size) / canvas.dimensions.distance -
     tokensSizeAdjust;
   // return dist <= range;
-  const unitSize = canvas.dimensions?.distance || 5;
-  const unitGridSize = canvas.grid?.size || 50;
-  dist = (Math.floor(dist) / unitGridSize) * unitSize;
+  // const unitSize = canvas.dimensions?.distance || 5;
+  // const unitGridSize = canvas.grid?.size || 50;
+  // dist = (Math.floor(dist) / unitGridSize) * unitSize;
   return dist;
 }
 
@@ -753,44 +759,68 @@ function getUnitTokenDistUniversal(aArmsReachData, bArmsReachData) {
   const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
   const x1 = aArmsReachData.centerX;
   const y1 = aArmsReachData.centerY;
-  const z1 = getElevationPlaceableObject(aArmsReachData.placeableObjectData) * unitsToPixel;
+  const z1 = aArmsReachData.centerZ;
   const x2 = bArmsReachData.centerX;
   const y2 = bArmsReachData.centerY;
-  const z2 = getElevationPlaceableObject(bArmsReachData.placeableObjectData) * unitsToPixel;
-  const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
-  return d;
+  const z2 = bArmsReachData.centerZ;
+  // Add support for 3D Preview Model
+  if (game.Levels3DPreview?._active) {
+    const placeable1Vector = {
+      x: x1,
+      y: y1,
+      z: z1 * unitsToPixel,
+    };
+
+    const placeable2Vector = {
+      x: x2,
+      y: y2,
+      z: z2 * unitsToPixel,
+    };
+    const d = Math.hypot(
+      placeable1Vector.x - placeable2Vector.x,
+      placeable1Vector.y - placeable2Vector.y,
+      placeable1Vector.z - placeable2Vector.z
+    );
+    return d;
+  } else {
+    const d =
+      Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow((z2 - z1) * unitsToPixel, 2)) / unitsToPixel;
+    return d;
+  }
 }
 
 // ================================================
 
 function getUnitTokenDist(token, placeableObjectTargetArmsReachData) {
   const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
-  const x1 = token.center.x;
-  const y1 = token.center.y;
-  const z1 = getElevationPlaceableObject(token) * unitsToPixel;
+  const x1 = token.vision.x;
+  const y1 = token.vision.y;
+  const z1 = getTokenHeightPatched(token);
   const x2 = placeableObjectTargetArmsReachData.centerX;
   const y2 = placeableObjectTargetArmsReachData.centerY;
-  const z2 = getElevationPlaceableObject(placeableObjectTargetArmsReachData.placeableObjectData) * unitsToPixel;
-  const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
-  return d;
-}
+  const z2 = placeableObjectTargetArmsReachData.centerZ;
+  // Add support for 3D Preview Model
+  if (game.Levels3DPreview?._active) {
+    const placeable1Vector = {
+      x: x1,
+      y: y1,
+      z: z1 * unitsToPixel,
+    };
 
-/**
- * Find out if a token is in the range of a particular object
- * @param {Object} token - a token
- * @param {Object} objectTargetPlaceableObject - a tile/drawing/light/note
- * @returns {Boolean} - true if in range, false if not
- **/
-export function isTokenInRange(objectSourcePlaceableObject, objectTargetPlaceableObject) {
-  if (game.modules.get("levels")?.active) {
-    let rangeTop = objectTargetPlaceableObject.document.getFlag("levels", "rangeTop");
-    let rangeBottom = objectTargetPlaceableObject.document.getFlag("levels", "rangeBottom");
-    if (!rangeTop && rangeTop !== 0) rangeTop = Infinity;
-    if (!rangeBottom && rangeBottom !== 0) rangeBottom = -Infinity;
-    const elevation = getElevationPlaceableObject(objectSourcePlaceableObject);
-    return elevation <= rangeTop && elevation >= rangeBottom;
+    const placeable2Vector = {
+      x: x2,
+      y: y2,
+      z: z2 * unitsToPixel,
+    };
+    const d = Math.hypot(
+      placeable1Vector.x - placeable2Vector.x,
+      placeable1Vector.y - placeable2Vector.y,
+      placeable1Vector.z - placeable2Vector.z
+    );
+    return d;
   } else {
-    // TODO maybe some other integration
-    return true;
+    const d =
+      Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow((z2 - z1) * unitsToPixel, 2)) / unitsToPixel;
+    return d;
   }
 }
