@@ -9,9 +9,7 @@ export const ResetDoorsAndFog = {
   resetDoors: async function (isCurrentScene, id) {
     const updates = [];
     if (isCurrentScene) {
-      const wallsToUpdate =
-        //@ts-ignore
-        canvas.walls?.doors.filter((wall) => wall.document.ds === 1);
+      const wallsToUpdate = canvas.walls?.doors.filter((wall) => wall.document.ds === 1);
       for (let i = 0; i < wallsToUpdate.length; i++) {
         const doorControl = wallsToUpdate[i];
         updates.push({ _id: doorControl.id, ds: 0 });
@@ -20,9 +18,7 @@ export const ResetDoorsAndFog = {
     } else {
       if (id) {
         const scene = game.scenes?.get(id);
-        const scenesToUpdate =
-          //@ts-ignore
-          scene.data.walls.filter((wall) => wall.document.ds === 1);
+        const scenesToUpdate = scene.data.walls.filter((wall) => wall.document.ds === 1);
         for (let i = 0; i < scenesToUpdate.length; i++) {
           const sceneToUpdate = scenesToUpdate[i];
           updates.push({ _id: sceneToUpdate.id, ds: 0 });
@@ -36,7 +32,7 @@ export const ResetDoorsAndFog = {
   resetFog: async function (isCurrentScene, id) {
     if (isCurrentScene) {
       // canvas.sight?.resetFog();
-      //@ts-ignore
+
       canvas.fog.reset();
     } else {
       if (id) {

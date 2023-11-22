@@ -45,7 +45,7 @@ export const registerSettings = function () {
     config: true,
     default: 0, // instead of 1
     type: Number,
-    //@ts-ignore
+
     range: { min: 0, max: 5, step: 1 },
   });
 
@@ -56,7 +56,7 @@ export const registerSettings = function () {
     config: true,
     default: 5,
     type: Number,
-    //@ts-ignore
+
     range: { min: 0, max: 20, step: 1 },
   });
 
@@ -87,7 +87,6 @@ export const registerSettings = function () {
     type: Boolean,
   });
 
-  //@ts-ignore
   // KeybindLib.register(MODULE_ID, "setCustomKeyBindForDoorInteraction", {
   // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`),
   // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`),
@@ -161,7 +160,7 @@ export const registerSettings = function () {
     config: false,
     default: 0, // instead of 1
     type: Number,
-    //@ts-ignore
+
     range: { min: 0, max: 10, step: 0.5 },
   });
 
@@ -172,7 +171,7 @@ export const registerSettings = function () {
     config: true,
     default: 0, // 5 before
     type: Number,
-    //@ts-ignore
+
     range: { min: 0, max: 50, step: 1 },
   });
 
@@ -196,7 +195,7 @@ export const registerSettings = function () {
     config: true,
     default: 0, // 1 before // 200 before
     type: Number,
-    //@ts-ignore
+
     //range: { min: 0, max: 750, step: 50 },
     range: { min: 0, max: 5, step: 0.5 },
   });
@@ -537,163 +536,7 @@ export const registerSettings = function () {
     type: Boolean,
   });
   */
-  // =========================================================
-  // RANGE OVERLAY
-  // =========================================================
-  /*
-  game.settings.register(CONSTANTS.MODULE_ID, 'enableRangeOverlay', {
-    name: i18n(`${CONSTANTS.MODULE_ID}.settingNameRangeOverlayFeature`),
-    hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintRangeOverlayFeature`),
-    scope: 'world',
-    config: false,
-    default: false,
-    type: Boolean,
-  });
 
-  const settingNames = {
-    IS_ACTIVE: 'is-active',
-    IC_VISIBILITY: 'ic_visibility',
-    OOC_VISIBILITY: 'ooc_visibility',
-    SHOW_TURN_ORDER: 'show-turn-order',
-    SHOW_POTENTIAL_TARGETS: 'show-potential-targets',
-    SHOW_DIFFICULT_TERRAIN: 'show-difficult-terrain',
-    SHOW_WALLS: 'show-walls',
-    MOVEMENT_ALPHA: 'movement-alpha',
-    RANGES: 'ranges',
-    DIAGONALS: 'diagonals',
-    SHOW_WEAPON_RANGE: 'show-weapon-range',
-    SPEED_ATTR_PATH: 'speed-attr-path',
-    INFO_BUTTON: 'info-button',
-    IGNORE_DIFFICULT_TERRAIN: 'ignore-difficult-terrain',
-  };
-  const hiddenSettings = [settingNames.IS_ACTIVE];
-
-  const defaultFalse = [
-    settingNames.IS_ACTIVE,
-    settingNames.SHOW_DIFFICULT_TERRAIN,
-    settingNames.SHOW_WALLS,
-    settingNames.IGNORE_DIFFICULT_TERRAIN,
-  ];
-
-  const ignore = [
-    settingNames.MOVEMENT_ALPHA,
-    settingNames.IC_VISIBILITY,
-    settingNames.OOC_VISIBILITY,
-    settingNames.RANGES,
-    settingNames.DIAGONALS,
-    settingNames.SPEED_ATTR_PATH,
-    settingNames.INFO_BUTTON,
-  ];
-
-  // noinspection JSUnusedLocalSymbols
-  for (const [key, settingName] of Object.entries(settingNames)) {
-    if (!ignore.includes(settingName)) {
-      game.settings.register(CONSTANTS.MODULE_ID, settingName, {
-        name: `${CONSTANTS.MODULE_ID}.${settingName}`,
-        hint: `${CONSTANTS.MODULE_ID}.${settingName}-hint`,
-        // name: `${CONSTANTS.MODULE_ID}.quick-settings.${settingName}.name`,
-        // hint: `${CONSTANTS.MODULE_ID}.quick-settings.${settingName}.hint`,
-        scope: 'client',
-        config: !hiddenSettings.includes(settingName),
-        type: Boolean,
-        default: !defaultFalse.includes(settingName),
-        onChange: () => {
-          API.combatRangeOverlay.instance.fullRefresh();
-        },
-      });
-    }
-  }
-
-  game.settings.register(CONSTANTS.MODULE_ID, 'movement-alpha', {
-    name: `${CONSTANTS.MODULE_ID}.movement-alpha`,
-    hint: `${CONSTANTS.MODULE_ID}.movement-alpha-hint`,
-    scope: 'client',
-    config: false,
-    type: Number,
-    default: 0.1,
-    range: {
-      min: 0,
-      max: 1,
-      step: 0.05,
-    },
-    onChange: () => {
-      API.combatRangeOverlay.instance.fullRefresh();
-    },
-  });
-
-  game.settings.register(CONSTANTS.MODULE_ID, 'ic_visibility', {
-    name: `${CONSTANTS.MODULE_ID}.ic_visibility`,
-    hint: `${CONSTANTS.MODULE_ID}.ic_visibility-hint`,
-    scope: 'client',
-    config: false,
-    type: String,
-    default: `never`,
-    choices: {
-      always: `${CONSTANTS.MODULE_ID}.visibilities.overlayVisibility.always`,
-      hotkeys: `${CONSTANTS.MODULE_ID}.visibilities.overlayVisibility.hotkeys`,
-      never: `${CONSTANTS.MODULE_ID}.visibilities.overlayVisibility.never`,
-    },
-    onChange: () => {
-      API.combatRangeOverlay.instance.fullRefresh();
-    },
-  });
-
-  game.settings.register(CONSTANTS.MODULE_ID, 'ooc_visibility', {
-    name: `${CONSTANTS.MODULE_ID}.ooc_visibility`,
-    hint: `${CONSTANTS.MODULE_ID}.ooc_visibility-hint`,
-    scope: 'client',
-    config: false,
-    type: String,
-    default: `never`,
-    choices: {
-      always: `${CONSTANTS.MODULE_ID}.visibilities.overlayVisibility.always`,
-      hotkeys: `${CONSTANTS.MODULE_ID}.visibilities.overlayVisibility.hotkeys`,
-      never: `${CONSTANTS.MODULE_ID}.visibilities.overlayVisibility.never`,
-    },
-    onChange: () => {
-      API.combatRangeOverlay.instance.fullRefresh();
-    },
-  });
-
-  game.settings.register(CONSTANTS.MODULE_ID, 'ranges', {
-    name: `${CONSTANTS.MODULE_ID}.ranges`,
-    hint: `${CONSTANTS.MODULE_ID}.ranges-hint`,
-    scope: 'client',
-    config: false,
-    type: String,
-    default: '5',
-    onChange: () => {
-      API.combatRangeOverlay.instance.fullRefresh();
-    },
-  });
-
-  game.settings.register(CONSTANTS.MODULE_ID, 'diagonals', {
-    name: `${CONSTANTS.MODULE_ID}.diagonals.name`,
-    hint: `${CONSTANTS.MODULE_ID}.diagonals.hint`,
-    scope: 'world',
-    config: false,
-    type: String,
-    default: 'fiveTenFive',
-    choices: {
-      fiveTenFive: `${CONSTANTS.MODULE_ID}.diagonals.fiveTenFive`,
-      tenFiveTen: `${CONSTANTS.MODULE_ID}.diagonals.tenFiveTen`,
-      five: `${CONSTANTS.MODULE_ID}.diagonals.five`,
-      ten: `${CONSTANTS.MODULE_ID}.diagonals.ten`,
-    },
-    onChange: () => {
-      API.combatRangeOverlay.instance.fullRefresh();
-    },
-  });
-
-  game.settings.register(CONSTANTS.MODULE_ID, 'speed-attr-path', {
-    name: `${CONSTANTS.MODULE_ID}.speed-attr-path`,
-    hint: `${CONSTANTS.MODULE_ID}.speed-attr-path-hint`,
-    scope: 'world',
-    config: false,
-    type: String,
-    default: '',
-  });
-  */
   // ===================================================================
 
   game.settings.register(CONSTANTS.MODULE_ID, "debug", {
@@ -719,9 +562,8 @@ export const registerSettings = function () {
 
 class ResetSettingsDialog extends FormApplication {
   constructor(...args) {
-    //@ts-ignore
     super(...args);
-    //@ts-ignore
+
     return new Dialog({
       title: game.i18n.localize(`${CONSTANTS.MODULE_ID}.dialogs.resetsettings.title`),
       content:
@@ -804,7 +646,7 @@ function otherSettings(apply = false) {
       config: true,
       default: 0, // instead of 1
       type: Number,
-      //@ts-ignore
+
       range: { min: 0, max: 5, step: 1 },
     },
 
@@ -815,7 +657,7 @@ function otherSettings(apply = false) {
       config: true,
       default: 5,
       type: Number,
-      //@ts-ignore
+
       range: { min: 0, max: 20, step: 1 },
     },
 
@@ -846,7 +688,6 @@ function otherSettings(apply = false) {
       type: Boolean,
     },
 
-    //@ts-ignore
     // KeybindLib.register(MODULE_ID, "setCustomKeyBindForDoorInteraction: {
     // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`),
     // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`),
@@ -920,7 +761,7 @@ function otherSettings(apply = false) {
       config: false,
       default: 0, // instead of 1
       type: Number,
-      //@ts-ignore
+
       range: { min: 0, max: 10, step: 0.5 },
     },
 
@@ -931,7 +772,7 @@ function otherSettings(apply = false) {
       config: true,
       default: 0, // 5 before
       type: Number,
-      //@ts-ignore
+
       range: { min: 0, max: 50, step: 1 },
     },
 
@@ -955,7 +796,7 @@ function otherSettings(apply = false) {
       config: true,
       default: 0, // 1 before // 200 before
       type: Number,
-      //@ts-ignore
+
       //range: { min: 0, max: 750, step: 50 },
       range: { min: 0, max: 5, step: 0.5 },
     },

@@ -154,9 +154,9 @@ export const DoorsReach = {
           name: doorControl.name,
           label: doorControl.name,
           icon: "", //doorControl.icon.texture.baseTexture., // TODO
-          //@ts-ignore
+
           disabled: doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED,
-          //@ts-ignore
+
           hidden: doorControl.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET,
           animate: false,
           x: doorControl.x,
@@ -440,10 +440,9 @@ export const DoorsReach = {
     // game.scenes?.current?.walls.contents.forEach((wall: WallDocument) => {
     for (let i = 0; i < game.scenes?.current?.walls.contents.length; i++) {
       const wall = game.scenes?.current?.walls.contents[i];
-      //@ts-ignore
+
       if (wall.door > 0) {
         const door = canvas.controls?.doors?.children.find((pixiDisplayObject) => {
-          //@ts-ignore
           return pixiDisplayObject.wall.id === wall.id;
         });
         // if (!door.visible) {
@@ -502,7 +501,7 @@ export const DoorsReach = {
         },
         //currentTarget: closestDoor
       };
-      //@ts-ignore
+
       closestDoor._onMouseDown(fakeEvent);
     } else {
       const tokenName = getCharacterName(token);

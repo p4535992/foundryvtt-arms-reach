@@ -1,5 +1,3 @@
-// import type { Overlay } from "./apps/range_overlay/overlay";
-
 export class DoorData {
   /// DoorSourceData: door data of the source door (WARNING: this data may change in the future)
   sourceData;

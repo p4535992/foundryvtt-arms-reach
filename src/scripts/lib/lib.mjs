@@ -151,9 +151,7 @@ export function isStringEquals(stringToCheck1, stringToCheck2, startsWith = fals
  */
 export function duplicateExtended(obj) {
   try {
-    //@ts-ignore
     if (structuredClone) {
-      //@ts-ignore
       return structuredClone(obj);
     } else {
       // Shallow copy
@@ -207,7 +205,7 @@ export function mergeByProperty(targetArray, sourceArray, prop) {
 // 	}
 // 	if (!selectedTokens || selectedTokens.length === 0) {
 // 		//if(game.user.character.token){
-// 		//  //@ts-ignore
+// 		//
 // 		//  return game.user.character.token;
 // 		//}else{
 // 		return null;
@@ -263,9 +261,7 @@ export function getElevationPlaceableObject(placeableObject) {
     base = base.document;
   }
   const base_elevation =
-    //@ts-ignore
     typeof _levels !== "undefined" &&
-    //@ts-ignore
     _levels?.advancedLOS &&
     (placeableObject instanceof Token || placeableObject instanceof TokenDocument)
       ? getTokenLOSheight(placeableObject)
@@ -309,16 +305,14 @@ export function inRange(document, elevation, rangeBottom, rangeTop) {
 export function getRangeForDocument(document) {
   if (document instanceof WallDocument) {
     return {
-      //@ts-ignore
       rangeBottom: document.flags?.["wall-height"]?.bottom ?? -Infinity,
-      //@ts-ignore
+
       rangeTop: document.flags?.["wall-height"]?.top ?? Infinity,
     };
   } else if (document instanceof TokenDocument) {
     return {
-      //@ts-ignore
       rangeBottom: document.elevation,
-      //@ts-ignore
+
       rangeTop: document.elevation,
     };
   }
@@ -355,10 +349,7 @@ export const getCharacterName = function (token) {
     tokenName = token.actor.name;
   } else if (token.name) {
     tokenName = token.name;
-  }
-  //@ts-ignore
-  else if (token.document.actorId) {
-    //@ts-ignore
+  } else if (token.document.actorId) {
     tokenName = game.actors?.get(token.document.actorId).name;
   }
   return tokenName;

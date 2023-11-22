@@ -10,12 +10,8 @@ import { WallsReach } from "./WallsReach.mjs";
 import { globalInteractionDistanceUniversal } from "./ArmsReachHelper.mjs";
 import { checkElevation, error, warn } from "./lib/lib.mjs";
 import CONSTANTS from "./constants.mjs";
-// import type { Overlay } from "./apps/range_overlay/overlay";
-// import type { combatRangeOverlay } from "./ArmsReachModels";
 
 const API = {
-  // combatRangeOverlay: <combatRangeOverlay>{},
-
   async isReachableArr(...inAttributes) {
     if (!Array.isArray(inAttributes)) {
       throw error("isReachable | inAttributes must be of type array");
@@ -53,7 +49,6 @@ const API = {
   },
 
   isReachableByTag(token, tag, maxDistance = 0, useGrid = false, userId = undefined) {
-    //@ts-ignore
     if (!game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active) {
       warn(`The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTag'`, true);
       return false;
@@ -121,14 +116,12 @@ const API = {
       //   const measuredTarget = <MeasuredTemplate>canvas.templates?.placeables?.find((x:MeasuredTemplate) => {return x.id === placeableObject.id;});
       //   isInReach = MeasuredsReach.globalInteractionDistance(token,ambientSoundTarget);
     } else if (relevantDocument instanceof TileDocument) {
-      //@ts-ignore
       const tileTarget = canvas.tiles?.placeables?.find((tile) => {
         return tile.id === placeableObject.id;
       });
       isInReach = TilesReach.globalInteractionDistance(token, tileTarget, maxDistance, useGrid, userId);
     } else if (relevantDocument instanceof WallDocument) {
       const doorControlTarget = canvas.controls?.doors?.children.find((pixiDisplayObject) => {
-        //@ts-ignore
         return pixiDisplayObject.wall.id === placeableObject.id;
       });
       if (doorControlTarget) {
@@ -149,10 +142,7 @@ const API = {
         return note.id === placeableObject.id;
       });
       isInReach = NotesReach.globalInteractionDistance(token, noteTarget, maxDistance, useGrid, userId);
-    }
-    //@ts-ignore
-    else if (relevantDocument?.name === "Stairway" || relevantDocument?.documentName === "Stairway") {
-      //@ts-ignore
+    } else if (relevantDocument?.name === "Stairway" || relevantDocument?.documentName === "Stairway") {
       const stairwayTarget = canvas.stairways?.placeables?.find((stairwayPlaceableObject) => {
         return stairwayPlaceableObject.id === placeableObject.id;
       });
@@ -170,7 +160,6 @@ const API = {
   },
 
   isReachableByTagUniversal(placeableObjectSource, tag, maxDistance = 0, useGrid = false, userId = undefined) {
-    //@ts-ignore
     if (!game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active) {
       warn(
         `The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTagUniversal'`,
@@ -280,7 +269,7 @@ const API = {
       ...Array.from(scene.tiles),
       ...Array.from(scene.walls),
       ...Array.from(scene.drawings),
-      //@ts-ignore
+
       ...Array.from(scene.stairways), // Add module stairways...
     ]
       .deepFlatten()

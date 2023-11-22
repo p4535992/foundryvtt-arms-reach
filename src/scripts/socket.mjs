@@ -1,6 +1,5 @@
 import { debug, warn } from "./lib/lib.mjs";
 import API from "./api.mjs";
-import { setSocket } from "../module.js";
 
 export const SOCKET_HANDLERS = {
   /**
@@ -28,7 +27,7 @@ export function registerSocket() {
   if (armsReachSocket) {
     return armsReachSocket;
   }
-  //@ts-ignore
+
   armsReachSocket = socketlib.registerModule(CONSTANTS.MODULE_ID);
 
   /**
@@ -57,8 +56,8 @@ export function registerSocket() {
    */
 
   // Basic
-
-  setSocket(armsReachSocket);
+  const data = game.modules.get(CONSTANTS.MODULE_ID);
+  data.socket = armsReachSocket;
   return armsReachSocket;
 }
 

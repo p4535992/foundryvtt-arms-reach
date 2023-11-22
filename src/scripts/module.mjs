@@ -27,14 +27,7 @@ import { SoundsReach } from "./SoundsReach";
 import { WallsReach } from "./WallsReach";
 import CONSTANTS from "./constants";
 import API from "./api";
-import { setApi } from "../module.js";
 import { registerSocket } from "./socket";
-// import { Overlay } from "./apps/range_overlay/overlay";
-// import { keyboard } from "./apps/range_overlay/keyboard";
-// import { mouse } from "./apps/range_overlay/mouse";
-// import { TOGGLE_BUTTON, _toggleButtonClick } from "./apps/range_overlay/controls";
-// import { canvasTokensGet } from "./apps/range_overlay/utility";
-// import { TokenInfo, updateLocation, updateMeasureFrom } from "./apps/range_overlay/tokenInfo";
 
 let taggerModuleActive;
 
@@ -49,14 +42,13 @@ export const initHooks = () => {
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
       DoorsReach.init();
 
-      //@ts-ignore
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "DoorControl.prototype._onMouseDown",
         DoorControlPrototypeOnMouseDownHandler,
         "MIXED"
       );
-      //@ts-ignore
+
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "DoorControl.prototype._onRightDown",
@@ -66,7 +58,6 @@ export const initHooks = () => {
     }
 
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
-      //@ts-ignore
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "Note.prototype._onClickLeft",
@@ -74,7 +65,6 @@ export const initHooks = () => {
         "MIXED"
       );
 
-      //@ts-ignore
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "Note.prototype._onClickLeft2",
@@ -84,14 +74,13 @@ export const initHooks = () => {
     }
 
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableTokensIntegration")) {
-      //@ts-ignore
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "Token.prototype._onClickLeft",
         TokenPrototypeOnClickLeftHandler,
         "MIXED"
       );
-      //@ts-ignore
+
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "Token.prototype._onClickLeft2",
@@ -101,7 +90,6 @@ export const initHooks = () => {
     }
 
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableLightsIntegration")) {
-      //@ts-ignore
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "AmbientLight.prototype._onClickRight",
@@ -111,7 +99,6 @@ export const initHooks = () => {
     }
 
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableSoundsIntegration")) {
-      //@ts-ignore
       libWrapper.register(
         CONSTANTS.MODULE_ID,
         "AmbientSound.prototype._onClickRight",
@@ -121,7 +108,7 @@ export const initHooks = () => {
     }
 
     // if (game.settings.get(CONSTANTS.MODULE_ID, 'enableDrawingsIntegration')) {
-    //   //@ts-ignore
+    //
     //   libWrapper.register(
     //     CONSTANTS.MODULE_ID,
     //     'Drawing.prototype._onHandleMouseDown',
@@ -132,7 +119,7 @@ export const initHooks = () => {
     // }
 
     // if (game.settings.get(CONSTANTS.MODULE_ID, 'enableTilesIntegration')) {
-    //   //@ts-ignore
+    //
     //   libWrapper.register(
     //     CONSTANTS.MODULE_ID,
     //     // 'Tile.prototype._onClickLeft',
@@ -153,7 +140,8 @@ export const setupHooks = () => {
     }
   }
 
-  setApi(API);
+  const data = game.modules.get(CONSTANTS.MODULE_ID);
+  data.api = API;
 };
 
 export const readyHooks = async () => {
@@ -361,135 +349,6 @@ export const readyHooks = async () => {
 
     // });
   }
-
-  // [EXPERIMENTAL] Range Overlay Integration
-  /*
-  if (game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-    Hooks.on('getSceneControlButtons', (controls: SceneControl[]) => {
-      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-        return;
-      }
-      const tokenButton = controls.find((b) => b.name == 'token');
-
-      if (tokenButton) {
-        tokenButton.tools.push({
-          name: TOGGLE_BUTTON,
-          title: `${CONSTANTS.MODULE_ID}.controlButton`,
-          icon: 'fas fa-people-arrows',
-          toggle: true,
-          active: game.settings.get(CONSTANTS.MODULE_ID, 'is-active'),
-          onClick: (toggled) => _toggleButtonClick(toggled, controls),
-          visible: true, // TODO: Figure out how to disable this from Settings
-          // onClick: (value) => {
-          //   game.settings.set(TRIGGER_HAPPY_MODULE_ID, 'enableTriggers', value);
-          //   if (game.triggers) game.triggers._parseJournals.bind(game.triggers)();
-          // },
-        });
-      }
-    });
-
-    //@ts-ignore
-    libWrapper.ignore_conflicts(
-      CONSTANTS.MODULE_ID,
-      ['drag-ruler', 'enhanced-terrain-layer'],
-      ['Token.prototype._onDragLeftStart', 'Token.prototype._onDragLeftDrop', 'Token.prototype._onDragLeftCancel'],
-    );
-
-    //@ts-ignore
-    libWrapper.register(
-      CONSTANTS.MODULE_ID,
-      'Token.prototype._onDragLeftStart',
-      mouse._dragStartWrapper.bind(mouse),
-      'WRAPPER',
-    );
-
-    //@ts-ignore
-    libWrapper.register(
-      CONSTANTS.MODULE_ID,
-      'Token.prototype._onDragLeftDrop',
-      mouse._dragDropWrapper.bind(mouse),
-      'WRAPPER',
-    );
-
-    //@ts-ignore
-    libWrapper.register(
-      CONSTANTS.MODULE_ID,
-      'Token.prototype._onDragLeftCancel',
-      mouse._dragCancelWrapper.bind(mouse),
-      'WRAPPER',
-    );
-
-    const instance = new Overlay();
-    API.combatRangeOverlay = {
-      instance,
-      showNumericMovementCost: false,
-      showPathLines: false,
-      roundNumericMovementCost: true,
-    };
-    instance.registerHooks();
-    keyboard.addHook('Alt', instance.altKeyHandler.bind(instance));
-    mouse.addHook(instance.dragHandler.bind(instance));
-
-    // noinspection JSUnusedLocalSymbols
-    Hooks.on('createCombatant', (combatant, options, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-        return;
-      }
-      const token = canvasTokensGet(combatant.token.id);
-      updateMeasureFrom(token, undefined);
-      API.combatRangeOverlay.instance.fullRefresh();
-    });
-
-    // noinspection JSUnusedLocalSymbols
-    Hooks.on('deleteCombatant', (combatant, options, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-        return;
-      }
-      const token = canvasTokensGet(combatant.token.id);
-      updateMeasureFrom(token, undefined);
-      API.combatRangeOverlay.instance.fullRefresh();
-    });
-
-    // noinspection JSUnusedLocalSymbols
-    Hooks.on('updateCombat', (combat, turnInfo, diff, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-        return;
-      }
-      if (combat?.previous?.tokenId) {
-        const token = canvasTokensGet(combat.previous.tokenId);
-        updateMeasureFrom(token, undefined);
-      }
-      API.combatRangeOverlay.instance.fullRefresh();
-    });
-
-    // noinspection JSUnusedLocalSymbols
-    Hooks.on('updateToken', (tokenDocument, updateData, options, someId) => {
-      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-        return;
-      }
-      const tokenId = tokenDocument.id;
-      const realToken = canvasTokensGet(tokenId); // Get the real token
-      updateLocation(realToken, updateData);
-      if (!realToken.inCombat) {
-        updateMeasureFrom(realToken, updateData);
-      }
-      API.combatRangeOverlay.instance.fullRefresh();
-    });
-
-    Hooks.on('controlToken', (token, boolFlag) => {
-      if (!game.settings.get(CONSTANTS.MODULE_ID, 'enableRangeOverlay')) {
-        return;
-      }
-      if (boolFlag && TokenInfo.current.speed === 0 && TokenInfo.current.getSpeedFromAttributes() === 0) {
-        if (game.user?.isGM) {
-          warn(i18n(`${CONSTANTS.MODULE_ID}.token-speed-warning-gm`), true);
-        } else {
-          warn(i18n(`${CONSTANTS.MODULE_ID}.token-speed-warning-player`), true);
-        }
-      }
-    });
-  }
-  */
 };
 
 export let currentTokenForToken = undefined;
@@ -675,7 +534,7 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
     }
     if (!isInReach) {
       // Bug fix not sure why i need to do this
-      //@ts-ignore
+
       if (doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
         if (game.settings.get(CONSTANTS.MODULE_ID, "disableDoorSound")) {
           return;

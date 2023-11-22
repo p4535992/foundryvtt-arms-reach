@@ -17,7 +17,7 @@ export const computeDistanceBetweenCoordinates = function (armsreachData, select
   const centerX = armsreachData.centerX;
   const centerY = armsreachData.centerY;
   const placeableObjectData = armsreachData.placeableObjectData;
-  //@ts-ignore
+
   const unitSize = canvas.dimensions.distance; //canvas.grid?.grid?.options.dimensions.distance;
 
   if (useGrids) {
@@ -58,17 +58,16 @@ export const getCenter = function (placeableObject, grid = {}) {
   const placeableObjectDocument = placeableObject.document?.documentName ? placeableObject.document : placeableObject;
 
   let isGridSpace = false;
-  //@ts-ignore
+
   if (placeableObjectDocument.documentName === TileDocument.documentName) {
     isGridSpace = false;
-    //@ts-ignore
   } else if (placeableObjectDocument.documentName === DrawingDocument.documentName) {
     isGridSpace = false;
   } else {
     isGridSpace = true;
   }
   grid = mergeObject({ w: canvas.grid?.w, h: canvas.grid?.h }, grid);
-  //@ts-ignore
+
   const [x, y] = [data.x, data.y];
   let center = { x: x, y: y };
   //Tokens, Tiles
@@ -81,7 +80,6 @@ export const getCenter = function (placeableObject, grid = {}) {
   }
   //Walls
   if ("c" in data) {
-    //@ts-ignore
     center = { x: (data.c[0] + data.c[2]) / 2, y: (data.c[1] + data.c[3]) / 2 };
   }
   return center;
@@ -121,7 +119,7 @@ function getTokenShape(token) {
     return shapeArray;
   } else {
     // Hex grids
-    //@ts-ignore
+
     if (game.modules.get("hex-size-support")?.active && CONFIG.hexSizeSupport.getAltSnappingFlag(token)) {
       const borderSize = token.document.flags["hex-size-support"].borderSize;
       let shape = [{ x: 0, y: 0 }];
@@ -145,7 +143,7 @@ function getTokenShape(token) {
           { x: 0, y: -2 },
           { x: 1, y: -2 },
         ]);
-      //@ts-ignore
+
       if (Boolean(CONFIG.hexSizeSupport.getAltOrientationFlag(token)) !== canvas.grid?.grid?.options.columns)
         shape.forEach((space) => (space.y *= -1));
       if (canvas.grid?.grid?.options.columns)
@@ -181,7 +179,7 @@ export const getFirstPlayerTokenSelected = function () {
   }
   if (!selectedTokens || selectedTokens.length === 0) {
     //if(game.user.character.token){
-    //  //@ts-ignore
+    //
     //  return game.user.character.token;
     //}else{
     return null;
@@ -211,7 +209,7 @@ export const getFirstPlayerTokenSelectedNo = function (noToken) {
   }
   if (!selectedTokens || selectedTokens.length === 0) {
     //if(game.user.character.token){
-    //  //@ts-ignore
+    //
     //  return game.user.character.token;
     //}else{
     return null;
@@ -372,7 +370,7 @@ export const checkTaggerForAmrsreachForStairway = function (placeable) {
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerStairwayIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeable) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -385,7 +383,7 @@ export const checkTaggerForAmrsreachForToken = function (placeableToken) {
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerTokenIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableToken) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -398,7 +396,7 @@ export const checkTaggerForAmrsreachForNote = function (placeableNote) {
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerNoteIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableNote) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -411,7 +409,7 @@ export const checkTaggerForAmrsreachForLight = function (placeableAmbientLight) 
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerLightIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableAmbientLight) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -424,7 +422,7 @@ export const checkTaggerForAmrsreachForSound = function (placeableAmbientSound) 
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerSoundIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableAmbientSound) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -437,7 +435,7 @@ export const checkTaggerForAmrsreachForDrawing = function (placeableDrawing) {
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerDrawingIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableDrawing) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -450,7 +448,7 @@ export const checkTaggerForAmrsreachForTile = function (placeableTile) {
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerTileIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableTile) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -463,7 +461,7 @@ export const checkTaggerForAmrsreachForWall = function (placeableWall) {
   if (!game.settings.get(CONSTANTS.MODULE_ID, "enableTaggerWallIntegration")) {
     return true;
   }
-  //@ts-ignore
+
   const tags = Tagger?.getTags(placeableWall) || [];
   if (tags.includes(CONSTANTS.TAGGER_FLAG)) {
     return true;
@@ -585,16 +583,14 @@ const getPlaceableY = function (placeable) {
 // ============================================================================================
 
 function distance_between_token_rect(p1, armsReachData) {
-  //@ts-ignore
   const x1 = p1.x ? p1.x : p1.document.x;
-  //@ts-ignore
+
   const y1 = p1.y ? p1.y : p1.document.y;
   const x1b = x1 + p1.w;
   const y1b = y1 + p1.h;
 
-  //@ts-ignore
   const x2 = armsReachData.x ? armsReachData.x : armsReachData.document.x;
-  //@ts-ignore
+
   const y2 = armsReachData.y ? armsReachData.y : armsReachData.document.y;
   const x2b = x2 + armsReachData.w;
   const y2b = y2 + armsReachData.h;
@@ -660,7 +656,6 @@ function units_between_token_and_placeable(token, armsReachData) {
       // 	dist = grids / (canvas.dimensions?.size / canvas.grid?.size);
       // }
     } else {
-      //@ts-ignore
       const isDoor = canvas.controls?.doors?.children.find((x) => {
         return x.wall.id === armsReachData.id;
       });
@@ -779,19 +774,6 @@ function getUnitTokenDist(token, placeableObjectTargetArmsReachData) {
   const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
   return d;
 }
-
-// function getUnitTokenDistOriginalLevels(token1, token2) {
-// 	const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
-// 	const x1 = token1.center.x;
-// 	const y1 = token1.center.y;
-// 	const z1 = token1.losHeight * unitsToPixel;
-// 	const x2 = token2.center.x;
-// 	const y2 = token2.center.y;
-// 	const z2 = token2.losHeight * unitsToPixel;
-
-// 	const d = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2)) / unitsToPixel;
-// 	return d;
-// }
 
 /**
  * Find out if a token is in the range of a particular object
