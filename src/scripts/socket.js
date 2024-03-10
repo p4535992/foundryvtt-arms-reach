@@ -1,5 +1,5 @@
-import { debug, warn } from "./lib/lib.js";
 import API from "./api.js";
+import Logger from "./lib/Logger.js";
 
 export const SOCKET_HANDLERS = {
     /**
@@ -23,7 +23,7 @@ export const SOCKET_HANDLERS = {
 export let armsReachSocket;
 
 export function registerSocket() {
-    debug("Registered armsReachSocket");
+    Logger.debug("Registered armsReachSocket");
     if (armsReachSocket) {
         return armsReachSocket;
     }
@@ -56,8 +56,7 @@ export function registerSocket() {
      */
 
     // Basic
-    const data = game.modules.get(CONSTANTS.MODULE_ID);
-    data.socket = armsReachSocket;
+    game.modules.get(CONSTANTS.MODULE_ID).socket = armsReachSocket;
     return armsReachSocket;
 }
 

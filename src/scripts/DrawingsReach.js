@@ -1,4 +1,4 @@
-import { checkElevation, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.js";
+import { checkElevation, getCharacterName } from "./lib/lib.js";
 import {
     computeDistanceBetweenCoordinates,
     getFirstPlayerToken,
@@ -6,6 +6,7 @@ import {
     interactionFailNotification,
 } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const DrawingsReach = {
     globalInteractionDistance: function (selectedToken, drawing, maxDistance = 0, useGrid = false, userId = undefined) {
@@ -21,7 +22,7 @@ export const DrawingsReach = {
             if (game.user?.isGM) {
                 return true;
             }
-            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
             return false;
         }
         // let isOwned = false;
@@ -56,14 +57,14 @@ export const DrawingsReach = {
                     game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDrawings"))
             ) {
                 if (!selectedToken) {
-                    interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForDrawing`));
+                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForDrawing`));
                     return false;
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, drawing);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -100,10 +101,12 @@ export const DrawingsReach = {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.drawingsNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.drawingsNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
                             );
                         } else {
-                            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.drawingsNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.drawingsNotInReach`));
                         }
                         return false;
                     } else {

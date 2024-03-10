@@ -6,6 +6,7 @@ import {
     interactionFailNotification,
 } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const TemplatesReach = {
     globalInteractionDistance: function (
@@ -69,7 +70,7 @@ export const TemplatesReach = {
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, template);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -106,7 +107,9 @@ export const TemplatesReach = {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.templatesNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.templatesNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
                             );
                         } else {
                             interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.templatesNotInReach`));

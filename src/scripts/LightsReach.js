@@ -1,4 +1,4 @@
-import { checkElevation, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.js";
+import { checkElevation, getCharacterName } from "./lib/lib.js";
 import {
     computeDistanceBetweenCoordinates,
     getFirstPlayerToken,
@@ -6,6 +6,7 @@ import {
     interactionFailNotification,
 } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const LightsReach = {
     globalInteractionDistance: function (selectedToken, light, maxDistance = 0, useGrid = false, userId = undefined) {
@@ -21,7 +22,7 @@ export const LightsReach = {
             if (game.user?.isGM) {
                 return true;
             }
-            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
             return false;
         }
         // let isOwned = false;
@@ -56,14 +57,14 @@ export const LightsReach = {
                     game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnLights"))
             ) {
                 if (!selectedToken) {
-                    interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForLight`));
+                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForLight`));
                     return false;
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, light);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -100,10 +101,12 @@ export const LightsReach = {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.lightsNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.lightsNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
                             );
                         } else {
-                            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.lightsNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.lightsNotInReach`));
                         }
                         return false;
                     } else {

@@ -8,13 +8,14 @@ import { TilesReach } from "./TilesReach.js";
 import { TokensReach } from "./TokensReach.js";
 import { WallsReach } from "./WallsReach.js";
 import { globalInteractionDistanceUniversal } from "./ArmsReachHelper.js";
-import { checkElevation, error, warn } from "./lib/lib.js";
+import { checkElevation } from "./lib/lib.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 const API = {
     async isReachableArr(...inAttributes) {
         if (!Array.isArray(inAttributes)) {
-            throw error("isReachable | inAttributes must be of type array");
+            throw Logger.error("isReachable | inAttributes must be of type array");
         }
         const [token, placeableObject, maxDistance, useGrid, userId] = inAttributes;
         const result = await this.isReachable(token, placeableObject, maxDistance, useGrid, userId);
@@ -23,7 +24,7 @@ const API = {
 
     async isReachableByTagArr(...inAttributes) {
         if (!Array.isArray(inAttributes)) {
-            throw error("isReachableByTag | inAttributes must be of type array");
+            throw Logger.error("isReachableByTag | inAttributes must be of type array");
         }
         const [token, tag, maxDistance, useGrid, userId] = inAttributes;
         const result = await this.isReachableByTag(token, tag, maxDistance, useGrid, userId);
@@ -32,7 +33,7 @@ const API = {
 
     async isReachableByIdArr(...inAttributes) {
         if (!Array.isArray(inAttributes)) {
-            throw error("isReachableById | inAttributes must be of type array");
+            throw Logger.error("isReachableById | inAttributes must be of type array");
         }
         const [token, placeableObjectId, maxDistance, useGrid, userId] = inAttributes;
         const result = await this.isReachableById(token, placeableObjectId, maxDistance, useGrid, userId);
@@ -41,7 +42,7 @@ const API = {
 
     async isReachableByIdOrNameArr(...inAttributes) {
         if (!Array.isArray(inAttributes)) {
-            throw error("isReachableByIdOrName | inAttributes must be of type array");
+            throw Logger.error("isReachableByIdOrName | inAttributes must be of type array");
         }
         const [token, placeableObjectIdOrName, maxDistance, useGrid, userId] = inAttributes;
         const result = await this.isReachableByIdOrName(token, placeableObjectIdOrName, maxDistance, useGrid, userId);
@@ -50,7 +51,10 @@ const API = {
 
     isReachableByTag(token, tag, maxDistance = 0, useGrid = false, userId = undefined) {
         if (!game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active) {
-            warn(`The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTag'`, true);
+            Logger.warn(
+                `The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTag'`,
+                true,
+            );
             return false;
         } else {
             const placeableObjects = Tagger?.getByTag(tag, { caseInsensitive: true }) || undefined;
@@ -68,7 +72,7 @@ const API = {
             obj.id === placeableObjectId;
         })[0];
         if (!object) {
-            warn(
+            Logger.warn(
                 `No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableById'`,
                 true,
             );
@@ -82,7 +86,7 @@ const API = {
         const objects = this._getObjectsFromScene(game.scenes?.current);
         const object = this._retrieveFromIdOrName(objects, placeableObjectIdOrName);
         if (!object) {
-            warn(
+            Logger.warn(
                 `No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrName'`,
                 true,
             );
@@ -164,14 +168,14 @@ const API = {
                 userId,
             );
         } else {
-            warn(` The document '${relevantDocument?.name}' is not supported from the API 'isReachable'`, true);
+            Logger.warn(` The document '${relevantDocument?.name}' is not supported from the API 'isReachable'`, true);
         }
         return isInReach;
     },
 
     isReachableByTagUniversal(placeableObjectSource, tag, maxDistance = 0, useGrid = false, userId = undefined) {
         if (!game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active) {
-            warn(
+            Logger.warn(
                 `The module '${CONSTANTS.TAGGER_MODULE_ID}' is not active can't use the API 'isReachableByTagUniversal'`,
                 true,
             );
@@ -198,7 +202,7 @@ const API = {
             obj.id === placeableObjectId;
         })[0];
         if (!object) {
-            warn(
+            Logger.warn(
                 `No placeable object find for the id '${placeableObjectId}' can't use the API 'isReachableByIdUniversal'`,
                 true,
             );
@@ -218,7 +222,7 @@ const API = {
         const objects = this._getObjectsFromScene(game.scenes?.current);
         const object = this._retrieveFromIdOrName(objects, placeableObjectIdOrName);
         if (!object) {
-            warn(
+            Logger.warn(
                 `No placeable object find for the id '${placeableObjectIdOrName}' can't use the API 'isReachableByIdOrNameUniversal'`,
                 true,
             );
@@ -240,7 +244,7 @@ const API = {
         if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(placeableObjectSource, placeableObjectTarget);
             if (!res) {
-                warn(
+                Logger.warn(
                     `The token '${placeableObjectSource.name}' is not on the elevation range of this placeable object`,
                 );
                 return false;

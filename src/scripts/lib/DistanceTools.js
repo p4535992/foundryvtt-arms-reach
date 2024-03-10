@@ -1,13 +1,13 @@
-//a quick way to map dimensions to their specific [D]imensions [S]ize [K]eys
-const DSK = {
-    x: "width",
-    y: "height",
-    z: "depth",
-};
+export default class DistanceTools {
+    //a quick way to map dimensions to their specific [D]imensions [S]ize [K]eys
+    static DSK = {
+        x: "width",
+        y: "height",
+        z: "depth",
+    };
 
-const DEGtoRAD = Math.pi / 180;
+    static DEGtoRAD = Math.pi / 180;
 
-class DistanceTools {
     /**
      * Work out all relevant x and y related information (x, y, width, height) (in scene units)
      *
@@ -40,21 +40,21 @@ class DistanceTools {
         for (let key of ["x", "y"]) {
             data[key] = data[key] * xyScale;
 
-            data[DSK[key]] = data[DSK[key]] * sizeScale;
+            data[DistanceTools.DSK[key]] = data[DistanceTools.DSK[key]] * sizeScale;
 
-            if (data[DSK[key]]) {
-                data[key] = data[key] + data[DSK[key]] / 2;
+            if (data[DistanceTools.DSK[key]]) {
+                data[key] = data[key] + data[DistanceTools.DSK[key]] / 2;
             }
         }
 
         if (data.rotation) {
             data.width = Math.sqrt(
-                (Math.cos(DEGtoRAD * data.rotation) * data.width) ** 2 +
-                    (Math.sin(DEGtoRAD * data.rotation) * data.height) ** 2,
+                (Math.cos(DistanceTools.DEGtoRAD * data.rotation) * data.width) ** 2 +
+                    (Math.sin(DistanceTools.DEGtoRAD * data.rotation) * data.height) ** 2,
             );
             data.height = Math.sqrt(
-                (Math.cos(DEGtoRAD * data.rotation) * data.height) ** 2 +
-                    (Math.sin(DEGtoRAD * data.rotation) * data.width) ** 2,
+                (Math.cos(DistanceTools.DEGtoRAD * data.rotation) * data.height) ** 2 +
+                    (Math.sin(DistanceTools.DEGtoRAD * data.rotation) * data.width) ** 2,
             );
         }
 
@@ -181,7 +181,7 @@ class DistanceTools {
             distance.push(position1[key] - position2[key]);
 
             if (settings.closestPoint) {
-                let reduction = (position1[DSK[key]] + position2[DSK[key]]) / 2;
+                let reduction = (position1[DistanceTools.DSK[key]] + position2[DistanceTools.DSK[key]]) / 2;
 
                 if (key == "z" && !isFinite(reduction)) {
                     //treat some special cases for the z level

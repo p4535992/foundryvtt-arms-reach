@@ -1,4 +1,4 @@
-import { checkElevation, getCharacterName, getTokenByTokenID, i18n, i18nFormat, warn } from "./lib/lib.js";
+import { checkElevation, getCharacterName, getTokenByTokenID } from "./lib/lib.js";
 import {
     computeDistanceBetweenCoordinates,
     getFirstPlayerToken,
@@ -7,6 +7,7 @@ import {
     interactionFailNotification,
 } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const StairwaysReach = {
     globalInteractionDistance: function (stairway, selectedTokenIds, userId = undefined) {
@@ -67,7 +68,7 @@ export const StairwaysReach = {
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(characterToken, stairway);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${characterToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -96,7 +97,9 @@ export const StairwaysReach = {
                         const tokenName = getCharacterName(characterToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
                             );
                         } else {
                             interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
@@ -188,7 +191,7 @@ export const StairwaysReach = {
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, stairway);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -225,7 +228,9 @@ export const StairwaysReach = {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
                             );
                         } else {
                             interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));

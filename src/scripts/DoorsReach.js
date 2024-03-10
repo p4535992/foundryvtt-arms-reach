@@ -1,5 +1,5 @@
-import { checkElevation, error, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.js";
-import { DoorData, DoorSourceData, DoorTargetData } from "./ArmsReachModels.js";
+import { checkElevation, getCharacterName } from "./lib/lib.js";
+
 import {
     computeDistanceBetweenCoordinates,
     getFirstPlayerToken,
@@ -9,6 +9,7 @@ import {
     interactionFailNotification,
 } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const DoorsReach = {
     init: function () {
@@ -36,7 +37,7 @@ export const DoorsReach = {
                             const character = getFirstPlayerToken();
                             if (!character) {
                                 interactionFailNotification(
-                                    i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedToCenterCamera`),
+                                    Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedToCenterCamera`),
                                 );
                                 return;
                             }
@@ -66,7 +67,7 @@ export const DoorsReach = {
                     const character = getFirstPlayerToken();
 
                     if (!character) {
-                        interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
+                        interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
                         return;
                     }
 
@@ -117,7 +118,7 @@ export const DoorsReach = {
             if (game.user?.isGM) {
                 return true;
             }
-            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
             return false;
         }
         // let isOwned = false;
@@ -190,7 +191,7 @@ export const DoorsReach = {
                 };
 
                 if (!selectedToken) {
-                    interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
+                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
                     return false;
                 } else {
                     // PreHook (can abort the interaction with the door)
@@ -198,10 +199,10 @@ export const DoorsReach = {
                     //   const tokenName = getCharacterName(character);
                     //   if (tokenName) {
                     //     iteractionFailNotification(
-                    //       i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, { tokenName: tokenName }),
+                    //       Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, { tokenName: tokenName }),
                     //     );
                     //   } else {
-                    //     iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
+                    //     iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
                     //   }
                     //   return false;
                     // }
@@ -210,7 +211,7 @@ export const DoorsReach = {
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, doorControl.wall);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -283,10 +284,10 @@ export const DoorsReach = {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, { tokenName: tokenName }),
                             );
                         } else {
-                            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
                         }
                         return false;
                     } else {
@@ -456,7 +457,7 @@ export const DoorsReach = {
                 if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                     const res = checkElevation(token, wall);
                     if (!res) {
-                        warn(
+                        Logger.warn(
                             `The token '${getCharacterName(token)}' is not on the elevation range of this placeable object`,
                         );
                         return false;
@@ -514,10 +515,10 @@ export const DoorsReach = {
 
             if (tokenName) {
                 interactionFailNotification(
-                    i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotFoundInReachFor`, { tokenName: tokenName }),
+                    Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotFoundInReachFor`, { tokenName: tokenName }),
                 );
             } else {
-                interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.doorNotFoundInReach`));
+                interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotFoundInReach`));
             }
             return;
         }

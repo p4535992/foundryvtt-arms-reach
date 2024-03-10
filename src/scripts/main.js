@@ -1,4 +1,4 @@
-import { warn, error, debug, i18n, i18nFormat, getCharacterName } from "./lib/lib.js";
+import { getCharacterName } from "./lib/lib.js";
 import { StairwaysReach } from "./StairwaysReach.js";
 // import { ResetDoorsAndFog } from "./resetdoorsandfog.js";
 import {
@@ -28,11 +28,12 @@ import { WallsReach } from "./WallsReach";
 import CONSTANTS from "./constants";
 import API from "./api";
 import { registerSocket } from "./socket";
+import Logger from "./lib/Logger.js";
 
 let taggerModuleActive;
 
 export const initHooks = () => {
-    warn("Init Hooks processing");
+    Logger.warn("Init Hooks processing");
     Hooks.once("socketlib.ready", registerSocket);
 
     taggerModuleActive = game.modules.get(CONSTANTS.TAGGER_MODULE_ID)?.active;

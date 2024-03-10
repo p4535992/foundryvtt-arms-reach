@@ -1,4 +1,4 @@
-import { checkElevation, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.js";
+import { checkElevation, getCharacterName } from "./lib/lib.js";
 import {
     computeDistanceBetweenCoordinates,
     getFirstPlayerToken,
@@ -6,6 +6,7 @@ import {
     interactionFailNotification,
 } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const NotesReach = {
     globalInteractionDistance: function (selectedToken, note, maxDistance = 0, useGrid = false, userId = undefined) {
@@ -21,7 +22,7 @@ export const NotesReach = {
             if (game.user?.isGM) {
                 return true;
             }
-            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
             return false;
         }
         // let isOwned = false;
@@ -56,14 +57,14 @@ export const NotesReach = {
                     game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnNotes"))
             ) {
                 if (!selectedToken) {
-                    interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForNote`));
+                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForNote`));
                     return false;
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, note);
                         if (!res) {
-                            warn(
+                            Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
@@ -100,10 +101,12 @@ export const NotesReach = {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                i18nFormat(`${CONSTANTS.MODULE_ID}.notesNotInReachFor`, { tokenName: tokenName }),
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.notesNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
                             );
                         } else {
-                            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.notesNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.notesNotInReach`));
                         }
                         return false;
                     } else {

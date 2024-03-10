@@ -1,5 +1,3 @@
-import { i18n } from "./lib/lib.js";
-import API from "./api.js";
 import CONSTANTS from "./constants.js";
 
 export const registerSettings = function () {
@@ -16,8 +14,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableArmsReach", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameEnableArmsReachFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintEnableArmsReachFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameEnableArmsReachFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintEnableArmsReachFeature`,
         scope: "world",
         config: true,
         default: true,
@@ -28,8 +26,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "notificationsInteractionFail", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteraction`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteraction`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteraction`,
         scope: "world",
         config: true,
         default: true,
@@ -39,8 +37,8 @@ export const registerSettings = function () {
     // DEPRECATED
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistance", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionDistance`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalMaximumInteractionDistance`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionDistance`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalMaximumInteractionDistance`,
         scope: "world",
         config: true,
         default: 0, // instead of 1
@@ -50,8 +48,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionMeasurement", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
+        hint: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
         scope: "world",
         config: true,
         default: 5,
@@ -61,8 +59,8 @@ export const registerSettings = function () {
     });
 
     // game.settings.register(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM', {
-    //   name: i18n(`${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteractionEvenForGM`),
-    //   hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteractionEvenForGM`),
+    //   name: `${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteractionEvenForGM`,
+    //   hint: `${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteractionEvenForGM`,
     //   scope: 'world',
     //   config: true,
     //   default: false,
@@ -70,8 +68,8 @@ export const registerSettings = function () {
     // });
 
     game.settings.register(CONSTANTS.MODULE_ID, "forceReSelection", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameAvoidSelectsTheControlledToken`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintAvoidSelectsTheControlledToken`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameAvoidSelectsTheControlledToken`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintAvoidSelectsTheControlledToken`,
         scope: "world",
         config: true,
         default: false,
@@ -79,8 +77,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "useOwnedTokenIfNoTokenIsSelected", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameUseOwnedTokenIfNoTokenIsSelected`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintUseOwnedTokenIfNoTokenIsSelected`,
         scope: "world",
         config: true,
         default: true,
@@ -88,18 +86,18 @@ export const registerSettings = function () {
     });
 
     // KeybindLib.register(MODULE_ID, "setCustomKeyBindForDoorInteraction", {
-    // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`),
-    // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`),
+    // 	name: `${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`,
+    // 	hint: `${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`,
     // 	config: true,
     // 	default: "KeyE",
     // 	onKeyDown: () => {
-    // 		log("Key pressed!");
+    // 		Logger.log("Key pressed!");
     // 	}
     // });
 
     //   game.settings.register(CONSTANTS.MODULE_ID,'setDistanceModeForDoorInteraction',{
-    //     name: i18n(CONSTANTS.MODULE_ID+".settingNameSetDistanceModeForDoorInteraction"),
-    //     hint: i18n(CONSTANTS.MODULE_ID+".settingHintSetDistanceModeForDoorInteraction"),
+    //     name: CONSTANTS.MODULE_ID+".settingNameSetDistanceModeForDoorInteraction",
+    //     hint: CONSTANTS.MODULE_ID+".settingHintSetDistanceModeForDoorInteraction",
     //     scope: "world",
     //     config: false,
     //     default: "0",
@@ -134,8 +132,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableDoorsIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDoorsIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDoorsIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameDoorsIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintDoorsIntegrationFeature`,
         scope: "world",
         config: true,
         default: true,
@@ -143,8 +141,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDoors`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDoors`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDoors`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDoors`,
         scope: "world",
         config: true,
         default: false,
@@ -154,8 +152,8 @@ export const registerSettings = function () {
     // DEPRECATED AND REMOVED
 
     game.settings.register(CONSTANTS.MODULE_ID, "doorInteractionDistance", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameMaximumDoorDistanceInteraction`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintMaximumDoorDistanceInteraction`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDoorDistanceInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorDistanceInteraction`,
         scope: "world",
         config: false,
         default: 0, // instead of 1
@@ -165,8 +163,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "doorInteractionMeasurement", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameMaximumDoorMeasurementInteraction`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintMaximumDoorMeasurementInteraction`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDoorMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorMeasurementInteraction`,
         scope: "world",
         config: true,
         default: 0, // 5 before
@@ -178,8 +176,8 @@ export const registerSettings = function () {
     // DEPRECATED
 
     game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteraction", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameHotKeyForInteraction`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintHotKeyForInteraction`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameHotKeyForInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintHotKeyForInteraction`,
         scope: "world",
         config: true,
         default: false,
@@ -189,8 +187,8 @@ export const registerSettings = function () {
     // DEPRECATED (double tap)
 
     game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`,
         scope: "world",
         config: true,
         default: 0, // 1 before // 200 before
@@ -203,8 +201,8 @@ export const registerSettings = function () {
     // DEPRECATED
 
     game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionCenter", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameHotKeyToCenterCamera`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintHotKeyToCenterCamera`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameHotKeyToCenterCamera`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintHotKeyToCenterCamera`,
         scope: "world",
         config: true,
         default: false,
@@ -212,8 +210,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "disableDoorSound", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`,
         scope: "world",
         config: true,
         default: true,
@@ -227,8 +225,8 @@ export const registerSettings = function () {
     // First of all Depends if the module is present and active
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableStairwaysIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameStairwaysIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintStairwaysIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameStairwaysIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintStairwaysIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -236,8 +234,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnStairways`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnStairways`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnStairways`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnStairways`,
         scope: "world",
         config: true,
         default: false,
@@ -245,8 +243,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerStairwayIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerStairwayIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerStairwayIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerStairwayIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerStairwayIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -258,8 +256,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableJournalsIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameNotesIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintNotesIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameNotesIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintNotesIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -267,8 +265,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnNotes", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnNotes`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnNotes`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnNotes`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnNotes`,
         scope: "world",
         config: true,
         default: false,
@@ -276,8 +274,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerNoteIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerNoteIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerNoteIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerNoteIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerNoteIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -289,8 +287,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTokensIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -298,8 +296,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTokens", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTokens`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTokens`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTokens`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTokens`,
         scope: "world",
         config: true,
         default: false,
@@ -307,8 +305,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`,
         scope: "world",
         config: true,
         default: false,
@@ -316,8 +314,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`,
         scope: "world",
         config: true,
         default: "ART_",
@@ -325,8 +323,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`,
         scope: "client",
         config: true,
         default: game.user?.character?.name ?? "",
@@ -334,8 +332,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerTokenIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerTokenIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerTokenIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerTokenIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerTokenIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -347,8 +345,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableLightsIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameLightsIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintLightsIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameLightsIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintLightsIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -356,8 +354,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnLights", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnLights`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnLights`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnLights`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnLights`,
         scope: "world",
         config: true,
         default: false,
@@ -365,8 +363,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerLightIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerLightIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerLightIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerLightIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerLightIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -378,8 +376,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableSoundsIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSoundsIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSoundsIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameSoundsIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintSoundsIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -387,8 +385,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnSounds", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnSounds`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnSounds`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnSounds`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnSounds`,
         scope: "world",
         config: true,
         default: false,
@@ -396,8 +394,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerSoundIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerSoundIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerSoundIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerSoundIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerSoundIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -409,8 +407,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableDrawingsIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDrawingsIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDrawingsIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameDrawingsIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintDrawingsIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -418,8 +416,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDrawings", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDrawings`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDrawings`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDrawings`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDrawings`,
         scope: "world",
         config: true,
         default: false,
@@ -427,8 +425,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerDrawingIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerDrawingIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerDrawingIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerDrawingIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerDrawingIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -440,8 +438,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTilesIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTilesIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTilesIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTilesIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTilesIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -449,8 +447,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnTiles", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTiles`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTiles`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTiles`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTiles`,
         scope: "world",
         config: true,
         default: false,
@@ -458,8 +456,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerTileIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerTileIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerTileIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerTileIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerTileIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -471,8 +469,8 @@ export const registerSettings = function () {
     // ========================================================
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableWallsIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameWallsIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintWallsIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameWallsIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintWallsIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -480,8 +478,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnWalls", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnWalls`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnWalls`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnWalls`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnWalls`,
         scope: "world",
         config: true,
         default: false,
@@ -489,8 +487,8 @@ export const registerSettings = function () {
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerWallIntegration", {
-        name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerWallIntegrationFeature`),
-        hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerWallIntegrationFeature`),
+        name: `${CONSTANTS.MODULE_ID}.settingNameTaggerWallIntegrationFeature`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerWallIntegrationFeature`,
         scope: "world",
         config: true,
         default: false,
@@ -502,8 +500,8 @@ export const registerSettings = function () {
     // ========================================================
 
     // game.settings.register(CONSTANTS.MODULE_ID, 'enableTemplatesIntegration', {
-    //   name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTemplatesIntegrationFeature`),
-    //   hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTemplatesIntegrationFeature`),
+    //   name: `${CONSTANTS.MODULE_ID}.settingNameTemplatesIntegrationFeature`,
+    //   hint: `${CONSTANTS.MODULE_ID}.settingHintTemplatesIntegrationFeature`,
     //   scope: 'world',
     //   config: true,
     //   default: false,
@@ -515,8 +513,8 @@ export const registerSettings = function () {
     // ========================================================
 
     // game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerIntegration", {
-    // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerIntegrationFeature`),
-    // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerIntegrationFeature`),
+    // 	name: `${CONSTANTS.MODULE_ID}.settingNameTaggerIntegrationFeature`,
+    // 	hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerIntegrationFeature`,
     // 	scope: "world",
     // 	config: true,
     // 	default: false,
@@ -528,8 +526,8 @@ export const registerSettings = function () {
     // ========================================================
     /* REMOVED ON V11 IS IN CORE
   game.settings.register(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog", {
-    name: i18n(`${CONSTANTS.MODULE_ID}.settingNameResetDoorsAndFogFeature`),
-    hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintResetDoorsAndFogFeature`),
+    name: `${CONSTANTS.MODULE_ID}.settingNameResetDoorsAndFogFeature`,
+    hint: `${CONSTANTS.MODULE_ID}.settingHintResetDoorsAndFogFeature`,
     scope: "world",
     config: true,
     default: false,
@@ -617,8 +615,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableArmsReach: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameEnableArmsReachFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintEnableArmsReachFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameEnableArmsReachFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintEnableArmsReachFeature`,
             scope: "world",
             config: true,
             default: true,
@@ -629,8 +627,8 @@ function otherSettings(apply = false) {
         },
 
         notificationsInteractionFail: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteraction`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteraction`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteraction`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteraction`,
             scope: "world",
             config: true,
             default: true,
@@ -640,8 +638,8 @@ function otherSettings(apply = false) {
         // DEPRECATED
 
         globalInteractionDistance: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionDistance`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalMaximumInteractionDistance`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionDistance`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalMaximumInteractionDistance`,
             scope: "world",
             config: true,
             default: 0, // instead of 1
@@ -651,8 +649,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionMeasurement: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
+            hint: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
             scope: "world",
             config: true,
             default: 5,
@@ -662,8 +660,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGM: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteractionEvenForGM`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteractionEvenForGM`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameNotificationsFailedInteractionEvenForGM`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintNotificationsFailedInteractionEvenForGM`,
             scope: "world",
             config: true,
             default: false,
@@ -671,8 +669,8 @@ function otherSettings(apply = false) {
         },
 
         forceReSelection: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameAvoidSelectsTheControlledToken`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintAvoidSelectsTheControlledToken`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameAvoidSelectsTheControlledToken`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintAvoidSelectsTheControlledToken`,
             scope: "world",
             config: true,
             default: false,
@@ -680,8 +678,8 @@ function otherSettings(apply = false) {
         },
 
         useOwnedTokenIfNoTokenIsSelected: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameUseOwnedTokenIfNoTokenIsSelected`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintUseOwnedTokenIfNoTokenIsSelected`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameUseOwnedTokenIfNoTokenIsSelected`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintUseOwnedTokenIfNoTokenIsSelected`,
             scope: "world",
             config: true,
             default: true,
@@ -689,18 +687,18 @@ function otherSettings(apply = false) {
         },
 
         // KeybindLib.register(MODULE_ID, "setCustomKeyBindForDoorInteraction: {
-        // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`),
-        // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`),
+        // 	name: `${CONSTANTS.MODULE_ID}.settingNameSetCustomKeyBindForDoorInteraction`,
+        // 	hint: `${CONSTANTS.MODULE_ID}.settingHintSetCustomKeyBindForDoorInteraction`,
         // 	config: true,
         // 	default: "KeyE",
         // 	onKeyDown: () => {
-        // 		log("Key pressed!");
+        // 		Logger.log("Key pressed!");
         // 	}
         // },
 
         // setDistanceModeForDoorInteraction: {
-        //     name: i18n(CONSTANTS.MODULE_ID+".settingNameSetDistanceModeForDoorInteraction"),
-        //     hint: i18n(CONSTANTS.MODULE_ID+".settingHintSetDistanceModeForDoorInteraction"),
+        //     name: CONSTANTS.MODULE_ID+".settingNameSetDistanceModeForDoorInteraction",
+        //     hint: CONSTANTS.MODULE_ID+".settingHintSetDistanceModeForDoorInteraction",
         //     scope: "world",
         //     config: false,
         //     default: "0",
@@ -735,8 +733,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableDoorsIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDoorsIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDoorsIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameDoorsIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintDoorsIntegrationFeature`,
             scope: "world",
             config: true,
             default: true,
@@ -744,8 +742,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnDoors: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDoors`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDoors`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDoors`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDoors`,
             scope: "world",
             config: true,
             default: false,
@@ -755,8 +753,8 @@ function otherSettings(apply = false) {
         // DEPRECATED AND REMOVED
 
         doorInteractionDistance: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameMaximumDoorDistanceInteraction`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintMaximumDoorDistanceInteraction`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDoorDistanceInteraction`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorDistanceInteraction`,
             scope: "world",
             config: false,
             default: 0, // instead of 1
@@ -766,8 +764,8 @@ function otherSettings(apply = false) {
         },
 
         doorInteractionMeasurement: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameMaximumDoorMeasurementInteraction`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintMaximumDoorMeasurementInteraction`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDoorMeasurementInteraction`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorMeasurementInteraction`,
             scope: "world",
             config: true,
             default: 0, // 5 before
@@ -779,8 +777,8 @@ function otherSettings(apply = false) {
         // DEPRECATED
 
         hotkeyDoorInteraction: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameHotKeyForInteraction`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintHotKeyForInteraction`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameHotKeyForInteraction`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintHotKeyForInteraction`,
             scope: "world",
             config: true,
             default: false,
@@ -790,8 +788,8 @@ function otherSettings(apply = false) {
         // DEPRECATED (double tap)
 
         hotkeyDoorInteractionDelay: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`,
             scope: "world",
             config: true,
             default: 0, // 1 before // 200 before
@@ -804,8 +802,8 @@ function otherSettings(apply = false) {
         // DEPRECATED
 
         hotkeyDoorInteractionCenter: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameHotKeyToCenterCamera`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintHotKeyToCenterCamera`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameHotKeyToCenterCamera`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintHotKeyToCenterCamera`,
             scope: "world",
             config: true,
             default: false,
@@ -813,8 +811,8 @@ function otherSettings(apply = false) {
         },
 
         disableDoorSound: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`,
             scope: "world",
             config: true,
             default: true,
@@ -828,8 +826,8 @@ function otherSettings(apply = false) {
         // First of all Depends if the module is present and active
 
         enableStairwaysIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameStairwaysIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintStairwaysIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameStairwaysIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintStairwaysIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -837,8 +835,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnStairways: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnStairways`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnStairways`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnStairways`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnStairways`,
             scope: "world",
             config: true,
             default: false,
@@ -846,8 +844,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerStairwayIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerStairwayIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerStairwayIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerStairwayIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerStairwayIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -859,8 +857,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableJournalsIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameNotesIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintNotesIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameNotesIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintNotesIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -868,8 +866,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnNotes: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnNotes`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnNotes`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnNotes`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnNotes`,
             scope: "world",
             config: true,
             default: false,
@@ -877,8 +875,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerNoteIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerNoteIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerNoteIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerNoteIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerNoteIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -890,8 +888,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableTokensIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -899,8 +897,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnTokens: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTokens`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTokens`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTokens`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTokens`,
             scope: "world",
             config: true,
             default: false,
@@ -908,8 +906,8 @@ function otherSettings(apply = false) {
         },
 
         tokensIntegrationWithLootSheet: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`,
             scope: "world",
             config: true,
             default: false,
@@ -917,8 +915,8 @@ function otherSettings(apply = false) {
         },
 
         tokensIntegrationByPrefix: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`,
             scope: "world",
             config: true,
             default: "ART_",
@@ -926,8 +924,8 @@ function otherSettings(apply = false) {
         },
 
         tokensIntegrationExplicitName: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`,
             scope: "client",
             config: true,
             default: game.user?.character?.name ?? "",
@@ -935,8 +933,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerTokenIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerTokenIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerTokenIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerTokenIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerTokenIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -948,8 +946,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableLightsIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameLightsIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintLightsIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameLightsIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintLightsIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -957,8 +955,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnLights: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnLights`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnLights`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnLights`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnLights`,
             scope: "world",
             config: true,
             default: false,
@@ -966,8 +964,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerLightIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerLightIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerLightIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerLightIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerLightIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -979,8 +977,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableSoundsIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameSoundsIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintSoundsIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameSoundsIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintSoundsIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -988,8 +986,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnSounds: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnSounds`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnSounds`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnSounds`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnSounds`,
             scope: "world",
             config: true,
             default: false,
@@ -997,8 +995,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerSoundIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerSoundIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerSoundIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerSoundIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerSoundIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1010,8 +1008,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableDrawingsIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameDrawingsIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintDrawingsIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameDrawingsIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintDrawingsIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1019,8 +1017,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnDrawings: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDrawings`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDrawings`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnDrawings`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnDrawings`,
             scope: "world",
             config: true,
             default: false,
@@ -1028,8 +1026,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerDrawingIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerDrawingIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerDrawingIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerDrawingIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerDrawingIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1041,8 +1039,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableTilesIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTilesIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTilesIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTilesIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTilesIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1050,8 +1048,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnTiles: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTiles`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTiles`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnTiles`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnTiles`,
             scope: "world",
             config: true,
             default: false,
@@ -1059,8 +1057,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerTileIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerTileIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerTileIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerTileIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerTileIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1072,8 +1070,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableWallsIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameWallsIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintWallsIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameWallsIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintWallsIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1081,8 +1079,8 @@ function otherSettings(apply = false) {
         },
 
         globalInteractionDistanceForGMOnWalls: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnWalls`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnWalls`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameGlobalInteractionDistanceForGMOnWalls`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalInteractionDistanceForGMOnWalls`,
             scope: "world",
             config: true,
             default: false,
@@ -1090,8 +1088,8 @@ function otherSettings(apply = false) {
         },
 
         enableTaggerWallIntegration: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerWallIntegrationFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerWallIntegrationFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameTaggerWallIntegrationFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerWallIntegrationFeature`,
             scope: "world",
             config: true,
             default: false,
@@ -1103,8 +1101,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         // enableTemplatesIntegration: {
-        //   name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTemplatesIntegrationFeature`),
-        //   hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTemplatesIntegrationFeature`),
+        //   name: `${CONSTANTS.MODULE_ID}.settingNameTemplatesIntegrationFeature`,
+        //   hint: `${CONSTANTS.MODULE_ID}.settingHintTemplatesIntegrationFeature`,
         //   scope: 'world',
         //   config: true,
         //   default: false,
@@ -1116,8 +1114,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         // enableTaggerIntegration: {
-        // 	name: i18n(`${CONSTANTS.MODULE_ID}.settingNameTaggerIntegrationFeature`),
-        // 	hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintTaggerIntegrationFeature`),
+        // 	name: `${CONSTANTS.MODULE_ID}.settingNameTaggerIntegrationFeature`,
+        // 	hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerIntegrationFeature`,
         // 	scope: "world",
         // 	config: true,
         // 	default: false,
@@ -1129,8 +1127,8 @@ function otherSettings(apply = false) {
         // ========================================================
 
         enableResetDoorsAndFog: {
-            name: i18n(`${CONSTANTS.MODULE_ID}.settingNameResetDoorsAndFogFeature`),
-            hint: i18n(`${CONSTANTS.MODULE_ID}.settingHintResetDoorsAndFogFeature`),
+            name: `${CONSTANTS.MODULE_ID}.settingNameResetDoorsAndFogFeature`,
+            hint: `${CONSTANTS.MODULE_ID}.settingHintResetDoorsAndFogFeature`,
             scope: "world",
             config: true,
             default: false,

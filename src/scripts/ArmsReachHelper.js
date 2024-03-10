@@ -1,6 +1,6 @@
-import { checkElevation, error, getElevationPlaceableObject, getTokenHeightPatched, warn } from "./lib/lib.js";
-import { ArmsreachData } from "./ArmsReachModels.js";
+import { getTokenHeightPatched } from "./lib/lib.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 /**
  * @href https://stackoverflow.com/questions/30368632/calculate-distance-on-a-grid-between-2-points
@@ -181,7 +181,7 @@ export const interactionFailNotification = function (message) {
     if (!game.settings.get(CONSTANTS.MODULE_ID, "notificationsInteractionFail")) {
         return;
     }
-    warn(message, true);
+    Logger.warn(message, true);
 };
 
 /**
@@ -191,7 +191,7 @@ export const getFirstPlayerTokenSelected = function () {
     // Get first token ownted by the player
     const selectedTokens = canvas.tokens?.controlled;
     if (selectedTokens.length > 1) {
-        //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+        //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
     if (!selectedTokens || selectedTokens.length === 0) {
@@ -221,7 +221,7 @@ export const getFirstPlayerTokenSelectedNo = function (noToken) {
     // Get first token ownted by the player
     const selectedTokens = canvas.tokens?.controlled;
     if (selectedTokens.length > 1) {
-        //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+        //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
     if (!selectedTokens || selectedTokens.length === 0) {
@@ -254,7 +254,7 @@ export const getFirstPlayerToken = function () {
     const controlledArray = canvas.tokens?.controlled;
     // Do nothing if multiple tokens are selected
     if (controlledArray.length && controlledArray.length > 1) {
-        //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+        //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
     // If exactly one token is selected, take that
@@ -293,7 +293,7 @@ export const getFirstPlayerTokenNo = function (noToken) {
     const controlledArray = canvas.tokens?.controlled;
     // Do nothing if multiple tokens are selected
     if (controlledArray.length && controlledArray.length > 1) {
-        //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+        //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
     // If exactly one token is selected, take that

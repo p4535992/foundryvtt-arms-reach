@@ -1,4 +1,4 @@
-import { info } from "./lib/lib.js";
+import Logger from "./lib/Logger.js";
 
 export const ResetDoorsAndFog = {
     resetDoorsAndFog: async function (isCurrentScene, id) {
@@ -26,7 +26,7 @@ export const ResetDoorsAndFog = {
                 await scene.updateEmbeddedDocuments("Wall", updates);
             }
         }
-        info(`Doors have been shut.`, true);
+        Logger.info(`Doors have been shut.`, true);
     },
 
     resetFog: async function (isCurrentScene, id) {
@@ -44,7 +44,7 @@ export const ResetDoorsAndFog = {
                     parentId: "",
                     parentType: "",
                 });
-                info(`Fog of War exploration progress was reset.`, true);
+                Logger.info(`Fog of War exploration progress was reset.`, true);
             }
         }
     },
