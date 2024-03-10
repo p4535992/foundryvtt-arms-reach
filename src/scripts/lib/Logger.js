@@ -1,4 +1,4 @@
-import CONSTANTS from "../constants.mjs";
+import CONSTANTS from "../constants.js";
 
 // ================================
 // Logger utility

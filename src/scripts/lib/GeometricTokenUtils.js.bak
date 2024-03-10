@@ -1,4 +1,4 @@
-import { sceneof } from "./lib.mjs";
+import { sceneof } from "./lib.js";
 
 //CONSTANTS
 const cGradtoRad = Math.PI / 180;
