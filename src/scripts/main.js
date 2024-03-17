@@ -41,7 +41,7 @@ export const initHooks = () => {
 
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableArmsReach")) {
         if (game.settings.get(CONSTANTS.MODULE_ID, "enableDoorsIntegration")) {
-            DoorsReach.init();
+            // DoorsReach.init();
 
             libWrapper.register(
                 CONSTANTS.MODULE_ID,

@@ -190,17 +190,15 @@ export const interactionFailNotification = function (message) {
 export const getFirstPlayerTokenSelected = function () {
     // Get first token ownted by the player
     const selectedTokens = canvas.tokens?.controlled;
+    if (!selectedTokens) {
+        return null;
+    }
     if (selectedTokens.length > 1) {
         //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
-    if (!selectedTokens || selectedTokens.length === 0) {
-        //if(game.user.character.token){
-        //
-        //  return game.user.character.token;
-        //}else{
+    if (selectedTokens.length === 0) {
         return null;
-        //}
     }
     if (selectedTokens[0] && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
         const isPlayerOwned = selectedTokens[0]?.document.isOwner;
@@ -220,17 +218,15 @@ export const getFirstPlayerTokenSelected = function () {
 export const getFirstPlayerTokenSelectedNo = function (noToken) {
     // Get first token ownted by the player
     const selectedTokens = canvas.tokens?.controlled;
+    if (!selectedTokens) {
+        return null;
+    }
     if (selectedTokens.length > 1) {
         //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
-    if (!selectedTokens || selectedTokens.length === 0) {
-        //if(game.user.character.token){
-        //
-        //  return game.user.character.token;
-        //}else{
+    if (selectedTokens.length === 0) {
         return null;
-        //}
     }
     if (selectedTokens[0] && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
         const isPlayerOwned = selectedTokens[0]?.document.isOwner;
@@ -251,17 +247,17 @@ export const getFirstPlayerTokenSelectedNo = function (noToken) {
 export const getFirstPlayerToken = function () {
     // Get controlled token
     let token;
-    const controlledArray = canvas.tokens?.controlled;
-    // Do nothing if multiple tokens are selected
-    if (controlledArray.length && controlledArray.length > 1) {
+    const selectedTokens = canvas.tokens?.controlled;
+    if (!selectedTokens) {
+        return null;
+    }
+    if (selectedTokens.length > 1) {
         //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
-    // If exactly one token is selected, take that
-    token = controlledArray[0];
-    if (!token) {
+    if (selectedTokens.length === 0) {
         if (game.settings.get(CONSTANTS.MODULE_ID, "useOwnedTokenIfNoTokenIsSelected")) {
-            if (!controlledArray.length || controlledArray.length === 0) {
+            if (!selectedTokens.length || selectedTokens.length === 0) {
                 // If no token is selected use the token of the users character
                 token = canvas.tokens?.placeables.find((token) => token.document.actorId === game.user?.character?.id);
             }
@@ -270,6 +266,12 @@ export const getFirstPlayerToken = function () {
                 token = canvas.tokens?.ownedTokens[0];
             }
         }
+    } else {
+        // If exactly one token is selected, take that
+        token = selectedTokens[0];
+    }
+    if (!token) {
+        return null;
     }
     if (token && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
         const isPlayerOwned = token.document.isOwner;
@@ -290,17 +292,17 @@ export const getFirstPlayerToken = function () {
 export const getFirstPlayerTokenNo = function (noToken) {
     // Get controlled token
     let token;
-    const controlledArray = canvas.tokens?.controlled;
-    // Do nothing if multiple tokens are selected
-    if (controlledArray.length && controlledArray.length > 1) {
+    const selectedTokens = canvas.tokens?.controlled;
+    if (!selectedTokens) {
+        return null;
+    }
+    if (selectedTokens.length > 1) {
         //iteractionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
         return null;
     }
-    // If exactly one token is selected, take that
-    token = controlledArray[0];
-    if (!token) {
+    if (selectedTokens.length === 0) {
         if (game.settings.get(CONSTANTS.MODULE_ID, "useOwnedTokenIfNoTokenIsSelected")) {
-            if (!controlledArray.length || controlledArray.length === 0) {
+            if (!selectedTokens.length || selectedTokens.length === 0) {
                 // If no token is selected use the token of the users character
                 token = canvas.tokens?.placeables.find(
                     (token) => token.document.actorId === game.user?.character?.id && token.id !== noToken.id,
@@ -317,6 +319,12 @@ export const getFirstPlayerTokenNo = function (noToken) {
                 // token = canvas.tokens?.ownedTokens[0];
             }
         }
+    } else {
+        // If exactly one token is selected, take that
+        token = selectedTokens[0];
+    }
+    if (!token) {
+        return null;
     }
     if (token && game.settings.get(CONSTANTS.MODULE_ID, "enableInteractionForTokenOwnedByUser")) {
         const isPlayerOwned = token.document.isOwner;

@@ -1,4 +1,4 @@
-import { registerSettings } from "./scripts/settings.js";
+import { registerKeyBindings, registerSettings } from "./scripts/settings.js";
 import { preloadTemplates } from "./scripts/preloadTemplates.js";
 import { initHooks, readyHooks, setupHooks } from "./scripts/main.js";
 import CONSTANTS from "./scripts/constants.js";
@@ -12,6 +12,7 @@ Hooks.once("init", async () => {
 
     // Register custom module settings
     registerSettings();
+    registerKeyBindings();
 
     // Assign custom classes and constants here
     initHooks();
