@@ -54,34 +54,6 @@ export const DoorsReach = {
                 !game.user?.isGM ||
                 (game.user?.isGM && game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors"))
             ) {
-                const doorSourceData = {
-                    scene: canvas.scene,
-                    name: doorControl.name,
-                    label: doorControl.name,
-                    icon: "", //doorControl.icon.texture.baseTexture., // TODO
-
-                    disabled: doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED,
-
-                    hidden: doorControl.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET,
-                    animate: false,
-                    x: doorControl.x,
-                    y: doorControl.y,
-                };
-
-                const tokenCenter = getTokenCenter(selectedToken);
-
-                const doorTargetData = {
-                    scene: canvas.scene,
-                    name: selectedToken.name,
-                    label: selectedToken.name,
-                    icon: "", //doorControl.icon.texture.baseTexture., // TODO
-                    disabled: false,
-                    hidden: false,
-                    animate: false,
-                    x: tokenCenter.x,
-                    y: tokenCenter.y,
-                };
-
                 if (!selectedToken) {
                     interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
                     return false;
@@ -126,10 +98,7 @@ export const DoorsReach = {
         if (!character) {
             return;
         }
-        // if (
-        //   Date.now() - ArmsReachVariables.lastData[key] >
-        //   game.settings.get(CONSTANTS.MODULE_ID, 'hotkeyDoorInteractionDelay')
-        // ) {
+
         if (
             (Date.now() - ArmsReachVariables.lastData[key]) / 1000 >
             game.settings.get(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay")
