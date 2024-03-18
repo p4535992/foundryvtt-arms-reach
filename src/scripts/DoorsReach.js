@@ -40,7 +40,7 @@ export const DoorsReach = {
             }
         }
 
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
 
         // Sets the global maximum interaction distance
         // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
@@ -137,22 +137,8 @@ export const DoorsReach = {
         }
         // Max distance definition
         const gridSize = canvas.dimensions?.size;
-        let maxDistance = Infinity;
 
-        let globalMaxDistance = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-        if (globalMaxDistance > 0) {
-            if (globalMaxDistance < maxDistance) {
-                maxDistance = globalMaxDistance;
-            }
-        } else {
-            // DEPRECATED AND REMOVED
-            // maxDistance = game.settings.get(CONSTANTS.MODULE_ID, 'doorInteractionDistance');
-            // if (maxDistance <= 0) {
-            if (game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement") > 0) {
-                maxDistance = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
-            }
-            // }
-        }
+        let maxDistance = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
 
         // Shortest dist
         let closestDoor = null; // is a doorcontrol

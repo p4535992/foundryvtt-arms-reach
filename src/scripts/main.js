@@ -368,10 +368,10 @@ export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...arg
         const isTokenNameChecked = getCharacterName(token)?.startsWith(prefixToCheck);
         // lootsheetnpc5e/template/npc-sheet.html
         const isNPCLootSheet = token.document.actor?.sheet?.template.includes("lootsheetnpc5e/template/npc-sheet.html");
-        const enableNPCLootSheet = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet");
+        // const enableNPCLootSheet = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet");
         if (
             isTokenNameChecked ||
-            (isNPCLootSheet && enableNPCLootSheet) ||
+            isNPCLootSheet || //  && enableNPCLootSheet
             (taggerModuleActive && checkTaggerForAmrsreachForToken(token))
         ) {
             const nameSourceToken = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName");

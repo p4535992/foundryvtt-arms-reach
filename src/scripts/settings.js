@@ -36,16 +36,16 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
-    game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionMeasurement", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
-        hint: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
-        scope: "world",
-        config: true,
-        default: 5,
-        type: Number,
+    // game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionMeasurement", {
+    //     name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
+    //     hint: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
+    //     scope: "world",
+    //     config: true,
+    //     default: 5,
+    //     type: Number,
 
-        range: { min: 0, max: 20, step: 1 },
-    });
+    //     range: { min: 0, max: 20, step: 0.5 },
+    // });
 
     game.settings.register(CONSTANTS.MODULE_ID, "forceReSelection", {
         name: `${CONSTANTS.MODULE_ID}.settingNameAvoidSelectsTheControlledToken`,
@@ -105,19 +105,6 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
-    // DEPRECATED AND REMOVED
-
-    game.settings.register(CONSTANTS.MODULE_ID, "doorInteractionDistance", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDoorDistanceInteraction`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorDistanceInteraction`,
-        scope: "world",
-        config: false,
-        default: 0, // instead of 1
-        type: Number,
-
-        range: { min: 0, max: 10, step: 0.5 },
-    });
-
     game.settings.register(CONSTANTS.MODULE_ID, "doorInteractionMeasurement", {
         name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDoorMeasurementInteraction`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorMeasurementInteraction`,
@@ -125,19 +112,7 @@ export const registerSettings = function () {
         config: true,
         default: 0, // 5 before
         type: Number,
-
-        range: { min: 0, max: 50, step: 1 },
-    });
-
-    // DEPRECATED
-
-    game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteraction", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameHotKeyForInteraction`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintHotKeyForInteraction`,
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean,
+        range: { min: 0, max: 50, step: 0.5 },
     });
 
     // DEPRECATED (double tap)
@@ -187,6 +162,16 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
+    game.settings.register(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumStairwayMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumStairwayMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 2.5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
+    });
+
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerStairwayIntegration", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTaggerStairwayIntegrationFeature`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerStairwayIntegrationFeature`,
@@ -216,6 +201,16 @@ export const registerSettings = function () {
         config: true,
         default: false,
         type: Boolean,
+    });
+
+    game.settings.register(CONSTANTS.MODULE_ID, "noteInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumNoteMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumNoteMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 2.5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerNoteIntegration", {
@@ -249,14 +244,24 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
-    game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`,
+    game.settings.register(CONSTANTS.MODULE_ID, "tokenInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumTokenMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumTokenMeasurementInteraction`,
         scope: "world",
         config: true,
-        default: false,
-        type: Boolean,
+        default: 5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
     });
+
+    // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet", {
+    //     name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`,
+    //     hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`,
+    //     scope: "world",
+    //     config: true,
+    //     default: false,
+    //     type: Boolean,
+    // });
 
     game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`,
@@ -307,6 +312,16 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
+    game.settings.register(CONSTANTS.MODULE_ID, "lightInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumLightMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumLightMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 2.5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
+    });
+
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerLightIntegration", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTaggerLightIntegrationFeature`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerLightIntegrationFeature`,
@@ -336,6 +351,16 @@ export const registerSettings = function () {
         config: true,
         default: false,
         type: Boolean,
+    });
+
+    game.settings.register(CONSTANTS.MODULE_ID, "soundInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumSoundMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumSoundMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 2.5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerSoundIntegration", {
@@ -369,6 +394,16 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
+    game.settings.register(CONSTANTS.MODULE_ID, "drawingInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumDrawingMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDrawingMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
+    });
+
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerDrawingIntegration", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTaggerDrawingIntegrationFeature`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerDrawingIntegrationFeature`,
@@ -398,6 +433,16 @@ export const registerSettings = function () {
         config: true,
         default: false,
         type: Boolean,
+    });
+
+    game.settings.register(CONSTANTS.MODULE_ID, "tileInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumTileMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumTileMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 5,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerTileIntegration", {
@@ -431,6 +476,16 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
+    game.settings.register(CONSTANTS.MODULE_ID, "wallInteractionMeasurement", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameMaximumWallMeasurementInteraction`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumWallMeasurementInteraction`,
+        scope: "world",
+        config: true,
+        default: 0,
+        type: Number,
+        range: { min: 0, max: 50, step: 0.5 },
+    });
+
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerWallIntegration", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTaggerWallIntegrationFeature`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerWallIntegrationFeature`,
@@ -439,46 +494,6 @@ export const registerSettings = function () {
         default: false,
         type: Boolean,
     });
-
-    // ========================================================
-    // TEMPLATES SUPPORT
-    // ========================================================
-
-    // game.settings.register(CONSTANTS.MODULE_ID, 'enableTemplatesIntegration', {
-    //   name: `${CONSTANTS.MODULE_ID}.settingNameTemplatesIntegrationFeature`,
-    //   hint: `${CONSTANTS.MODULE_ID}.settingHintTemplatesIntegrationFeature`,
-    //   scope: 'world',
-    //   config: true,
-    //   default: false,
-    //   type: Boolean,
-    // });
-
-    // ========================================================
-    // TAGGER SUPPORT
-    // ========================================================
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerIntegration", {
-    // 	name: `${CONSTANTS.MODULE_ID}.settingNameTaggerIntegrationFeature`,
-    // 	hint: `${CONSTANTS.MODULE_ID}.settingHintTaggerIntegrationFeature`,
-    // 	scope: "world",
-    // 	config: true,
-    // 	default: false,
-    // 	type: Boolean,
-    // });
-
-    // ========================================================
-    // Reset Doors and Fog
-    // ========================================================
-    /* REMOVED ON V11 IS IN CORE
-  game.settings.register(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog", {
-    name: `${CONSTANTS.MODULE_ID}.settingNameResetDoorsAndFogFeature`,
-    hint: `${CONSTANTS.MODULE_ID}.settingHintResetDoorsAndFogFeature`,
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-  });
-  */
 
     // ===================================================================
 

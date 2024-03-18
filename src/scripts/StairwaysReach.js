@@ -33,7 +33,7 @@ export const StairwaysReach = {
             }
         }
         // Sets the global maximum interaction distance
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement");
 
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {
@@ -125,7 +125,7 @@ export const StairwaysReach = {
         }
 
         // Sets the global maximum interaction distance
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement");
 
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {

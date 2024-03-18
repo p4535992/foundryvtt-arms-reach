@@ -43,7 +43,7 @@ export const TilesReach = {
         }
 
         // Sets the global maximum interaction distance
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "tileInteractionMeasurement");
 
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {
