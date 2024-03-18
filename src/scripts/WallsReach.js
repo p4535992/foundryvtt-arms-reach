@@ -9,7 +9,13 @@ import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 
 export const WallsReach = {
-    globalInteractionDistance: function (selectedToken, wall, maxDistance = 0, useGrid = false, userId = undefined) {
+    globalInteractionDistance: function (
+        selectedToken,
+        targetPlaceableObject,
+        maxDistance = 0,
+        useGrid = false,
+        userId = undefined,
+    ) {
         // Check if no token is selected and you are the GM avoid the distance calculation
         if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
@@ -62,7 +68,7 @@ export const WallsReach = {
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(selectedToken, wall);
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
@@ -78,7 +84,7 @@ export const WallsReach = {
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
                         // const dist = computeDistanceBetweenCoordinatesOLD(WallsReach.getWallsCenter(wall), character);
                         const dist = computeDistanceBetweenCoordinates(
-                            WallsReach.getWallsCenter(wall),
+                            WallsReach.getWallsCenter(targetPlaceableObject),
                             selectedToken,
                             WallDocument.documentName,
                             true,
@@ -90,7 +96,7 @@ export const WallsReach = {
                                 ? maxDistance
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
                         const dist = computeDistanceBetweenCoordinates(
-                            WallsReach.getWallsCenter(wall),
+                            WallsReach.getWallsCenter(targetPlaceableObject),
                             selectedToken,
                             WallDocument.documentName,
                             false,

@@ -9,7 +9,13 @@ import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 
 export const SoundsReach = {
-    globalInteractionDistance: function (selectedToken, sound, maxDistance = 0, useGrid = false, userId = undefined) {
+    globalInteractionDistance: function (
+        selectedToken,
+        targetPlaceableObject,
+        maxDistance = 0,
+        useGrid = false,
+        userId = undefined,
+    ) {
         // Check if no token is selected and you are the GM avoid the distance calculation
         if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
@@ -62,7 +68,7 @@ export const SoundsReach = {
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(selectedToken, sound);
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
@@ -78,7 +84,7 @@ export const SoundsReach = {
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
                         // const dist = computeDistanceBetweenCoordinatesOLD(SoundsReach.getSoundsCenter(sound), character);
                         const dist = computeDistanceBetweenCoordinates(
-                            SoundsReach.getSoundsCenter(sound),
+                            SoundsReach.getSoundsCenter(targetPlaceableObject),
                             selectedToken,
                             AmbientSoundDocument.documentName,
                             true,
@@ -90,7 +96,7 @@ export const SoundsReach = {
                                 ? maxDistance
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
                         const dist = computeDistanceBetweenCoordinates(
-                            SoundsReach.getSoundsCenter(sound),
+                            SoundsReach.getSoundsCenter(targetPlaceableObject),
                             selectedToken,
                             AmbientSoundDocument.documentName,
                             false,

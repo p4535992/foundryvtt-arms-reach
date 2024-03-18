@@ -10,12 +10,12 @@ import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 
 export const StairwaysReach = {
-    globalInteractionDistance: function (stairway, selectedTokenIds, userId = undefined) {
+    globalInteractionDistance: function (selectedToken, targetPlaceableObject, userId = undefined) {
         // Check if no token is selected and you are the GM avoid the distance calculation
         if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
             (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
-            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors") && game.user?.isGM)
         ) {
             return true;
         }
@@ -23,27 +23,20 @@ export const StairwaysReach = {
             if (game.user?.isGM) {
                 return true;
             }
-            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
             return false;
         }
-        // let isOwned = false;
-        let characterToken = getFirstPlayerTokenSelected();
-        if (selectedTokenIds) {
-            if (selectedTokenIds.length > 1) {
-                //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
-                return false;
+
+        if (!selectedToken) {
+            selectedToken = getFirstPlayerToken();
+        }
+        if (!selectedToken) {
+            if (game.user?.isGM) {
+                return true;
             } else {
-                characterToken = getTokenByTokenID(selectedTokenIds[0]);
-            }
-        } else {
-            if (!characterToken) {
-                characterToken = getFirstPlayerToken();
-                // if (character) {
-                // 	isOwned = true;
-                // }
+                return false;
             }
         }
-
         // Sets the global maximum interaction distance
         // OLD SETTING
         let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
@@ -66,7 +59,7 @@ export const StairwaysReach = {
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(characterToken, stairway);
+                        const res = checkElevation(characterToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
                                 `The token '${characterToken.name}' is not on the elevation range of this placeable object`,
@@ -78,7 +71,7 @@ export const StairwaysReach = {
                     if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0) {
                         // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
                         const dist = computeDistanceBetweenCoordinates(
-                            StairwaysReach.getStairwaysCenter(stairway),
+                            StairwaysReach.getStairwaysCenter(targetPlaceableObject),
                             characterToken,
                             "Stairway",
                             true,
@@ -86,7 +79,7 @@ export const StairwaysReach = {
                         isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
                     } else {
                         const dist = computeDistanceBetweenCoordinates(
-                            StairwaysReach.getStairwaysCenter(stairway),
+                            StairwaysReach.getStairwaysCenter(targetPlaceableObject),
                             characterToken,
                             "Stairway",
                             false,

@@ -1,4 +1,4 @@
-import { getCharacterName } from "./lib/lib.js";
+import { getCharacterName, getTokenByTokenID } from "./lib/lib.js";
 import { StairwaysReach } from "./StairwaysReach.js";
 // import { ResetDoorsAndFog } from "./resetdoorsandfog.js";
 import {
@@ -181,7 +181,20 @@ export const readyHooks = async () => {
                         doNotReselectIfGM = true;
                     }
 
-                    const result = StairwaysReach.globalInteractionDistance(sourceData, selectedTokenIds, userId);
+                    let characterToken = getFirstPlayerTokenSelected();
+                    if (selectedTokenIds) {
+                        if (selectedTokenIds.length > 1) {
+                            //iteractionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.warningNoSelectMoreThanOneToken`));
+                            return false;
+                        } else {
+                            characterToken = getTokenByTokenID(selectedTokenIds[0]);
+                        }
+                    } else {
+                        if (!characterToken) {
+                            characterToken = getFirstPlayerToken();
+                        }
+                    }
+                    const result = StairwaysReach.globalInteractionDistance(characterToken, sourceData, userId);
                     if (!doNotReselectIfGM) {
                         reselectTokenAfterInteraction(tokenSelected);
                     }

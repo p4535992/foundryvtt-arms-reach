@@ -11,7 +11,7 @@ import Logger from "./lib/Logger.js";
 export const TemplatesReach = {
     globalInteractionDistance: function (
         selectedToken,
-        template,
+        targetPlaceableObject,
         maxDistance = 0,
         useGrid = false,
         userId = undefined,
@@ -68,7 +68,7 @@ export const TemplatesReach = {
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(selectedToken, template);
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
@@ -84,7 +84,7 @@ export const TemplatesReach = {
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
                         // const dist = computeDistanceBetweenCoordinatesOLD(TemplatesReach.getTemplatesCenter(template), character);
                         const dist = computeDistanceBetweenCoordinates(
-                            TemplatesReach.getTemplatesCenter(template),
+                            TemplatesReach.getTemplatesCenter(targetPlaceableObject),
                             selectedToken,
                             MeasuredTemplateDocument.documentName,
                             true,
@@ -96,7 +96,7 @@ export const TemplatesReach = {
                                 ? maxDistance
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
                         const dist = computeDistanceBetweenCoordinates(
-                            TemplatesReach.getTemplatesCenter(template),
+                            TemplatesReach.getTemplatesCenter(targetPlaceableObject),
                             selectedToken,
                             MeasuredTemplateDocument.documentName,
                             false,

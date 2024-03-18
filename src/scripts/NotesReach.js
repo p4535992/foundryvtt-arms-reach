@@ -9,7 +9,13 @@ import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 
 export const NotesReach = {
-    globalInteractionDistance: function (selectedToken, note, maxDistance = 0, useGrid = false, userId = undefined) {
+    globalInteractionDistance: function (
+        selectedToken,
+        targetPlaceableObject,
+        maxDistance = 0,
+        useGrid = false,
+        userId = undefined,
+    ) {
         // Check if no token is selected and you are the GM avoid the distance calculation
         if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
@@ -62,7 +68,7 @@ export const NotesReach = {
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(selectedToken, note);
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
@@ -78,7 +84,7 @@ export const NotesReach = {
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
                         // const dist = computeDistanceBetweenCoordinatesOLD(NotesReach.getNotesCenter(note), character);
                         const dist = computeDistanceBetweenCoordinates(
-                            NotesReach.getNotesCenter(note),
+                            NotesReach.getNotesCenter(targetPlaceableObject),
                             selectedToken,
                             NoteDocument.documentName,
                             true,
@@ -90,7 +96,7 @@ export const NotesReach = {
                                 ? maxDistance
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
                         const dist = computeDistanceBetweenCoordinates(
-                            NotesReach.getNotesCenter(note),
+                            NotesReach.getNotesCenter(targetPlaceableObject),
                             selectedToken,
                             NoteDocument.documentName,
                             false,

@@ -9,7 +9,13 @@ import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 
 export const TilesReach = {
-    globalInteractionDistance: function (selectedToken, tile, maxDistance = 0, useGrid = false, userId = undefined) {
+    globalInteractionDistance: function (
+        selectedToken,
+        targetPlaceableObject,
+        maxDistance = 0,
+        useGrid = false,
+        userId = undefined,
+    ) {
         // Check if no token is selected and you are the GM avoid the distance calculation
         if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
@@ -62,7 +68,7 @@ export const TilesReach = {
                 } else {
                     let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(selectedToken, tile);
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
                                 `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
@@ -78,7 +84,7 @@ export const TilesReach = {
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
                         // const dist = computeDistanceBetweenCoordinatesOLD(TilesReach.getTilesCenter(tile), character);
                         const dist = computeDistanceBetweenCoordinates(
-                            TilesReach.getTilesCenter(tile),
+                            TilesReach.getTilesCenter(targetPlaceableObject),
                             selectedToken,
                             TileDocument.documentName,
                             true,
@@ -90,7 +96,7 @@ export const TilesReach = {
                                 ? maxDistance
                                 : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
                         const dist = computeDistanceBetweenCoordinates(
-                            TilesReach.getTilesCenter(tile),
+                            TilesReach.getTilesCenter(targetPlaceableObject),
                             selectedToken,
                             TileDocument.documentName,
                             false,

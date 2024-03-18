@@ -13,7 +13,13 @@ import Logger from "./lib/Logger.js";
 import DistanceTools from "./lib/DistanceTools.js";
 
 export const DoorsReach = {
-    globalInteractionDistance: function (selectedToken, doorControl, isRightHanler, maxDistance = 0, useGrid = false) {
+    globalInteractionDistance: function (
+        selectedToken,
+        targetPlaceableObject,
+        isRightHanler,
+        maxDistance = 0,
+        useGrid = false,
+    ) {
         // Check if no token is selected and you are the GM avoid the distance calculation
         if (
             (!canvas.tokens?.controlled && game.user?.isGM) ||
@@ -61,10 +67,24 @@ export const DoorsReach = {
                     if (game.user?.isGM && isRightHanler) {
                         return true;
                     } else {
-                        const canInteractB = DistanceTools.canInteract(doorControl, selectedToken, maxDistance, {
-                            closestPoint: !useGrid,
-                            includez: true,
-                        });
+                        if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
+                            const res = checkElevation(selectedToken, targetPlaceableObject);
+                            if (!res) {
+                                Logger.warn(
+                                    `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
+                                );
+                                return false;
+                            }
+                        }
+                        const canInteractB = DistanceTools.canInteract(
+                            targetPlaceableObject,
+                            selectedToken,
+                            maxDistance,
+                            {
+                                closestPoint: !useGrid,
+                                includez: true,
+                            },
+                        );
                         if (!canInteractB) {
                             const tokenName = getCharacterName(selectedToken);
                             if (tokenName) {
