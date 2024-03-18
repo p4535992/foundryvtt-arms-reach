@@ -205,37 +205,6 @@ export const readyHooks = async () => {
             });
         }
 
-        /* REMOVED ON V11 IS IN CORE
-    // Adds menu option to Scene Nav and Directory
-    Hooks.on("getSceneNavigationContext", (html, contextOptions) => {
-      if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
-        contextOptions.push(ResetDoorsAndFog.getContextOption("sceneId"));
-      }
-    });
-
-    Hooks.on("getSceneDirectoryEntryContext", (html, contextOptions) => {
-      if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
-        contextOptions.push(ResetDoorsAndFog.getContextOption(undefined));
-      }
-    });
-
-    // Adds Shut All Doors button to Walls Control Layer
-    Hooks.on("getSceneControlButtons", (controls) => {
-      if (game.settings.get(CONSTANTS.MODULE_ID, "enableResetDoorsAndFog")) {
-        controls[4]?.tools.splice(controls[4].tools.length - 2, 0, {
-          name: "close",
-          title: "Close Open Doors",
-          icon: "fas fa-door-closed",
-          onClick: () => {
-            ResetDoorsAndFog.resetDoors(true, game.scenes?.current?.id);
-          },
-          button: true,
-        });
-        return controls;
-      }
-    });
-    */
-
         // Hooks.on('canvasReady',function (canvas: Canvas) {
         // const [target] = args;
         // const canvas = this as Canvas;

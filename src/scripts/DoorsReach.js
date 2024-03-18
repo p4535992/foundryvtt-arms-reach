@@ -1,13 +1,6 @@
 import { checkElevation, getCharacterName } from "./lib/lib.js";
 
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableDoorCenter,
-    getTokenCenter,
-    isFocusOnCanvas,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, isFocusOnCanvas, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 import DistanceTools from "./lib/DistanceTools.js";

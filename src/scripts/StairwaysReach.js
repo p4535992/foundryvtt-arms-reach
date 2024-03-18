@@ -1,13 +1,8 @@
-import { checkElevation, getCharacterName, getTokenByTokenID } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getFirstPlayerTokenSelected,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { checkElevation, getCharacterName } from "./lib/lib.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const StairwaysReach = {
     globalInteractionDistance: function (selectedToken, targetPlaceableObject, userId = undefined) {
@@ -90,17 +85,6 @@ export const StairwaysReach = {
         }
 
         return false;
-    },
-
-    getStairwaysCenter: function (stairway) {
-        // const stairwayCenter = {
-        //   x: stairway.x - canvas.dimensions?.size / 2,
-        //   y: stairway.y - canvas.dimensions?.size / 2,
-        //   w: stairway.width,
-        //   h: stairway.height,
-        // };
-        // return stairwayCenter;
-        return getPlaceableCenter(stairway);
     },
 
     globalInteractionDistanceSimple: function (

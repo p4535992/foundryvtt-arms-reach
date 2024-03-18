@@ -1,12 +1,8 @@
 import { checkElevation, getCharacterName } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const TokensReach = {
     globalInteractionDistance: function (
@@ -98,11 +94,5 @@ export const TokensReach = {
         }
 
         return false;
-    },
-
-    getTokensCenter: function (token) {
-        // const tokenCenter = { x: token.x + token.width / 2, y: token.y + token.height / 2 };
-        // return tokenCenter;
-        return getPlaceableCenter(token);
     },
 };

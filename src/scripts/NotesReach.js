@@ -1,12 +1,8 @@
 import { checkElevation, getCharacterName } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const NotesReach = {
     globalInteractionDistance: function (
@@ -98,20 +94,5 @@ export const NotesReach = {
         }
 
         return false;
-    },
-
-    getNotesCenter: function (note) {
-        // const noteCenter = {
-        //   x: note.x - canvas.dimensions?.size / 2,
-        //   y: note.y - canvas.dimensions?.size / 2,
-        //   w: note.width,
-        //   h: note.height,
-        // };
-        // return noteCenter;
-        const noteCenter = getPlaceableCenter(note);
-        // TODO i don't understand this w = 0, h = 0 seem to make the distnace right ?
-        noteCenter.w = 0;
-        noteCenter.h = 0;
-        return noteCenter;
     },
 };

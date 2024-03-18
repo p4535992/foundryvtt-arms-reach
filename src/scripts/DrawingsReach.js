@@ -1,12 +1,8 @@
 import { checkElevation, getCharacterName } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const DrawingsReach = {
     globalInteractionDistance: function (
@@ -98,16 +94,5 @@ export const DrawingsReach = {
         }
 
         return false;
-    },
-
-    getDrawingsCenter: function (drawing) {
-        // const drawCenter = {
-        //   x: drawing.x,
-        //   y: drawing.y,
-        //   w: drawing.width,
-        //   h: drawing.height
-        // };
-        // return drawCenter;
-        return getPlaceableCenter(drawing);
     },
 };

@@ -1,12 +1,8 @@
 import { checkElevation, getCharacterName } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const WallsReach = {
     globalInteractionDistance: function (
@@ -98,10 +94,5 @@ export const WallsReach = {
         }
 
         return false;
-    },
-
-    getWallsCenter: function (wall) {
-        const wallCenter = getPlaceableCenter(wall);
-        return wallCenter;
     },
 };

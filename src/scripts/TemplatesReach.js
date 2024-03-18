@@ -1,12 +1,8 @@
 import { checkElevation, getCharacterName, i18n, i18nFormat, warn } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const TemplatesReach = {
     globalInteractionDistance: function (
@@ -98,11 +94,5 @@ export const TemplatesReach = {
         }
 
         return false;
-    },
-
-    getTemplatesCenter: function (template) {
-        // const templateCenter = { x: template.x, y: template.y };
-        // return templateCenter;
-        return getPlaceableCenter(template);
     },
 };

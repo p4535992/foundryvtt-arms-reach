@@ -11,6 +11,7 @@ import { globalInteractionDistanceUniversal } from "./ArmsReachHelper.js";
 import { checkElevation } from "./lib/lib.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 const API = {
     async isReachableArr(...inAttributes) {

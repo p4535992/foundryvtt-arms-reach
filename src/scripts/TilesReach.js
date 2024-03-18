@@ -1,12 +1,8 @@
 import { checkElevation, getCharacterName } from "./lib/lib.js";
-import {
-    computeDistanceBetweenCoordinates,
-    getFirstPlayerToken,
-    getPlaceableCenter,
-    interactionFailNotification,
-} from "./ArmsReachHelper.js";
+import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import DistanceTools from "./lib/DistanceTools.js";
 
 export const TilesReach = {
     globalInteractionDistance: function (
@@ -98,11 +94,5 @@ export const TilesReach = {
         }
 
         return false;
-    },
-
-    getTilesCenter: function (tile) {
-        // const tileCenter = { x: tile.x, y: tile.y };
-        // return tileCenter;
-        return getPlaceableCenter(tile);
     },
 };

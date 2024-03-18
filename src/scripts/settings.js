@@ -154,17 +154,6 @@ export const registerSettings = function () {
         range: { min: 0, max: 5, step: 0.5 },
     });
 
-    // DEPRECATED
-
-    game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionCenter", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameHotKeyToCenterCamera`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintHotKeyToCenterCamera`,
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean,
-    });
-
     game.settings.register(CONSTANTS.MODULE_ID, "disableDoorSound", {
         name: `${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`,
