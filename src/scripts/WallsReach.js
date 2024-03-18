@@ -70,19 +70,19 @@ export const WallsReach = {
                     }
 
                     const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
-                        closestPoint: !useGrid,
+                        closestPoint: true,
                         includez: true,
                     });
                     if (!canInteractB) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.wallsNotInReachFor`, {
                                     tokenName: tokenName,
                                 }),
                             );
                         } else {
-                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.wallsNotInReach`));
                         }
                     }
                     return canInteractB;

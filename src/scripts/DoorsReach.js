@@ -71,7 +71,7 @@ export const DoorsReach = {
                             selectedToken,
                             maxDistance,
                             {
-                                closestPoint: !useGrid,
+                                closestPoint: true,
                                 includez: true,
                             },
                         );
