@@ -250,20 +250,13 @@ const API = {
                 return false;
             }
         }
-        // OLD SETTING
-        if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
-            const maxDist =
-                maxDistance && maxDistance > 0
-                    ? maxDistance
-                    : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-            isNotNearEnough = dist > maxDist;
-        } else {
-            const maxDist =
-                maxDistance && maxDistance > 0
-                    ? maxDistance
-                    : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-            isNotNearEnough = dist > maxDist;
-        }
+
+        const maxDist =
+            maxDistance && maxDistance > 0
+                ? maxDistance
+                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+        isNotNearEnough = dist > maxDist;
+
         if (isNotNearEnough) {
             // TODO add a warning  dialog ?
             return false;

@@ -47,11 +47,8 @@ export const TokensReach = {
         }
 
         // Sets the global maximum interaction distance
-        // OLD SETTING
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-        if (globalInteraction <= 0) {
-            globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-        }
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {
             // Check distance
@@ -76,33 +73,19 @@ export const TokensReach = {
                             return false;
                         }
                     }
-                    // OLD SETTING
-                    if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
-                        const maxDist =
-                            maxDistance && maxDistance > 0
-                                ? maxDistance
-                                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-                        // const dist = computeDistanceBetweenCoordinatesOLD(TokensReach.getTokensCenter(token), character);
-                        const dist = computeDistanceBetweenCoordinates(
-                            TokensReach.getTokensCenter(targetPlaceableObject),
-                            selectedToken,
-                            TokenDocument.documentName,
-                            true,
-                        );
-                        isNotNearEnough = dist > maxDist;
-                    } else {
-                        const maxDist =
-                            maxDistance && maxDistance > 0
-                                ? maxDistance
-                                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-                        const dist = computeDistanceBetweenCoordinates(
-                            TokensReach.getTokensCenter(targetPlaceableObject),
-                            selectedToken,
-                            TokenDocument.documentName,
-                            false,
-                        );
-                        isNotNearEnough = dist > maxDist;
-                    }
+
+                    const maxDist =
+                        maxDistance && maxDistance > 0
+                            ? maxDistance
+                            : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+                    const dist = computeDistanceBetweenCoordinates(
+                        TokensReach.getTokensCenter(targetPlaceableObject),
+                        selectedToken,
+                        TokenDocument.documentName,
+                        false,
+                    );
+                    isNotNearEnough = dist > maxDist;
+
                     if (isNotNearEnough) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {

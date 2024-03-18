@@ -38,11 +38,8 @@ export const StairwaysReach = {
             }
         }
         // Sets the global maximum interaction distance
-        // OLD SETTING
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-        if (globalInteraction <= 0) {
-            globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-        }
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {
             // Check distance
@@ -67,25 +64,15 @@ export const StairwaysReach = {
                             return false;
                         }
                     }
-                    // OLD SETTING
-                    if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0) {
-                        // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
-                        const dist = computeDistanceBetweenCoordinates(
-                            StairwaysReach.getStairwaysCenter(targetPlaceableObject),
-                            characterToken,
-                            "Stairway",
-                            true,
-                        );
-                        isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-                    } else {
-                        const dist = computeDistanceBetweenCoordinates(
-                            StairwaysReach.getStairwaysCenter(targetPlaceableObject),
-                            characterToken,
-                            "Stairway",
-                            false,
-                        );
-                        isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-                    }
+
+                    const dist = computeDistanceBetweenCoordinates(
+                        StairwaysReach.getStairwaysCenter(targetPlaceableObject),
+                        characterToken,
+                        "Stairway",
+                        false,
+                    );
+                    isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+
                     if (isNotNearEnough) {
                         const tokenName = getCharacterName(characterToken);
                         if (tokenName) {
@@ -161,11 +148,8 @@ export const StairwaysReach = {
         }
 
         // Sets the global maximum interaction distance
-        // OLD SETTING
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-        if (globalInteraction <= 0) {
-            globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-        }
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {
             // Check distance
@@ -190,33 +174,19 @@ export const StairwaysReach = {
                             return false;
                         }
                     }
-                    // OLD SETTING
-                    if (game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance") > 0 || useGrid) {
-                        const maxDist =
-                            maxDistance && maxDistance > 0
-                                ? maxDistance
-                                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistance");
-                        // const dist = computeDistanceBetweenCoordinatesOLD(StairwaysReach.getStairwaysCenter(stairway), character);
-                        const dist = computeDistanceBetweenCoordinates(
-                            StairwaysReach.getStairwaysCenter(stairway),
-                            selectedToken,
-                            "Stairway",
-                            true,
-                        );
-                        isNotNearEnough = dist > maxDist;
-                    } else {
-                        const maxDist =
-                            maxDistance && maxDistance > 0
-                                ? maxDistance
-                                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-                        const dist = computeDistanceBetweenCoordinates(
-                            StairwaysReach.getStairwaysCenter(stairway),
-                            selectedToken,
-                            "Stairway",
-                            false,
-                        );
-                        isNotNearEnough = dist > maxDist;
-                    }
+
+                    const maxDist =
+                        maxDistance && maxDistance > 0
+                            ? maxDistance
+                            : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+                    const dist = computeDistanceBetweenCoordinates(
+                        StairwaysReach.getStairwaysCenter(stairway),
+                        selectedToken,
+                        "Stairway",
+                        false,
+                    );
+                    isNotNearEnough = dist > maxDist;
+
                     if (isNotNearEnough) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {

@@ -36,19 +36,6 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
-    // DEPRECATED
-
-    game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionDistance", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionDistance`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintGlobalMaximumInteractionDistance`,
-        scope: "world",
-        config: true,
-        default: 0, // instead of 1
-        type: Number,
-
-        range: { min: 0, max: 5, step: 1 },
-    });
-
     game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionMeasurement", {
         name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
         hint: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
