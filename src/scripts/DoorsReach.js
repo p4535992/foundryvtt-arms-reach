@@ -136,9 +136,9 @@ export const DoorsReach = {
             return null;
         }
         // Max distance definition
-        const gridSize = canvas.dimensions?.size;
+        // const gridSize = canvas.dimensions?.size;
 
-        let maxDistance = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
+        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
 
         // Shortest dist
         let closestDoor = null; // is a doorcontrol
@@ -163,7 +163,7 @@ export const DoorsReach = {
                     }
                 }
 
-                const canInteractB = DistanceTools.canInteract(door, token, maxDistance, {
+                const canInteractB = DistanceTools.canInteract(door, token, globalInteraction, {
                     closestPoint: true,
                     includez: true,
                 });

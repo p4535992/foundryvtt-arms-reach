@@ -669,7 +669,7 @@ function _units_between_token_and_placeable(token, armsReachData) {
                 // WHY ? is a wall but i need to multiply anyway for antoher unitsize
                 // dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;
             } else {
-                const globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
+                const globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
                 if (globalInteraction > 5) {
                     // WHY ? is a door but i need to multiply anyway for antoher unitsize
                     // dist = (Math.floor(dist) / unitGridSize) * unitSize * unitSize;

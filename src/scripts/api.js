@@ -7,7 +7,6 @@ import { StairwaysReach } from "./StairwaysReach.js";
 import { TilesReach } from "./TilesReach.js";
 import { TokensReach } from "./TokensReach.js";
 import { WallsReach } from "./WallsReach.js";
-import { globalInteractionDistanceUniversal } from "./ArmsReachHelper.js";
 import { checkElevation } from "./lib/lib.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
