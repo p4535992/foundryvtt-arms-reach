@@ -239,8 +239,6 @@ const API = {
         userId = undefined,
     ) {
         // const userId = game.users?.find((u:User) => return u.id = gameUserId)[0];
-        const dist = globalInteractionDistanceUniversal(placeableObjectSource, placeableObjectTarget, useGrid);
-        let isNotNearEnough = false;
         if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
             const res = checkElevation(placeableObjectSource, placeableObjectTarget);
             if (!res) {
@@ -251,18 +249,23 @@ const API = {
             }
         }
 
-        const maxDist =
-            maxDistance && maxDistance > 0
-                ? maxDistance
-                : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-        isNotNearEnough = dist > maxDist;
-
-        if (isNotNearEnough) {
-            // TODO add a warning  dialog ?
-            return false;
-        } else {
-            return true;
+        const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
+            closestPoint: !useGrid,
+            includez: true,
+        });
+        if (!canInteractB) {
+            const tokenName = getCharacterName(selectedToken);
+            if (tokenName) {
+                interactionFailNotification(
+                    Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
+                        tokenName: tokenName,
+                    }),
+                );
+            } else {
+                interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
+            }
         }
+        return canInteractB;
     },
 
     // ==========================================

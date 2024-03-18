@@ -54,7 +54,6 @@ export const StairwaysReach = {
                     interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
                     return false;
                 } else {
-                    let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(characterToken, targetPlaceableObject);
                         if (!res) {
@@ -65,29 +64,23 @@ export const StairwaysReach = {
                         }
                     }
 
-                    const dist = computeDistanceBetweenCoordinates(
-                        StairwaysReach.getStairwaysCenter(targetPlaceableObject),
-                        characterToken,
-                        "Stairway",
-                        false,
-                    );
-                    isNotNearEnough = dist > game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-
-                    if (isNotNearEnough) {
-                        const tokenName = getCharacterName(characterToken);
+                    const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
+                        closestPoint: !useGrid,
+                        includez: true,
+                    });
+                    if (!canInteractB) {
+                        const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, {
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
                                     tokenName: tokenName,
                                 }),
                             );
                         } else {
-                            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
                         }
-                        return false;
-                    } else {
-                        return true;
                     }
+                    return canInteractB;
                     // END MOD ABD 4535992
                 }
             } else if (game.user?.isGM) {
@@ -164,7 +157,6 @@ export const StairwaysReach = {
                     interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
                     return false;
                 } else {
-                    let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, stairway);
                         if (!res) {
@@ -175,33 +167,23 @@ export const StairwaysReach = {
                         }
                     }
 
-                    const maxDist =
-                        maxDistance && maxDistance > 0
-                            ? maxDistance
-                            : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-                    const dist = computeDistanceBetweenCoordinates(
-                        StairwaysReach.getStairwaysCenter(stairway),
-                        selectedToken,
-                        "Stairway",
-                        false,
-                    );
-                    isNotNearEnough = dist > maxDist;
-
-                    if (isNotNearEnough) {
+                    const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
+                        closestPoint: !useGrid,
+                        includez: true,
+                    });
+                    if (!canInteractB) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, {
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
                                     tokenName: tokenName,
                                 }),
                             );
                         } else {
-                            interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
                         }
-                        return false;
-                    } else {
-                        return true;
                     }
+                    return canInteractB;
                     // END MOD ABD 4535992
                 }
             } else if (game.user?.isGM) {

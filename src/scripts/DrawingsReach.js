@@ -63,7 +63,6 @@ export const DrawingsReach = {
                     interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForDrawing`));
                     return false;
                 } else {
-                    let isNotNearEnough = false;
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                         const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
@@ -74,33 +73,23 @@ export const DrawingsReach = {
                         }
                     }
 
-                    const maxDist =
-                        maxDistance && maxDistance > 0
-                            ? maxDistance
-                            : game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionMeasurement");
-                    const dist = computeDistanceBetweenCoordinates(
-                        DrawingsReach.getDrawingsCenter(targetPlaceableObject),
-                        selectedToken,
-                        DrawingDocument.documentName,
-                        false,
-                    );
-                    isNotNearEnough = dist > maxDist;
-
-                    if (isNotNearEnough) {
+                    const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
+                        closestPoint: !useGrid,
+                        includez: true,
+                    });
+                    if (!canInteractB) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
                             interactionFailNotification(
-                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.drawingsNotInReachFor`, {
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
                                     tokenName: tokenName,
                                 }),
                             );
                         } else {
-                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.drawingsNotInReach`));
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
                         }
-                        return false;
-                    } else {
-                        return true;
                     }
+                    return canInteractB;
                 }
             } else if (game.user?.isGM) {
                 // DO NOTHING
