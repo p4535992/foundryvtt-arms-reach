@@ -108,27 +108,23 @@ export const initHooks = () => {
             );
         }
 
-        // if (game.settings.get(CONSTANTS.MODULE_ID, 'enableDrawingsIntegration')) {
-        //
-        //   libWrapper.register(
-        //     CONSTANTS.MODULE_ID,
-        //     'Drawing.prototype._onHandleMouseDown',
-        //     // 'Drawing.prototype._onClickLeft',
-        //     DrawingPrototypeOnClickLeftHandler,
-        //     'MIXED',
-        //   );
-        // }
+        if (game.settings.get(CONSTANTS.MODULE_ID, "enableDrawingsIntegration")) {
+            libWrapper.register(
+                CONSTANTS.MODULE_ID,
+                "Drawing.prototype._onClickLeft",
+                DrawingPrototypeOnClickLeftHandler,
+                "MIXED",
+            );
+        }
 
-        // if (game.settings.get(CONSTANTS.MODULE_ID, 'enableTilesIntegration')) {
-        //
-        //   libWrapper.register(
-        //     CONSTANTS.MODULE_ID,
-        //     // 'Tile.prototype._onClickLeft',
-        //     'Tile.prototype._onHandleMouseDown',
-        //     TilePrototypeOnClickLeftHandler,
-        //     'MIXED',
-        //   );
-        // }
+        if (game.settings.get(CONSTANTS.MODULE_ID, "enableTilesIntegration")) {
+            libWrapper.register(
+                CONSTANTS.MODULE_ID,
+                "Tile.prototype._onClickLeft",
+                TilePrototypeOnClickLeftHandler,
+                "MIXED",
+            );
+        }
     }
 };
 
@@ -141,8 +137,7 @@ export const setupHooks = () => {
         }
     }
 
-    const data = game.modules.get(CONSTANTS.MODULE_ID);
-    data.api = API;
+    game.modules.get(CONSTANTS.MODULE_ID).api = API;
 };
 
 export const readyHooks = async () => {
@@ -211,6 +206,7 @@ export const readyHooks = async () => {
             });
         }
 
+        /*
         // Hooks.on('canvasReady',function (canvas: Canvas) {
         // const [target] = args;
         // const canvas = this as Canvas;
@@ -341,6 +337,7 @@ export const readyHooks = async () => {
         });
 
         // });
+        */
     }
 };
 
@@ -669,58 +666,58 @@ export const AmbientSoundPrototypeOnClickRightHandler = async function (wrapped,
     return wrapped(...args);
 };
 
-// export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-//   if (game.settings.get(CONSTANTS.MODULE_ID, 'enableDrawingsIntegration')) {
-//     const [target] = args;
-//     const drawing = this;
-//     let tokenSelected;
+export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableDrawingsIntegration")) {
+        const [target] = args;
+        const drawing = this;
+        let tokenSelected;
 
-//     tokenSelected = getFirstPlayerTokenSelected();
-//     if (!tokenSelected) {
-//       tokenSelected = getFirstPlayerToken();
-//     }
+        tokenSelected = getFirstPlayerTokenSelected();
+        if (!tokenSelected) {
+            tokenSelected = getFirstPlayerToken();
+        }
 
-//     if(taggerModuleActive && !checkTaggerForAmrsreach(drawing)){
-// if(!doNotReselectIfGM){
-//   reselectTokenAfterInteraction(tokenSelected);
-// }
-//       return wrapped(...args);
-//     }
-//     const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
-// if(!doNotReselectIfGM){
-//   reselectTokenAfterInteraction(tokenSelected);
-// }
-//     if (!isInReach) {
-//       return;
-//     }
-//   }
-//   return wrapped(...args);
-// };
+        if (taggerModuleActive && !checkTaggerForAmrsreach(drawing)) {
+            if (!doNotReselectIfGM) {
+                reselectTokenAfterInteraction(tokenSelected);
+            }
+            return wrapped(...args);
+        }
+        const isInReach = await DrawingsReach.globalInteractionDistance(tokenSelected, drawing);
+        if (!doNotReselectIfGM) {
+            reselectTokenAfterInteraction(tokenSelected);
+        }
+        if (!isInReach) {
+            return;
+        }
+    }
+    return wrapped(...args);
+};
 
-// export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
-//   if (game.settings.get(CONSTANTS.MODULE_ID, 'enableTilesIntegration')) {
-//     const [target] = args;
-//     const tile = this;
-//     let tokenSelected;
+export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableTilesIntegration")) {
+        const [target] = args;
+        const tile = this;
+        let tokenSelected;
 
-//     tokenSelected = getFirstPlayerTokenSelected();
-//     if (!tokenSelected) {
-//       tokenSelected = getFirstPlayerToken();
-//     }
+        tokenSelected = getFirstPlayerTokenSelected();
+        if (!tokenSelected) {
+            tokenSelected = getFirstPlayerToken();
+        }
 
-//     if(taggerModuleActive && !checkTaggerForAmrsreach(tile)){
-// if(!doNotReselectIfGM){
-//   reselectTokenAfterInteraction(tokenSelected);
-// }
-//       return wrapped(...args);
-//     }
-//     const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
-// if(!doNotReselectIfGM){
-//   reselectTokenAfterInteraction(tokenSelected);
-// }
-//     if (!isInReach) {
-//       return;
-//     }
-//   }
-//   return wrapped(...args);
-// };
+        if (taggerModuleActive && !checkTaggerForAmrsreach(tile)) {
+            if (!doNotReselectIfGM) {
+                reselectTokenAfterInteraction(tokenSelected);
+            }
+            return wrapped(...args);
+        }
+        const isInReach = await TilesReach.globalInteractionDistance(tokenSelected, tile);
+        if (!doNotReselectIfGM) {
+            reselectTokenAfterInteraction(tokenSelected);
+        }
+        if (!isInReach) {
+            return;
+        }
+    }
+    return wrapped(...args);
+};
