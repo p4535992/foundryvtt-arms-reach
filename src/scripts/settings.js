@@ -263,23 +263,23 @@ export const registerSettings = function () {
     //     type: Boolean,
     // });
 
-    game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`,
-        scope: "world",
-        config: true,
-        default: "ART_",
-        type: String,
-    });
+    // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix", {
+    //     name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`,
+    //     hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`,
+    //     scope: "world",
+    //     config: true,
+    //     default: "ART_",
+    //     type: String,
+    // });
 
-    game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`,
-        scope: "client",
-        config: true,
-        default: game.user?.character?.name ?? "",
-        type: String,
-    });
+    // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName", {
+    //     name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`,
+    //     hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`,
+    //     scope: "client",
+    //     config: true,
+    //     default: game.user?.character?.name ?? "",
+    //     type: String,
+    // });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerTokenIntegration", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTaggerTokenIntegrationFeature`,

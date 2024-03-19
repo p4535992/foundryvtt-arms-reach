@@ -367,35 +367,39 @@ export const TokenPrototypeOnClickLeft2Handler = async function (wrapped, ...arg
     if (game.settings.get(CONSTANTS.MODULE_ID, "enableTokensIntegration")) {
         const [target] = args;
         const token = this;
-        const prefixToCheck = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix");
-        const isTokenNameChecked = getCharacterName(token)?.startsWith(prefixToCheck);
+
+        let range = getProperty(token, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+
+        // const prefixToCheck = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix");
+        // const isTokenNameChecked = getCharacterName(token)?.startsWith(prefixToCheck);
         // lootsheetnpc5e/template/npc-sheet.html
-        const isNPCLootSheet = token.document.actor?.sheet?.template.includes("lootsheetnpc5e/template/npc-sheet.html");
+        // const isNPCLootSheet = token.document.actor?.sheet?.template.includes("lootsheetnpc5e/template/npc-sheet.html");
         // const enableNPCLootSheet = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet");
         if (
-            isTokenNameChecked ||
-            isNPCLootSheet || //  && enableNPCLootSheet
+            range > 0 ||
+            // isTokenNameChecked ||
+            // isNPCLootSheet || //  && enableNPCLootSheet
             (taggerModuleActive && checkTaggerForAmrsreachForToken(token))
         ) {
-            const nameSourceToken = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName");
+            // const nameSourceToken = game.settings.get(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName");
             let tokenSelected;
 
-            if (nameSourceToken) {
-                tokenSelected = canvas.tokens?.placeables.find(
-                    (tokenTmp) => tokenTmp.name === nameSourceToken || tokenTmp.document.name === nameSourceToken,
-                );
-            } else {
-                if (currentTokenForToken?.id !== token.id) {
-                    tokenSelected = currentTokenForToken;
-                    reselectTokenAfterInteraction(tokenSelected);
-                }
+            // if (nameSourceToken) {
+            //     tokenSelected = canvas.tokens?.placeables.find(
+            //         (tokenTmp) => tokenTmp.name === nameSourceToken || tokenTmp.document.name === nameSourceToken,
+            //     );
+            // } else {
+            if (currentTokenForToken?.id !== token.id) {
+                tokenSelected = currentTokenForToken;
+                reselectTokenAfterInteraction(tokenSelected);
+            }
+            if (!tokenSelected) {
+                tokenSelected = getFirstPlayerTokenSelectedNo(currentTokenForToken);
                 if (!tokenSelected) {
-                    tokenSelected = getFirstPlayerTokenSelectedNo(currentTokenForToken);
-                    if (!tokenSelected) {
-                        tokenSelected = getFirstPlayerTokenNo(currentTokenForToken);
-                    }
+                    tokenSelected = getFirstPlayerTokenNo(currentTokenForToken);
                 }
             }
+            // }
 
             // Check if no token is selected and you are the GM avoid the distance calculation
             let doNotReselectIfGM = false;
