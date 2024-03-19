@@ -117,26 +117,26 @@ export const registerSettings = function () {
 
     // DEPRECATED (double tap)
 
-    game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`,
-        scope: "world",
-        config: true,
-        default: 0, // 1 before // 200 before
-        type: Number,
+    // game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay", {
+    //     name: `${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`,
+    //     hint: `${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`,
+    //     scope: "world",
+    //     config: true,
+    //     default: 0, // 1 before // 200 before
+    //     type: Number,
 
-        //range: { min: 0, max: 750, step: 50 },
-        range: { min: 0, max: 5, step: 0.5 },
-    });
+    //     //range: { min: 0, max: 750, step: 50 },
+    //     range: { min: 0, max: 5, step: 0.5 },
+    // });
 
-    game.settings.register(CONSTANTS.MODULE_ID, "disableDoorSound", {
-        name: `${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`,
-        hint: `${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`,
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean,
-    });
+    // game.settings.register(CONSTANTS.MODULE_ID, "disableDoorSound", {
+    //     name: `${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`,
+    //     hint: `${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`,
+    //     scope: "world",
+    //     config: true,
+    //     default: true,
+    //     type: Boolean,
+    // });
 
     // ========================================================
     // STAIRWAY SUPPORT

@@ -112,7 +112,8 @@ export const DoorsReach = {
 
         if (
             (Date.now() - ArmsReachVariables.lastData[key]) / 1000 >
-            game.settings.get(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay")
+            1
+            // game.settings.get(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay")
         ) {
             ArmsReachVariables.lastData.x = character.x;
             ArmsReachVariables.lastData.y = character.y;

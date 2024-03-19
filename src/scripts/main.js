@@ -529,18 +529,18 @@ export const DoorControlPrototypeOnMouseDownHandler = async function (wrapped, .
             // Bug fix not sure why i need to do this
 
             if (doorControl.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
-                if (game.settings.get(CONSTANTS.MODULE_ID, "disableDoorSound")) {
-                    return;
-                }
                 // TODO ADD INTEGRATION FOR V11 DISABLE SOUND FOR LOCKED DOOR
                 // Door Lock
                 /* REMOVED WITH v11
-        const doorData = DoorsReach.defaultDoorData();
-        const playpath = doorData.lockPath;
-        const playVolume = doorData.lockLevel;
-        const fixedPlayPath = playpath.replace("[data]", "").trim();
-        AudioHelper.play({ src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false }, true);
-        */
+                if (game.settings.get(CONSTANTS.MODULE_ID, "disableDoorSound")) {
+                    return;
+                }
+                const doorData = DoorsReach.defaultDoorData();
+                const playpath = doorData.lockPath;
+                const playVolume = doorData.lockLevel;
+                const fixedPlayPath = playpath.replace("[data]", "").trim();
+                AudioHelper.play({ src: fixedPlayPath, volume: playVolume, autoplay: true, loop: false }, true);
+                */
             }
             return;
         }
