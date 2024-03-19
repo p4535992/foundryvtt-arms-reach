@@ -110,7 +110,7 @@ export const registerSettings = function () {
         hint: `${CONSTANTS.MODULE_ID}.settingHintMaximumDoorMeasurementInteraction`,
         scope: "world",
         config: true,
-        default: 0, // 5 before
+        default: 0.5, // 5 before
         type: Number,
         range: { min: 0, max: 50, step: 0.5 },
     });

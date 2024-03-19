@@ -4,7 +4,7 @@ const CONSTANTS = {
     TAGGER_MODULE_ID: "tagger",
     TAGGER_FLAG: "armsreach",
     FLAGS: {
-        ENABLED: "enabled",
+        // ENABLED: "enabled",
         RANGE: "range",
     },
 };

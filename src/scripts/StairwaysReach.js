@@ -41,62 +41,64 @@ export const StairwaysReach = {
         // Sets the global maximum interaction distance
         let globalInteraction =
             maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement");
-
+        let range = getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+        globalInteraction = range > 0 ? range : globalInteraction;
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
-        if (globalInteraction > 0) {
-            // Check distance
-            //let character:Token = getFirstPlayerToken();
-            if (
-                !game.user?.isGM ||
-                (game.user?.isGM &&
-                    // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
-                    game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways"))
-            ) {
-                if (!selectedToken) {
-                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
-                    return false;
-                } else {
-                    if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(selectedToken, targetPlaceableObject);
-                        if (!res) {
-                            Logger.warn(
-                                `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
-                            );
-                            return false;
-                        }
+        // if (globalInteraction > 0) {
+        // Check distance
+        //let character:Token = getFirstPlayerToken();
+        if (
+            !game.user?.isGM ||
+            (game.user?.isGM &&
+                // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
+                game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways"))
+        ) {
+            if (!selectedToken) {
+                interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
+                return false;
+            } else {
+                if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
+                    const res = checkElevation(selectedToken, targetPlaceableObject);
+                    if (!res) {
+                        Logger.warn(
+                            `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
+                        );
+                        return false;
                     }
-
-                    const canInteractB = DistanceTools.canInteract(
-                        targetPlaceableObject,
-                        selectedToken,
-                        globalInteraction,
-                        {
-                            closestPoint: true,
-                            includez: true,
-                        },
-                    );
-                    if (!canInteractB) {
-                        const tokenName = getCharacterName(selectedToken);
-                        if (tokenName) {
-                            interactionFailNotification(
-                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, {
-                                    tokenName: tokenName,
-                                }),
-                            );
-                        } else {
-                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
-                        }
-                    }
-                    return canInteractB;
-                    // END MOD ABD 4535992
                 }
-            } else if (game.user?.isGM) {
-                // DO NOTHING
-                return true;
-            }
-        }
 
+                const canInteractB = DistanceTools.canInteract(
+                    targetPlaceableObject,
+                    selectedToken,
+                    globalInteraction,
+                    {
+                        closestPoint: true,
+                        includez: true,
+                    },
+                );
+                if (!canInteractB) {
+                    const tokenName = getCharacterName(selectedToken);
+                    if (tokenName) {
+                        interactionFailNotification(
+                            Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.stairwaysNotInReachFor`, {
+                                tokenName: tokenName,
+                            }),
+                        );
+                    } else {
+                        interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.stairwaysNotInReach`));
+                    }
+                }
+                return canInteractB;
+                // END MOD ABD 4535992
+            }
+        } else if (game.user?.isGM) {
+            // DO NOTHING
+            return true;
+        }
         return false;
+        // } else {
+        //     return false;
+        // }
     },
 };
 

@@ -42,63 +42,64 @@ export const DoorsReach = {
 
         let globalInteraction =
             maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
-
+        let range = getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+        globalInteraction = range > 0 ? range : globalInteraction;
         // Sets the global maximum interaction distance
         // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
-        if (globalInteraction > 0) {
-            // Check distance
-            if (
-                !game.user?.isGM ||
-                (game.user?.isGM && game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors"))
-            ) {
-                if (!selectedToken) {
-                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
-                    return false;
+        // if (globalInteraction > 0) {
+        // Check distance
+        if (
+            !game.user?.isGM ||
+            (game.user?.isGM && game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnDoors"))
+        ) {
+            if (!selectedToken) {
+                interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelected`));
+                return false;
+            } else {
+                if (game.user?.isGM && isRightHanler) {
+                    return true;
                 } else {
-                    if (game.user?.isGM && isRightHanler) {
-                        return true;
-                    } else {
-                        if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                            const res = checkElevation(selectedToken, targetPlaceableObject);
-                            if (!res) {
-                                Logger.warn(
-                                    `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
-                                );
-                                return false;
-                            }
+                    if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
+                        if (!res) {
+                            Logger.warn(
+                                `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
+                            );
+                            return false;
                         }
-                        const canInteractB = DistanceTools.canInteract(
-                            targetPlaceableObject,
-                            selectedToken,
-                            maxDistance,
-                            {
-                                closestPoint: true,
-                                includez: true,
-                            },
-                        );
-                        if (!canInteractB) {
-                            const tokenName = getCharacterName(selectedToken);
-                            if (tokenName) {
-                                interactionFailNotification(
-                                    Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
-                                        tokenName: tokenName,
-                                    }),
-                                );
-                            } else {
-                                interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
-                            }
-                        }
-                        return canInteractB;
                     }
-                    // END MOD ABD 4535992
+                    const canInteractB = DistanceTools.canInteract(
+                        targetPlaceableObject,
+                        selectedToken,
+                        globalInteraction,
+                        {
+                            closestPoint: true,
+                            includez: true,
+                        },
+                    );
+                    if (!canInteractB) {
+                        const tokenName = getCharacterName(selectedToken);
+                        if (tokenName) {
+                            interactionFailNotification(
+                                Logger.i18nFormat(`${CONSTANTS.MODULE_ID}.doorNotInReachFor`, {
+                                    tokenName: tokenName,
+                                }),
+                            );
+                        } else {
+                            interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.doorNotInReach`));
+                        }
+                    }
+                    return canInteractB;
                 }
-            } else if (game.user?.isGM) {
-                return true;
+                // END MOD ABD 4535992
             }
-            return false;
-        } else {
-            return false;
+        } else if (game.user?.isGM) {
+            return true;
         }
+        return false;
+        // } else {
+        //     return false;
+        // }
     },
 
     ifStuckInteract: function (key, offsetx, offsety) {
@@ -140,8 +141,6 @@ export const DoorsReach = {
         // Max distance definition
         // const gridSize = canvas.dimensions?.size;
 
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
-
         // Shortest dist
         let closestDoor = null; // is a doorcontrol
         for (let i = 0; i < game.scenes?.current?.walls.contents.length; i++) {
@@ -154,6 +153,12 @@ export const DoorsReach = {
                 // if (!door.visible) {
                 //   continue;
                 // }
+                let globalInteraction =
+                    maxDistance > 0
+                        ? maxDistance
+                        : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
+                let range = getProperty(door, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+                globalInteraction = range > 0 ? range : globalInteraction;
 
                 if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
                     const res = checkElevation(token, wall);

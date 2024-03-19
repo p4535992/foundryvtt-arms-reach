@@ -11,6 +11,7 @@ export class ArmsReachFormConfig {
         AmbientSoundConfig: "_handleGenericConfig",
         MeasuredTemplateConfig: "_handleGenericConfig",
         NoteConfig: "_handleGenericConfig",
+        StairwayConfig: "_handleStairwayConfig",
     };
 
     static _handleRenderFormApplication(app, html) {
@@ -52,6 +53,11 @@ export class ArmsReachFormConfig {
         this._applyHtml(app, elem, true);
     }
 
+    static _handleStairwayConfig(app, html) {
+        const elem = html.find(`div[data-tab="label"]`);
+        this._applyHtml(app, elem, true);
+    }
+
     static _applyHtml(app, elem, insertBefore = false) {
         if (!elem) {
             return;
@@ -60,7 +66,7 @@ export class ArmsReachFormConfig {
         const tagDocument = object?.document ?? object;
 
         let range = getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
-        let isEnabled = getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}`) || false;
+        // let isEnabled = getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}`) || false;
 
         let fieldset = `
         <fieldset>
@@ -70,19 +76,20 @@ export class ArmsReachFormConfig {
                     Arms Reach  Range
                 </label>
                 <div class="form-fields">
-                    <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}" type="number" value="${range}" min="1" step="0.5" max="50" placeholder="0">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}">
-                    Arms Reach Enabled ?
-                </label>
-                <div class="form-fields">
-                    <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}" type="checkbox" ${isEnabled ? "checked" : ""} data-dtype="Boolean">
+                    <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}" type="number" value="${range}" min="0" step="0.5" max="50" placeholder="0">
                 </div>
             </div>
         </fieldset>
         `;
+
+        // <div class="form-group">
+        //         <label for="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}">
+        //             Arms Reach Enabled ?
+        //         </label>
+        //         <div class="form-fields">
+        //             <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}" type="checkbox" ${isEnabled ? "checked" : ""} data-dtype="Boolean">
+        //         </div>
+        // </div>
 
         if (insertBefore) {
             $(fieldset).insertBefore(elem);
