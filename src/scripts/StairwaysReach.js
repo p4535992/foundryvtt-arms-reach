@@ -52,24 +52,29 @@ export const StairwaysReach = {
                     // && game.settings.get(CONSTANTS.MODULE_ID, 'globalInteractionDistanceForGM')
                     game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways"))
             ) {
-                if (!characterToken) {
-                    interactionFailNotification(i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
+                if (!selectedToken) {
+                    interactionFailNotification(Logger.i18n(`${CONSTANTS.MODULE_ID}.noCharacterSelectedForStairway`));
                     return false;
                 } else {
                     if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {
-                        const res = checkElevation(characterToken, targetPlaceableObject);
+                        const res = checkElevation(selectedToken, targetPlaceableObject);
                         if (!res) {
                             Logger.warn(
-                                `The token '${characterToken.name}' is not on the elevation range of this placeable object`,
+                                `The token '${selectedToken.name}' is not on the elevation range of this placeable object`,
                             );
                             return false;
                         }
                     }
 
-                    const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
-                        closestPoint: true,
-                        includez: true,
-                    });
+                    const canInteractB = DistanceTools.canInteract(
+                        targetPlaceableObject,
+                        selectedToken,
+                        globalInteraction,
+                        {
+                            closestPoint: true,
+                            includez: true,
+                        },
+                    );
                     if (!canInteractB) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {

@@ -70,10 +70,15 @@ export const NotesReach = {
                         }
                     }
 
-                    const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
-                        closestPoint: true,
-                        includez: true,
-                    });
+                    const canInteractB = DistanceTools.canInteract(
+                        targetPlaceableObject,
+                        selectedToken,
+                        globalInteraction,
+                        {
+                            closestPoint: true,
+                            includez: true,
+                        },
+                    );
                     if (!canInteractB) {
                         const tokenName = getCharacterName(selectedToken);
                         if (tokenName) {
