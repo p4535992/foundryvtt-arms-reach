@@ -677,6 +677,16 @@ export const DrawingPrototypeOnClickLeftHandler = async function (wrapped, ...ar
             tokenSelected = getFirstPlayerToken();
         }
 
+        // Check if no token is selected and you are the GM avoid the distance calculation
+        let doNotReselectIfGM = false;
+        if (
+            (!canvas.tokens?.controlled && game.user?.isGM) ||
+            (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
+        ) {
+            doNotReselectIfGM = true;
+        }
+
         if (taggerModuleActive && !checkTaggerForAmrsreach(drawing)) {
             if (!doNotReselectIfGM) {
                 reselectTokenAfterInteraction(tokenSelected);
@@ -703,6 +713,16 @@ export const TilePrototypeOnClickLeftHandler = async function (wrapped, ...args)
         tokenSelected = getFirstPlayerTokenSelected();
         if (!tokenSelected) {
             tokenSelected = getFirstPlayerToken();
+        }
+
+        // Check if no token is selected and you are the GM avoid the distance calculation
+        let doNotReselectIfGM = false;
+        if (
+            (!canvas.tokens?.controlled && game.user?.isGM) ||
+            (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+            (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnStairways") && game.user?.isGM)
+        ) {
+            doNotReselectIfGM = true;
         }
 
         if (taggerModuleActive && !checkTaggerForAmrsreach(tile)) {

@@ -3,6 +3,7 @@ import { preloadTemplates } from "./scripts/preloadTemplates.js";
 import { initHooks, readyHooks, setupHooks } from "./scripts/main.js";
 import CONSTANTS from "./scripts/constants.js";
 import Logger from "./scripts/lib/Logger.js";
+import { ArmsReachFormConfig } from "./scripts/lib/ArmsReachFormConfig.js";
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -57,3 +58,6 @@ Hooks.once("ready", () => {
 });
 
 // Add any additional hooks if necessary
+Hooks.on("renderFormApplication", (app, html, options) => {
+    ArmsReachFormConfig._handleRenderFormApplication(app, html);
+});

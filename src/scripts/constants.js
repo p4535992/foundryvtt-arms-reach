@@ -3,6 +3,10 @@ const CONSTANTS = {
     PATH: `modules/arms-reach/`,
     TAGGER_MODULE_ID: "tagger",
     TAGGER_FLAG: "armsreach",
+    FLAGS: {
+        ENABLED: "enabled",
+        RANGE: "range",
+    },
 };
 
 CONSTANTS.PATH = `modules/${CONSTANTS.MODULE_ID}/`;
