@@ -43,7 +43,8 @@ export const NotesReach = {
         }
 
         // Sets the global maximum interaction distance
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "noteInteractionMeasurement");
+        let globalInteraction =
+            maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "noteInteractionMeasurement");
 
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {

@@ -194,7 +194,13 @@ export const readyHooks = async () => {
                             characterToken = getFirstPlayerToken();
                         }
                     }
-                    const result = StairwaysReach.globalInteractionDistance(characterToken, sourceData, userId);
+                    const result = StairwaysReach.globalInteractionDistance(
+                        characterToken,
+                        sourceData,
+                        0,
+                        userId,
+                        false,
+                    );
                     if (!doNotReselectIfGM) {
                         reselectTokenAfterInteraction(tokenSelected);
                     }

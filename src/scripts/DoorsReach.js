@@ -9,7 +9,7 @@ export const DoorsReach = {
     globalInteractionDistance: function (
         selectedToken,
         targetPlaceableObject,
-        isRightHanler,
+        isRightHanler = false,
         maxDistance = 0,
         useGrid = false,
     ) {
@@ -40,7 +40,8 @@ export const DoorsReach = {
             }
         }
 
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
+        let globalInteraction =
+            maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
 
         // Sets the global maximum interaction distance
         // Global interaction distance control. Replaces prototype function of DoorControl. Danger...

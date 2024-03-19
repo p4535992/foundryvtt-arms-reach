@@ -43,7 +43,8 @@ export const TokensReach = {
         }
 
         // Sets the global maximum interaction distance
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "tokenInteractionMeasurement");
+        let globalInteraction =
+            maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "tokenInteractionMeasurement");
 
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {

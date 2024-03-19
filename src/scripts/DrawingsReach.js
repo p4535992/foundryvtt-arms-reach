@@ -43,7 +43,8 @@ export const DrawingsReach = {
         }
 
         // Sets the global maximum interaction distance
-        let globalInteraction = game.settings.get(CONSTANTS.MODULE_ID, "drawingInteractionMeasurement");
+        let globalInteraction =
+            maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "drawingInteractionMeasurement");
 
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         if (globalInteraction > 0) {
