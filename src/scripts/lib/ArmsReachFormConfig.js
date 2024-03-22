@@ -76,7 +76,7 @@ export class ArmsReachFormConfig {
                     Arms Reach  Range
                 </label>
                 <div class="form-fields">
-                    <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}" type="number" value="${range}" min="0" step="0.5" max="50" placeholder="0">
+                    <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}" type="number" value="${range}" min="0" step="0.5" max="15" placeholder="0">
                 </div>
             </div>
         </fieldset>

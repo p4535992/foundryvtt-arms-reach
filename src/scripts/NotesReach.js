@@ -78,6 +78,7 @@ export const NotesReach = {
                     {
                         closestPoint: true,
                         includez: true,
+                        useGrid: useGrid,
                     },
                 );
                 if (!canInteractB) {

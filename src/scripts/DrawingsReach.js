@@ -78,6 +78,7 @@ export const DrawingsReach = {
                     {
                         closestPoint: true,
                         includez: true,
+                        useGrid: useGrid,
                     },
                 );
                 if (!canInteractB) {

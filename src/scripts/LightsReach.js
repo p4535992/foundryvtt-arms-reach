@@ -78,6 +78,7 @@ export const LightsReach = {
                     {
                         closestPoint: true,
                         includez: true,
+                        useGrid: useGrid,
                     },
                 );
                 if (!canInteractB) {

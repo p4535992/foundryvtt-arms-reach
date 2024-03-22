@@ -74,6 +74,7 @@ export const StairwaysReach = {
                     {
                         closestPoint: true,
                         includez: true,
+                        useGrid: useGrid,
                     },
                 );
                 if (!canInteractB) {

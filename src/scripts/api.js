@@ -252,6 +252,7 @@ const API = {
         const canInteractB = DistanceTools.canInteract(targetPlaceableObject, selectedToken, maxDistance, {
             closestPoint: true,
             includez: true,
+            useGrid: useGrid,
         });
         if (!canInteractB) {
             const tokenName = getCharacterName(selectedToken);

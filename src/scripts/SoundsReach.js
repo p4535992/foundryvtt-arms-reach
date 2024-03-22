@@ -78,6 +78,7 @@ export const SoundsReach = {
                     {
                         closestPoint: true,
                         includez: true,
+                        useGrid: useGrid,
                     },
                 );
                 if (!canInteractB) {

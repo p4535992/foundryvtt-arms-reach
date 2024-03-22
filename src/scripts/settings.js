@@ -112,7 +112,7 @@ export const registerSettings = function () {
         config: true,
         default: 0.5, // 5 before
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     // DEPRECATED (double tap)
@@ -169,7 +169,7 @@ export const registerSettings = function () {
         config: true,
         default: 2.5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerStairwayIntegration", {
@@ -210,7 +210,7 @@ export const registerSettings = function () {
         config: true,
         default: 2.5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerNoteIntegration", {
@@ -251,7 +251,7 @@ export const registerSettings = function () {
         config: true,
         default: 5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet", {
@@ -319,7 +319,7 @@ export const registerSettings = function () {
         config: true,
         default: 2.5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerLightIntegration", {
@@ -360,7 +360,7 @@ export const registerSettings = function () {
         config: true,
         default: 2.5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerSoundIntegration", {
@@ -401,7 +401,7 @@ export const registerSettings = function () {
         config: true,
         default: 5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerDrawingIntegration", {
@@ -442,7 +442,7 @@ export const registerSettings = function () {
         config: true,
         default: 5,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerTileIntegration", {
@@ -483,7 +483,7 @@ export const registerSettings = function () {
         config: true,
         default: 0,
         type: Number,
-        range: { min: 0, max: 50, step: 0.5 },
+        range: { min: 0, max: 15, step: 0.5 },
     });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerWallIntegration", {

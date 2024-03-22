@@ -75,6 +75,7 @@ export const DoorsReach = {
                         {
                             closestPoint: true,
                             includez: true,
+                            useGrid: useGrid,
                         },
                     );
                     if (!canInteractB) {
@@ -173,6 +174,7 @@ export const DoorsReach = {
                 const canInteractB = DistanceTools.canInteract(door, token, globalInteraction, {
                     closestPoint: true,
                     includez: true,
+                    useGrid: false,
                 });
                 if (canInteractB) {
                     closestDoor = door;

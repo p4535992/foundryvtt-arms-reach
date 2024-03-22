@@ -247,11 +247,15 @@ export default class DistanceTools {
      * @param {Object} [settings]
      * @param {boolean} [settings.closestPoint=false] if the closest points of object1 and object2 to one another should be used
      * @param {boolean} [settings.includez=true]      if the z coordinate should be included in the calculations
+     * @param {boolean} [settings.useGrid=false]      if you want to check the distance with the rid system on the scene
      *
      * @returns {boolean}				              if interaction is possible
      */
-    static canInteract(object1, object2, distance, settings = { closestPoint: false, includez: true }) {
-        const calculatedDistance = DistanceTools.distancebetween(object1, object2, settings);
+    static canInteract(object1, object2, distance, settings = { closestPoint: false, includez: true, useGrid: false }) {
+        let calculatedDistance = DistanceTools.distancebetween(object1, object2, settings);
+        if (settings.useGrid) {
+            calculatedDistance = Math.floor(calculatedDistance / canvas.grid?.size) + 1;
+        }
         return calculatedDistance <= distance;
     }
 }
