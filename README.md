@@ -212,10 +212,6 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * Pressing 'e' opens/closes a door nearest of current selected token
 
-* Holding 'e' centers the camera on current selected token
-
-* Double tapping movement on the direction of a door will interact with it
-
 **NOTE: If no token is selected and you are a GM this feature is not activated**
 
 ### [Stairways](https://gitlab.com/SWW13/foundryvtt-stairways) Feature
@@ -231,7 +227,6 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 * Add distance calculation for owned source token and generic target token on the canvas for open the sheet and emulate a loot chest
 * GM can use this feature but beware there is probably some glitch in some use case because they owned every token
-* ~~This feature work with only one owned source token on the canvas at the time~~
 * [OPTIONAL] You can set the name of your _explicit source token_ (not the character name) on the specific module setting
 * If no _explicit source token_ is setted on the module setting the module take the first selected token of the player, if no selected token ias present it will try to get the first owwned token of the player
 * It's advisable for this feature to use the [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger) instead the name and sheet checker is more dinamic.
@@ -241,36 +236,39 @@ To interact with a door, journal, ecc., the player need to have a token selected
 * This feature make sense only with one of this module active [Lightswitch by theripper93](https://www.reddit.com/r/FoundryVTT/comments/pmu4z0/lightswitch_a_user_frendly_way_to_present/) (from [theripper93](https://www.patreon.com/theripper93) only patreon page) or [LightSwitch](https://github.com/zarmstrong/fvtt-lightswitch)
 * Add distance calculation for light on the canvas
 
-### Drawing Feature (Beta need feedback)
+### Drawing Feature (Beta it should be working but only on the API level)
 
 * Add distance calculation for drawings on the canvas
 
-### Tile Feature (Beta need feedback)
+### Tile Feature (Beta it should be working but only on the API level)
 
 * Add distance calculation for tiles on the canvas
 
-### Sounds Feature (Beta need feedback)
+### Sounds Feature (Beta it should be working but only on the API level)
 
 * Add distance calculation for sounds on the canvas
 
-### Templates Feature (On developing)
+### Templates Feature (Beta it should be working but only on the API level)
 
 * Add distance calculation for templates on the canvas
 
-### Wall Feature (On developing)
+### Wall Feature (Beta it should be working but only on the API level)
 
 * Add distance calculation for walls on the canvas (door are a special case with specific rule)
 
-### Tagger Feature
+### Tagger Feature 
 
 * Add integration with [Tagger Module](https://github.com/Haxxer/FoundryVTT-Tagger), you decide specifically for which placeable objects on the canvas the distance calculation should be triggered
 * **IMPORTANT:** the tagger you must used for any placeable object is the string 'armsreach'
 * From 2.2.11 this feature is been splitted for each category of placeable object (Wall, Token, Note, ecc.) for a better customization
 
+### Customize the distance interaction in every placeable object Wall, Light, Stairway, ecc.
+
+![](/wiki/images/flag_door.png)
+
+![](/wiki/images/flag_stairway.png)
 
 ### Reset Doors and Fog feature Feature (deprecated and removed on v11)
-
-**NOTE:** This feature remain for history, it will been updated, but is been "officially" transferred here [Sidebar Context](https://github.com/kandashi/sidebar-context) because make more sense on that module than this, also is been on the core of foundryvtt v11...
 
 ~~Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.~~
 

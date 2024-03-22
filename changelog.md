@@ -1,5 +1,12 @@
 # CHANGELOG 
 
+### 2.4.0 [BREAKING CHANGES]
+
+- Ty to [Saibot393](https://github.com/Saibot393/) for a better and cleaner math calculation
+- Major cleanup of the code
+- Removed many feature in favor of others modules
+- Add keybinding for the 'e' button for interact with a door
+
 ### 2.3.6 [BREAKING CHANGES]
 
 - Big clean and first refactoring for the new behaviour
