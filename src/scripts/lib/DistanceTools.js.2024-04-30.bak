@@ -6,7 +6,7 @@ export default class DistanceTools {
         z: "depth",
     };
 
-    static DEGtoRAD = Math.PI / 180;
+    static DEGtoRAD = Math.pi / 180;
 
     /**
      * Work out all relevant x and y related information (x, y, width, height) (in scene units)
@@ -27,13 +27,8 @@ export default class DistanceTools {
             //data.width = Math.abs(ObjectDoc.c[2] - ObjectDoc.c[0]);
             //data.height = Math.abs(ObjectDoc.c[3] - ObjectDoc.c[1]);
         } else {
-            for (let key of ["x", "y", "width", "height" /*, "rotation"*/]) {
+            for (let key of ["x", "y", "width", "height", "rotation"]) {
                 data[key] = ObjectDoc[key] ?? 0;
-            }
-
-            if (ObjectDoc.iconSize) {
-                data.width = ObjectDoc.iconSize;
-                data.height = ObjectDoc.iconSize;
             }
         }
 
@@ -41,26 +36,27 @@ export default class DistanceTools {
 
         let xyScale = 1 / Scene?.dimensions.distancePixels ?? 1;
         let sizeScale = (ObjectDoc.documentName == "Token" ? Scene?.dimensions.distance : xyScale) ?? 1; //tokens need a different size scale factor
-        let adjustxyz = !["Wall", "Note", "Stairway", "Tile", "Drawing"].includes(ObjectDoc.documentName); //some document already use the middle point for xyz
 
         for (let key of ["x", "y"]) {
             data[key] = data[key] * xyScale;
 
             data[DistanceTools.DSK[key]] = data[DistanceTools.DSK[key]] * sizeScale;
 
-            if (adjustxyz && data[DistanceTools.DSK[key]]) {
+            if (data[DistanceTools.DSK[key]]) {
                 data[key] = data[key] + data[DistanceTools.DSK[key]] / 2;
             }
         }
 
-        /* removedto better reflect the actual foundry outline of tiles and tokens
-		if (data.rotation) {
-			let width = data.width;
-			let height = data.height;
-			data.width = Math.sqrt((Math.cos(DistanceTools.DEGtoRAD * data.rotation) * width)**2 + (Math.sin(DistanceTools.DEGtoRAD * data.rotation) * height)**2);
-			data.height = Math.sqrt((Math.cos(DistanceTools.DEGtoRAD * data.rotation) * height)**2 + (Math.sin(DistanceTools.DEGtoRAD * data.rotation) * width)**2);
-		}
-		*/
+        if (data.rotation) {
+            data.width = Math.sqrt(
+                (Math.cos(DistanceTools.DEGtoRAD * data.rotation) * data.width) ** 2 +
+                    (Math.sin(DistanceTools.DEGtoRAD * data.rotation) * data.height) ** 2,
+            );
+            data.height = Math.sqrt(
+                (Math.cos(DistanceTools.DEGtoRAD * data.rotation) * data.height) ** 2 +
+                    (Math.sin(DistanceTools.DEGtoRAD * data.rotation) * data.width) ** 2,
+            );
+        }
 
         return data;
     }
@@ -114,6 +110,7 @@ export default class DistanceTools {
                 }
 
                 if (top < bottom) {
+                    //why is this valid?
                     let buffer = top;
                     top = bottom;
                     bottom = top;
@@ -218,11 +215,11 @@ export default class DistanceTools {
     /**
      * Calculates the distance between two placeables objects
      *
-     * @param {object} object1 							placeable object 1
-     * @param {object} object2 							placeable object 2
+     * @param {object} object1 			placeable object 1
+     * @param {object} object2 			placeable object 2
      * @param {Object} [settings]
-     * @param {boolean} [settings.closestPoint=false] 	if the closest points of object1 and object2 to one another should be used
-     * @param {boolean} [settings.includez=true]      	if the z coordinate should be included in the calculations
+     * @param {boolean} [settings.closestPoint=false] if the closest points of object1 and object2 to one another should be used
+     * @param {boolean} [settings.includez=true]      if the z coordinate should be included in the calculations
      *
      * @returns {number}					calculated distance
      */
@@ -244,13 +241,13 @@ export default class DistanceTools {
     /**
      * Calculate if object1 and object2 are close enough to interact with one another
      *
-     * @param {object} object1 			            	placeable object 1
-     * @param {object} object2 			            	placeable object 2
-     * @param {number} distance 			          		interaction distance to be checked
+     * @param {object} object1 			              placeable object 1
+     * @param {object} object2 			              placeable object 2
+     * @param {number} distance 			          interaction distance to be checked
      * @param {Object} [settings]
-     * @param {boolean} [settings.closestPoint=false] 	if the closest points of object1 and object2 to one another should be used
-     * @param {boolean} [settings.includez=true]      	if the z coordinate should be included in the calculations
-     * @param {boolean} [settings.useGrid=false]      	if you want to check the distance with the rid system on the scene
+     * @param {boolean} [settings.closestPoint=false] if the closest points of object1 and object2 to one another should be used
+     * @param {boolean} [settings.includez=true]      if the z coordinate should be included in the calculations
+     * @param {boolean} [settings.useGrid=false]      if you want to check the distance with the rid system on the scene
      *
      * @returns {boolean}				              if interaction is possible
      */
