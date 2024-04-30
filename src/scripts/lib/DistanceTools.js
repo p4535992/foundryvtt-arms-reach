@@ -117,7 +117,6 @@ export default class DistanceTools {
 				}
 				
 				if (top < bottom) {
-					//why is this valid?
 					let buffer = top;
 					top = bottom;
 					bottom = top;
@@ -175,9 +174,10 @@ export default class DistanceTools {
 	* Calculate the distance between two positions, including the z distance if both objects have a z position 
 	* normally uses the center points, can be set to calculate the distance of the closest points of both positions (assuming boxes)
 	*
-	* @param {document} position1 		position data of object 1
-	* @param {document} position2 		position data of object 2
-	* @param {boolean} closestPoint 	if the closest points of position1 and position2 to one another should be used
+    * @param {document} position1 		position data of object 1
+    * @param {document} position2 		position data of object 2
+    * @param {Object} [settings]
+    * @param {boolean} [settings.closestPoint=false] if the closest points of object1 and object2 to one another should be used
 	*
 	* @returns {number}					the distance between position1 and position2
 	*/
@@ -211,16 +211,18 @@ export default class DistanceTools {
 			}
 		}
 		
-		return Math.hypot(...(distance.filter(value => value)));
+        const calculatedDistance = Math.hypot(...distance.filter((value) => value));
+        return calculatedDistance;
 	}
 	
 	/**
 	* Calculates the distance between two placeables objects
 	*
-	* @param {object} object1 			placeable object 1
-	* @param {object} object2 			placeable object 2
-	* @param {boolean} closestPoint 	if the closest points of object1 and object2 to one another should be used
-	* @param {boolean} includez 		if the z coordinate should be included in the calculations
+    * @param {object} object1 							placeable object 1
+    * @param {object} object2 							placeable object 2
+    * @param {Object} [settings]
+    * @param {boolean} [settings.closestPoint=false] 	if the closest points of object1 and object2 to one another should be used
+    * @param {boolean} [settings.includez=true]      	if the z coordinate should be included in the calculations
 	*
 	* @returns {number}					calculated distance
 	*/
@@ -232,24 +234,31 @@ export default class DistanceTools {
 			let position1 = settings.includez ? DistanceTools.xyzData(document1) : DistanceTools.xyData(document1);
 			let position2 = settings.includez ? DistanceTools.xyzData(document2) : DistanceTools.xyData(document2);
 			
-			return DistanceTools.distance(position1, position2, settings);
+            const calculatedDistance = DistanceTools.distance(position1, position2, settings);
+            return calculatedDistance;
 		}
 		
 		return undefined;
 	}
 	
-	/**
-	* Calculate if object1 and object2 are close enough to interact with one another
-	*
-	* @param {object} object1 			placeable object 1
-	* @param {object} object2 			placeable object 2
-	* @param {number} distance 			interaction distance to be checked
-	* @param {boolean} closestPoint 	if the closest points of object1 and object2 to one another should be used
-	* @param {boolean} includez 		if the z coordinate should be included in the calculations
-	*
-	* @returns {boolean}				if interaction is possible
-	*/
+    /**
+    * Calculate if object1 and object2 are close enough to interact with one another
+    *
+    * @param {object} object1 			            	placeable object 1
+    * @param {object} object2 			            	placeable object 2
+    * @param {number} distance 			          		interaction distance to be checked
+    * @param {Object} [settings]
+    * @param {boolean} [settings.closestPoint=false] 	if the closest points of object1 and object2 to one another should be used
+    * @param {boolean} [settings.includez=true]      	if the z coordinate should be included in the calculations
+    * @param {boolean} [settings.useGrid=false]      	if you want to check the distance with the rid system on the scene
+     *
+     * @returns {boolean}				              if interaction is possible
+     */
 	static canInteract(object1, object2, distance, settings = {closestPoint : false, includez : true}) {
 		return DistanceTools.distancebetween(position1, position2, settings) <= distance;
 	}
 }
+
+Hooks.once("init", () => {
+	game.modules.get("distancetools-test").api = {tools : DistanceTools};
+});
