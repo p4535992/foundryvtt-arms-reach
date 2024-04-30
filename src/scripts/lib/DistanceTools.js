@@ -41,8 +41,8 @@ export default class DistanceTools {
 
         let xyScale = 1 / Scene?.dimensions.distancePixels ?? 1;
         let sizeScale = (ObjectDoc.documentName == "Token" ? Scene?.dimensions.distance : xyScale) ?? 1; //tokens need a different size scale factor
-        let adjustxyz = !["Wall", "Note", "Stairway", "Tile", "Drawing"].includes(ObjectDoc.documentName); //some document already use the middle point for xyz
-
+        let adjustxyz = !["Wall", "Note", "Stairway"].includes(ObjectDoc.documentName); //some document already use the middle point for xyz
+        // TODO check for tile and drawing ??
         for (let key of ["x", "y"]) {
             data[key] = data[key] * xyScale;
 
@@ -250,7 +250,7 @@ export default class DistanceTools {
      * @param {Object} [settings]
      * @param {boolean} [settings.closestPoint=false] 	if the closest points of object1 and object2 to one another should be used
      * @param {boolean} [settings.includez=true]      	if the z coordinate should be included in the calculations
-     * @param {boolean} [settings.useGrid=false]      	if you want to check the distance with the rid system on the scene
+     * @param {boolean} [settings.useGrid=false]      	if you want to check the distance with the grid system on the scene
      *
      * @returns {boolean}				              if interaction is possible
      */

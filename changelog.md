@@ -1,4 +1,11 @@
-# CHANGELOG 
+# CHANGELOG
+
+### 2.4.1
+
+- Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/92 ty very much to @Saibot393 for the math and the contribution
+- Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/90
+- Try to fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/91
+
 
 ### 2.4.0 [BREAKING CHANGES]
 
@@ -11,13 +18,13 @@
 
 - Big clean and first refactoring for the new behaviour
 
-### 2.3.5 
+### 2.3.5
 
-- Fixed bug in reselectTokenAfterInteraction functio, ty to @Saibot393 
+- Fixed bug in reselectTokenAfterInteraction functio, ty to @Saibot393
 
 ### 2.3.4
 
-- Add fix to sound(door lock) sound, ty to @Saibot393 
+- Add fix to sound(door lock) sound, ty to @Saibot393
 
 ### 2.3.3
 

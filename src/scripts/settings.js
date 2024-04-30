@@ -36,17 +36,6 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
-    // game.settings.register(CONSTANTS.MODULE_ID, "globalInteractionMeasurement", {
-    //     name: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
-    //     hint: `${CONSTANTS.MODULE_ID}.settingNameGlobalMaximumInteractionMeasurement`,
-    //     scope: "world",
-    //     config: true,
-    //     default: 5,
-    //     type: Number,
-
-    //     range: { min: 0, max: 20, step: 0.5 },
-    // });
-
     game.settings.register(CONSTANTS.MODULE_ID, "forceReSelection", {
         name: `${CONSTANTS.MODULE_ID}.settingNameAvoidSelectsTheControlledToken`,
         hint: `${CONSTANTS.MODULE_ID}.settingHintAvoidSelectsTheControlledToken`,
@@ -114,29 +103,6 @@ export const registerSettings = function () {
         type: Number,
         range: { min: 0, max: 15, step: 0.5 },
     });
-
-    // DEPRECATED (double tap)
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "hotkeyDoorInteractionDelay", {
-    //     name: `${CONSTANTS.MODULE_ID}.settingNameDoubleTapInteraction`,
-    //     hint: `${CONSTANTS.MODULE_ID}.settingHintDoubleTapInteraction`,
-    //     scope: "world",
-    //     config: true,
-    //     default: 0, // 1 before // 200 before
-    //     type: Number,
-
-    //     //range: { min: 0, max: 750, step: 50 },
-    //     range: { min: 0, max: 5, step: 0.5 },
-    // });
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "disableDoorSound", {
-    //     name: `${CONSTANTS.MODULE_ID}.settingNameDisableDoorSound`,
-    //     hint: `${CONSTANTS.MODULE_ID}.settingHintDisableDoorSound`,
-    //     scope: "world",
-    //     config: true,
-    //     default: true,
-    //     type: Boolean,
-    // });
 
     // ========================================================
     // STAIRWAY SUPPORT
@@ -253,33 +219,6 @@ export const registerSettings = function () {
         type: Number,
         range: { min: 0, max: 15, step: 0.5 },
     });
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationWithLootSheet", {
-    //     name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationWithLootSheet`,
-    //     hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationWithLootSheet`,
-    //     scope: "world",
-    //     config: true,
-    //     default: false,
-    //     type: Boolean,
-    // });
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationByPrefix", {
-    //     name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationByPrefix`,
-    //     hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationByPrefix`,
-    //     scope: "world",
-    //     config: true,
-    //     default: "ART_",
-    //     type: String,
-    // });
-
-    // game.settings.register(CONSTANTS.MODULE_ID, "tokensIntegrationExplicitName", {
-    //     name: `${CONSTANTS.MODULE_ID}.settingNameTokensIntegrationExplicitName`,
-    //     hint: `${CONSTANTS.MODULE_ID}.settingHintTokensIntegrationExplicitName`,
-    //     scope: "client",
-    //     config: true,
-    //     default: game.user?.character?.name ?? "",
-    //     type: String,
-    // });
 
     game.settings.register(CONSTANTS.MODULE_ID, "enableTaggerTokenIntegration", {
         name: `${CONSTANTS.MODULE_ID}.settingNameTaggerTokenIntegrationFeature`,
@@ -528,15 +467,15 @@ class ResetSettingsDialog extends FormApplication {
         super(...args);
 
         return new Dialog({
-            title: game.i18n.localize(`downtime-dnd5e.SettingReset.dialogs.title`),
+            title: game.i18n.localize(`${CONSTANTS.MODULE_ID}.dialogs.resetsettings.title`),
             content:
                 '<p style="margin-bottom:1rem;">' +
-                game.i18n.localize(`downtime-dnd5e.SettingReset.dialogs.content`) +
+                game.i18n.localize(`${CONSTANTS.MODULE_ID}.dialogs.resetsettings.content`) +
                 "</p>",
             buttons: {
                 confirm: {
                     icon: '<i class="fas fa-check"></i>',
-                    label: game.i18n.localize(`downtime-dnd5e.SettingReset.dialogs.confirm`),
+                    label: game.i18n.localize(`${CONSTANTS.MODULE_ID}.dialogs.resetsettings.confirm`),
                     callback: async () => {
                         for (let setting of game.settings.storage
                             .get("world")
@@ -549,7 +488,7 @@ class ResetSettingsDialog extends FormApplication {
                 },
                 cancel: {
                     icon: '<i class="fas fa-times"></i>',
-                    label: game.i18n.localize(`downtime-dnd5e.SettingReset.dialogs.cancel`),
+                    label: game.i18n.localize(`${CONSTANTS.MODULE_ID}.dialogs.resetsettings.cancel`),
                 },
             },
             default: "cancel",
