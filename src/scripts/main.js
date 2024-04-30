@@ -193,8 +193,8 @@ export const readyHooks = async () => {
                         characterToken,
                         sourceData,
                         0,
-                        userId,
                         false,
+                        userId,
                     );
                     if (!doNotReselectIfGM) {
                         reselectTokenAfterInteraction(tokenSelected);

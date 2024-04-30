@@ -4,7 +4,7 @@
 
 - Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/92 ty very much to @Saibot393 for the math and the contribution
 - Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/90
-- Try to fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/91
+- Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/91
 
 
 ### 2.4.0 [BREAKING CHANGES]
