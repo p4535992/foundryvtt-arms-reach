@@ -1,13 +1,13 @@
-//a quick way to map dimensions to their specific [D]imensions [S]ize [K]eys
-const DSK = {
-	x : "width",
-	y : "height",
-	z : "depth"
-}
-
-const DEGtoRAD = Math.PI/180;
-
 export default class DistanceTools {
+	//a quick way to map dimensions to their specific [D]imensions [S]ize [K]eys
+	const DSK = {
+		x : "width",
+		y : "height",
+		z : "depth"
+	}
+	
+	const DEGtoRAD = Math.PI/180;
+	
 	/**
 	* Work out all relevant x and y related information (x, y, width, height) (in scene units)
 	*
