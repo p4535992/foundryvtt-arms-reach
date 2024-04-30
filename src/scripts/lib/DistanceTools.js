@@ -258,7 +258,3 @@ export default class DistanceTools {
 		return DistanceTools.distancebetween(position1, position2, settings) <= distance;
 	}
 }
-
-Hooks.once("init", () => {
-	game.modules.get("distancetools-test").api = {tools : DistanceTools};
-});
