@@ -7,7 +7,7 @@ const DSK = {
 
 const DEGtoRAD = Math.PI/180;
 
-class DistanceTools {
+export default class DistanceTools {
 	/**
 	* Work out all relevant x and y related information (x, y, width, height) (in scene units)
 	*
@@ -253,7 +253,3 @@ class DistanceTools {
 		return DistanceTools.distancebetween(position1, position2, settings) <= distance;
 	}
 }
-
-Hooks.once("init", () => {
-	game.modules.get("distancetools-test").api = {tools : DistanceTools};
-});
