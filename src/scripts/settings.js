@@ -72,6 +72,15 @@ export const registerSettings = function () {
         type: Boolean,
     });
 
+    game.settings.register(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet", {
+        name: `${CONSTANTS.MODULE_ID}.settingNameEnableAdditionalReachSettingOnPlaceableConfigSheet`,
+        hint: `${CONSTANTS.MODULE_ID}.settingHintEnableAdditionalReachSettingOnPlaceableConfigSheet`,
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean,
+    });
+
     // ========================================================
     // DOOR SUPPORT
     // ========================================================

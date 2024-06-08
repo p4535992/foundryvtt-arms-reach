@@ -1,4 +1,7 @@
 # CHANGELOG
+### 2.4.2
+
+- Add v12 manifest compatibility
 
 ### 2.4.1
 

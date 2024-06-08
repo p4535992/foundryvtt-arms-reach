@@ -268,16 +268,6 @@ To interact with a door, journal, ecc., the player need to have a token selected
 
 ![](/wiki/images/flag_stairway.png)
 
-### Reset Doors and Fog feature Feature (deprecated and removed on v11)
-
-~~Adds a button to the Walls Menu to Shut all doors in the current scene. Also adds a menu to the context dropdown for the Scene Navigation and Scene Directory menus to shut all doors and delete fog in the selected scene to prepare it for a fresh visit from characters. I find it useful after QAing a new map for holes in walls/doors and checking lighting, etc.~~
-
-~~Changes the functionality from closing ALL doors to closing ONLY opened doors. Doors that are currently locked remain locked, and are not closed.~~
-
-~~### [Experimental] Integration of [Combat Range Overlay](https://github.com/Nazrax/fvtt-combat-range-overlay)~~
-
-~~[Here the documentation](./wiki/docs/combat-range-overlay.md)~~
-
 # Build
 
 ## Install all packages
@@ -383,12 +373,3 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 
 A very big thanks to [manuelVo](https://github.com/manuelVo), because i was to stupid to understand thing like measurement of Foundry by myself.
 A very big thanks to [Saibot393](https://github.com/Saibot393/), and his GeometricUtils class for token distance calculation.
-
-
-## Acknowledgements
-
-Bootstrapped with League of Extraordinary FoundryVTT Developers  [foundry-vtt-types](https://github.com/League-of-Foundry-Developers/foundry-vtt-types).
-
-Mad props to the 'League of Extraordinary FoundryVTT Developers' community which helped me figure out a lot.
-
-

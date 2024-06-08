@@ -240,6 +240,9 @@
     "arms-reach.settingNameMaximumTemplateMeasurementInteraction": "Maximum template interaction distance measurement (ft, mt, ...),",
     "arms-reach.settingHintMaximumTemplateMeasurementInteraction": "Is the distance calculation used only for the template",
 
+    "arms-reach.settingNameEnableAdditionalReachSettingOnPlaceableConfigSheet": "Enable additional reach setting on placeable config sheet",
+    "arms-reach.settingHintEnableAdditionalReachSettingOnPlaceableConfigSheet": "If enable it will let you set a specific value for the specific placeable object",
+
     "arms-reach.setting.reset.name": "Reset settings to default",
     "arms-reach.setting.reset.label": "Reset Settings To Default",
     "arms-reach.setting.reset.hint": "This will reset all of the settings of back to the active game system's default.",

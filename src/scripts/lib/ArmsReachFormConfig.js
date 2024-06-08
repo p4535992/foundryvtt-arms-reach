@@ -1,4 +1,5 @@
 import CONSTANTS from "../constants";
+import Logger from "./Logger";
 
 export class ArmsReachFormConfig {
     static configHandlers = {
@@ -15,6 +16,10 @@ export class ArmsReachFormConfig {
     };
 
     static _handleRenderFormApplication(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         let method = ArmsReachFormConfig.configHandlers[app.constructor.name];
         if (!method) {
             const key = Object.keys(ArmsReachFormConfig.configHandlers).find((name) =>
@@ -27,33 +32,57 @@ export class ArmsReachFormConfig {
     }
 
     static _handleTokenConfig(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         const elem = html.find(`div[data-tab="character"]`);
         this._applyHtml(app, elem);
     }
 
     static _handleTileConfig(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         const elem = html.find(`div[data-tab="basic"]`);
         this._applyHtml(app, elem);
     }
 
     static _handleDrawingConfig(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         const elem = html.find(`div[data-tab="position"]`);
         this._applyHtml(app, elem);
     }
 
     static _handleAmbientLightConfig(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         let button = html.find(`button[name="submit"]`);
         let elem = (button.length ? button : html.find(`button[type="submit"]`)).parent();
         this._applyHtml(app, elem, true);
     }
 
     static _handleGenericConfig(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         let button = html.find(`button[name="submit"]`);
         let elem = button.length ? button : html.find(`button[type="submit"]`);
         this._applyHtml(app, elem, true);
     }
 
     static _handleStairwayConfig(app, html) {
+        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+            return;
+        }
         const elem = html.find(`div[data-tab="label"]`);
         this._applyHtml(app, elem, true);
     }
