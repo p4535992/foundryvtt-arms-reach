@@ -1,4 +1,4 @@
-import { checkElevation, getCharacterName } from "./lib/lib.js";
+import { checkElevation, getCharacterName, isRealNumber } from "./lib/lib.js";
 
 import { getFirstPlayerToken, isFocusOnCanvas, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
@@ -41,7 +41,9 @@ export const DoorsReach = {
         }
 
         let globalInteraction =
-            maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
+            maxDistance && isRealNumber(maxDistance) && maxDistance > 0
+                ? maxDistance
+                : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
         let range = getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
         globalInteraction = range > 0 ? range : globalInteraction;
         // Sets the global maximum interaction distance
@@ -155,7 +157,7 @@ export const DoorsReach = {
                 //   continue;
                 // }
                 let globalInteraction =
-                    maxDistance > 0
+                    maxDistance && isRealNumber(maxDistance) && maxDistance > 0
                         ? maxDistance
                         : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
                 let range = getProperty(door, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;

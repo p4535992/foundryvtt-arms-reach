@@ -119,3 +119,7 @@ export function sceneof(pToken) {
 
     return vscene;
 }
+
+export function isRealNumber(inNumber) {
+    return !isNaN(inNumber) && typeof inNumber === "number" && isFinite(inNumber);
+}

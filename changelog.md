@@ -1,4 +1,9 @@
 # CHANGELOG
+
+### 2.4.3
+
+- Fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/96
+
 ### 2.4.2
 
 - Add v12 manifest compatibility

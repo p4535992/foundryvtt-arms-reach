@@ -1,4 +1,4 @@
-import { checkElevation, getCharacterName } from "./lib/lib.js";
+import { checkElevation, getCharacterName, isRealNumber } from "./lib/lib.js";
 import { getFirstPlayerToken, interactionFailNotification } from "./ArmsReachHelper.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
@@ -40,7 +40,9 @@ export const StairwaysReach = {
         }
         // Sets the global maximum interaction distance
         let globalInteraction =
-            maxDistance > 0 ? maxDistance : game.settings.get(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement");
+            maxDistance && isRealNumber(maxDistance) && maxDistance > 0
+                ? maxDistance
+                : game.settings.get(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement");
         let range = getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
         globalInteraction = range > 0 ? range : globalInteraction;
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
