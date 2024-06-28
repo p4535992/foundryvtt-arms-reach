@@ -19,20 +19,7 @@
             "email": ""
         }
     ],
-    "type": "module",
     "socket": true,
-    "includes": [
-        "./assets/**",
-        "./lang/**",
-        "./languages/**",
-        "./scripts/**",
-        "./styles/**",
-        "./templates/**",
-        "./module.json",
-        "./README.md",
-        "./icons/**",
-        "./packs/**"
-    ],
     "media": [
         {
             "type": "icon",
@@ -80,7 +67,6 @@
         }
     ],
     "packs": [],
-    "systems": [],
     "scripts": [],
     "esmodules": ["module.js"],
     "styles": ["styles/arms-reach.css"],
