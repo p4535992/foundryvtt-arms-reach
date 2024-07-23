@@ -47,7 +47,9 @@ export const DrawingsReach = {
             maxDistance && isRealNumber(maxDistance) && maxDistance > 0
                 ? maxDistance
                 : game.settings.get(CONSTANTS.MODULE_ID, "drawingInteractionMeasurement");
-        let range = getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+        let range =
+            foundry.utils.getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) ||
+            0;
         globalInteraction = range > 0 ? range : globalInteraction;
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         // if (globalInteraction > 0) {

@@ -44,7 +44,9 @@ export const DoorsReach = {
             maxDistance && isRealNumber(maxDistance) && maxDistance > 0
                 ? maxDistance
                 : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
-        let range = getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+        let range =
+            foundry.utils.getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) ||
+            0;
         globalInteraction = range > 0 ? range : globalInteraction;
         // Sets the global maximum interaction distance
         // Global interaction distance control. Replaces prototype function of DoorControl. Danger...
@@ -160,7 +162,8 @@ export const DoorsReach = {
                     maxDistance && isRealNumber(maxDistance) && maxDistance > 0
                         ? maxDistance
                         : game.settings.get(CONSTANTS.MODULE_ID, "doorInteractionMeasurement");
-                let range = getProperty(door, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+                let range =
+                    foundry.utils.getProperty(door, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
                 globalInteraction = range > 0 ? range : globalInteraction;
 
                 if (game.settings.get(CONSTANTS.MODULE_ID, "autoCheckElevationByDefault")) {

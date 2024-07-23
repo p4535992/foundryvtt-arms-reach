@@ -94,8 +94,9 @@ export class ArmsReachFormConfig {
         const object = app?.object?._object ?? app?.object;
         const tagDocument = object?.document ?? object;
 
-        let range = getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
-        // let isEnabled = getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}`) || false;
+        let range =
+            foundry.utils.getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+        // let isEnabled = foundry.utils.getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}`) || false;
 
         let fieldset = `
         <fieldset>
@@ -108,6 +109,7 @@ export class ArmsReachFormConfig {
                     <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}" type="number" value="${range}" min="0" step="0.5" max="15" placeholder="0">
                 </div>
             </div>
+            <label>NOTE: If the value on the configuration tab i 0 is automatically DISABLED and use the value setted on the module setting</label>
         </fieldset>
         `;
 

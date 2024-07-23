@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 2.4.4
+
+- Update module.json (fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/100)
+- ripper93's light-switch integration ty very much @silentmark (https://github.com/p4535992/foundryvtt-arms-reach/pull/99)
+- Some little upgrade of the code
+
+
 ### 2.4.3
 
 - Fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/96
