@@ -97,6 +97,16 @@ export const initHooks = () => {
                 AmbientLightPrototypeOnClickRightHandler,
                 "MIXED",
             );
+            if (game.modules.get("light-switch")?.active) {
+                setTimeout(() => {
+                    libWrapper.register(
+                        CONSTANTS.MODULE_ID,
+                        "ControlsLayer.prototype.drawLightswitches",
+                        AmbientLightDrawLightSwitches,
+                        "MIXED",
+                    );
+                }, 2500);
+            }
         }
 
         if (game.settings.get(CONSTANTS.MODULE_ID, "enableSoundsIntegration")) {
@@ -598,8 +608,52 @@ export const DoorControlPrototypeOnRightDownHandler = async function (wrapped, .
     return wrapped(...args);
 };
 
+export const AmbientLightDrawLightSwitches = function (wrapped, ...args) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableLightsIntegration")) {
+        wrapped(...args);
+        for (let lightSwitch of this.lightSwitches.children) {
+            lightSwitch.off("mousedown");
+            let oldMouseDown = lightSwitch._onMouseDown;
+            lightSwitch._onMouseDown = async function (event) {
+                const light = this.light;
+                let tokenSelected;
+
+                tokenSelected = getFirstPlayerTokenSelected();
+                if (!tokenSelected) {
+                    tokenSelected = getFirstPlayerToken();
+                }
+                // Check if no token is selected and you are the GM avoid the distance calculation
+                let doNotReselectIfGM = false;
+                if (
+                    (!canvas.tokens?.controlled && game.user?.isGM) ||
+                    (canvas.tokens?.controlled?.length <= 0 && game.user?.isGM) ||
+                    (!game.settings.get(CONSTANTS.MODULE_ID, "globalInteractionDistanceForGMOnLights") &&
+                        game.user?.isGM)
+                ) {
+                    doNotReselectIfGM = true;
+                }
+                if (taggerModuleActive && !checkTaggerForAmrsreachForLight(light)) {
+                    if (!doNotReselectIfGM) {
+                        reselectTokenAfterInteraction(tokenSelected);
+                    }
+                    return oldMouseDown.apply(this, [event]);
+                }
+                const isInReach = await LightsReach.globalInteractionDistance(tokenSelected, light);
+                if (!doNotReselectIfGM) {
+                    reselectTokenAfterInteraction(tokenSelected);
+                }
+                if (!isInReach) {
+                    return;
+                }
+                return oldMouseDown.apply(this, [event]);
+            };
+            lightSwitch.on("mousedown", lightSwitch._onMouseDown);
+        }
+    }
+};
+
 export const AmbientLightPrototypeOnClickRightHandler = async function (wrapped, ...args) {
-    if (game.settings.get(CONSTANTS.MODULE_ID, "enableJournalsIntegration")) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "enableLightsIntegration")) {
         const [target] = args;
         const light = this;
         let tokenSelected;
