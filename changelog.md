@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 12.0.0 (BETA)
+
+- Very little fix from https://github.com/p4535992/foundryvtt-arms-reach/issues/94#issuecomment-2683390619
+
 ### 2.4.4
 
 - Update module.json (fix: https://github.com/p4535992/foundryvtt-arms-reach/issues/100)
