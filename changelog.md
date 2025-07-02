@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 13.0.0 (BETA)
+
+- Update module.json, Ty to @oestred for found the time to make some compatibility test https://github.com/p4535992/foundryvtt-arms-reach/issues/103
+
 ### 12.0.0 (BETA)
 
 - Very little fix from https://github.com/p4535992/foundryvtt-arms-reach/issues/94#issuecomment-2683390619
