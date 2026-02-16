@@ -1,4 +1,7 @@
 # CHANGELOG
+### 13.0.4
+
+- Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/pull/109
 
 ### 13.0.3
 
