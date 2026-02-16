@@ -45,7 +45,10 @@ export const StairwaysReach = {
                 : game.settings.get(CONSTANTS.MODULE_ID, "stairwayInteractionMeasurement");
         let range =
             //foundry.utils.getProperty(targetPlaceableObject, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
-			targetPlaceableObject.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.RANGE) || 0;
+            targetPlaceableObject?.document?.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.RANGE) || // Placeable object with .document
+            targetPlaceableObject?.getFlag?.(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.RANGE) || // Document instance with .getFlag()
+            targetPlaceableObject?.flags?.[CONSTANTS.MODULE_ID]?.[CONSTANTS.FLAGS.RANGE] || // Raw data object from hooks
+            0;
         globalInteraction = range > 0 ? range : globalInteraction;
         // Global interaction distance control. Replaces prototype function of Stairways. Danger...
         // if (globalInteraction > 0) {
