@@ -2,104 +2,106 @@ import CONSTANTS from "../constants";
 import Logger from "./Logger";
 
 export class ArmsReachFormConfig {
-    static configHandlers = {
-        TokenConfig: "_handleTokenConfig",
-        TileConfig: "_handleTileConfig",
-        DrawingConfig: "_handleDrawingConfig",
-        AmbientLightConfig: "_handleAmbientLightConfig", // v9
-        LightConfig: "_handleGenericConfig", // v8
-        WallConfig: "_handleGenericConfig",
-        AmbientSoundConfig: "_handleGenericConfig",
-        MeasuredTemplateConfig: "_handleGenericConfig",
-        NoteConfig: "_handleGenericConfig",
-        StairwayConfig: "_handleStairwayConfig",
-    };
+  static configHandlers = {
+    TokenConfig: "_handleTokenConfig",
+    TileConfig: "_handleTileConfig",
+    DrawingConfig: "_handleDrawingConfig",
+    AmbientLightConfig: "_handleAmbientLightConfig", // v9
+    LightConfig: "_handleGenericConfig", // v8
+    WallConfig: "_handleGenericConfig",
+    AmbientSoundConfig: "_handleGenericConfig",
+    MeasuredTemplateConfig: "_handleGenericConfig",
+    NoteConfig: "_handleGenericConfig",
+    StairwayConfig: "_handleStairwayConfig",
+  };
 
-    static _handleRenderFormApplication(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        let method = ArmsReachFormConfig.configHandlers[app.constructor.name];
-        if (!method) {
-            const key = Object.keys(ArmsReachFormConfig.configHandlers).find((name) =>
-                app.constructor.name.includes(name),
-            );
-            if (!key) return;
-            method = ArmsReachFormConfig.configHandlers[key];
-        }
-        ArmsReachFormConfig[method](app, html, true);
+  static _handleRenderFormApplication(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
     }
-
-    static _handleTokenConfig(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        const elem = html.find(`div[data-tab="character"]`);
-        this._applyHtml(app, elem);
+    let method = ArmsReachFormConfig.configHandlers[app.constructor.name];
+    if (!method) {
+      const key = Object.keys(ArmsReachFormConfig.configHandlers).find((name) => app.constructor.name.includes(name));
+      if (!key) return;
+      method = ArmsReachFormConfig.configHandlers[key];
     }
+    // Foundry v13+ ApplicationV2 render hooks pass an HTMLElement instead of a jQuery object,
+    // but the individual handlers below use `html.find(...)` everywhere. Wrap once at entry
+    // so the rest of the file keeps its jQuery assumption.
+    const $html = typeof html?.find === "function" ? html : $(html);
+    ArmsReachFormConfig[method](app, $html, true);
+  }
 
-    static _handleTileConfig(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        const elem = html.find(`div[data-tab="basic"]`);
-        this._applyHtml(app, elem);
+  static _handleTokenConfig(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
     }
+    const elem = html.find(`div[data-tab="character"]`);
+    this._applyHtml(app, elem);
+  }
 
-    static _handleDrawingConfig(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        const elem = html.find(`div[data-tab="position"]`);
-        this._applyHtml(app, elem);
+  static _handleTileConfig(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
     }
+    const elem = html.find(`div[data-tab="basic"]`);
+    this._applyHtml(app, elem);
+  }
 
-    static _handleAmbientLightConfig(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        let button = html.find(`button[name="submit"]`);
-        let elem = (button.length ? button : html.find(`button[type="submit"]`)).parent();
-        this._applyHtml(app, elem, true);
+  static _handleDrawingConfig(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
     }
+    const elem = html.find(`div[data-tab="position"]`);
+    this._applyHtml(app, elem);
+  }
 
-    static _handleGenericConfig(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        let button = html.find(`button[name="submit"]`);
-        let elem = button.length ? button : html.find(`button[type="submit"]`);
-        this._applyHtml(app, elem, true);
+  static _handleAmbientLightConfig(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
     }
+    let button = html.find(`button[name="submit"]`);
+    let elem = (button.length ? button : html.find(`button[type="submit"]`)).parent();
+    this._applyHtml(app, elem, true);
+  }
 
-    static _handleStairwayConfig(app, html) {
-        if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
-            Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
-            return;
-        }
-        const elem = html.find(`div[data-tab="main"]`).find(".form-group").last();
-        this._applyHtml(app, elem);
+  static _handleGenericConfig(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
     }
+    let button = html.find(`button[name="submit"]`);
+    let elem = button.length ? button : html.find(`button[type="submit"]`);
+    this._applyHtml(app, elem, true);
+  }
 
-    static _applyHtml(app, elem, insertBefore = false) {
-        if (!elem) {
-            return;
-        }
-        const object = app?.object?._object ?? app?.object;
-        const tagDocument = object?.document ?? object;
+  static _handleStairwayConfig(app, html) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "enableAdditionalReachSettingOnPlaceableConfigSheet")) {
+      Logger.debug("Setting 'enableAdditionalReachSettingOnPlaceableConfigSheet' is disabled");
+      return;
+    }
+    const elem = html.find(`div[data-tab="main"]`).find(".form-group").last();
+    this._applyHtml(app, elem);
+  }
 
-        let range =
-            //foundry.utils.getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
-			tagDocument.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.RANGE) || 0; //not strictly necessary here but for the sake uniformity
-        // let isEnabled = foundry.utils.getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}`) || false;
+  static _applyHtml(app, elem, insertBefore = false) {
+    if (!elem) {
+      return;
+    }
+    const object = app?.object?._object ?? app?.object;
+    const tagDocument = object?.document ?? object;
 
-        let fieldset = `
+    let range =
+      //foundry.utils.getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.RANGE}`) || 0;
+      tagDocument.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.RANGE) || 0; //not strictly necessary here but for the sake uniformity
+    // let isEnabled = foundry.utils.getProperty(tagDocument, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}`) || false;
+
+    let fieldset = `
         <fieldset>
             <legend>Arms reach</legend>
             <div class="form-group">
@@ -114,19 +116,19 @@ export class ArmsReachFormConfig {
         </fieldset>
         `;
 
-        // <div class="form-group">
-        //         <label for="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}">
-        //             Arms Reach Enabled ?
-        //         </label>
-        //         <div class="form-fields">
-        //             <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}" type="checkbox" ${isEnabled ? "checked" : ""} data-dtype="Boolean">
-        //         </div>
-        // </div>
+    // <div class="form-group">
+    //         <label for="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}">
+    //             Arms Reach Enabled ?
+    //         </label>
+    //         <div class="form-fields">
+    //             <input name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.ENABLED}" type="checkbox" ${isEnabled ? "checked" : ""} data-dtype="Boolean">
+    //         </div>
+    // </div>
 
-        if (insertBefore) {
-            $(fieldset).insertBefore(elem);
-        } else {
-            elem.append(fieldset);
-        }
+    if (insertBefore) {
+      $(fieldset).insertBefore(elem);
+    } else {
+      elem.append(fieldset);
     }
+  }
 }
