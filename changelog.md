@@ -1,4 +1,9 @@
 # CHANGELOG
+
+### 14.0.0 (BETA)
+
+- Fix ApplicationV2 config sheet injection (v13+) + bump Foundry v14 compat https://github.com/p4535992/foundryvtt-arms-reach/pull/110
+
 ### 13.0.4
 
 - Bug fix: https://github.com/p4535992/foundryvtt-arms-reach/pull/109
