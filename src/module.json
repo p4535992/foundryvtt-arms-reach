@@ -72,8 +72,8 @@
     "styles": ["styles/arms-reach.css"],
     "compatibility": {
         "minimum": 13,
-        "verified": 13,
-        "maximum": 13
+        "verified": 14,
+        "maximum": 14
     },
     "url": "https://github.com/p4535992/foundryvtt-arms-reach",
     "manifest": "https://github.com/p4535992/foundryvtt-arms-reach/releases/download/13.0.4/module.json",
